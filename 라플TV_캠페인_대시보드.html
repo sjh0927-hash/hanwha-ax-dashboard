@@ -1,4 +1,6 @@
-﻿<title>라플TV 광고 캠페인 대시보드 · 6월</title>
+﻿<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>라플TV 광고 캠페인 대시보드 · 6월</title>
 <style>
 :root{
   --ground:#0B0F1A;--surface:#131924;--surface-2:#1C2438;
@@ -14,7 +16,7 @@
   --fk:'Malgun Gothic','Apple SD Gothic Neo',-apple-system,sans-serif;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-body{background:var(--ground);color:var(--text);font-family:var(--fk);font-size:13px;line-height:1.6;padding-bottom:48px;min-width:880px;}
+body{background:var(--ground);color:var(--text);font-family:var(--fk);font-size:13px;line-height:1.6;padding-bottom:48px;}
 
 /* HEADER */
 .hdr{position:relative;background:var(--surface);border-bottom:1px solid var(--border);padding:16px 28px 14px;display:flex;align-items:center;justify-content:space-between;overflow:hidden;}
@@ -201,6 +203,58 @@ body{background:var(--ground);color:var(--text);font-family:var(--fk);font-size:
 #tt .tt-l{font-size:9px;color:var(--dim);font-family:var(--fk);margin-bottom:3px;letter-spacing:.03em;}
 #tt .tt-v{font-size:13px;font-weight:700;color:var(--text);font-family:var(--fn);}
 #tt .tt-v2{font-size:10px;color:var(--dim);font-family:var(--fn);margin-top:2px;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:860px){
+  /* Layout */
+  .wrap{padding:0 14px;}
+  .sect{margin-top:16px;}
+
+  /* Header */
+  .hdr{padding:12px 14px;}
+  .hdr-wm{display:none;}
+  .hdr-date{display:none;}
+  .hdr-title{font-size:12px;}
+  .hdr-sub{display:none;}
+
+  /* Tabs: 가로 스크롤 */
+  .tab-nav{padding:0 10px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+  .tab-nav::-webkit-scrollbar{display:none;}
+  .tab-btn{padding:10px 12px;font-size:10px;}
+
+  /* KPI: 6→3열 */
+  .kpi-grid{grid-template-columns:repeat(3,1fr);}
+  .kv{font-size:18px;}
+
+  /* 캠페인 행: 좌우 스크롤 */
+  .camp-list{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+  .camp{min-width:660px;}
+
+  /* 차트 레이아웃: 세로 stacking */
+  .charts-row{grid-template-columns:1fr;}
+  .two-col{grid-template-columns:1fr;}
+  .fmt-pair{grid-template-columns:1fr;}
+  .prog-cards{grid-template-columns:1fr 1fr;}
+  .icard-grid{grid-template-columns:1fr;}
+
+  /* 소재 테이블: 좌우 스크롤 */
+  .card{overflow-x:auto;}
+}
+
+@media(max-width:520px){
+  /* KPI: 6→2열 */
+  .kpi-grid{grid-template-columns:repeat(2,1fr);}
+
+  /* 프로그램 카드 단열 */
+  .prog-cards{grid-template-columns:1fr;}
+
+  /* 헤더 우측 요소 축소 */
+  .live{display:none;}
+  .hdr-right{gap:8px;}
+
+  /* 탭 글씨 더 작게 */
+  .tab-btn{padding:10px 10px;font-size:9px;}
+}
 </style>
 
 <!-- HEADER -->
