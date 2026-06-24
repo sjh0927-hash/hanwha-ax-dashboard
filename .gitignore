@@ -1,0 +1,13 @@
+.env
+
+# 엑셀 원본 (비밀번호 포함, 용량 큰 바이너리)
+*.xlsx
+*.xls
+rpt.xlsx
+
+# 압축 파일
+*.zip
+
+# PowerShell / batch (민감한 스크립트)
+*.ps1
+*.bat
