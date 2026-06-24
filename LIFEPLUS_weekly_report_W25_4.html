@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LIFEPLUS 위클리 리포트 W25 · 2026.06.14–06.20</title>
+<script>(function(){var t=localStorage.getItem('lp-theme');if(t==='dark')document.documentElement.classList.add('dark');})();</script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -172,6 +173,32 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);font-s
   .hdr-kpi-bar{grid-template-columns:repeat(3,1fr);}
   .goal-grid,.exec-grid,.chart-grid,.bw-pair,.ts-grid{grid-template-columns:1fr;}
 }
+
+/* ── THEME TOGGLE ── */
+.theme-btn{position:fixed;bottom:20px;right:20px;z-index:9999;
+  width:38px;height:38px;border-radius:50%;
+  border:1px solid var(--border);background:var(--surf);
+  cursor:pointer;font-size:18px;line-height:1;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 2px 12px rgba(0,0,0,.12);transition:border-color .15s,background .15s,box-shadow .15s;
+  color:var(--ink3);}
+.theme-btn:hover{border-color:var(--navy2);color:var(--ink);}
+
+/* ── DARK MODE ── */
+html.dark{
+  --bg:#0D1220;--surf:#131924;--surf2:#1C2438;
+  --border:#273049;
+  --ink:#D8DFEE;--ink2:#9AA5BC;--ink3:#6B7B9A;--ink4:#4A5568;
+  --up:#34D399;--dn:#F87171;--warn:#FBBF24;
+}
+html.dark .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.5);}
+html.dark .t-wk{background:rgba(79,70,229,.2);color:#A5B4FC;}
+html.dark .t-hn{background:rgba(217,119,6,.2);color:#FCD34D;}
+html.dark .t-dd{background:rgba(5,150,105,.2);color:#6EE7B7;}
+html.dark .bw-head.best{background:rgba(5,150,105,.12);}
+html.dark .bw-head.worst{background:rgba(185,28,28,.12);}
+html.dark .bw-head.best .bw-label{color:#34D399;}
+html.dark .bw-head.worst .bw-label{color:#F87171;}
 </style>
 </head>
 <body>
@@ -725,6 +752,8 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);font-s
 
 </div><!-- /main -->
 
+<button id="theme-btn" class="theme-btn" title="다크 모드">🌙</button>
+
 <script>
 /* ── ACTIVE NAV ── */
 const sections=document.querySelectorAll('.sec[id]');
@@ -745,7 +774,9 @@ const eps=['ep.1','ep.2','ep.3','ep.4','ep.5','ep.6','ep.7','ep.8','ep.9','ep.10
 const names=['행운','루머','이탈리아','리더십','야구','본능','헤일메리','부동산','죽음','신분','호기심','실패','럭셔리','디저트','마이클잭슨','초능력','다이어트','프랑스','스필버그','브로드웨이'];
 const org=[28.0,31.3,26.9,22.9,17.3,32.6,45.2,26.8,35.3,28.0,32.3,30.2,36.3,32.4,46.6,32.3,34.9,34.8,29.5,40.0];
 const awt=[7.6,8.2,7.3,6.5,6.8,8.9,9.9,7.9,10.6,8.4,9.4,7.2,10.5,8.4,10.6,9.0,10.2,10.5,8.0,8.7];
-const TC='rgba(0,0,0,.4)';const GC='rgba(0,0,0,.05)';
+const _dk=document.documentElement.classList.contains('dark');
+const TC=_dk?'rgba(255,255,255,.45)':'rgba(0,0,0,.4)';
+const GC=_dk?'rgba(255,255,255,.07)':'rgba(0,0,0,.05)';
 
 Chart.defaults.font.family="Inter,sans-serif";
 Chart.defaults.font.size=10;
@@ -780,6 +811,19 @@ new Chart(document.getElementById('c_prog'),{
   data:{labels:['라플위클리','딥다이브','HOT & NEW'],datasets:[{data:[11.1,5.5,3.1],backgroundColor:['#4F46E5','#0D9488','#D97706'],borderRadius:4}]},
   options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:i=>`자연유입 평균: ${i.raw}만`}}},scales:{x:{ticks:{color:TC},grid:{display:false}},y:{ticks:{color:TC,callback:v=>v+'만'},grid:{color:GC}}}}
 });
+
+/* ── THEME TOGGLE ── */
+(function(){
+  var btn=document.getElementById('theme-btn');
+  if(!btn)return;
+  var upd=function(){var d=document.documentElement.classList.contains('dark');btn.textContent=d?'☀':'🌙';btn.title=d?'라이트 모드':'다크 모드';};
+  upd();
+  btn.addEventListener('click',function(){
+    document.documentElement.classList.toggle('dark');
+    localStorage.setItem('lp-theme',document.documentElement.classList.contains('dark')?'dark':'light');
+    upd();
+  });
+})();
 </script>
 </body>
 </html>

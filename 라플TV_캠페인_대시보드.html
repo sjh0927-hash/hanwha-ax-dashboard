@@ -1,6 +1,7 @@
 ﻿<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>라플TV 광고 캠페인 대시보드 · 6월</title>
+<script>(function(){var t=localStorage.getItem('lp-theme');if(t==='light')document.documentElement.classList.add('light');})();</script>
 <style>
 :root{
   --ground:#0B0F1A;--surface:#131924;--surface-2:#1C2438;
@@ -255,6 +256,24 @@ body{background:var(--ground);color:var(--text);font-family:var(--fk);font-size:
   /* 탭 글씨 더 작게 */
   .tab-btn{padding:10px 10px;font-size:9px;}
 }
+
+/* ── THEME TOGGLE ── */
+.theme-btn{position:fixed;bottom:20px;right:20px;z-index:9999;
+  width:38px;height:38px;border-radius:50%;
+  border:1px solid var(--border);background:var(--surface);
+  cursor:pointer;font-size:18px;line-height:1;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 2px 12px rgba(0,0,0,.4);transition:border-color .15s,background .15s,box-shadow .15s;}
+.theme-btn:hover{border-color:var(--accent);}
+
+/* ── LIGHT MODE ── */
+html.light{
+  --ground:#F0F3FA;--surface:#FFFFFF;--surface-2:#F5F8FF;
+  --border:#CDD4E8;--border-2:#DDE3F0;
+  --text:#1A2035;--dim:#556080;--faint:#8A9AB8;
+}
+html.light #tt{background:rgba(26,32,53,.95)!important;color:#D8DFEE!important;}
+html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
 </style>
 
 <!-- HEADER -->
@@ -1071,6 +1090,7 @@ body{background:var(--ground);color:var(--text);font-family:var(--fk);font-size:
 </div>
 
 <div id="tt"></div>
+<button id="theme-btn" class="theme-btn" title="라이트 모드">☀</button>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -2297,4 +2317,17 @@ function drawRetargetCharts(){try{
 setTimeout(function(){ try { drawOverviewCharts(); } catch(e) {} }, 120);
 
 }); // end DOMContentLoaded
+
+/* ── THEME TOGGLE ── */
+(function(){
+  var btn=document.getElementById('theme-btn');
+  if(!btn)return;
+  var upd=function(){var l=document.documentElement.classList.contains('light');btn.textContent=l?'🌙':'☀';btn.title=l?'다크 모드':'라이트 모드';};
+  upd();
+  btn.addEventListener('click',function(){
+    document.documentElement.classList.toggle('light');
+    localStorage.setItem('lp-theme',document.documentElement.classList.contains('light')?'light':'dark');
+    upd();
+  });
+})();
 </script>

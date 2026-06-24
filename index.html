@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>한화생명 LIFEPLUS 미디어팀 — 대시보드</title>
+<script>(function(){var t=localStorage.getItem('lp-theme');if(t==='light')document.documentElement.classList.add('light');})();</script>
 <style>
 :root{
   --ground:#0B0F1A;--surface:#131924;--border:#273049;
@@ -45,6 +46,22 @@ body{background:var(--ground);color:var(--text);font-family:var(--fk);min-height
 
 /* FOOTER */
 .footer{border-top:1px solid var(--border);padding:16px 32px;font-size:9px;color:var(--faint);font-family:var(--fn);letter-spacing:.5px;}
+
+/* ── THEME TOGGLE ── */
+.theme-btn{position:fixed;bottom:20px;right:20px;z-index:9999;
+  width:38px;height:38px;border-radius:50%;
+  border:1px solid var(--border);background:var(--surface);
+  cursor:pointer;font-size:18px;line-height:1;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 2px 12px rgba(0,0,0,.4);transition:border-color .15s,background .15s,box-shadow .15s;}
+.theme-btn:hover{border-color:var(--accent);}
+
+/* ── LIGHT MODE ── */
+html.light{
+  --ground:#F0F3FA;--surface:#FFFFFF;--border:#CDD4E8;
+  --text:#1A2035;--dim:#556080;--faint:#8A9AB8;
+}
+html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
 </style>
 </head>
 <body>
@@ -106,6 +123,22 @@ body{background:var(--ground);color:var(--text);font-family:var(--fk);min-height
 </main>
 
 <footer class="footer">HANWHA LIFE · LIFEPLUS MEDIA TEAM · INTERNAL USE ONLY</footer>
+
+<button id="theme-btn" class="theme-btn" title="라이트 모드">☀</button>
+
+<script>
+(function(){
+  var btn=document.getElementById('theme-btn');
+  if(!btn)return;
+  var upd=function(){var l=document.documentElement.classList.contains('light');btn.textContent=l?'🌙':'☀';btn.title=l?'다크 모드':'라이트 모드';};
+  upd();
+  btn.addEventListener('click',function(){
+    document.documentElement.classList.toggle('light');
+    localStorage.setItem('lp-theme',document.documentElement.classList.contains('light')?'light':'dark');
+    upd();
+  });
+})();
+</script>
 
 </body>
 </html>
