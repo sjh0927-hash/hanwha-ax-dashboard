@@ -234,6 +234,23 @@ HOT&NEW 16화는 **조회캠페인 + 클릭최대화 캠페인** 합산값을 CR
 
 ---
 
+## 10단계 — GitHub 푸시 (Netlify 자동 배포)
+
+검증이 완료되면 아래 PowerShell 명령으로 변경사항을 GitHub에 푸시한다.  
+푸시 즉시 Netlify가 감지하여 **자동으로 배포**한다 (통상 30초~1분 소요).
+
+```powershell
+Set-Location "C:\Users\Administrator\Desktop\hanwha_ax_today"
+git add "라플TV_캠페인_대시보드.html"
+git commit -m "대시보드 업데이트: 6/N 데이터 반영"
+git push origin main
+```
+
+> 커밋 메시지의 날짜(6/N)는 실제 업데이트한 날짜로 교체한다.  
+> 배포 현황은 https://app.netlify.com 에서 확인 가능.
+
+---
+
 ## 참고: 주요 시트 구조 요약
 
 | 시트명 | 일별총합 위치 | 소재별 위치 |
