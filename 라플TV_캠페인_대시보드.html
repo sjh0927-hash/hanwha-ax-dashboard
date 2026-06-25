@@ -515,7 +515,7 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
   <section class="sect">
     <div class="sect-lbl">조회캠페인 요약 · 6월 집행 (유튜브 예산만)</div>
     <div class="kpi-grid" style="grid-template-columns:repeat(5,1fr);">
-      <div class="kpi"><div class="kv">3,983<span class="ku">만원</span></div><div class="kl">예산 (YouTube only)</div><div class="ks">6월 집행 2,235만 · 56% 소진</div></div>
+      <div class="kpi"><div class="kv">2,387<span class="ku">만원</span></div><div class="kl">소진금액 (VAT포함)</div><div class="ks">예산 3,983만 · 60% 집행</div></div>
       <div class="kpi a"><div class="kv">963,841<span class="ku"></span></div><div class="kl">총 조회수 (롱폼+쇼츠)</div><div class="ks">롱폼 665K · 쇼츠 299K</div></div>
       <div class="kpi"><div class="kv">207<span class="ku">만</span></div><div class="kl">총 노출수</div><div class="ks">2,072,821회</div></div>
       <div class="kpi t"><div class="kv">0.45<span class="ku">%</span></div><div class="kl">평균 CTR</div><div class="ks">클릭 9,306회</div></div>
@@ -526,14 +526,15 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
   <section class="sect" style="margin-top:14px;">
     <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
       <div style="display:flex;gap:6px;">
-        <button class="tog-btn" id="vfmt-longform" data-vfmt="롱폼">롱폼 (7개)</button>
-        <button class="tog-btn" id="vfmt-shorts" data-vfmt="쇼츠">쇼츠 (12개)</button>
+        <button class="tog-btn" id="vfmt-longform" data-vfmt="롱폼">롱폼 (8개)</button>
+        <button class="tog-btn" id="vfmt-shorts" data-vfmt="쇼츠">쇼츠 (13개)</button>
       </div>
       <div style="display:flex;gap:6px;">
         <span style="font-size:9px;color:var(--faint);align-self:center;letter-spacing:1px;">프로그램</span>
         <button class="tog-btn on" id="vprog-all" data-vprog="전체">전체</button>
         <button class="tog-btn" id="vprog-rapple" data-vprog="라플위클리">라플위클리</button>
         <button class="tog-btn" id="vprog-hot" data-vprog="HOT&amp;NEW">HOT&amp;NEW</button>
+        <button class="tog-btn" id="vprog-deep" data-vprog="딥다이브">딥다이브</button>
       </div>
     </div>
   </section>
@@ -542,7 +543,7 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
     <div class="card" style="padding:12px 16px;">
       <table class="ctbl">
         <thead><tr>
-          <th>소재명</th><th>프로그램</th><th>노출수</th><th>조회수</th><th>클릭수</th><th>CTR</th><th>CPV</th><th>VTR</th><th>평가</th>
+          <th>소재명</th><th>프로그램</th><th>소진(VAT+)</th><th>노출수</th><th>조회수</th><th>클릭수</th><th>CTR</th><th>CPV</th><th>VTR</th><th>평가</th>
         </tr></thead>
         <tbody id="view-tbody"></tbody>
       </table>
@@ -551,10 +552,10 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
 
   <section class="sect">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-      <div class="card"><div class="ct" id="ch-vtr-title">VTR (%)</div><canvas id="ch-vtr" style="width:100%;display:block;"></canvas></div>
-      <div class="card"><div class="ct" id="ch-cpv-title">CPV (원)</div><canvas id="ch-cpv" style="width:100%;display:block;"></canvas></div>
-      <div class="card"><div class="ct" id="ch-ctr-title">CTR (%)</div><canvas id="ch-ctr" style="width:100%;display:block;"></canvas></div>
-      <div class="card"><div class="ct" id="ch-views-title">조회수</div><canvas id="ch-views" style="width:100%;display:block;"></canvas></div>
+      <div class="card"><div class="ct" id="ch-vtr-title">VTR (%) <span style="font-size:9px;font-weight:400;color:var(--faint);">조회율 — 노출 대비 영상 조회 비율</span></div><canvas id="ch-vtr" style="width:100%;display:block;"></canvas></div>
+      <div class="card"><div class="ct" id="ch-cpv-title">CPV (원) <span style="font-size:9px;font-weight:400;color:var(--faint);">조회당 비용 — 1회 조회에 소요된 광고비</span></div><canvas id="ch-cpv" style="width:100%;display:block;"></canvas></div>
+      <div class="card"><div class="ct" id="ch-ctr-title">CTR (%) <span style="font-size:9px;font-weight:400;color:var(--faint);">클릭률 — 노출 대비 광고 클릭 비율</span></div><canvas id="ch-ctr" style="width:100%;display:block;"></canvas></div>
+      <div class="card"><div class="ct" id="ch-views-title">조회수 <span style="font-size:9px;font-weight:400;color:var(--faint);">소재별 실제 영상 조회 횟수</span></div><canvas id="ch-views" style="width:100%;display:block;"></canvas></div>
     </div>
   </section>
 
@@ -938,13 +939,13 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
 <div class="wrap">
 
   <section class="sect">
-    <div class="sect-lbl">후속 조회 캠페인 · 6월 성과 (6/1~6/23)</div>
+    <div class="sect-lbl">후속 조회 캠페인 · 6월 성과 (6/1~6/24)</div>
     <div class="kpi-grid" style="grid-template-columns:repeat(5,1fr);">
-      <div class="kpi a"><div class="kv">767<span class="ku">만원</span></div><div class="kl">6월 광고비</div><div class="ks">예산 1,000만 · 77% 소진</div></div>
-      <div class="kpi"><div class="kv">290<span class="ku">만</span></div><div class="kl">총 노출수</div><div class="ks">2,906,026회</div></div>
-      <div class="kpi t"><div class="kv">579,195<span class="ku"></span></div><div class="kl">총 조회수</div><div class="ks">CTR 2.58%</div></div>
-      <div class="kpi"><div class="kv">13<span class="ku">원</span></div><div class="kl">평균 CPV</div><div class="ks">4개 캠페인 중 최저</div></div>
-      <div class="kpi"><div class="kv">74,836<span class="ku"></span></div><div class="kl">클릭수</div><div class="ks">CPC 103원</div></div>
+      <div class="kpi a"><div class="kv">801<span class="ku">만원</span></div><div class="kl">6월 광고비</div><div class="ks">예산 1,000만 · 80% 소진</div></div>
+      <div class="kpi"><div class="kv">303<span class="ku">만</span></div><div class="kl">총 노출수</div><div class="ks">3,034,636회</div></div>
+      <div class="kpi t"><div class="kv">605,113<span class="ku"></span></div><div class="kl">총 조회수</div><div class="ks">CTR 2.56%</div></div>
+      <div class="kpi"><div class="kv">13<span class="ku">원</span></div><div class="kl">평균 CPV</div><div class="ks">3개 캠페인 운영 중</div></div>
+      <div class="kpi"><div class="kv">77,759<span class="ku"></span></div><div class="kl">클릭수</div><div class="ks">CPC 103원</div></div>
     </div>
   </section>
 
@@ -954,10 +955,10 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
       <div class="pcard" style="border-top:2px solid var(--prog-weekly);">
         <div class="pcard-hd"><div class="pcard-nm">라플위클리</div><span class="badge ba">-</span></div>
         <div class="pcard-rows">
-          <div class="pcard-row"><span class="pr-lbl">집행액</span><span class="pr-val">3,261,520원</span></div>
-          <div class="pcard-row"><span class="pr-lbl">노출수</span><span class="pr-val">1,323,417</span></div>
-          <div class="pcard-row"><span class="pr-lbl">조회수</span><span class="pr-val">228,574</span></div>
-          <div class="pcard-row"><span class="pr-lbl">CTR</span><span class="pr-val">2.12%</span></div>
+          <div class="pcard-row"><span class="pr-lbl">집행액</span><span class="pr-val">3,594,912원</span></div>
+          <div class="pcard-row"><span class="pr-lbl">노출수</span><span class="pr-val">1,452,027</span></div>
+          <div class="pcard-row"><span class="pr-lbl">조회수</span><span class="pr-val">254,492</span></div>
+          <div class="pcard-row"><span class="pr-lbl">CTR</span><span class="pr-val">2.13%</span></div>
           <div class="pcard-row"><span class="pr-lbl">CPV</span><span class="pr-val">14원</span></div>
         </div>
       </div>
@@ -992,41 +993,43 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
           <th>소재명</th><th>프로그램</th><th>소진금액(VAT+)</th><th>운영기간</th><th>6월 조회수</th><th>클릭</th><th>CTR</th><th>CPV</th><th>6월 광고비</th><th>상태</th>
         </tr></thead>
         <tbody>
+          <!-- 활성 소재 (운영 중) -->
           <tr>
-            <td><div class="cn">딥다이브_6화_군체</div></td>
+            <td><div class="cn">시즌5_13화_토이스토리</div></td>
+            <td><span style="font-size:8px;color:var(--prog-weekly);font-weight:700;">위클리</span></td>
+            <td style="font-family:var(--fn);font-size:10px;font-weight:700;">1,260,232원</td>
+            <td style="font-family:var(--fn);font-size:10px;">6/9 ~ 현재</td>
+            <td>86,245</td><td>10,934</td>
+            <td>2.48%</td><td>13원</td><td>1,145,665원</td>
+            <td><span class="pill good">활성</span></td>
+          </tr>
+          <tr>
+            <td><div class="cn">시즌6_19화_스티븐 스필버그</div></td>
+            <td><span style="font-size:8px;color:var(--prog-weekly);font-weight:700;">위클리</span></td>
+            <td style="font-family:var(--fn);font-size:10px;font-weight:700;">1,056,688원</td>
+            <td style="font-family:var(--fn);font-size:10px;">6/15 ~ 현재</td>
+            <td>68,316</td><td>8,487</td>
+            <td>2.29%</td><td>14원</td><td>960,625원</td>
+            <td><span class="pill good">활성</span></td>
+          </tr>
+          <tr>
+            <td><div class="cn">시즌1_9화_실수</div></td>
+            <td><span style="font-size:8px;color:var(--prog-weekly);font-weight:700;">위클리</span></td>
+            <td style="font-family:var(--fn);font-size:10px;font-weight:700;">939,474원</td>
+            <td style="font-family:var(--fn);font-size:10px;">6/15 ~ 현재</td>
+            <td>41,602</td><td>4,891</td>
+            <td>1.18%</td><td>21원</td><td>854,067원</td>
+            <td><span class="pill good">활성</span></td>
+          </tr>
+          <!-- 종료 소재 -->
+          <tr>
+            <td><div class="cn">딥다이브_6화_군체</div><div class="csub">OFF 캠페인</div></td>
             <td><span style="font-size:8px;color:var(--prog-deep);font-weight:700;">딥다이브</span></td>
             <td style="font-family:var(--fn);font-size:10px;font-weight:700;">1,867,546원</td>
             <td style="font-family:var(--fn);font-size:10px;">6/1 ~ 6/17</td>
             <td style="color:var(--teal);font-weight:700;">183,130</td><td>21,668</td>
             <td style="color:var(--teal);font-weight:700;">3.63%</td><td>9원</td><td>1,697,769원</td>
             <td><span class="pill warn">중단</span></td>
-          </tr>
-          <tr>
-            <td><div class="cn">시즌5_13화_토이스토리</div></td>
-            <td><span style="font-size:8px;color:var(--prog-weekly);font-weight:700;">위클리</span></td>
-            <td style="font-family:var(--fn);font-size:10px;font-weight:700;">1,130,918원</td>
-            <td style="font-family:var(--fn);font-size:10px;">6/9 ~ 현재</td>
-            <td>78,648</td><td>8,081</td>
-            <td>2.62%</td><td>13원</td><td>1,028,107원</td>
-            <td><span class="pill good">활성</span></td>
-          </tr>
-          <tr>
-            <td><div class="cn">시즌1_9화_실수</div></td>
-            <td><span style="font-size:8px;color:var(--prog-weekly);font-weight:700;">위클리</span></td>
-            <td style="font-family:var(--fn);font-size:10px;font-weight:700;">570,646원</td>
-            <td style="font-family:var(--fn);font-size:10px;">6/15 ~ 현재</td>
-            <td>22,515</td><td>2,744</td>
-            <td>1.04%</td><td>23원</td><td>518,769원</td>
-            <td><span class="pill good">활성</span></td>
-          </tr>
-          <tr>
-            <td><div class="cn">시즌6_19화_스티븐 스필버그</div></td>
-            <td><span style="font-size:8px;color:var(--prog-weekly);font-weight:700;">위클리</span></td>
-            <td style="font-family:var(--fn);font-size:10px;font-weight:700;">701,800원</td>
-            <td style="font-family:var(--fn);font-size:10px;">6/15 ~ 현재</td>
-            <td>36,918</td><td>4,822</td>
-            <td>1.78%</td><td>17원</td><td>638,000원</td>
-            <td><span class="pill good">활성</span></td>
           </tr>
           <tr>
             <td><div class="cn">시즌6_15화_마이클잭슨</div><div class="csub">OFF 캠페인</div></td>
@@ -1084,13 +1087,13 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
           </tr>
         </tbody>
       </table>
-      <div style="font-size:9px;color:var(--faint);margin-top:8px;padding-top:8px;border-top:1px solid var(--border);">※ CTR은 조회율(조회수/노출수) · 실측 기준 (6/21) · OFF 캠페인은 중단 소재 포함</div>
+      <div style="font-size:9px;color:var(--faint);margin-top:8px;padding-top:8px;border-top:1px solid var(--border);">※ CTR은 조회율(조회수/노출수) · 실측 기준 (6/24) · OFF 캠페인은 중단 소재 포함</div>
     </div>
   </section>
 
   <section class="sect">
     <div class="card">
-      <div class="ct">6월 일별 조회수 &amp; CTR 추이 (6/1~6/23)</div>
+      <div class="ct">6월 일별 조회수 &amp; CTR 추이 (6/1~6/24)</div>
       <canvas id="retargetDaily" style="width:100%;height:200px;display:block;margin-top:4px;"></canvas>
     </div>
   </section>
@@ -1208,25 +1211,27 @@ function regHits(id,arr){HITS[id]=arr;}
 
 /* ── 조회캠페인 CREATIVE DATA ── */
 var CREATIVES = [
-  {fmt:'롱폼',prog:'라플위클리',ep:'18화',title:'프랑스',     ctr:0.97,vtr:63.1,cpv:29,views:103067,imp:163272,clicks:1591},
-  {fmt:'롱폼',prog:'라플위클리',ep:'19화',title:'스필버그',   ctr:0.53,vtr:59.9,cpv:34,views:148599,imp:248133,clicks:1311},
-  {fmt:'롱폼',prog:'라플위클리',ep:'20화',title:'뮤지컬',     ctr:0.54,vtr:53.1,cpv:23,views:133071,imp:250580,clicks:1345},
-  {fmt:'롱폼',prog:'HOT&NEW',  ep:'13화',title:'백룸',        ctr:0.47,vtr:60.5,cpv:26,views:76472, imp:126363,clicks:596},
-  {fmt:'롱폼',prog:'HOT&NEW',  ep:'14화',title:'아웃사이더즈',ctr:0.65,vtr:59.4,cpv:28,views:72125, imp:121443,clicks:794},
-  {fmt:'롱폼',prog:'HOT&NEW',  ep:'15화',title:'디스클로저',  ctr:0.49,vtr:61.1,cpv:25,views:68805, imp:112610,clicks:554},
-  {fmt:'롱폼',prog:'HOT&NEW',  ep:'16화',title:'토이스토리',  ctr:1.01,vtr:13.7,cpv:28,views:118438,imp:861518,clicks:8690},
-  {fmt:'쇼츠',prog:'라플위클리',ep:'18화',title:'프랑스 선공개', ctr:0.37,vtr:55.1,cpv:12,views:27452,imp:49848, clicks:183},
-  {fmt:'쇼츠',prog:'라플위클리',ep:'18화',title:'프랑스 본편',   ctr:0.19,vtr:69.5,cpv:8, views:39648,imp:57090, clicks:106},
-  {fmt:'쇼츠',prog:'라플위클리',ep:'19화',title:'스필버그 선공개',ctr:0.51,vtr:24.3,cpv:15,views:21916,imp:90283, clicks:461},
-  {fmt:'쇼츠',prog:'라플위클리',ep:'19화',title:'스필버그 본편',  ctr:0.30,vtr:25.2,cpv:15,views:21441,imp:85242, clicks:255},
-  {fmt:'쇼츠',prog:'라플위클리',ep:'20화',title:'뮤지컬 선공개',  ctr:0.29,vtr:21.9,cpv:15,views:21794,imp:99758, clicks:288},
-  {fmt:'쇼츠',prog:'라플위클리',ep:'20화',title:'뮤지컬 본편',    ctr:0.23,vtr:30.4,cpv:13,views:24740,imp:81383, clicks:187},
-  {fmt:'쇼츠',prog:'HOT&NEW',  ep:'13화',title:'백룸 쇼츠1',     ctr:0.26,vtr:23.8,cpv:16,views:20443,imp:85885, clicks:222},
-  {fmt:'쇼츠',prog:'HOT&NEW',  ep:'13화',title:'백룸 쇼츠2',     ctr:0.22,vtr:24.7,cpv:16,views:20341,imp:82424, clicks:183},
-  {fmt:'쇼츠',prog:'HOT&NEW',  ep:'14화',title:'아웃사이더즈 1', ctr:0.30,vtr:44.2,cpv:12,views:26727,imp:60451, clicks:181},
-  {fmt:'쇼츠',prog:'HOT&NEW',  ep:'14화',title:'아웃사이더즈 2', ctr:0.31,vtr:45.6,cpv:13,views:26084,imp:57176, clicks:180},
-  {fmt:'쇼츠',prog:'HOT&NEW',  ep:'15화',title:'디스클로저 1',   ctr:0.23,vtr:27.1,cpv:14,views:16466,imp:60703, clicks:139},
-  {fmt:'쇼츠',prog:'HOT&NEW',  ep:'15화',title:'디스클로저 2',   ctr:0.29,vtr:26.7,cpv:14,views:15920,imp:59678, clicks:171}
+  {fmt:'롱폼',prog:'라플위클리',ep:'18화',title:'프랑스',      ctr:0.97,vtr:63.1,cpv:29,views:103067,imp:163272,clicks:1591,spend:2999756},
+  {fmt:'롱폼',prog:'라플위클리',ep:'19화',title:'스필버그',    ctr:0.53,vtr:59.9,cpv:34,views:148599,imp:248133,clicks:1311,spend:4999431},
+  {fmt:'롱폼',prog:'라플위클리',ep:'20화',title:'뮤지컬',      ctr:0.54,vtr:53.1,cpv:23,views:133071,imp:250580,clicks:1345,spend:2998082},
+  {fmt:'롱폼',prog:'HOT&NEW',   ep:'13화',title:'백룸',        ctr:0.47,vtr:60.5,cpv:26,views:76472, imp:126363,clicks:596, spend:1999844},
+  {fmt:'롱폼',prog:'HOT&NEW',   ep:'14화',title:'아웃사이더즈',ctr:0.65,vtr:59.4,cpv:28,views:72125, imp:121443,clicks:794, spend:2000272},
+  {fmt:'롱폼',prog:'HOT&NEW',   ep:'15화',title:'디스클로저',  ctr:0.49,vtr:61.1,cpv:25,views:68805, imp:112610,clicks:554, spend:1701875},
+  {fmt:'롱폼',prog:'HOT&NEW',   ep:'16화',title:'토이스토리',  ctr:1.01,vtr:13.7,cpv:28,views:118438,imp:861518,clicks:8690,spend:3000436},
+  {fmt:'롱폼',prog:'딥다이브',  ep:'7화', title:'뉴뮤지엄',   ctr:0.40,vtr:42.5,cpv:33,views:11029, imp:25958, clicks:104, spend:364940},
+  {fmt:'쇼츠',prog:'라플위클리',ep:'18화',title:'프랑스 선공개', ctr:0.37,vtr:55.1,cpv:12,views:27452,imp:49848, clicks:183, spend:329731},
+  {fmt:'쇼츠',prog:'라플위클리',ep:'18화',title:'프랑스 본편',   ctr:0.19,vtr:69.5,cpv:8, views:39648,imp:57090, clicks:106, spend:329864},
+  {fmt:'쇼츠',prog:'라플위클리',ep:'19화',title:'스필버그 선공개',ctr:0.51,vtr:24.3,cpv:15,views:21916,imp:90283, clicks:461,spend:329718},
+  {fmt:'쇼츠',prog:'라플위클리',ep:'19화',title:'스필버그 본편',  ctr:0.30,vtr:25.2,cpv:15,views:21441,imp:85242, clicks:255,spend:330045},
+  {fmt:'쇼츠',prog:'라플위클리',ep:'20화',title:'뮤지컬 선공개',  ctr:0.29,vtr:21.9,cpv:15,views:21794,imp:99758, clicks:288,spend:329863},
+  {fmt:'쇼츠',prog:'라플위클리',ep:'20화',title:'뮤지컬 본편',    ctr:0.23,vtr:30.4,cpv:13,views:24740,imp:81383, clicks:187,spend:329955},
+  {fmt:'쇼츠',prog:'HOT&NEW',   ep:'13화',title:'백룸 쇼츠1',    ctr:0.26,vtr:23.8,cpv:16,views:20443,imp:85885, clicks:222,spend:329873},
+  {fmt:'쇼츠',prog:'HOT&NEW',   ep:'13화',title:'백룸 쇼츠2',    ctr:0.22,vtr:24.7,cpv:16,views:20341,imp:82424, clicks:183,spend:328911},
+  {fmt:'쇼츠',prog:'HOT&NEW',   ep:'14화',title:'아웃사이더즈 1',ctr:0.30,vtr:44.2,cpv:12,views:26727,imp:60451, clicks:181,spend:329999},
+  {fmt:'쇼츠',prog:'HOT&NEW',   ep:'14화',title:'아웃사이더즈 2',ctr:0.31,vtr:45.6,cpv:13,views:26084,imp:57176, clicks:180,spend:330045},
+  {fmt:'쇼츠',prog:'HOT&NEW',   ep:'15화',title:'디스클로저 1',  ctr:0.23,vtr:27.1,cpv:14,views:16466,imp:60703, clicks:139,spend:228954},
+  {fmt:'쇼츠',prog:'HOT&NEW',   ep:'15화',title:'디스클로저 2',  ctr:0.29,vtr:26.7,cpv:14,views:15920,imp:59678, clicks:171,spend:230492},
+  {fmt:'쇼츠',prog:'딥다이브',  ep:'7화 선공개',title:'뉴뮤지엄',ctr:0.15,vtr:41.8,cpv:15,views:4992, imp:11945, clicks:18,  spend:75968}
 ];
 var _vfmt = '롱폼';
 var _vprog = '전체';
@@ -1256,8 +1261,8 @@ function drawHBar(id, data, maxV, unit, color) {
     ctx.fillRect(lpad, y, barW, rowH - 6);
     /* fill — prog color per bar */
     var tagColor = d.prog === '라플위클리' ? C.weekly : (d.prog === 'HOT&NEW' ? C.hot : C.deep);
-    ctx.fillStyle = best ? C.teal : tagColor;
-    ctx.globalAlpha = best ? 1 : 0.78;
+    ctx.fillStyle = tagColor;
+    ctx.globalAlpha = 0.78;
     ctx.fillRect(lpad, y, blen, rowH - 6);
     ctx.globalAlpha = 1;
     /* prog tag (left accent strip) */
@@ -1267,7 +1272,7 @@ function drawHBar(id, data, maxV, unit, color) {
     ctx.fillStyle = C.dim; ctx.font = '9px ' + FN; ctx.textAlign = 'right';
     ctx.fillText(d.ep + ' ' + d.lbl, lpad - 8, y + rowH - 10);
     /* value */
-    ctx.fillStyle = best ? C.teal : C.text; ctx.font = 'bold 9px ' + FN; ctx.textAlign = 'left';
+    ctx.fillStyle = C.text; ctx.font = 'bold 9px ' + FN; ctx.textAlign = 'left';
     ctx.fillText(d.v + unit, lpad + blen + 4, y + rowH - 10);
   });
   regHits(id, data.map(function(d,i){
@@ -1300,11 +1305,11 @@ function drawVBar(id, data, color) {
     var bh = (d.v / maxV) * cH, y = pad.t + cH - bh;
     var best = d.v === maxV;
     var progC = d.prog === '라플위클리' ? C.weekly : (d.prog === 'HOT&NEW' ? C.hot : C.deep);
-    ctx.fillStyle = best ? C.teal : progC;
-    ctx.globalAlpha = best ? 1 : 0.72;
+    ctx.fillStyle = progC;
+    ctx.globalAlpha = 0.72;
     ctx.fillRect(x, y, bw, bh);
     ctx.globalAlpha = 1;
-    ctx.fillStyle = best ? C.teal : C.dim; ctx.font = '8px ' + FN; ctx.textAlign = 'center';
+    ctx.fillStyle = C.dim; ctx.font = '8px ' + FN; ctx.textAlign = 'center';
     ctx.fillText(d.ep, x + bw/2, pad.t + cH + 11);
   });
   regHits(id, data.map(function(d,i){
@@ -1319,16 +1324,18 @@ function renderViewTable(data) {
   if (!tbody) return;
   var maxViews = Math.max.apply(null, data.map(function(d){return d.views;}));
   tbody.innerHTML = data.map(function(d) {
-    var vtrC = d.vtr >= 55 ? C.teal : d.vtr >= 35 ? C.yellow : C.accent;
-    var pill = d.vtr >= 55 ? '<span class="pill good">우수</span>' : d.vtr >= 35 ? '<span class="pill neu">-</span>' : '<span class="pill warn">보통</span>';
+    var vtrC = d.vtr >= 60 ? C.teal : d.vtr >= 45 ? C.yellow : C.accent;
+    var pill = d.vtr >= 60 ? '<span class="pill good">우수</span>' : d.vtr >= 45 ? '<span class="pill neu">보통</span>' : '<span class="pill warn">저조</span>';
     var progBadge = d.prog === '라플위클리'
       ? '<span style="font-size:8px;color:var(--prog-weekly);font-weight:700;">위클리</span>'
       : d.prog === 'HOT&NEW'
       ? '<span style="font-size:8px;color:var(--prog-hot);font-weight:700;">H&amp;N</span>'
       : '<span style="font-size:8px;color:var(--prog-deep);font-weight:700;">딥다이브</span>';
+    var spendStr = d.spend ? Math.round(d.spend/10000) + '만원' : '-';
     return '<tr>' +
       '<td><div class="cn">' + d.ep + ' ' + d.title + '</div></td>' +
       '<td>' + progBadge + '</td>' +
+      '<td style="font-size:9px;font-family:var(--fn);color:var(--dim);">' + spendStr + '</td>' +
       '<td>' + d.imp.toLocaleString() + '</td>' +
       '<td>' + d.views.toLocaleString() + '</td>' +
       '<td>' + d.clicks.toLocaleString() + '</td>' +
