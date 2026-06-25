@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>한화생명 LIFEPLUS 미디어팀 — 대시보드</title>
+<script>(function(){var t=localStorage.getItem('lp-theme');if(t==='light')document.documentElement.classList.add('light');})();</script>
+<style>
+:root{
+  --ground:#0B0F1A;--surface:#131924;--border:#273049;
+  --text:#D8DFEE;--dim:#6B7B9A;--faint:#3A4A68;
+  --accent:#FF6B2B;--teal:#00C9A7;--yellow:#F0C040;
+  --fn:'Consolas','Courier New',monospace;
+  --fk:'Malgun Gothic','Apple SD Gothic Neo',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--ground);color:var(--text);font-family:var(--fk);min-height:100vh;display:flex;flex-direction:column;}
+
+/* HEADER */
+.hdr{background:var(--surface);border-bottom:1px solid var(--border);padding:20px 32px;display:flex;align-items:center;gap:14px;}
+.hdr-mark{width:36px;height:36px;background:var(--accent);border-radius:5px;display:flex;align-items:center;justify-content:center;font-family:var(--fn);font-size:11px;font-weight:700;color:#fff;letter-spacing:-.5px;flex-shrink:0;}
+.hdr-info{}
+.hdr-title{font-size:15px;font-weight:700;letter-spacing:-.2px;}
+.hdr-sub{font-size:10px;color:var(--dim);margin-top:2px;font-family:var(--fn);}
+
+/* MAIN */
+.wrap{max-width:960px;margin:0 auto;padding:40px 28px;flex:1;}
+.section-lbl{font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--faint);margin-bottom:14px;}
+
+/* CARDS */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-bottom:36px;}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:20px 22px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:10px;transition:border-color .15s,transform .1s;}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);}
+.card-top{display:flex;align-items:center;gap:10px;}
+.card-icon{width:32px;height:32px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+.card-name{font-size:13px;font-weight:700;letter-spacing:-.1px;}
+.card-desc{font-size:11px;color:var(--dim);line-height:1.6;}
+.card-meta{display:flex;align-items:center;gap:8px;margin-top:4px;}
+.badge{font-size:8px;font-weight:700;letter-spacing:.8px;padding:2px 6px;border-radius:3px;font-family:var(--fn);}
+.badge.live{background:rgba(0,201,167,.15);color:var(--teal);}
+.badge.weekly{background:rgba(75,142,255,.15);color:#4B8EFF;}
+.badge.score{background:rgba(240,192,64,.15);color:var(--yellow);}
+.card-date{font-size:9px;color:var(--faint);font-family:var(--fn);margin-left:auto;}
+.card-arrow{font-size:16px;color:var(--faint);align-self:flex-end;margin-top:auto;transition:color .15s;}
+.card:hover .card-arrow{color:var(--accent);}
+
+/* FOOTER */
+.footer{border-top:1px solid var(--border);padding:16px 32px;font-size:9px;color:var(--faint);font-family:var(--fn);letter-spacing:.5px;}
+
+/* ── THEME TOGGLE ── */
+.theme-btn{position:fixed;bottom:20px;right:20px;z-index:9999;
+  width:38px;height:38px;border-radius:50%;
+  border:1px solid var(--border);background:var(--surface);
+  cursor:pointer;font-size:18px;line-height:1;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 2px 12px rgba(0,0,0,.4);transition:border-color .15s,background .15s,box-shadow .15s;}
+.theme-btn:hover{border-color:var(--accent);}
+
+/* ── LIGHT MODE ── */
+html.light{
+  --ground:#F0F3FA;--surface:#FFFFFF;--border:#CDD4E8;
+  --text:#1A2035;--dim:#556080;--faint:#8A9AB8;
+}
+html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hdr-mark">LP</div>
+  <div class="hdr-info">
+    <div class="hdr-title">한화생명 LIFEPLUS 미디어팀</div>
+    <div class="hdr-sub">Campaign Dashboard Hub · 2026.06</div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="section-lbl">광고 캠페인</div>
+  <div class="cards">
+    <a class="card" href="라플TV_캠페인_대시보드.html">
+      <div class="card-top">
+        <div class="card-icon" style="background:rgba(255,107,43,.12);">📊</div>
+        <div class="card-name">라플TV 캠페인 대시보드</div>
+      </div>
+      <div class="card-desc">6월 광고 캠페인 전체 성과 — 조회·클릭·전환·후속조회 탭별 소재/일별 분석</div>
+      <div class="card-meta">
+        <span class="badge live">LIVE</span>
+        <span class="card-date">매일 업데이트</span>
+      </div>
+      <div class="card-arrow">→</div>
+    </a>
+  </div>
+
+  <div class="section-lbl">채널 리포트</div>
+  <div class="cards">
+    <a class="card" href="LIFEPLUS_TV_Score_0622_Report.html">
+      <div class="card-top">
+        <div class="card-icon" style="background:rgba(240,192,64,.12);">🏆</div>
+        <div class="card-name">LIFEPLUS TV Score</div>
+      </div>
+      <div class="card-desc">에피소드별 LTV Score 산출 — 자연유입·조회율·CTR 기반 S/A/B/C 등급 분류</div>
+      <div class="card-meta">
+        <span class="badge score">SCORE</span>
+        <span class="card-date">0622 기준</span>
+      </div>
+      <div class="card-arrow">→</div>
+    </a>
+    <a class="card" href="LIFEPLUS_weekly_report_W25_4.html">
+      <div class="card-top">
+        <div class="card-icon" style="background:rgba(75,142,255,.12);">📋</div>
+        <div class="card-name">주간 리포트 W25</div>
+      </div>
+      <div class="card-desc">채널 주간 KPI — 구독자·조회수·HIT 달성현황 및 에피소드 성과 요약</div>
+      <div class="card-meta">
+        <span class="badge weekly">WEEKLY</span>
+        <span class="card-date">W25 기준</span>
+      </div>
+      <div class="card-arrow">→</div>
+    </a>
+  </div>
+
+</main>
+
+<footer class="footer">HANWHA LIFE · LIFEPLUS MEDIA TEAM · INTERNAL USE ONLY</footer>
+
+<button id="theme-btn" class="theme-btn" title="라이트 모드">☀</button>
+
+<script>
+(function(){
+  var btn=document.getElementById('theme-btn');
+  if(!btn)return;
+  var upd=function(){var l=document.documentElement.classList.contains('light');btn.textContent=l?'🌙':'☀';btn.title=l?'다크 모드':'라이트 모드';};
+  upd();
+  btn.addEventListener('click',function(){
+    document.documentElement.classList.toggle('light');
+    localStorage.setItem('lp-theme',document.documentElement.classList.contains('light')?'light':'dark');
+    upd();
+  });
+})();
+</script>
+
+</body>
+</html>

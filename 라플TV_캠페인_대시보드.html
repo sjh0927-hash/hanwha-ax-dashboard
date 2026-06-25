@@ -1,0 +1,2374 @@
+﻿<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>라플TV 광고 캠페인 대시보드 · 6월</title>
+<script>(function(){var t=localStorage.getItem('lp-theme');if(t==='light')document.documentElement.classList.add('light');})();</script>
+<style>
+:root{
+  --ground:#0B0F1A;--surface:#131924;--surface-2:#1C2438;
+  --border:#273049;--border-2:#1E2A40;
+  --text:#D8DFEE;--dim:#6B7B9A;--faint:#3A4A68;
+  --accent:#FF6B2B;--adim:rgba(255,107,43,.12);
+  --teal:#00C9A7;--tdim:rgba(0,201,167,.10);
+  --yellow:#F0C040;--red:#FF4757;
+  --prog-weekly:#4B8EFF;--prog-weekly-dim:rgba(75,142,255,.15);
+  --prog-hot:#FF3B5C;--prog-hot-dim:rgba(255,59,92,.15);
+  --prog-deep:#22C55E;--prog-deep-dim:rgba(34,197,94,.15);
+  --fn:'Consolas','Cascadia Code','Courier New',monospace;
+  --fk:'Malgun Gothic','Apple SD Gothic Neo',-apple-system,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--ground);color:var(--text);font-family:var(--fk);font-size:13px;line-height:1.6;padding-bottom:48px;}
+
+/* HEADER */
+.hdr{position:relative;background:var(--surface);border-bottom:1px solid var(--border);padding:16px 28px 14px;display:flex;align-items:center;justify-content:space-between;overflow:hidden;}
+.hdr::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.035) 3px,rgba(0,0,0,.035) 4px);pointer-events:none;}
+.hdr-wm{position:absolute;right:-8px;top:50%;transform:translateY(-50%);font-family:var(--fn);font-size:140px;font-weight:700;color:rgba(255,107,43,.055);letter-spacing:-6px;line-height:1;user-select:none;pointer-events:none;}
+.hdr-brand{display:flex;align-items:center;gap:12px;position:relative;z-index:1;}
+.hdr-mark{width:32px;height:32px;background:var(--accent);border-radius:4px;display:flex;align-items:center;justify-content:center;font-family:var(--fn);font-size:10px;font-weight:700;color:#fff;letter-spacing:-.5px;flex-shrink:0;}
+.hdr-title{font-size:14px;font-weight:700;letter-spacing:-.2px;}
+.hdr-sub{font-size:10px;color:var(--dim);margin-top:1px;}
+.hdr-right{display:flex;align-items:center;gap:16px;position:relative;z-index:1;}
+.live{display:flex;align-items:center;gap:5px;font-family:var(--fn);font-size:10px;color:var(--accent);letter-spacing:1.8px;}
+.live-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+@media(prefers-reduced-motion:reduce){.live-dot{animation:none;}}
+.hdr-date{font-family:var(--fn);font-size:11px;color:var(--dim);}
+
+/* TABS */
+.tab-nav{background:var(--surface);border-bottom:1px solid var(--border);padding:0 28px;display:flex;gap:0;position:sticky;top:0;z-index:100;}
+.tab-btn{padding:10px 16px;font-family:var(--fk);font-size:11px;font-weight:600;color:var(--dim);border:none;background:transparent;cursor:pointer;border-bottom:2px solid transparent;transition:color .15s,border-color .15s;white-space:nowrap;letter-spacing:.2px;}
+.tab-btn:hover{color:var(--text);}
+.tab-btn.active{color:var(--accent);border-bottom-color:var(--accent);}
+
+/* PAGE */
+.page{display:none;}.page.active{display:block;}
+.wrap{max-width:1260px;margin:0 auto;padding:0 28px;}
+.sect{margin-top:22px;}
+.sect-lbl{font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--faint);margin-bottom:9px;}
+
+/* KPI */
+.kpi-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;}
+.kpi{background:var(--surface);border:1px solid var(--border);border-top:2px solid var(--border);border-radius:4px;padding:12px 13px 10px;}
+.kpi.a{border-top-color:var(--accent);}.kpi.t{border-top-color:var(--teal);}.kpi.y{border-top-color:var(--yellow);}
+.kv{font-family:var(--fn);font-size:21px;font-weight:700;line-height:1.1;letter-spacing:-.5px;}
+.kpi.a .kv{color:var(--accent);}.kpi.t .kv{color:var(--teal);}
+.ku{font-family:var(--fn);font-size:10px;color:var(--dim);margin-left:1px;}
+.kl{font-size:10px;color:var(--dim);margin-top:4px;}
+.ks{font-family:var(--fn);font-size:9px;color:var(--faint);margin-top:1px;}
+
+/* CAMPAIGN ROWS */
+.camp-list{display:flex;flex-direction:column;gap:6px;}
+.camp{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:12px 15px;display:grid;grid-template-columns:195px 1fr 95px 85px 100px 76px;align-items:center;gap:12px;}
+.cnm{font-size:12px;font-weight:700;}.ctp{font-size:10px;color:var(--dim);margin-top:2px;}
+.pw{display:flex;flex-direction:column;gap:4px;}
+.pls{display:flex;justify-content:space-between;font-family:var(--fn);font-size:9px;color:var(--dim);}
+.pb{height:3px;background:var(--border-2);border-radius:2px;overflow:hidden;}
+.pf{height:100%;border-radius:2px;background:var(--accent);}.pf.t{background:var(--teal);}
+.cm{text-align:right;}.cmv{font-family:var(--fn);font-size:13px;font-weight:700;}.cml{font-size:9px;color:var(--dim);margin-top:1px;}
+.badge{display:inline-block;padding:2px 7px;border-radius:3px;font-size:9px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;}
+.bg{background:var(--tdim);color:var(--teal);}.ba{background:var(--adim);color:var(--accent);}
+.by{background:rgba(240,192,64,.1);color:var(--yellow);}
+
+/* CHARTS */
+.charts-row{display:grid;grid-template-columns:1fr 300px;gap:8px;margin-top:8px;}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:15px 17px;}
+.ct{font-size:10px;font-weight:600;color:var(--dim);letter-spacing:.3px;margin-bottom:11px;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;}
+
+/* CREATIVE TABLE */
+.ctbl{width:100%;border-collapse:collapse;margin-top:4px;}
+.ctbl th{font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--dim);text-align:left;padding:5px 8px;border-bottom:1px solid var(--border);}
+.ctbl th:not(:first-child){text-align:right;}
+.ctbl td{padding:6px 8px;border-bottom:1px solid var(--border-2);font-size:11px;vertical-align:middle;}
+.ctbl td:not(:first-child){font-family:var(--fn);text-align:right;font-size:11px;}
+.ctbl tr:last-child td{border-bottom:none;}
+.ctbl tr:hover td{background:rgba(255,255,255,.02);}
+.cn{font-weight:600;font-size:11px;max-width:200px;}
+.csub{font-size:9px;color:var(--dim);}
+.vtr-bar{display:inline-flex;align-items:center;gap:5px;}
+.vtr-bg{width:50px;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+.vtr-fg{height:100%;border-radius:2px;}
+.pill{display:inline-block;padding:1px 5px;border-radius:2px;font-size:9px;font-weight:700;}
+.good{background:rgba(0,201,167,.12);color:var(--teal);}
+.warn{background:rgba(255,107,43,.12);color:var(--accent);}
+.neu{background:rgba(255,255,255,.06);color:var(--dim);}
+.neu{background:rgba(107,123,154,.1);color:var(--dim);}
+
+/* DATE CREATIVE CARDS */
+.date-cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(152px,1fr));gap:8px;}
+.date-cards-grid-lg{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px;}
+.dcard-lg{background:var(--ground);border:1px solid var(--border);border-radius:6px;padding:16px 18px;border-top-width:3px;}
+.dcard-lg.weekly{border-top-color:var(--prog-weekly);}
+.dcard-lg.hot{border-top-color:var(--prog-hot);}
+.dcard-lg.deep{border-top-color:var(--prog-deep);}
+.dcard-lg .dcard-prog{display:inline-block;padding:2px 7px;border-radius:2px;font-size:9px;font-weight:700;}
+.dcard-lg.weekly .dcard-prog{background:var(--prog-weekly-dim);color:var(--prog-weekly);}
+.dcard-lg.hot .dcard-prog{background:var(--prog-hot-dim);color:var(--prog-hot);}
+.dcard-lg.deep .dcard-prog{background:var(--prog-deep-dim);color:var(--prog-deep);}
+.dcard-lg .dcard-ctr{font-size:22px;font-weight:700;font-family:var(--fn);line-height:1.1;}
+.dcard-lg.weekly .dcard-ctr{color:var(--prog-weekly);}
+.dcard-lg.hot .dcard-ctr{color:var(--prog-hot);}
+.dcard-lg.deep .dcard-ctr{color:var(--prog-deep);}
+.date-btn{width:30px;height:30px;border-radius:4px;border:1px solid var(--border);background:transparent;color:var(--dim);font-family:var(--fn);font-size:10px;cursor:pointer;flex-shrink:0;position:relative;}
+.date-btn:hover{border-color:var(--prog-weekly);color:var(--prog-weekly);}
+.date-btn.on{background:var(--prog-weekly);border-color:var(--prog-weekly);color:#fff;font-weight:700;}
+.date-btn.wk{color:var(--accent);}
+.date-btn.wk.on{background:var(--accent);border-color:var(--accent);color:#fff;}
+.date-btn.ev::after{content:'';position:absolute;bottom:3px;left:50%;transform:translateX(-50%);width:3px;height:3px;border-radius:50%;background:var(--teal);}
+.dcard{background:var(--ground);border:1px solid var(--border);border-radius:4px;padding:10px 12px;border-top-width:2px;}
+.dcard.weekly{border-top-color:var(--prog-weekly);}
+.dcard.hot{border-top-color:var(--prog-hot);}
+.dcard.deep{border-top-color:var(--prog-deep);}
+.dcard-prog{display:inline-block;padding:1px 5px;border-radius:2px;font-size:8px;font-weight:700;}
+.dcard.weekly .dcard-prog{background:var(--prog-weekly-dim);color:var(--prog-weekly);}
+.dcard.hot .dcard-prog{background:var(--prog-hot-dim);color:var(--prog-hot);}
+.dcard.deep .dcard-prog{background:var(--prog-deep-dim);color:var(--prog-deep);}
+.dcard-ctr{font-size:20px;font-weight:700;font-family:var(--fn);line-height:1.1;}
+.dcard.weekly .dcard-ctr{color:var(--prog-weekly);}
+.dcard.hot .dcard-ctr{color:var(--prog-hot);}
+.dcard.deep .dcard-ctr{color:var(--prog-deep);}
+/* FORMAT COMPARE */
+.fmt-pair{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px;}
+.fcard{background:var(--surface-2);border-radius:4px;padding:12px;}
+.flbl{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--dim);margin-bottom:8px;}
+.frow{display:flex;justify-content:space-between;align-items:baseline;padding:4px 0;border-bottom:1px solid var(--border);}
+.frow:last-child{border-bottom:none;}
+.fnm{font-size:10px;color:var(--dim);}.fval{font-family:var(--fn);font-size:12px;font-weight:600;}
+
+/* PROGRAM CARDS */
+.prog-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.pcard{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:14px;}
+.pcard-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.pcard-nm{font-size:12px;font-weight:700;}
+.pcard-rows{display:flex;flex-direction:column;gap:0;}
+.pcard-row{display:flex;justify-content:space-between;align-items:baseline;padding:5px 0;border-bottom:1px solid var(--border-2);}
+.pcard-row:last-child{border-bottom:none;}
+.pr-lbl{font-size:10px;color:var(--dim);}
+.pr-val{font-family:var(--fn);font-size:13px;font-weight:700;}
+
+/* INSIGHT */
+.insight{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 4px 4px 0;padding:10px 14px;margin-top:8px;font-size:11px;color:var(--dim);line-height:1.8;}
+.insight strong{color:var(--text);}
+.tag{display:inline-block;padding:1px 5px;border-radius:2px;font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-left:2px;vertical-align:middle;}
+.tg{background:var(--tdim);color:var(--teal);}.ta{background:var(--adim);color:var(--accent);}
+
+/* FUNNEL */
+.funnel{display:flex;flex-direction:column;gap:6px;margin-top:8px;}
+.funnel-step{background:var(--surface-2);border-radius:4px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;}
+.funnel-lbl{font-size:11px;color:var(--dim);}
+.funnel-val{font-family:var(--fn);font-size:15px;font-weight:700;}
+.funnel-rate{font-family:var(--fn);font-size:10px;color:var(--teal);}
+
+/* TOGGLE */
+.toggle-row{display:flex;gap:6px;margin-bottom:12px;}
+.tog-btn{padding:4px 12px;border-radius:20px;font-size:10px;font-weight:600;letter-spacing:.3px;border:1px solid var(--border);background:transparent;color:var(--dim);cursor:pointer;transition:all .15s;}
+.tog-btn.on{background:var(--accent);border-color:var(--accent);color:#fff;}
+.tog-pane{display:none;}.tog-pane.on{display:block;}
+
+/* MINI BAR */
+.mbar-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.mbar-lbl{font-size:10px;color:var(--dim);width:68px;flex-shrink:0;}
+.mbar-track{flex:1;height:16px;background:var(--border-2);border-radius:2px;overflow:hidden;position:relative;}
+.mbar-fill{height:100%;border-radius:2px;display:flex;align-items:center;justify-content:flex-end;padding-right:6px;}
+.mbar-num{font-family:var(--fn);font-size:9px;font-weight:700;color:#fff;}
+
+/* INSIGHT CARDS */
+.icard-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:0;}
+.icard{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:14px 16px;}
+.icard-hd{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+.icard-icon{width:22px;height:22px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;}
+.icard-nm{font-size:12px;font-weight:700;}
+.icard-status{font-size:9px;padding:2px 7px;border-radius:3px;font-weight:700;letter-spacing:.5px;margin-left:auto;}
+.st-ok{background:rgba(0,201,167,.12);color:var(--teal);}
+.st-warn{background:rgba(255,107,43,.12);color:var(--accent);}
+.icard-rows{display:flex;flex-direction:column;gap:0;}
+.icard-row{display:flex;align-items:flex-start;gap:6px;padding:4px 0;border-bottom:1px solid var(--border-2);font-size:11px;color:var(--dim);line-height:1.5;}
+.icard-row:last-child{border-bottom:none;}
+.icard-dot{width:4px;height:4px;border-radius:50%;flex-shrink:0;margin-top:6px;}
+.icard-row strong{color:var(--text);}
+.icard-row em{font-style:normal;color:var(--teal);}
+.icard-row s{color:var(--accent);text-decoration:none;}
+
+/* SUMMARY INSIGHT */
+.sum-insight{background:var(--surface-2);border-radius:4px;padding:14px 16px;margin-bottom:8px;}
+.sum-insight-row{display:flex;align-items:flex-start;gap:10px;padding:5px 0;border-bottom:1px solid var(--border);font-size:11px;color:var(--dim);line-height:1.6;}
+.sum-insight-row:last-child{border-bottom:none;}
+.sum-insight-row strong{color:var(--text);}
+
+/* OP COMMENT */
+.op-comment{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 4px 4px 0;padding:10px 14px;font-size:11px;color:var(--dim);line-height:1.8;display:flex;align-items:flex-start;gap:10px;}
+.op-date{font-family:var(--fn);font-size:9px;font-weight:700;color:var(--accent);letter-spacing:1px;white-space:nowrap;padding-top:2px;}
+
+/* TOOLTIP */
+#tt{position:fixed;pointer-events:none;z-index:9999;background:rgba(11,15,26,.97);border:1px solid var(--border);border-radius:6px;padding:7px 11px;display:none;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,.55);}
+#tt .tt-l{font-size:9px;color:var(--dim);font-family:var(--fk);margin-bottom:3px;letter-spacing:.03em;}
+#tt .tt-v{font-size:13px;font-weight:700;color:var(--text);font-family:var(--fn);}
+#tt .tt-v2{font-size:10px;color:var(--dim);font-family:var(--fn);margin-top:2px;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:860px){
+  /* Layout */
+  .wrap{padding:0 14px;}
+  .sect{margin-top:16px;}
+
+  /* Header */
+  .hdr{padding:12px 14px;}
+  .hdr-wm{display:none;}
+  .hdr-date{display:none;}
+  .hdr-title{font-size:12px;}
+  .hdr-sub{display:none;}
+
+  /* Tabs: 가로 스크롤 */
+  .tab-nav{padding:0 10px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+  .tab-nav::-webkit-scrollbar{display:none;}
+  .tab-btn{padding:10px 12px;font-size:10px;}
+
+  /* KPI: 6→3열 */
+  .kpi-grid{grid-template-columns:repeat(3,1fr);}
+  .kv{font-size:18px;}
+
+  /* 캠페인 행: 좌우 스크롤 */
+  .camp-list{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+  .camp{min-width:660px;}
+
+  /* 차트 레이아웃: 세로 stacking */
+  .charts-row{grid-template-columns:1fr;}
+  .two-col{grid-template-columns:1fr;}
+  .fmt-pair{grid-template-columns:1fr;}
+  .prog-cards{grid-template-columns:1fr 1fr;}
+  .icard-grid{grid-template-columns:1fr;}
+
+  /* 소재 테이블: 좌우 스크롤 */
+  .card{overflow-x:auto;}
+}
+
+@media(max-width:520px){
+  /* KPI: 6→2열 */
+  .kpi-grid{grid-template-columns:repeat(2,1fr);}
+
+  /* 프로그램 카드 단열 */
+  .prog-cards{grid-template-columns:1fr;}
+
+  /* 헤더 우측 요소 축소 */
+  .live{display:none;}
+  .hdr-right{gap:8px;}
+
+  /* 탭 글씨 더 작게 */
+  .tab-btn{padding:10px 10px;font-size:9px;}
+}
+
+/* ── THEME TOGGLE ── */
+.theme-btn{position:fixed;bottom:20px;right:20px;z-index:9999;
+  width:38px;height:38px;border-radius:50%;
+  border:1px solid var(--border);background:var(--surface);
+  cursor:pointer;font-size:18px;line-height:1;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 2px 12px rgba(0,0,0,.4);transition:border-color .15s,background .15s,box-shadow .15s;}
+.theme-btn:hover{border-color:var(--accent);}
+
+/* ── LIGHT MODE ── */
+html.light{
+  --ground:#F0F3FA;--surface:#FFFFFF;--surface-2:#F5F8FF;
+  --border:#CDD4E8;--border-2:#DDE3F0;
+  --text:#1A2035;--dim:#556080;--faint:#8A9AB8;
+}
+html.light #tt{background:rgba(26,32,53,.95)!important;color:#D8DFEE!important;}
+html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
+</style>
+
+<!-- HEADER -->
+<header class="hdr">
+  <div class="hdr-wm">64%</div>
+  <div class="hdr-brand">
+    <div class="hdr-mark">라플</div>
+    <div>
+      <div class="hdr-title">라플TV × 한화 라이프플러스 캠페인 대시보드</div>
+      <div class="hdr-sub">6월 집행 현황 리포트</div>
+    </div>
+  </div>
+  <div class="hdr-right">
+    <div class="live"><span class="live-dot"></span>LIVE</div>
+    <div class="hdr-date">기준일&nbsp;2026.06.24</div>
+  </div>
+</header>
+
+<!-- TAB NAV -->
+<nav class="tab-nav">
+  <button class="tab-btn active" data-tab="overview">전체 개요</button>
+  <button class="tab-btn" data-tab="view">조회 캠페인 · 소재별</button>
+  <button class="tab-btn" data-tab="click">클릭수 최대화</button>
+  <button class="tab-btn" data-tab="conv">전환 캠페인</button>
+  <button class="tab-btn" data-tab="retarget">후속 조회</button>
+</nav>
+
+<!-- ═══════════════════════════════════════════ -->
+<!--  PAGE 1: OVERVIEW                           -->
+<!-- ═══════════════════════════════════════════ -->
+<div id="page-overview" class="page active">
+<div class="wrap">
+
+  <section class="sect">
+    <div class="sect-lbl">6월 당월 누적 핵심 지표 · 기준일 2026.06.24</div>
+    <div class="kpi-grid">
+      <div class="kpi a"><div class="kv">4,731<span class="ku">만원</span></div><div class="kl">총 광고비 집행</div><div class="ks">예산 6,983만 · 소진율 68%</div></div>
+      <div class="kpi"><div class="kv">1,949<span class="ku">만</span></div><div class="kl">총 노출수</div><div class="ks">19,493,819회</div></div>
+      <div class="kpi t"><div class="kv">162.4<span class="ku">만</span></div><div class="kl">총 조회수</div><div class="ks">1,624,370회</div></div>
+      <div class="kpi t"><div class="kv">1.60<span class="ku">%</span></div><div class="kl">전체 CTR</div><div class="ks">클릭 312,823회</div></div>
+      <div class="kpi"><div class="kv">29<span class="ku">원</span></div><div class="kl">평균 CPV</div><div class="ks">CPC 평균 151원</div></div>
+      <div class="kpi t"><div class="kv">6,267<span class="ku">건</span></div><div class="kl">구독 전환</div><div class="ks">구독단가 1,172원</div></div>
+    </div>
+  </section>
+
+  <section class="sect" style="margin-top:14px;">
+    <div class="op-comment">
+      <div class="op-date">6/24<br>코멘트</div>
+      <div>
+        클릭 캠페인 누적 <strong>20.6만 클릭</strong>, CTR 1.90% 운영 중. 위클리 토이스토리 → 핫앤뉴 토이스토리로 예산 일부 분산.
+        후속 조회 CPV <strong>13원</strong>·누적 60.5만 조회로 효율 최우수. 구독 전환 <strong>6,267건</strong>·단가 1,172원·일 평균 300건 유지.
+        <span class="tag tg">딥다이브 7화</span> 뉴뮤지엄 조회캠페인 집행 중 (롱폼+쇼츠).
+        <span class="tag tg">핫앤뉴 16화</span> 토이스토리 롱폼 CTR 1.23%·집행 중.
+      </div>
+    </div>
+  </section>
+
+  <section class="sect">
+    <div class="sect-lbl">캠페인별 예산 집행 현황</div>
+    <div class="camp-list">
+      <div class="camp">
+        <div><div class="cnm">유튜브 조회 캠페인</div><div class="ctp">라플위클리 · HOT&amp;NEW · 딥다이브 (유튜브 예산만)</div></div>
+        <div class="pw"><div class="pls"><span>예산 3,983만원</span><span style="color:var(--accent)">60% 소진 · 2,387만원</span></div><div class="pb"><div class="pf" style="width:60%"></div></div></div>
+        <div class="cm"><div class="cmv">0.45%</div><div class="cml">CTR</div></div>
+        <div class="cm"><div class="cmv">23원</div><div class="cml">CPV</div></div>
+        <div class="cm"><div class="cmv">963,841</div><div class="cml">조회수</div></div>
+        <div><span class="badge ba">진행중</span></div>
+      </div>
+      <div class="camp">
+        <div><div class="cnm">디맨드젠 클릭수 최대화</div><div class="ctp">라플TV 전채널 롱폼 · 4월 개시</div></div>
+        <div class="pw"><div class="pls"><span>예산 1,000만원</span><span style="color:var(--accent)">80% 소진 · 808만원</span></div><div class="pb"><div class="pf" style="width:80%"></div></div></div>
+        <div class="cm"><div class="cmv">1.90%</div><div class="cml">CTR</div></div>
+        <div class="cm"><div class="cmv">39원</div><div class="cml">CPC</div></div>
+        <div class="cm"><div class="cmv">206,060</div><div class="cml">클릭수</div></div>
+        <div><span class="badge bg">양호</span></div>
+      </div>
+      <div class="camp">
+        <div><div class="cnm">디맨드젠 후속 조회</div><div class="ctp">리타겟팅 · 6월 1일 개시</div></div>
+        <div class="pw"><div class="pls"><span>예산 1,000만원</span><span style="color:var(--teal)">80% 소진 · 801만원</span></div><div class="pb"><div class="pf t" style="width:80%"></div></div></div>
+        <div class="cm"><div class="cmv">2.56%</div><div class="cml">CTR</div></div>
+        <div class="cm"><div class="cmv" style="color:var(--teal)">13원</div><div class="cml">CPV</div></div>
+        <div class="cm"><div class="cmv">605,113</div><div class="cml">조회수</div></div>
+        <div><span class="badge bg">효율 우수</span></div>
+      </div>
+      <div class="camp">
+        <div><div class="cnm">디맨드젠 구독 전환</div><div class="ctp">구독자 확보 · 전환 최적화</div></div>
+        <div class="pw"><div class="pls"><span>예산 1,000만원</span><span style="color:var(--accent)">73% 소진 · 735만원</span></div><div class="pb"><div class="pf" style="width:73%"></div></div></div>
+        <div class="cm"><div class="cmv">0.56%</div><div class="cml">CTR</div></div>
+        <div class="cm"><div class="cmv" style="color:var(--teal)">1,172원</div><div class="cml">구독단가</div></div>
+        <div class="cm"><div class="cmv">6,267</div><div class="cml">전환(구독)</div></div>
+        <div><span class="badge bg">목표 달성</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sect">
+    <div class="sect-lbl">상세 분석</div>
+    <div class="charts-row">
+      <div class="card">
+        <div class="ct">6월 일별 구독 전환수 — 전환 캠페인 기준</div>
+        <canvas id="cv1" style="width:100%;height:170px;display:block;"></canvas>
+      </div>
+      <div class="card">
+        <div class="ct">캠페인별 광고비 배분 (6월 집행액)</div>
+        <canvas id="dn1" style="width:100%;height:170px;display:block;"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <section class="sect">
+    <div class="two-col">
+      <div class="card">
+        <div class="ct">콘텐츠 포맷별 성과 비교 — 6월 조회캠페인</div>
+        <div class="fmt-pair">
+          <div class="fcard">
+            <div class="flbl">쇼츠</div>
+            <div class="frow"><span class="fnm">평균 CPV</span><span class="fval" style="color:var(--teal)">13원</span></div>
+            <div class="frow"><span class="fnm">평균 CTR</span><span class="fval">0.29%</span></div>
+            <div class="frow"><span class="fnm">평균 VTR</span><span class="fval">33.0%</span></div>
+            <div class="frow"><span class="fnm">총 조회</span><span class="fval">299,378</span></div>
+            <div class="frow"><span class="fnm">총 광고비</span><span class="fval">395만원</span></div>
+          </div>
+          <div class="fcard">
+            <div class="flbl">롱폼</div>
+            <div class="frow"><span class="fnm">평균 CPV</span><span class="fval" style="color:var(--accent)">28원</span></div>
+            <div class="frow"><span class="fnm">평균 CTR</span><span class="fval" style="color:var(--teal)">0.66%</span></div>
+            <div class="frow"><span class="fnm">평균 VTR</span><span class="fval" style="color:var(--teal)">49.5%</span></div>
+            <div class="frow"><span class="fnm">총 조회</span><span class="fval">664,563</span></div>
+            <div class="frow"><span class="fnm">총 광고비</span><span class="fval">1,849만원</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="ct">프로그램별 클릭 최대화 · CPC 비교 (6월)</div>
+        <div style="margin-top:8px;">
+          <div class="mbar-row">
+            <div class="mbar-lbl">라플위클리</div>
+            <div class="mbar-track"><div class="mbar-fill" style="width:100%;background:linear-gradient(90deg,var(--prog-weekly),rgba(75,142,255,.4));"><span class="mbar-num">CTR 2.61%</span></div></div>
+          </div>
+          <div class="mbar-row">
+            <div class="mbar-lbl">HOT &amp; NEW</div>
+            <div class="mbar-track"><div class="mbar-fill" style="width:67%;background:linear-gradient(90deg,var(--prog-hot),rgba(255,59,92,.4));"><span class="mbar-num">CTR 1.74%</span></div></div>
+          </div>
+          <div class="mbar-row">
+            <div class="mbar-lbl">딥다이브</div>
+            <div class="mbar-track"><div class="mbar-fill" style="width:51%;background:linear-gradient(90deg,var(--prog-deep),rgba(34,197,94,.4));"><span class="mbar-num">CTR 1.34%</span></div></div>
+          </div>
+        </div>
+        <div style="margin-top:16px;padding-top:12px;border-top:1px solid var(--border);">
+          <div class="ct" style="margin-bottom:8px;">조회캠페인 프로그램별 CPV</div>
+          <div class="mbar-row"><div class="mbar-lbl">라플위클리</div><div class="mbar-track"><div class="mbar-fill" style="width:65%;background:linear-gradient(90deg,var(--prog-weekly),rgba(75,142,255,.4));"><span class="mbar-num">26원</span></div></div></div>
+          <div class="mbar-row"><div class="mbar-lbl">HOT &amp; NEW</div><div class="mbar-track"><div class="mbar-fill" style="width:55%;background:linear-gradient(90deg,var(--prog-hot),rgba(255,59,92,.4));"><span class="mbar-num">22원</span></div></div></div>
+          <div class="mbar-row"><div class="mbar-lbl">딥다이브</div><div class="mbar-track" style="background:var(--border-2);"><div style="height:100%;display:flex;align-items:center;padding-left:8px;"><span style="font-family:var(--fn);font-size:9px;color:var(--faint);">미집행</span></div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sect">
+    <div class="sect-lbl">월간 주요 인사이트 — 6월 1일~24일 종합 분석</div>
+
+    <div class="sum-insight">
+      <div class="sum-insight-row">
+        <span style="font-family:var(--fn);font-size:9px;color:var(--accent);white-space:nowrap;padding-top:2px;font-weight:700;">전체 요약</span>
+        <span>총 예산 6,983만원 중 <strong>68% 소진</strong>. 4개 캠페인 동시 운영 안정화. 후속조회 CPV 13원·구독단가 1,172원으로 <strong>효율 지표 목표 달성</strong>. 유튜브 조회캠페인(YouTube만) 60% 소진. 딥다이브 7화 집행 중·핫앤뉴 16화 CTR 1.74% 기록.</span>
+      </div>
+    </div>
+
+    <div class="icard-grid">
+
+      <div class="icard">
+        <div class="icard-hd">
+          <div class="icard-icon" style="background:rgba(255,107,43,.15);color:var(--accent);">조회</div>
+          <div class="icard-nm">유튜브 조회 캠페인</div>
+          <span class="icard-status st-warn">주의</span>
+        </div>
+        <div class="icard-rows">
+          <div class="icard-row"><span class="icard-dot" style="background:var(--teal)"></span><div>예산 소진율 <em>60%</em> (YouTube만 3,983만원 기준). 딥다이브 7화 뉴뮤지엄 집행 중 — 잔여 예산 소진 본격화 중</div></div>
+          <div class="icard-row"><span class="icard-dot" style="background:var(--teal)"></span><div>쇼츠 <strong>18화 본편 VTR 69.5%</strong> 이례적 성과 (기준치 30% 대비 2배+). 핫앤뉴 16화 롱폼 CTR 0.83% 양호</div></div>
+          <div class="icard-row"><span class="icard-dot" style="background:var(--teal)"></span><div><strong>딥다이브 7화 뉴뮤지엄</strong> 오늘 라이브 (선공개 쇼츠 오전, 본편 예정). 7화 소재 3종 집행 개시</div></div>
+          <div class="icard-row"><span class="icard-dot" style="background:var(--faint)"></span><div>스필버그 소재 CPV <s>34원</s>으로 최고가이나 조회량 최다(148K). 도달 목적 소재로 운용 유효</div></div>
+        </div>
+      </div>
+
+      <div class="icard">
+        <div class="icard-hd">
+          <div class="icard-icon" style="background:rgba(255,155,94,.15);color:#FF9B5E;">클릭</div>
+          <div class="icard-nm">디맨드젠 클릭수 최대화</div>
+          <span class="icard-status st-warn">모니터링</span>
+        </div>
+        <div class="icard-rows">
+          <div class="icard-row"><span class="icard-dot" style="background:var(--accent)"></span><div>CTR 추이: 4월 3.08% → 5월 3.24% → <s>6월 1.90%</s>. 위클리 토이스토리 6/22 이후 CTR 1%대 하락 — off 검토</div></div>
+          <div class="icard-row"><span class="icard-dot" style="background:var(--teal)"></span><div>라플위클리 CTR <em>2.61%</em> · 핫앤뉴 1.74% · 딥다이브 1.34%. 핫앤뉴 토이스토리 편입 후 비용 분산 중</div></div>
+          <div class="icard-row"><span class="icard-dot" style="background:var(--faint)"></span><div>누적 클릭 <strong>20.6만건</strong>, CPC 39원 안정적. 채널 유입 효과 충분히 확보</div></div>
+          <div class="icard-row"><span class="icard-dot" style="background:var(--faint)"></span><div>딥다이브 CTR 1.34% 상대적 저조. 소재·타겟팅 최적화 여지 있음</div></div>
+        </div>
+      </div>
+
+      <div class="icard">
+        <div class="icard-hd">
+          <div class="icard-icon" style="background:rgba(0,201,167,.15);color:var(--teal);">후속</div>
+          <div class="icard-nm">디맨드젠 후속 조회</div>
+          <span class="icard-status st-ok">효율 최우수</span>
+        </div>
+        <div class="icard-rows">
+          <div class="icard-row"><span class="icard-dot" style="background:var(--teal)"></span><div>CPV <em>13원</em> — 4개 캠페인 최저. 6/1(74원) 대비 6/8(10원)으로 <strong>8일 내 빠른 최적화</strong> 완료</div></div>
+          <div class="icard-row"><span class="icard-dot" style="background:var(--teal)"></span><div>딥다이브 CPV <em>11원</em>, CTR <em>3.51%</em>로 후속조회 내 최고 효율 소재</div></div>
+          <div class="icard-row"><span class="icard-dot" style="background:var(--accent)"></span><div>6/17~19 CPV 재상승 (16→23→20원). <strong>소재 갱신 타이밍 모니터링</strong> 필요</div></div>
+          <div class="icard-row"><span class="icard-dot" style="background:var(--faint)"></span><div>HOT&amp;NEW CPV 18원으로 딥다이브 대비 63% 높음. 크리에이티브 품질 개선 여지</div></div>
+        </div>
+      </div>
+
+      <div class="icard">
+        <div class="icard-hd">
+          <div class="icard-icon" style="background:rgba(0,201,167,.15);color:var(--teal);">전환</div>
+          <div class="icard-nm">디맨드젠 구독 전환</div>
+          <span class="icard-status st-ok">목표 달성</span>
+        </div>
+        <div class="icard-rows">
+          <div class="icard-row"><span class="icard-dot" style="background:var(--teal)"></span><div>구독단가 <em>1,172원</em>, CVR <em>31.8%</em>로 클릭 품질 높음. 일 평균 <strong>300건 안정 전환</strong></div></div>
+          <div class="icard-row"><span class="icard-dot" style="background:var(--teal)"></span><div>6/22 285건·6/23 301건으로 안정 유지. <strong>스필버그 소재</strong> 전환 성과 견인 중</div></div>
+          <div class="icard-row"><span class="icard-dot" style="background:var(--teal)"></span><div><strong>주말 피크</strong> 확인: 6/20(토) 429건 최고. 6월 누적 6,267건·구독단가 1,172원 달성</div></div>
+          <div class="icard-row"><span class="icard-dot" style="background:var(--faint)"></span><div>6/17~19 감소(179→362→316) 이후 회복세. 딥다이브 7화 라이브로 추가 전환 기대</div></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!--  PAGE 2: 조회캠페인 소재별 (동적 필터)       -->
+<!-- ═══════════════════════════════════════════ -->
+<div id="page-view" class="page">
+<div class="wrap">
+
+  <section class="sect">
+    <div class="sect-lbl">조회캠페인 요약 · 6월 집행 (유튜브 예산만)</div>
+    <div class="kpi-grid" style="grid-template-columns:repeat(5,1fr);">
+      <div class="kpi a"><div class="kv">2,387<span class="ku">만원</span></div><div class="kl">소진금액 (VAT포함)</div><div class="ks">예산 3,983만 · 60% 집행</div></div>
+      <div class="kpi t"><div class="kv">963,841<span class="ku"></span></div><div class="kl">총 조회수 (롱폼+쇼츠)</div><div class="ks">롱폼 665K · 쇼츠 299K</div></div>
+      <div class="kpi"><div class="kv">207<span class="ku">만</span></div><div class="kl">총 노출수</div><div class="ks">2,072,821회</div></div>
+      <div class="kpi t"><div class="kv">0.45<span class="ku">%</span></div><div class="kl">평균 CTR</div><div class="ks">클릭 9,306회</div></div>
+      <div class="kpi t"><div class="kv">23<span class="ku">원</span></div><div class="kl">평균 CPV</div><div class="ks">롱폼 28원 · 쇼츠 13원</div></div>
+    </div>
+  </section>
+
+  <section class="sect" style="margin-top:14px;">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+      <div style="display:flex;gap:6px;">
+        <button class="tog-btn" id="vfmt-longform" data-vfmt="롱폼">롱폼 (8개)</button>
+        <button class="tog-btn" id="vfmt-shorts" data-vfmt="쇼츠">쇼츠 (13개)</button>
+      </div>
+      <div style="display:flex;gap:6px;">
+        <span style="font-size:9px;color:var(--faint);align-self:center;letter-spacing:1px;">프로그램</span>
+        <button class="tog-btn on" id="vprog-all" data-vprog="전체">전체</button>
+        <button class="tog-btn" id="vprog-rapple" data-vprog="라플위클리">라플위클리</button>
+        <button class="tog-btn" id="vprog-hot" data-vprog="HOT&amp;NEW">HOT&amp;NEW</button>
+        <button class="tog-btn" id="vprog-deep" data-vprog="딥다이브">딥다이브</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="sect" style="margin-top:10px;">
+    <div class="card" style="padding:12px 16px;">
+      <table class="ctbl">
+        <thead><tr>
+          <th>소재명</th><th>프로그램</th><th>소진(VAT+)</th><th>노출수</th><th>조회수</th><th>클릭수</th><th>CTR</th><th>CPV</th><th>VTR</th><th>평가</th>
+        </tr></thead>
+        <tbody id="view-tbody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="sect">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+      <div class="card"><div class="ct" id="ch-vtr-title">VTR (%) <span style="font-size:9px;font-weight:400;color:var(--faint);">조회율 — 노출 대비 영상 조회 비율</span></div><canvas id="ch-vtr" style="width:100%;display:block;"></canvas></div>
+      <div class="card"><div class="ct" id="ch-cpv-title">CPV (원) <span style="font-size:9px;font-weight:400;color:var(--faint);">조회당 비용 — 1회 조회에 소요된 광고비</span></div><canvas id="ch-cpv" style="width:100%;display:block;"></canvas></div>
+      <div class="card"><div class="ct" id="ch-ctr-title">CTR (%) <span style="font-size:9px;font-weight:400;color:var(--faint);">클릭률 — 노출 대비 광고 클릭 비율</span></div><canvas id="ch-ctr" style="width:100%;display:block;"></canvas></div>
+      <div class="card"><div class="ct" id="ch-views-title">조회수 <span style="font-size:9px;font-weight:400;color:var(--faint);">소재별 실제 영상 조회 횟수</span></div><canvas id="ch-views" style="width:100%;display:block;"></canvas></div>
+    </div>
+  </section>
+
+  <!-- kept legacy toggle panes empty for data-prefix handlers already bound -->
+  <div style="display:none">
+      <div id="vp-shorts" class="tog-pane on">
+        <table class="ctbl">
+          <thead><tr>
+            <th>소재명</th><th>프로그램</th><th>노출수</th><th>조회수</th><th>클릭수</th><th>CTR</th><th>CPV</th><th>VTR</th><th>광고비</th><th>평가</th>
+          </tr></thead>
+          <tbody>
+            <tr><td><div class="cn">시즌6_18화_프랑스_본편</div><div class="csub">쇼츠</div></td><td>라플위클리</td><td>57,090</td><td>39,648</td><td>106</td><td>0.19%</td><td>8원</td><td><div class="vtr-bar"><div class="vtr-bg"><div class="vtr-fg" style="width:69%;background:var(--teal);"></div></div>69.5%</div></td><td>330K</td><td><span class="pill good">우수</span></td></tr>
+            <tr><td><div class="cn">시즌6_18화_프랑스_선공개</div><div class="csub">쇼츠</div></td><td>라플위클리</td><td>49,848</td><td>27,452</td><td>183</td><td>0.37%</td><td>12원</td><td><div class="vtr-bar"><div class="vtr-bg"><div class="vtr-fg" style="width:55%;background:var(--teal);"></div></div>55.1%</div></td><td>330K</td><td><span class="pill good">우수</span></td></tr>
+            <tr><td><div class="cn">시즌6_19화_스필버그_선공개</div><div class="csub">쇼츠</div></td><td>라플위클리</td><td>90,283</td><td>21,916</td><td>461</td><td>0.51%</td><td>15원</td><td><div class="vtr-bar"><div class="vtr-bg"><div class="vtr-fg" style="width:24%;background:var(--accent);"></div></div>24.3%</div></td><td>330K</td><td><span class="pill warn">보통</span></td></tr>
+            <tr><td><div class="cn">시즌6_19화_스필버그_본편</div><div class="csub">쇼츠</div></td><td>라플위클리</td><td>85,242</td><td>21,441</td><td>255</td><td>0.30%</td><td>15원</td><td><div class="vtr-bar"><div class="vtr-bg"><div class="vtr-fg" style="width:25%;background:var(--accent);"></div></div>25.2%</div></td><td>330K</td><td><span class="pill warn">보통</span></td></tr>
+            <tr><td><div class="cn">시즌6_20화_뮤지컬_선공개</div><div class="csub">쇼츠</div></td><td>라플위클리</td><td>99,758</td><td>21,794</td><td>288</td><td>0.29%</td><td>15원</td><td><div class="vtr-bar"><div class="vtr-bg"><div class="vtr-fg" style="width:22%;background:var(--accent);"></div></div>21.9%</div></td><td>330K</td><td><span class="pill warn">보통</span></td></tr>
+            <tr><td><div class="cn">시즌6_20화_뮤지컬_본편</div><div class="csub">쇼츠</div></td><td>라플위클리</td><td>81,383</td><td>24,740</td><td>187</td><td>0.23%</td><td>13원</td><td><div class="vtr-bar"><div class="vtr-bg"><div class="vtr-fg" style="width:30%;background:var(--yellow);"></div></div>30.4%</div></td><td>330K</td><td><span class="pill neu">-</span></td></tr>
+            <tr><td><div class="cn">핫앤뉴_14화_아웃사이더즈_쇼츠1</div><div class="csub">쇼츠</div></td><td>HOT&amp;NEW</td><td>60,451</td><td>26,727</td><td>181</td><td>0.30%</td><td>12원</td><td><div class="vtr-bar"><div class="vtr-bg"><div class="vtr-fg" style="width:44%;background:var(--teal);"></div></div>44.2%</div></td><td>330K</td><td><span class="pill good">우수</span></td></tr>
+            <tr><td><div class="cn">핫앤뉴_14화_아웃사이더즈_쇼츠2</div><div class="csub">쇼츠</div></td><td>HOT&amp;NEW</td><td>57,176</td><td>26,084</td><td>180</td><td>0.31%</td><td>13원</td><td><div class="vtr-bar"><div class="vtr-bg"><div class="vtr-fg" style="width:46%;background:var(--teal);"></div></div>45.6%</div></td><td>330K</td><td><span class="pill good">우수</span></td></tr>
+            <tr><td><div class="cn">핫앤뉴_13화_백룸_쇼츠1</div><div class="csub">쇼츠</div></td><td>HOT&amp;NEW</td><td>85,885</td><td>20,443</td><td>222</td><td>0.26%</td><td>16원</td><td><div class="vtr-bar"><div class="vtr-bg"><div class="vtr-fg" style="width:24%;background:var(--accent);"></div></div>23.8%</div></td><td>330K</td><td><span class="pill warn">보통</span></td></tr>
+            <tr><td><div class="cn">핫앤뉴_13화_백룸_쇼츠2</div><div class="csub">쇼츠</div></td><td>HOT&amp;NEW</td><td>82,424</td><td>20,341</td><td>183</td><td>0.22%</td><td>16원</td><td><div class="vtr-bar"><div class="vtr-bg"><div class="vtr-fg" style="width:25%;background:var(--accent);"></div></div>24.7%</div></td><td>330K</td><td><span class="pill warn">보통</span></td></tr>
+            <tr><td><div class="cn">핫앤뉴_15화_디스클로저_쇼츠1</div><div class="csub">쇼츠</div></td><td>HOT&amp;NEW</td><td>60,703</td><td>16,466</td><td>139</td><td>0.23%</td><td>14원</td><td><div class="vtr-bar"><div class="vtr-bg"><div class="vtr-fg" style="width:27%;background:var(--yellow);"></div></div>27.1%</div></td><td>229K</td><td><span class="pill neu">진행중</span></td></tr>
+            <tr><td><div class="cn">핫앤뉴_15화_디스클로저_쇼츠2</div><div class="csub">쇼츠</div></td><td>HOT&amp;NEW</td><td>59,678</td><td>15,920</td><td>171</td><td>0.29%</td><td>14원</td><td><div class="vtr-bar"><div class="vtr-bg"><div class="vtr-fg" style="width:27%;background:var(--yellow);"></div></div>26.7%</div></td><td>230K</td><td><span class="pill neu">진행중</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- LONGFORM -->
+      <div id="vp-longform" class="tog-pane">
+        <table class="ctbl">
+          <thead><tr>
+            <th>소재명</th><th>프로그램</th><th>노출수</th><th>조회수</th><th>클릭수</th><th>CTR</th><th>CPV</th><th>VTR</th><th>광고비</th><th>평가</th>
+          </tr></thead>
+          <tbody>
+            <tr><td><div class="cn">시즌6_18화_프랑스</div><div class="csub">롱폼</div></td><td>라플위클리</td><td>163,272</td><td>103,067</td><td>1,591</td><td style="color:var(--teal)">0.97%</td><td>29원</td><td><div class="vtr-bar"><div class="vtr-bg"><div class="vtr-fg" style="width:63%;background:var(--teal);"></div></div>63.1%</div></td><td>3,000K</td><td><span class="pill good">CTR 최고</span></td></tr>
+            <tr><td><div class="cn">시즌6_19화_스티븐 스필버그</div><div class="csub">롱폼</div></td><td>라플위클리</td><td>248,133</td><td>148,599</td><td>1,311</td><td>0.53%</td><td>34원</td><td><div class="vtr-bar"><div class="vtr-bg"><div class="vtr-fg" style="width:60%;background:var(--teal);"></div></div>59.9%</div></td><td>5,000K</td><td><span class="pill good">조회 최다</span></td></tr>
+            <tr><td><div class="cn">시즌6_20화_뮤지컬</div><div class="csub">롱폼</div></td><td>라플위클리</td><td>250,580</td><td>133,071</td><td>1,345</td><td>0.54%</td><td>23원</td><td><div class="vtr-bar"><div class="vtr-bg"><div class="vtr-fg" style="width:53%;background:var(--yellow);"></div></div>53.1%</div></td><td>3,000K</td><td><span class="pill good">CPV 최저</span></td></tr>
+            <tr><td><div class="cn">핫앤뉴_13화_백룸</div><div class="csub">롱폼</div></td><td>HOT&amp;NEW</td><td>126,363</td><td>76,472</td><td>596</td><td>0.47%</td><td>26원</td><td><div class="vtr-bar"><div class="vtr-bg"><div class="vtr-fg" style="width:61%;background:var(--teal);"></div></div>60.5%</div></td><td>2,000K</td><td><span class="pill good">우수</span></td></tr>
+            <tr><td><div class="cn">핫앤뉴_14화_아웃사이더즈</div><div class="csub">롱폼</div></td><td>HOT&amp;NEW</td><td>121,443</td><td>72,125</td><td>794</td><td style="color:var(--teal)">0.65%</td><td>28원</td><td><div class="vtr-bar"><div class="vtr-bg"><div class="vtr-fg" style="width:59%;background:var(--teal);"></div></div>59.4%</div></td><td>2,000K</td><td><span class="pill good">우수</span></td></tr>
+          </tbody></table></div></div></div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!--  PAGE 3: 클릭수 최대화                      -->
+<!-- ═══════════════════════════════════════════ -->
+<div id="page-click" class="page">
+<div class="wrap">
+
+  <section class="sect">
+    <div class="sect-lbl">클릭수 최대화 캠페인 누적 (6월 기준)</div>
+    <div class="kpi-grid" style="grid-template-columns:repeat(6,1fr);">
+      <div class="kpi a"><div class="kv">808<span class="ku">만원</span></div><div class="kl">6월 집행액</div><div class="ks">예산 1,000만 · 80% 소진</div></div>
+      <div class="kpi"><div class="kv">1,085<span class="ku">만</span></div><div class="kl">총 노출수</div><div class="ks">10,848,745회</div></div>
+      <div class="kpi t"><div class="kv">206,060<span class="ku"></span></div><div class="kl">총 클릭수</div><div class="ks">CTR 1.90%</div></div>
+      <div class="kpi a"><div class="kv">39<span class="ku">원</span></div><div class="kl">평균 CPC</div><div class="ks">클릭당 비용</div></div>
+      <div class="kpi"><div class="kv">727<span class="ku">원</span></div><div class="kl">평균 CPV</div><div class="ks">조회당 비용 (클릭 최적화)</div></div>
+      <div class="kpi t"><div class="kv">11,114<span class="ku"></span></div><div class="kl">총 조회수</div><div class="ks">6월 기준</div></div>
+    </div>
+  </section>
+
+  <section class="sect">
+    <div class="sect-lbl">프로그램별 성과</div>
+    <div class="prog-cards">
+      <div class="pcard" style="border-top:2px solid var(--prog-weekly);">
+        <div class="pcard-hd"><div class="pcard-nm">라플위클리</div><span class="badge bg">CTR 최고</span></div>
+        <div class="pcard-rows">
+          <div class="pcard-row"><span class="pr-lbl">집행액</span><span class="pr-val">3,842,899원</span></div>
+          <div class="pcard-row"><span class="pr-lbl">노출수</span><span class="pr-val">3,458,801</span></div>
+          <div class="pcard-row"><span class="pr-lbl">조회수</span><span class="pr-val">5,260</span></div>
+          <div class="pcard-row"><span class="pr-lbl">클릭수</span><span class="pr-val">90,407</span></div>
+          <div class="pcard-row"><span class="pr-lbl">CTR</span><span class="pr-val" style="color:var(--teal)">2.61%</span></div>
+          <div class="pcard-row"><span class="pr-lbl">CPC</span><span class="pr-val">43원</span></div>
+        </div>
+      </div>
+      <div class="pcard" style="border-top:2px solid var(--prog-hot);">
+        <div class="pcard-hd"><div class="pcard-nm">HOT &amp; NEW</div><span class="badge bg">CPC 최저</span></div>
+        <div class="pcard-rows">
+          <div class="pcard-row"><span class="pr-lbl">집행액</span><span class="pr-val">2,453,897원</span></div>
+          <div class="pcard-row"><span class="pr-lbl">노출수</span><span class="pr-val">4,121,941</span></div>
+          <div class="pcard-row"><span class="pr-lbl">조회수</span><span class="pr-val">4,012</span></div>
+          <div class="pcard-row"><span class="pr-lbl">클릭수</span><span class="pr-val">71,843</span></div>
+          <div class="pcard-row"><span class="pr-lbl">CTR</span><span class="pr-val">1.74%</span></div>
+          <div class="pcard-row"><span class="pr-lbl">CPC</span><span class="pr-val" style="color:var(--teal)">34원</span></div>
+        </div>
+      </div>
+      <div class="pcard" style="border-top:2px solid var(--prog-deep);">
+        <div class="pcard-hd"><div class="pcard-nm">딥다이브</div><span class="badge ba">-</span></div>
+        <div class="pcard-rows">
+          <div class="pcard-row"><span class="pr-lbl">집행액</span><span class="pr-val">1,784,837원</span></div>
+          <div class="pcard-row"><span class="pr-lbl">노출수</span><span class="pr-val">3,268,003</span></div>
+          <div class="pcard-row"><span class="pr-lbl">조회수</span><span class="pr-val">1,845</span></div>
+          <div class="pcard-row"><span class="pr-lbl">클릭수</span><span class="pr-val">43,810</span></div>
+          <div class="pcard-row"><span class="pr-lbl">CTR</span><span class="pr-val">1.34%</span></div>
+          <div class="pcard-row"><span class="pr-lbl">CPC</span><span class="pr-val">41원</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sect">
+    <div class="two-col">
+      <div class="card">
+        <div class="ct">월별 CTR 추이 — 클릭수 최대화 캠페인</div>
+        <canvas id="clickTrend" style="width:100%;height:180px;display:block;"></canvas>
+      </div>
+      <div class="card">
+        <div class="ct">프로그램별 클릭수 / 집행액 비교</div>
+        <canvas id="clickProg" style="width:100%;height:180px;display:block;"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <section class="sect">
+    <div class="sect-lbl">소재별 성과 — 6월 운영 이력</div>
+    <div class="card" style="padding:12px 16px;">
+      <table class="ctbl">
+        <thead><tr>
+          <th>소재명</th><th>프로그램</th><th>운영 기간</th><th>광고비</th><th>노출수</th><th>조회수</th><th>클릭수</th><th>CTR</th><th>CPC</th><th>CPV</th><th>상태</th>
+        </tr></thead>
+        <tbody>
+          <tr>
+            <td><div class="cn">시즌6_15화_마이클잭슨</div><div class="csub">라플위클리 S6</div></td>
+            <td><span style="font-size:8px;color:var(--prog-weekly);font-weight:700;">위클리</span></td>
+            <td style="font-family:var(--fn);font-size:10px;">6/1 ~ 6/9</td>
+            <td>1,728,353원</td><td>1,351,014</td><td>1,145</td><td>48,125</td>
+            <td>3.56%</td><td>36원</td><td>1,509원</td>
+            <td><span class="pill warn">중단</span></td>
+          </tr>
+          <tr>
+            <td><div class="cn">시즌5_13화_토이스토리</div><div class="csub">라플위클리 S5</div></td>
+            <td><span style="font-size:8px;color:var(--prog-weekly);font-weight:700;">위클리</span></td>
+            <td style="font-family:var(--fn);font-size:10px;">6/9 ~ 현재</td>
+            <td>1,656,496원</td><td>1,971,763</td><td>2,697</td><td>33,275</td>
+            <td>1.69%</td><td>50원</td><td>614원</td>
+            <td><span class="pill good">활성</span></td>
+          </tr>
+          <tr>
+            <td><div class="cn">시즌6_19화_스티븐 스필버그</div><div class="csub">라플위클리 S6</div></td>
+            <td><span style="font-size:8px;color:var(--prog-weekly);font-weight:700;">위클리</span></td>
+            <td style="font-family:var(--fn);font-size:10px;">6/16 ~ 현재</td>
+            <td>458,050원</td><td>136,024</td><td>1,418</td><td>9,007</td>
+            <td style="color:var(--teal);font-weight:700;">6.62%</td><td>51원</td><td>323원</td>
+            <td><span class="pill good">활성</span></td>
+          </tr>
+          <tr>
+            <td><div class="cn">핫앤뉴_11화_원더풀스</div><div class="csub">HOT&amp;NEW</div></td>
+            <td><span style="font-size:8px;color:var(--prog-hot);font-weight:700;">H&amp;N</span></td>
+            <td style="font-family:var(--fn);font-size:10px;">6/1 ~ 6/5</td>
+            <td>308,933원</td><td>310,455</td><td>314</td><td>8,328</td>
+            <td>2.68%</td><td>37원</td><td>984원</td>
+            <td><span class="pill neu">종료</span></td>
+          </tr>
+          <tr>
+            <td><div class="cn">핫앤뉴_12화_만달로리안</div><div class="csub">HOT&amp;NEW</div></td>
+            <td><span style="font-size:8px;color:var(--prog-hot);font-weight:700;">H&amp;N</span></td>
+            <td style="font-family:var(--fn);font-size:10px;">6/1 ~ 6/9</td>
+            <td>25,810원</td><td>24,952</td><td>549</td><td>784</td>
+            <td>3.14%</td><td>33원</td><td>47원</td>
+            <td><span class="pill warn">중단</span></td>
+          </tr>
+          <tr>
+            <td><div class="cn">핫앤뉴_13화_백룸</div><div class="csub">HOT&amp;NEW</div></td>
+            <td><span style="font-size:8px;color:var(--prog-hot);font-weight:700;">H&amp;N</span></td>
+            <td style="font-family:var(--fn);font-size:10px;">6/9 ~ 6/16</td>
+            <td>1,778,197원</td><td>3,161,407</td><td>2,615</td><td>55,027</td>
+            <td>1.74%</td><td>32원</td><td>680원</td>
+            <td><span class="pill warn">중단</span></td>
+          </tr>
+          <tr>
+            <td><div class="cn">핫앤뉴_16화_토이스토리</div><div class="csub">HOT&amp;NEW</div></td>
+            <td><span style="font-size:8px;color:var(--prog-hot);font-weight:700;">H&amp;N</span></td>
+            <td style="font-family:var(--fn);font-size:10px;">6/23 ~ 현재</td>
+            <td>340,957원</td><td>625,127</td><td>534</td><td>7,704</td>
+            <td>1.23%</td><td>44원</td><td>639원</td>
+            <td><span class="pill good">활성</span></td>
+          </tr>
+          <tr>
+            <td><div class="cn">딥다이브_6화_군체</div><div class="csub">딥다이브</div></td>
+            <td><span style="font-size:8px;color:var(--prog-deep);font-weight:700;">딥다이브</span></td>
+            <td style="font-family:var(--fn);font-size:10px;">6/1 ~ 6/18</td>
+            <td>1,784,837원</td><td>3,268,003</td><td>1,846</td><td>43,810</td>
+            <td>1.34%</td><td>41원</td><td>967원</td>
+            <td><span class="pill warn">중단</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="sect">
+    <div class="card" style="padding:12px 16px;border-left:3px solid rgba(255,107,43,.4);">
+      <div style="display:flex;gap:32px;flex-wrap:wrap;">
+        <div>
+          <div style="font-size:9px;font-weight:700;color:var(--dim);letter-spacing:.08em;margin-bottom:7px;">상태 기준</div>
+          <div style="display:flex;flex-direction:column;gap:5px;">
+            <div style="display:flex;align-items:center;gap:7px;"><span class="pill good">활성</span><span style="font-size:10px;color:var(--faint);">6/24 기준 현재 집행 중인 소재</span></div>
+            <div style="display:flex;align-items:center;gap:7px;"><span class="pill warn">중단</span><span style="font-size:10px;color:var(--faint);">특정 일자 OFF — 예산 소진·소재 교체 등</span></div>
+            <div style="display:flex;align-items:center;gap:7px;"><span class="pill neu">종료</span><span style="font-size:10px;color:var(--faint);">CTR 지속 하락 등 구조적 사유로 캠페인 종료</span></div>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:9px;font-weight:700;color:var(--dim);letter-spacing:.08em;margin-bottom:7px;">차트 색상 기준 — 프로그램별</div>
+          <div style="display:flex;flex-direction:column;gap:5px;">
+            <div style="display:flex;align-items:center;gap:7px;"><span style="display:inline-block;width:10px;height:10px;background:var(--prog-weekly);border-radius:2px;flex-shrink:0;"></span><span style="font-size:10px;color:var(--faint);">파랑 — 라플위클리 소재</span></div>
+            <div style="display:flex;align-items:center;gap:7px;"><span style="display:inline-block;width:10px;height:10px;background:var(--prog-hot);border-radius:2px;flex-shrink:0;"></span><span style="font-size:10px;color:var(--faint);">빨강 — HOT&amp;NEW 소재</span></div>
+            <div style="display:flex;align-items:center;gap:7px;"><span style="display:inline-block;width:10px;height:10px;background:var(--prog-deep);border-radius:2px;flex-shrink:0;"></span><span style="font-size:10px;color:var(--faint);">그린 — 딥다이브 소재</span></div>
+            <div style="display:flex;align-items:center;gap:7px;"><span style="font-size:10px;color:var(--faint);">※ 활성 소재는 진하게, 종료 소재는 반투명하게 표시</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sect">
+    <div class="two-col">
+      <div class="card">
+        <div class="ct">소재별 CTR 비교</div>
+        <canvas id="clickCTR" style="width:100%;display:block;"></canvas>
+      </div>
+      <div class="card">
+        <div class="ct">소재별 클릭수 비교</div>
+        <canvas id="clickCreativeClicks" style="width:100%;display:block;"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <section class="sect">
+    <div class="two-col">
+      <div class="card">
+        <div class="ct">소재별 광고비 비중 · 6월 기준</div>
+        <canvas id="clickDonutCost" style="width:100%;display:block;"></canvas>
+      </div>
+      <div class="card">
+        <div class="ct">소재별 클릭수 비중 · 6월 기준</div>
+        <canvas id="clickDonutClicks" style="width:100%;display:block;"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <section class="sect">
+    <div class="sect-lbl">일자별 운영 소재 현황 · 6월 (주말 <span style="color:var(--accent)">●</span> / 이벤트일 <span style="color:var(--teal)">●</span>)</div>
+    <div class="card" style="padding:14px 16px;">
+      <div id="click-day-btns" style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:14px;"></div>
+      <div id="click-date-note" style="font-size:10px;color:var(--dim);margin-bottom:14px;min-height:16px;padding:8px 10px;background:rgba(255,255,255,.04);border-radius:4px;border-left:2px solid var(--border);"></div>
+      <div id="click-date-cards" class="date-cards-grid-lg"></div>
+    </div>
+  </section>
+
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!--  PAGE 4: 전환 캠페인                        -->
+<!-- ═══════════════════════════════════════════ -->
+<div id="page-conv" class="page">
+<div class="wrap">
+
+  <section class="sect">
+    <div class="sect-lbl">구독 전환 캠페인 · 6월 성과</div>
+    <div class="kpi-grid" style="grid-template-columns:repeat(5,1fr);">
+      <div class="kpi t"><div class="kv">6,267<span class="ku">건</span></div><div class="kl">6월 구독 전환</div><div class="ks">6/1~6/24 누적</div></div>
+      <div class="kpi a"><div class="kv">1,172<span class="ku">원</span></div><div class="kl">구독단가 (CPSub)</div><div class="ks">목표 대비 효율적</div></div>
+      <div class="kpi a"><div class="kv">735<span class="ku">만원</span></div><div class="kl">6월 광고비</div><div class="ks">예산 1,000만 · 73% 소진</div></div>
+      <div class="kpi t"><div class="kv">0.56<span class="ku">%</span></div><div class="kl">CTR</div><div class="ks">19,698 클릭</div></div>
+      <div class="kpi t"><div class="kv">31.8<span class="ku">%</span></div><div class="kl">평균 전환율 (CVR)</div><div class="ks">클릭 대비 구독 전환</div></div>
+    </div>
+  </section>
+
+  <section class="sect">
+    <div class="two-col">
+      <div class="card">
+        <div class="ct">6월 일별 구독 전환수 &amp; CVR (6/1~6/24)</div>
+        <canvas id="convDaily" style="width:100%;height:220px;display:block;"></canvas>
+      </div>
+      <div class="card">
+        <div class="ct">전환 퍼널 — 6월 누적</div>
+        <div class="funnel" style="margin-top:4px;">
+          <div class="funnel-step" style="border-left:3px solid var(--dim);">
+            <div><div class="funnel-lbl">노출수 (Impressions)</div></div>
+            <div style="text-align:right;"><div class="funnel-val">3,537,617</div></div>
+          </div>
+          <div class="funnel-step" style="border-left:3px solid #FF9B5E;">
+            <div><div class="funnel-lbl">조회수 (Views)</div><div style="font-family:var(--fn);font-size:9px;color:var(--faint);">노출 대비 1.25%</div></div>
+            <div style="text-align:right;"><div class="funnel-val">44,302</div></div>
+          </div>
+          <div class="funnel-step" style="border-left:3px solid var(--accent);">
+            <div><div class="funnel-lbl">클릭수 (Clicks)</div><div style="font-family:var(--fn);font-size:9px;color:var(--faint);">노출 대비 CTR 0.56%</div></div>
+            <div style="text-align:right;"><div class="funnel-val">19,698</div></div>
+          </div>
+          <div class="funnel-step" style="border-left:3px solid var(--teal);">
+            <div><div class="funnel-lbl">구독 전환 (Conversions)</div><div style="font-family:var(--fn);font-size:9px;color:var(--teal);">클릭 대비 CVR 31.8%</div></div>
+            <div style="text-align:right;"><div class="funnel-val" style="color:var(--teal)">6,267</div><div class="funnel-rate">단가 1,172원</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sect">
+    <div class="sect-lbl">소재별 6월 성과 (전환 캠페인 소재)</div>
+    <!-- 롱폼 합계 callout -->
+    <div style="display:flex;gap:20px;flex-wrap:wrap;padding:10px 16px;background:rgba(0,201,167,.08);border-radius:6px;border:1px solid rgba(0,201,167,.2);margin-bottom:12px;align-items:center;">
+      <div style="font-size:9px;font-weight:700;color:var(--teal);letter-spacing:.08em;">롱폼 합계 (디맨드젠 전환)</div>
+      <div style="display:flex;gap:16px;flex-wrap:wrap;">
+        <div><span style="font-size:9px;color:var(--dim);">6월 광고비 </span><span style="font-size:12px;font-weight:700;font-family:var(--fn);color:var(--text);">7,345,747원</span></div>
+        <div><span style="font-size:9px;color:var(--dim);">구독 전환 </span><span style="font-size:12px;font-weight:700;font-family:var(--fn);color:var(--teal);">6,267건</span></div>
+        <div><span style="font-size:9px;color:var(--dim);">구독단가 </span><span style="font-size:12px;font-weight:700;font-family:var(--fn);color:var(--text);">1,172원</span></div>
+        <div><span style="font-size:9px;color:var(--dim);">CTR </span><span style="font-size:12px;font-weight:700;font-family:var(--fn);color:var(--text);">0.56%</span></div>
+        <div><span style="font-size:9px;color:var(--dim);">CVR </span><span style="font-size:12px;font-weight:700;font-family:var(--fn);color:var(--text);">31.8%</span></div>
+      </div>
+    </div>
+    <div class="card" style="padding:12px 16px;">
+      <table class="ctbl">
+        <thead><tr>
+          <th>소재명</th><th>프로그램</th><th>운영기간</th><th>6월 노출</th><th>클릭</th><th>CTR</th><th>CPV</th><th>6월 광고비</th><th>상태</th>
+        </tr></thead>
+        <tbody>
+          <tr>
+            <td><div class="cn">딥다이브_6화_군체</div><div class="csub">구독 전환 소재</div></td>
+            <td><span style="font-size:8px;color:var(--prog-deep);font-weight:700;">딥다이브</span></td>
+            <td style="font-family:var(--fn);font-size:10px;">6/1 ~ 현재</td>
+            <td>2,165,883</td><td>11,538</td>
+            <td>0.53%</td><td>165원</td><td>4,329,614원</td>
+            <td><span class="pill good">활성</span></td>
+          </tr>
+          <tr>
+            <td><div class="cn">시즌6_19화_스티븐 스필버그</div><div class="csub">구독 전환 소재</div></td>
+            <td><span style="font-size:8px;color:var(--prog-weekly);font-weight:700;">위클리</span></td>
+            <td style="font-family:var(--fn);font-size:10px;">6/16 ~ 현재</td>
+            <td>406,641</td><td>3,109</td>
+            <td style="color:var(--teal);font-weight:700;">0.76%</td><td>194원</td><td>1,138,424원</td>
+            <td><span class="pill good">활성</span></td>
+          </tr>
+          <tr>
+            <td><div class="cn">시즌5_13화_토이스토리</div><div class="csub">구독 전환 소재</div></td>
+            <td><span style="font-size:8px;color:var(--prog-weekly);font-weight:700;">위클리</span></td>
+            <td style="font-family:var(--fn);font-size:10px;">6/9 ~ 현재</td>
+            <td>96,712</td><td>335</td>
+            <td>0.35%</td><td>118원</td><td>140,297원</td>
+            <td><span class="pill good">활성</span></td>
+          </tr>
+          <tr>
+            <td><div class="cn">시즌6_15화_마이클잭슨</div><div class="csub">OFF 캠페인</div></td>
+            <td><span style="font-size:8px;color:var(--prog-weekly);font-weight:700;">위클리</span></td>
+            <td style="font-family:var(--fn);font-size:10px;">6/1 ~ 6/9</td>
+            <td>710,038</td><td>4,404</td>
+            <td>0.62%</td><td>169원</td><td>1,610,769원</td>
+            <td><span class="pill warn">중단</span></td>
+          </tr>
+          <tr>
+            <td><div class="cn">야구 소재</div><div class="csub">OFF 캠페인</div></td>
+            <td><span style="font-size:8px;color:var(--prog-weekly);font-weight:700;">위클리</span></td>
+            <td style="font-family:var(--fn);font-size:10px;">6/1 ~ 6/21</td>
+            <td>158,139</td><td>309</td>
+            <td>0.20%</td><td>89원</td><td>125,477원</td>
+            <td><span class="pill warn">중단</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="font-size:9px;color:var(--faint);margin-top:8px;padding-top:8px;border-top:1px solid var(--border);">※ 소재별 지표는 디맨드젠_전환캠페인 실측 기준 (6/24 기준) · 마이클잭슨·야구는 OFF 캠페인 집행 실적 포함</div>
+    </div>
+  </section>
+
+  <section class="sect">
+    <div class="sect-lbl">일자별 전환 현황 · 6월 (주말 <span style="color:var(--accent)">●</span> / 고전환일 <span style="color:var(--teal)">●</span>)</div>
+    <div class="card" style="padding:14px 16px;">
+      <div id="conv-day-btns" style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:14px;"></div>
+      <div id="conv-date-note" style="font-size:10px;color:var(--dim);margin-bottom:14px;min-height:16px;padding:8px 10px;background:rgba(255,255,255,.04);border-radius:4px;border-left:2px solid var(--border);"></div>
+      <div id="conv-date-cards"></div>
+    </div>
+  </section>
+
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!--  PAGE 5: 후속 조회                          -->
+<!-- ═══════════════════════════════════════════ -->
+<div id="page-retarget" class="page">
+<div class="wrap">
+
+  <section class="sect">
+    <div class="sect-lbl">후속 조회 캠페인 · 6월 성과 (6/1~6/24)</div>
+    <div class="kpi-grid" style="grid-template-columns:repeat(5,1fr);">
+      <div class="kpi a"><div class="kv">801<span class="ku">만원</span></div><div class="kl">6월 광고비</div><div class="ks">예산 1,000만 · 80% 소진</div></div>
+      <div class="kpi"><div class="kv">303<span class="ku">만</span></div><div class="kl">총 노출수</div><div class="ks">3,034,636회</div></div>
+      <div class="kpi t"><div class="kv">605,113<span class="ku"></span></div><div class="kl">총 조회수</div><div class="ks">CTR 2.56%</div></div>
+      <div class="kpi t"><div class="kv">13<span class="ku">원</span></div><div class="kl">평균 CPV</div><div class="ks">3개 캠페인 운영 중</div></div>
+      <div class="kpi"><div class="kv">77,759<span class="ku"></span></div><div class="kl">클릭수</div><div class="ks">CPC 103원</div></div>
+    </div>
+  </section>
+
+  <section class="sect">
+    <div class="sect-lbl">프로그램별 성과</div>
+    <div class="prog-cards">
+      <div class="pcard" style="border-top:2px solid var(--prog-weekly);">
+        <div class="pcard-hd"><div class="pcard-nm">라플위클리</div><span class="badge ba">-</span></div>
+        <div class="pcard-rows">
+          <div class="pcard-row"><span class="pr-lbl">집행액</span><span class="pr-val">3,594,912원</span></div>
+          <div class="pcard-row"><span class="pr-lbl">노출수</span><span class="pr-val">1,452,027</span></div>
+          <div class="pcard-row"><span class="pr-lbl">조회수</span><span class="pr-val">254,492</span></div>
+          <div class="pcard-row"><span class="pr-lbl">CTR</span><span class="pr-val">2.13%</span></div>
+          <div class="pcard-row"><span class="pr-lbl">CPV</span><span class="pr-val">14원</span></div>
+        </div>
+      </div>
+      <div class="pcard" style="border-top:2px solid var(--prog-hot);">
+        <div class="pcard-hd"><div class="pcard-nm">HOT &amp; NEW</div><span class="badge ba">-</span></div>
+        <div class="pcard-rows">
+          <div class="pcard-row"><span class="pr-lbl">집행액</span><span class="pr-val">1,531,983원</span></div>
+          <div class="pcard-row"><span class="pr-lbl">노출수</span><span class="pr-val">661,966</span></div>
+          <div class="pcard-row"><span class="pr-lbl">조회수</span><span class="pr-val">84,845</span></div>
+          <div class="pcard-row"><span class="pr-lbl">CTR</span><span class="pr-val">2.19%</span></div>
+          <div class="pcard-row"><span class="pr-lbl">CPV</span><span class="pr-val">18원</span></div>
+        </div>
+      </div>
+      <div class="pcard" style="border-top:2px solid var(--prog-deep);">
+        <div class="pcard-hd"><div class="pcard-nm">딥다이브</div><span class="badge bg">CPV 최저</span></div>
+        <div class="pcard-rows">
+          <div class="pcard-row"><span class="pr-lbl">집행액</span><span class="pr-val">2,879,036원</span></div>
+          <div class="pcard-row"><span class="pr-lbl">노출수</span><span class="pr-val">920,643</span></div>
+          <div class="pcard-row"><span class="pr-lbl">조회수</span><span class="pr-val">265,776</span></div>
+          <div class="pcard-row"><span class="pr-lbl">CTR</span><span class="pr-val" style="color:var(--teal)">3.51%</span></div>
+          <div class="pcard-row"><span class="pr-lbl">CPV</span><span class="pr-val" style="color:var(--teal)">11원</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sect">
+    <div class="sect-lbl">소재별 6월 성과 · 전체 운영 이력</div>
+    <div class="card" style="padding:12px 16px;">
+      <table class="ctbl">
+        <thead><tr>
+          <th>소재명</th><th>프로그램</th><th>소진금액(VAT+)</th><th>운영기간</th><th>6월 조회수</th><th>클릭</th><th>CTR</th><th>CPV</th><th>6월 광고비</th><th>상태</th>
+        </tr></thead>
+        <tbody>
+          <!-- 활성 소재 (운영 중) -->
+          <tr>
+            <td><div class="cn">시즌5_13화_토이스토리</div></td>
+            <td><span style="font-size:8px;color:var(--prog-weekly);font-weight:700;">위클리</span></td>
+            <td style="font-family:var(--fn);font-size:10px;font-weight:700;">1,260,232원</td>
+            <td style="font-family:var(--fn);font-size:10px;">6/9 ~ 현재</td>
+            <td>86,245</td><td>10,934</td>
+            <td>2.48%</td><td>13원</td><td>1,145,665원</td>
+            <td><span class="pill good">활성</span></td>
+          </tr>
+          <tr>
+            <td><div class="cn">시즌6_19화_스티븐 스필버그</div></td>
+            <td><span style="font-size:8px;color:var(--prog-weekly);font-weight:700;">위클리</span></td>
+            <td style="font-family:var(--fn);font-size:10px;font-weight:700;">1,056,688원</td>
+            <td style="font-family:var(--fn);font-size:10px;">6/15 ~ 현재</td>
+            <td>68,316</td><td>8,487</td>
+            <td>2.29%</td><td>14원</td><td>960,625원</td>
+            <td><span class="pill good">활성</span></td>
+          </tr>
+          <tr>
+            <td><div class="cn">시즌1_9화_실수</div></td>
+            <td><span style="font-size:8px;color:var(--prog-weekly);font-weight:700;">위클리</span></td>
+            <td style="font-family:var(--fn);font-size:10px;font-weight:700;">939,474원</td>
+            <td style="font-family:var(--fn);font-size:10px;">6/15 ~ 현재</td>
+            <td>41,602</td><td>4,891</td>
+            <td>1.18%</td><td>21원</td><td>854,067원</td>
+            <td><span class="pill good">활성</span></td>
+          </tr>
+          <!-- 종료 소재 -->
+          <tr>
+            <td><div class="cn">딥다이브_6화_군체</div><div class="csub">OFF 캠페인</div></td>
+            <td><span style="font-size:8px;color:var(--prog-deep);font-weight:700;">딥다이브</span></td>
+            <td style="font-family:var(--fn);font-size:10px;font-weight:700;">1,867,546원</td>
+            <td style="font-family:var(--fn);font-size:10px;">6/1 ~ 6/17</td>
+            <td style="color:var(--teal);font-weight:700;">183,130</td><td>21,668</td>
+            <td style="color:var(--teal);font-weight:700;">3.63%</td><td>9원</td><td>1,697,769원</td>
+            <td><span class="pill warn">중단</span></td>
+          </tr>
+          <tr>
+            <td><div class="cn">시즌6_15화_마이클잭슨</div><div class="csub">OFF 캠페인</div></td>
+            <td><span style="font-size:8px;color:var(--prog-weekly);font-weight:700;">위클리</span></td>
+            <td style="font-family:var(--fn);font-size:10px;font-weight:700;">394,801원</td>
+            <td style="font-family:var(--fn);font-size:10px;">6/1 ~ 6/9</td>
+            <td>29,716</td><td>3,519</td>
+            <td>2.89%</td><td>12원</td><td>358,910원</td>
+            <td><span class="pill warn">중단</span></td>
+          </tr>
+          <tr>
+            <td><div class="cn">핫앤뉴_12화_만달로리안</div><div class="csub">OFF 캠페인</div></td>
+            <td><span style="font-size:8px;color:var(--prog-hot);font-weight:700;">H&amp;N</span></td>
+            <td style="font-family:var(--fn);font-size:10px;font-weight:700;">1,158,551원</td>
+            <td style="font-family:var(--fn);font-size:10px;">6/1 ~ 6/9</td>
+            <td>66,840</td><td>9,928</td>
+            <td style="color:var(--teal);font-weight:700;">3.94%</td><td>16원</td><td>1,053,228원</td>
+            <td><span class="pill warn">중단</span></td>
+          </tr>
+          <tr>
+            <td><div class="cn">핫앤뉴_11화_원더풀스</div><div class="csub">OFF 캠페인</div></td>
+            <td><span style="font-size:8px;color:var(--prog-hot);font-weight:700;">H&amp;N</span></td>
+            <td style="font-family:var(--fn);font-size:10px;font-weight:700;">136,175원</td>
+            <td style="font-family:var(--fn);font-size:10px;">6/1 ~ 6/5</td>
+            <td>3,949</td><td>558</td>
+            <td>1.03%</td><td>31원</td><td>123,795원</td>
+            <td><span class="pill warn">중단</span></td>
+          </tr>
+          <tr>
+            <td><div class="cn">핫앤뉴_13화_백룸</div><div class="csub">OFF 캠페인</div></td>
+            <td><span style="font-size:8px;color:var(--prog-hot);font-weight:700;">H&amp;N</span></td>
+            <td style="font-family:var(--fn);font-size:10px;font-weight:700;">390,456원</td>
+            <td style="font-family:var(--fn);font-size:10px;">6/9 ~ 6/12</td>
+            <td>14,056</td><td>3,999</td>
+            <td>1.12%</td><td>25원</td><td>354,960원</td>
+            <td><span class="pill warn">중단</span></td>
+          </tr>
+          <tr>
+            <td><div class="cn">시즌6_7화_헤일메리</div><div class="csub">OFF 캠페인</div></td>
+            <td><span style="font-size:8px;color:var(--prog-weekly);font-weight:700;">위클리</span></td>
+            <td style="font-family:var(--fn);font-size:10px;font-weight:700;">119,759원</td>
+            <td style="font-family:var(--fn);font-size:10px;">6/9 ~ 6/12</td>
+            <td>11,397</td><td>1,246</td>
+            <td>2.89%</td><td>10원</td><td>108,872원</td>
+            <td><span class="pill warn">중단</span></td>
+          </tr>
+          <tr>
+            <td><div class="cn">시즌2_1화_첫사랑</div><div class="csub">OFF 캠페인</div></td>
+            <td><span style="font-size:8px;color:var(--prog-weekly);font-weight:700;">위클리</span></td>
+            <td style="font-family:var(--fn);font-size:10px;font-weight:700;">183,451원</td>
+            <td style="font-family:var(--fn);font-size:10px;">6/9 ~ 6/15</td>
+            <td>17,216</td><td>1,861</td>
+            <td>3.05%</td><td>10원</td><td>166,774원</td>
+            <td><span class="pill warn">중단</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="font-size:9px;color:var(--faint);margin-top:8px;padding-top:8px;border-top:1px solid var(--border);">※ CTR은 조회율(조회수/노출수) · 실측 기준 (6/24) · OFF 캠페인은 중단 소재 포함</div>
+    </div>
+  </section>
+
+  <section class="sect">
+    <div class="card">
+      <div class="ct">6월 일별 조회수 &amp; CTR 추이 (6/1~6/24)</div>
+      <canvas id="retargetDaily" style="width:100%;height:200px;display:block;margin-top:4px;"></canvas>
+    </div>
+  </section>
+
+  <section class="sect">
+    <div class="sect-lbl">일자별 후속조회 현황 · 6월 (주말 <span style="color:var(--accent)">●</span> / 고조회일 <span style="color:var(--teal)">●</span>)</div>
+    <div class="card" style="padding:14px 16px;">
+      <div id="retarget-day-btns" style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:14px;"></div>
+      <div id="retarget-date-note" style="font-size:10px;color:var(--dim);margin-bottom:14px;min-height:16px;padding:8px 10px;background:rgba(255,255,255,.04);border-radius:4px;border-left:2px solid var(--border);"></div>
+      <div id="retarget-date-cards"></div>
+    </div>
+  </section>
+
+</div>
+</div>
+
+<div id="tt"></div>
+<button id="theme-btn" class="theme-btn" title="라이트 모드">☀</button>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+/* ── TAB SWITCHING ── */
+var drawn = {};
+document.querySelectorAll('.tab-btn[data-tab]').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    var name = btn.getAttribute('data-tab');
+    document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
+    document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+    var pg = document.getElementById('page-' + name);
+    if (pg) pg.classList.add('active');
+    btn.classList.add('active');
+    if (!drawn[name]) {
+      drawn[name] = true;
+      setTimeout(function() {
+        if (name === 'view') try{drawViewCharts();}catch(e){}
+        if (name === 'click') try{drawClickCharts();}catch(e){}
+        if (name === 'conv') try{drawConvCharts();}catch(e){}
+        if (name === 'retarget') try{drawRetargetCharts();}catch(e){}
+      }, 150);
+    }
+  });
+});
+
+/* ── TOGGLE PANE ── */
+document.querySelectorAll('.tog-btn[data-prefix]').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    var prefix = btn.getAttribute('data-prefix');
+    var id = btn.getAttribute('data-id');
+    var par = btn.parentElement;
+    par.querySelectorAll('.tog-btn').forEach(function(b) { b.classList.remove('on'); });
+    par.parentElement.querySelectorAll('.tog-pane').forEach(function(p) { p.classList.remove('on'); });
+    btn.classList.add('on');
+    var pane = document.getElementById(prefix + '-' + id);
+    if (pane) pane.classList.add('on');
+  });
+});
+
+/* ── CANVAS HELPERS ── */
+var FN = "'Consolas','Courier New',monospace";
+var C = {ground:'#0B0F1A',surface:'#131924',border:'#273049',
+  text:'#D8DFEE',dim:'#6B7B9A',faint:'#3A4A68',
+  accent:'#FF6B2B',teal:'#00C9A7',yellow:'#F0C040',
+  orange2:'#FF9B5E',
+  weekly:'#4B8EFF', hot:'#FF3B5C', deep:'#22C55E'};
+
+function setup(id, h) {
+  var el = document.getElementById(id);
+  if (!el) return null;
+  var dpr = window.devicePixelRatio || 1;
+  /* getBoundingClientRect is the most reliable after layout */
+  var rect = el.getBoundingClientRect();
+  var w = rect.width;
+  if (!w && el.parentElement) w = el.parentElement.getBoundingClientRect().width - 32;
+  if (!w || w < 80) w = 340;
+  el.width  = Math.round(w * dpr);
+  el.height = Math.round(h * dpr);
+  el.style.width  = w + 'px';
+  el.style.height = h + 'px';
+  var ctx = el.getContext('2d');
+  ctx.scale(dpr, dpr);
+  ctx._w = w; ctx._h = h;
+  return ctx;
+}
+
+/* ── TOOLTIP ENGINE ── */
+var HITS={};
+function regHits(id,arr){HITS[id]=arr;}
+(function(){
+  var tt=document.getElementById('tt');
+  document.addEventListener('mousemove',function(e){
+    var el=e.target;
+    if(el.tagName!=='CANVAS'){tt.style.display='none';return;}
+    var hits=HITS[el.id];
+    if(!hits||!hits.length){tt.style.display='none';return;}
+    var rect=el.getBoundingClientRect();
+    var mx=e.clientX-rect.left, my=e.clientY-rect.top;
+    var found=null;
+    for(var i=0;i<hits.length;i++){
+      var h=hits[i];
+      if(mx>=h.x&&mx<=h.x+h.w&&my>=h.y&&my<=h.y+h.h){found=h;break;}
+    }
+    if(!found){tt.style.display='none';return;}
+    tt.innerHTML=found.lines.map(function(l,i){
+      return '<div class="tt-'+(i===0?'l':i===1?'v':'v2')+'">'+l+'</div>';
+    }).join('');
+    var tw=tt.offsetWidth||180;
+    var tx=e.clientX+14, ty=e.clientY-12;
+    if(tx+tw>window.innerWidth-4)tx=e.clientX-tw-10;
+    if(ty+60>window.innerHeight)ty=e.clientY-64;
+    tt.style.left=tx+'px';tt.style.top=ty+'px';tt.style.display='block';
+  });
+  document.addEventListener('mouseleave',function(){tt.style.display='none';});
+})();
+
+/* ── 조회캠페인 CREATIVE DATA ── */
+var CREATIVES = [
+  {fmt:'롱폼',prog:'라플위클리',ep:'18화',title:'프랑스',      ctr:0.97,vtr:63.1,cpv:29,views:103067,imp:163272,clicks:1591,spend:2999756},
+  {fmt:'롱폼',prog:'라플위클리',ep:'19화',title:'스필버그',    ctr:0.53,vtr:59.9,cpv:34,views:148599,imp:248133,clicks:1311,spend:4999431},
+  {fmt:'롱폼',prog:'라플위클리',ep:'20화',title:'뮤지컬',      ctr:0.54,vtr:53.1,cpv:23,views:133071,imp:250580,clicks:1345,spend:2998082},
+  {fmt:'롱폼',prog:'HOT&NEW',   ep:'13화',title:'백룸',        ctr:0.47,vtr:60.5,cpv:26,views:76472, imp:126363,clicks:596, spend:1999844},
+  {fmt:'롱폼',prog:'HOT&NEW',   ep:'14화',title:'아웃사이더즈',ctr:0.65,vtr:59.4,cpv:28,views:72125, imp:121443,clicks:794, spend:2000272},
+  {fmt:'롱폼',prog:'HOT&NEW',   ep:'15화',title:'디스클로저',  ctr:0.49,vtr:61.1,cpv:25,views:68805, imp:112610,clicks:554, spend:1701875},
+  {fmt:'롱폼',prog:'HOT&NEW',   ep:'16화',title:'토이스토리',  ctr:1.01,vtr:13.7,cpv:28,views:118438,imp:861518,clicks:8690,spend:3000436},
+  {fmt:'롱폼',prog:'딥다이브',  ep:'7화', title:'뉴뮤지엄',   ctr:0.40,vtr:42.5,cpv:33,views:11029, imp:25958, clicks:104, spend:364940},
+  {fmt:'쇼츠',prog:'라플위클리',ep:'18화',title:'프랑스 선공개', ctr:0.37,vtr:55.1,cpv:12,views:27452,imp:49848, clicks:183, spend:329731},
+  {fmt:'쇼츠',prog:'라플위클리',ep:'18화',title:'프랑스 본편',   ctr:0.19,vtr:69.5,cpv:8, views:39648,imp:57090, clicks:106, spend:329864},
+  {fmt:'쇼츠',prog:'라플위클리',ep:'19화',title:'스필버그 선공개',ctr:0.51,vtr:24.3,cpv:15,views:21916,imp:90283, clicks:461,spend:329718},
+  {fmt:'쇼츠',prog:'라플위클리',ep:'19화',title:'스필버그 본편',  ctr:0.30,vtr:25.2,cpv:15,views:21441,imp:85242, clicks:255,spend:330045},
+  {fmt:'쇼츠',prog:'라플위클리',ep:'20화',title:'뮤지컬 선공개',  ctr:0.29,vtr:21.9,cpv:15,views:21794,imp:99758, clicks:288,spend:329863},
+  {fmt:'쇼츠',prog:'라플위클리',ep:'20화',title:'뮤지컬 본편',    ctr:0.23,vtr:30.4,cpv:13,views:24740,imp:81383, clicks:187,spend:329955},
+  {fmt:'쇼츠',prog:'HOT&NEW',   ep:'13화',title:'백룸 쇼츠1',    ctr:0.26,vtr:23.8,cpv:16,views:20443,imp:85885, clicks:222,spend:329873},
+  {fmt:'쇼츠',prog:'HOT&NEW',   ep:'13화',title:'백룸 쇼츠2',    ctr:0.22,vtr:24.7,cpv:16,views:20341,imp:82424, clicks:183,spend:328911},
+  {fmt:'쇼츠',prog:'HOT&NEW',   ep:'14화',title:'아웃사이더즈 1',ctr:0.30,vtr:44.2,cpv:12,views:26727,imp:60451, clicks:181,spend:329999},
+  {fmt:'쇼츠',prog:'HOT&NEW',   ep:'14화',title:'아웃사이더즈 2',ctr:0.31,vtr:45.6,cpv:13,views:26084,imp:57176, clicks:180,spend:330045},
+  {fmt:'쇼츠',prog:'HOT&NEW',   ep:'15화',title:'디스클로저 1',  ctr:0.23,vtr:27.1,cpv:14,views:16466,imp:60703, clicks:139,spend:228954},
+  {fmt:'쇼츠',prog:'HOT&NEW',   ep:'15화',title:'디스클로저 2',  ctr:0.29,vtr:26.7,cpv:14,views:15920,imp:59678, clicks:171,spend:230492},
+  {fmt:'쇼츠',prog:'딥다이브',  ep:'7화 선공개',title:'뉴뮤지엄',ctr:0.15,vtr:41.8,cpv:15,views:4992, imp:11945, clicks:18,  spend:75968}
+];
+var _vfmt = '롱폼';
+var _vprog = '전체';
+
+function getViewData() {
+  return CREATIVES.filter(function(d) {
+    return d.fmt === _vfmt && (_vprog === '전체' || d.prog === _vprog);
+  });
+}
+
+/* ── 수평 바 차트 ── */
+function drawHBar(id, data, maxV, unit, color) {
+  var n = data.length;
+  var rowH = 22;
+  var h = n * rowH + 30;
+  var ctx = setup(id, h);
+  if (!ctx) return;
+  var W = ctx._w, H = ctx._h;
+  var lpad = 100, rpad = 50;
+  var barW = W - lpad - rpad;
+  data.forEach(function(d, i) {
+    var y = 14 + i * rowH;
+    var blen = (d.v / maxV) * barW;
+    var best = (d.v === Math.max.apply(null, data.map(function(x){return x.v;})));
+    /* track */
+    ctx.fillStyle = C.border;
+    ctx.fillRect(lpad, y, barW, rowH - 6);
+    /* fill — prog color per bar */
+    var tagColor = d.prog === '라플위클리' ? C.weekly : (d.prog === 'HOT&NEW' ? C.hot : C.deep);
+    ctx.fillStyle = tagColor;
+    ctx.globalAlpha = 0.78;
+    ctx.fillRect(lpad, y, blen, rowH - 6);
+    ctx.globalAlpha = 1;
+    /* prog tag (left accent strip) */
+    ctx.fillStyle = tagColor + '33';
+    ctx.fillRect(0, y, 6, rowH - 6);
+    /* label */
+    ctx.fillStyle = C.dim; ctx.font = '9px ' + FN; ctx.textAlign = 'right';
+    ctx.fillText(d.ep + ' ' + d.lbl, lpad - 8, y + rowH - 10);
+    /* value */
+    ctx.fillStyle = C.text; ctx.font = 'bold 9px ' + FN; ctx.textAlign = 'left';
+    ctx.fillText(d.v + unit, lpad + blen + 4, y + rowH - 10);
+  });
+  regHits(id, data.map(function(d,i){
+    var y=14+i*rowH;
+    return {x:0,y:y,w:W,h:rowH,lines:[d.ep+' '+d.lbl, d.v+unit]};
+  }));
+}
+
+/* ── 수직 바 차트 ── */
+function drawVBar(id, data, color) {
+  var h = 160;
+  var ctx = setup(id, h);
+  if (!ctx) return;
+  var W = ctx._w, H = ctx._h;
+  var pad = {t:16, r:10, b:28, l:40};
+  var cW = W - pad.l - pad.r, cH = H - pad.t - pad.b;
+  var maxV = Math.max.apply(null, data.map(function(d){return d.v;}));
+  var ticks = [Math.round(maxV*0.25), Math.round(maxV*0.5), Math.round(maxV*0.75), maxV];
+  ticks.forEach(function(v) {
+    var y = pad.t + cH - (v / maxV) * cH;
+    ctx.strokeStyle = C.border; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(pad.l + cW, y); ctx.stroke();
+    ctx.fillStyle = C.faint; ctx.font = '8px ' + FN; ctx.textAlign = 'right';
+    ctx.fillText((v/1000).toFixed(0)+'K', pad.l - 4, y + 3);
+  });
+  var n = data.length;
+  var step = cW / n, bw = step * 0.6;
+  data.forEach(function(d, i) {
+    var x = pad.l + step * i + (step - bw) / 2;
+    var bh = (d.v / maxV) * cH, y = pad.t + cH - bh;
+    var best = d.v === maxV;
+    var progC = d.prog === '라플위클리' ? C.weekly : (d.prog === 'HOT&NEW' ? C.hot : C.deep);
+    ctx.fillStyle = progC;
+    ctx.globalAlpha = 0.72;
+    ctx.fillRect(x, y, bw, bh);
+    ctx.globalAlpha = 1;
+    ctx.fillStyle = C.dim; ctx.font = '8px ' + FN; ctx.textAlign = 'center';
+    ctx.fillText(d.ep, x + bw/2, pad.t + cH + 11);
+  });
+  regHits(id, data.map(function(d,i){
+    var x=pad.l+step*i+(step-bw)/2;
+    var bh=(d.v/maxV)*cH, y=pad.t+cH-bh;
+    return {x:x,y:pad.t,w:bw,h:cH,lines:[d.ep+' '+d.lbl, d.v.toLocaleString()+'회']};
+  }));
+}
+
+function renderViewTable(data) {
+  var tbody = document.getElementById('view-tbody');
+  if (!tbody) return;
+  var maxViews = Math.max.apply(null, data.map(function(d){return d.views;}));
+  tbody.innerHTML = data.map(function(d) {
+    var vtrC = d.vtr >= 60 ? C.teal : d.vtr >= 45 ? C.yellow : C.accent;
+    var pill = d.vtr >= 60 ? '<span class="pill good">우수</span>' : d.vtr >= 45 ? '<span class="pill neu">보통</span>' : '<span class="pill warn">저조</span>';
+    var progBadge = d.prog === '라플위클리'
+      ? '<span style="font-size:8px;color:var(--prog-weekly);font-weight:700;">위클리</span>'
+      : d.prog === 'HOT&NEW'
+      ? '<span style="font-size:8px;color:var(--prog-hot);font-weight:700;">H&amp;N</span>'
+      : '<span style="font-size:8px;color:var(--prog-deep);font-weight:700;">딥다이브</span>';
+    var spendStr = d.spend ? Math.round(d.spend/10000) + '만원' : '-';
+    return '<tr>' +
+      '<td><div class="cn">' + d.ep + ' ' + d.title + '</div></td>' +
+      '<td>' + progBadge + '</td>' +
+      '<td style="font-size:9px;font-family:var(--fn);color:var(--dim);">' + spendStr + '</td>' +
+      '<td>' + d.imp.toLocaleString() + '</td>' +
+      '<td>' + d.views.toLocaleString() + '</td>' +
+      '<td>' + d.clicks.toLocaleString() + '</td>' +
+      '<td style="color:' + (d.ctr >= 0.6 ? C.teal : 'inherit') + '">' + d.ctr + '%</td>' +
+      '<td style="color:' + (d.cpv <= 15 ? C.teal : 'inherit') + '">' + d.cpv + '원</td>' +
+      '<td><div class="vtr-bar"><div class="vtr-bg"><div class="vtr-fg" style="width:' + Math.min(d.vtr,100) + '%;background:' + vtrC + ';height:100%;border-radius:2px;"></div></div>' + d.vtr + '%</div></td>' +
+      '<td>' + pill + '</td>' +
+      '</tr>';
+  }).join('');
+}
+
+function renderViewCharts(data) {
+  var hData = data.map(function(d) { return {ep:d.ep, lbl:d.title, prog:d.prog, v:d.vtr}; });
+  drawHBar('ch-vtr',   hData, 100, '%', C.teal);
+  drawHBar('ch-cpv',   data.map(function(d){return {ep:d.ep,lbl:d.title,prog:d.prog,v:d.cpv};}), 40, '원', C.accent);
+  drawHBar('ch-ctr',   data.map(function(d){return {ep:d.ep,lbl:d.title,prog:d.prog,v:d.ctr};}), _vfmt==='롱폼'?1.2:0.7, '%', C.orange2);
+  drawVBar('ch-views', data.map(function(d){return {ep:d.ep,lbl:d.title,prog:d.prog,v:d.views};}), C.accent);
+}
+
+function applyViewFilter() {
+  var data = getViewData();
+  renderViewTable(data);
+  setTimeout(function() { try { renderViewCharts(data); } catch(e) {} }, 80);
+}
+
+/* ── 조회캠페인 필터 버튼 이벤트 ── */
+document.querySelectorAll('[data-vfmt]').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    _vfmt = btn.getAttribute('data-vfmt');
+    document.querySelectorAll('[data-vfmt]').forEach(function(b){ b.classList.remove('on'); });
+    btn.classList.add('on');
+    applyViewFilter();
+  });
+});
+document.querySelectorAll('[data-vprog]').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    _vprog = btn.getAttribute('data-vprog');
+    document.querySelectorAll('[data-vprog]').forEach(function(b){ b.classList.remove('on'); });
+    btn.classList.add('on');
+    applyViewFilter();
+  });
+});
+/* 초기 롱폼 선택 상태 */
+(function(){
+  var lf = document.getElementById('vfmt-longform');
+  if (lf) lf.classList.add('on');
+})();
+
+function grid(ctx,W,H,pad,maxV,ticks){
+  ticks.forEach(function(v){
+    var y=pad.t+H-(v/maxV)*H;
+    ctx.strokeStyle=C.border; ctx.lineWidth=1;
+    ctx.beginPath(); ctx.moveTo(pad.l,y); ctx.lineTo(pad.l+W,y); ctx.stroke();
+    ctx.fillStyle=C.faint; ctx.font='9px '+FN; ctx.textAlign='right';
+    ctx.fillText(v,pad.l-5,y+3);
+  });
+}
+
+function bars(ctx,data,W,H,pad,maxV,color,id){
+  var n=data.length; var step=W/n; var bw=step*.55;
+  var hits=[];
+  data.forEach(function(d,i){
+    var x=pad.l+step*i+(step-bw)/2;
+    var bh=(d.v/maxV)*H; var y=pad.t+H-bh;
+    var best=d.v===Math.max.apply(null,data.map(function(x){return x.v;}));
+    var c=best?C.teal:color;
+    ctx.fillStyle=c; ctx.globalAlpha=best?1:.75;
+    ctx.fillRect(x,y,bw,bh); ctx.globalAlpha=1;
+    ctx.fillStyle=best?C.teal:C.text; ctx.font='bold 10px '+FN; ctx.textAlign='center';
+    ctx.fillText(d.v,x+bw/2,y-4);
+    ctx.fillStyle=C.dim; ctx.font='9px '+FN; ctx.fillText(d.lbl,x+bw/2,pad.t+H+12);
+    if(d.sub){ctx.fillStyle=C.faint;ctx.font='8px '+FN;ctx.fillText(d.sub,x+bw/2,pad.t+H+22);}
+    hits.push({x:x,y:pad.t,w:bw,h:H,lines:[d.lbl+(d.sub?' ('+d.sub+')':''),d.v.toLocaleString()+'건']});
+  });
+  if(id)regHits(id,hits);
+}
+
+/* === PAGE 1: Overview charts === */
+function drawOverviewCharts(){
+  try{
+    var ctx=setup('cv1',170); if(!ctx)return;
+    var W=ctx._w,H=ctx._h;
+    var data=[{lbl:'6/19',sub:'금',v:316},{lbl:'6/20',sub:'토',v:429},{lbl:'6/21',sub:'일',v:310},{lbl:'6/22',sub:'월',v:285},{lbl:'6/23',sub:'화',v:301}];
+    var pad={t:18,r:42,b:36,l:30};
+    var cW=W-pad.l-pad.r,cH=H-pad.t-pad.b;
+    grid(ctx,cW,cH,pad,500,[100,200,300,400,500]);
+    var avg=Math.round(data.reduce(function(s,d){return s+d.v;},0)/data.length);
+    var avgY=pad.t+cH-(avg/500)*cH;
+    ctx.setLineDash([3,4]); ctx.strokeStyle='rgba(255,107,43,.3)'; ctx.lineWidth=1;
+    ctx.beginPath(); ctx.moveTo(pad.l,avgY); ctx.lineTo(pad.l+cW,avgY); ctx.stroke();
+    ctx.setLineDash([]); ctx.fillStyle=C.accent; ctx.font='9px '+FN; ctx.textAlign='left';
+    ctx.fillText('avg '+avg,pad.l+cW+3,avgY+3);
+    bars(ctx,data,cW,cH,pad,500,C.accent,'cv1');
+  }catch(e){}
+  try{
+    var ctx2=setup('dn1',170); if(!ctx2)return;
+    var W2=ctx2._w,H2=ctx2._h;
+    var segs=[{lbl:'유튜브조회',v:22345367,c:C.accent},{lbl:'클릭최대화',v:7738879,c:C.orange2},{lbl:'후속조회',v:7672540,c:C.teal},{lbl:'구독전환',v:6903554,c:'#00E5C0'}];
+    var tot=segs.reduce(function(s,sg){return s+sg.v;},0);
+    var cx=H2/2+4,cy=H2/2,r=cy-14,ri=r*.58;
+    var sa=-Math.PI/2;
+    segs.forEach(function(sg){
+      var a=(sg.v/tot)*2*Math.PI;
+      ctx2.beginPath(); ctx2.moveTo(cx,cy); ctx2.arc(cx,cy,r,sa,sa+a); ctx2.closePath();
+      ctx2.fillStyle=sg.c; ctx2.fill(); sa+=a;
+    });
+    ctx2.beginPath(); ctx2.arc(cx,cy,ri,0,2*Math.PI); ctx2.fillStyle=C.surface; ctx2.fill();
+    ctx2.fillStyle=C.text; ctx2.font='bold 13px '+FN; ctx2.textAlign='center';
+    ctx2.fillText('4,466',cx,cy+1); ctx2.fillStyle=C.dim; ctx2.font='9px '+FN; ctx2.fillText('만원',cx,cy+13);
+    var lx=cx+r+10;
+    segs.forEach(function(sg,i){
+      var pct=((sg.v/tot)*100).toFixed(0);
+      var ly=H2/2-(segs.length*18)/2+i*20+2;
+      ctx2.fillStyle=sg.c; ctx2.fillRect(lx,ly,7,7);
+      ctx2.fillStyle=C.dim; ctx2.font='9px '+FN; ctx2.textAlign='left';
+      ctx2.fillText(sg.lbl,lx+11,ly+7);
+      var tw=ctx2.measureText(sg.lbl).width;
+      ctx2.fillStyle=C.text; ctx2.fillText(pct+'%',lx+11+tw+3,ly+7);
+    });
+  }catch(e){}
+}
+
+/* === PAGE 2: entry point (동적 필터 기반으로 교체) === */
+function drawViewCharts(){ applyViewFilter(); }
+
+function _legacyVtrChart_unused(){try{
+  (function(){
+    var ctx=setup('vtrChart',200); if(!ctx)return;
+    var W=ctx._w,H=ctx._h;
+    var items=[
+      {lbl:'18화 프랑스',c:C.weekly,vtr:63.1,fmt:'롱폼'},
+      {lbl:'14화 아웃사이더즈',c:C.hot,vtr:59.4,fmt:'롱폼'},
+      {lbl:'15화 디스클로저',c:C.hot,vtr:61.1,fmt:'롱폼'},
+      {lbl:'13화 백룸',c:C.hot,vtr:60.5,fmt:'롱폼'},
+      {lbl:'19화 스필버그',c:C.weekly,vtr:59.9,fmt:'롱폼'},
+      {lbl:'20화 뮤지컬',c:C.weekly,vtr:53.1,fmt:'롱폼'},
+      {lbl:'18화 본편',c:C.weekly,vtr:69.5,fmt:'쇼츠'},
+      {lbl:'18화 선공개',c:C.weekly,vtr:55.1,fmt:'쇼츠'},
+      {lbl:'14화_쇼츠2',c:C.hot,vtr:45.6,fmt:'쇼츠'},
+      {lbl:'14화_쇼츠1',c:C.hot,vtr:44.2,fmt:'쇼츠'},
+      {lbl:'20화 본편',c:C.weekly,vtr:30.4,fmt:'쇼츠'},
+      {lbl:'19화 선공개',c:C.weekly,vtr:24.3,fmt:'쇼츠'},
+    ];
+    items.sort(function(a,b){return b.vtr-a.vtr;});
+    var bH=14; var gap=2; var lpad=90; var rpad=50;
+    var maxW=W-lpad-rpad;
+    items.forEach(function(d,i){
+      var y=8+i*(bH+gap);
+      ctx.fillStyle=C.faint; ctx.font='9px '+FN; ctx.textAlign='right';
+      ctx.fillText(d.lbl,lpad-6,y+bH-2);
+      ctx.fillStyle=C.border; ctx.fillRect(lpad,y,maxW,bH);
+      ctx.fillStyle=d.c; ctx.fillRect(lpad,y,(d.vtr/100)*maxW,bH);
+      ctx.fillStyle=C.text; ctx.font='bold 9px '+FN; ctx.textAlign='left';
+      ctx.fillText(d.vtr+'%',lpad+(d.vtr/100)*maxW+4,y+bH-2);
+    });
+  })();
+
+  /* CPV comparison */
+  (function(){
+    var ctx=setup('cpvChart',200); if(!ctx)return;
+    var W=ctx._w,H=ctx._h;
+    var items=[
+      {lbl:'18화 프랑스_본편',cpv:8,fmt:'쇼츠',c:C.weekly},
+      {lbl:'20화 뮤지컬',cpv:23,fmt:'롱폼',c:C.weekly},
+      {lbl:'14화_쇼츠1',cpv:12,fmt:'쇼츠',c:C.hot},
+      {lbl:'18화 프랑스',cpv:29,fmt:'롱폼',c:C.weekly},
+      {lbl:'14화 아웃사이더즈',cpv:28,fmt:'롱폼',c:C.hot},
+      {lbl:'15화 디스클로저',cpv:25,fmt:'롱폼',c:C.hot},
+      {lbl:'13화 백룸',cpv:26,fmt:'롱폼',c:C.hot},
+      {lbl:'19화 스필버그',cpv:34,fmt:'롱폼',c:C.weekly},
+      {lbl:'쇼츠 평균',cpv:13,fmt:'쇼츠 avg',c:C.teal},
+      {lbl:'롱폼 평균',cpv:27,fmt:'롱폼 avg',c:C.accent},
+    ];
+    items.sort(function(a,b){return a.cpv-b.cpv;});
+    var bH=14; var gap=2; var lpad=90; var rpad=44;
+    var maxW=W-lpad-rpad; var maxCPV=40;
+    items.forEach(function(d,i){
+      var y=8+i*(bH+gap);
+      ctx.fillStyle=C.faint; ctx.font='9px '+FN; ctx.textAlign='right';
+      ctx.fillText(d.lbl,lpad-6,y+bH-2);
+      ctx.fillStyle=C.border; ctx.fillRect(lpad,y,maxW,bH);
+      ctx.fillStyle=d.c; ctx.fillRect(lpad,y,(d.cpv/maxCPV)*maxW,bH);
+      ctx.fillStyle=C.text; ctx.font='bold 9px '+FN; ctx.textAlign='left';
+      ctx.fillText(d.cpv+'원',lpad+(d.cpv/maxCPV)*maxW+4,y+bH-2);
+    });
+  })();
+}catch(e){}}
+
+/* === PAGE 3: Click charts === */
+function drawClickCharts(){try{
+  (function(){
+    var ctx=setup('clickTrend',180); if(!ctx)return;
+    var W=ctx._w,H=ctx._h;
+    var months=['4월','5월','6월(~24일)'];
+    var ctrs=[3.08,3.24,1.90];
+    var costs=[6984753,12951479,8081632];
+    var pad={t:20,r:16,b:36,l:36};
+    var cW=W-pad.l-pad.r,cH=H-pad.t-pad.b;
+    [1,2,3,4].forEach(function(v){
+      var y=pad.t+cH-(v/4)*cH;
+      ctx.strokeStyle=C.border; ctx.lineWidth=1;
+      ctx.beginPath(); ctx.moveTo(pad.l,y); ctx.lineTo(pad.l+cW,y); ctx.stroke();
+      ctx.fillStyle=C.faint; ctx.font='9px '+FN; ctx.textAlign='right';
+      ctx.fillText(v+'%',pad.l-5,y+3);
+    });
+    var step=cW/(months.length-1);
+    ctx.strokeStyle=C.accent; ctx.lineWidth=2; ctx.lineJoin='round';
+    ctx.beginPath();
+    ctrs.forEach(function(v,i){
+      var x=pad.l+i*step; var y=pad.t+cH-(v/4)*cH;
+      if(i===0)ctx.moveTo(x,y); else ctx.lineTo(x,y);
+    });
+    ctx.stroke();
+    ctrs.forEach(function(v,i){
+      var x=pad.l+i*step; var y=pad.t+cH-(v/4)*cH;
+      ctx.fillStyle=C.accent; ctx.beginPath(); ctx.arc(x,y,4,0,2*Math.PI); ctx.fill();
+      ctx.fillStyle=C.text; ctx.font='bold 10px '+FN; ctx.textAlign='center';
+      ctx.fillText(v+'%',x,y-8);
+      ctx.fillStyle=C.dim; ctx.font='9px '+FN; ctx.fillText(months[i],x,pad.t+cH+14);
+      ctx.fillStyle=C.faint; ctx.font='8px '+FN;
+      var m=(costs[i]/10000).toFixed(0);
+      ctx.fillText(m+'만원',x,pad.t+cH+24);
+    });
+    regHits('clickTrend',ctrs.map(function(v,i){
+      var x=pad.l+i*step;
+      return {x:x-28,y:0,w:56,h:H,lines:[months[i],v+'% CTR · '+(costs[i]/10000).toFixed(0)+'만원']};
+    }));
+  })();
+
+  (function(){
+    var ctx=setup('clickProg',180); if(!ctx)return;
+    var W=ctx._w,H=ctx._h;
+    var data=[
+      {lbl:'라플위클리',v:90407,cost:3842899,c:C.weekly},
+      {lbl:'HOT&NEW',v:71843,cost:2453897,c:C.hot},
+      {lbl:'딥다이브',v:43810,cost:1784837,c:C.deep}
+    ];
+    var pad={t:18,r:12,b:36,l:36};
+    var cW=W-pad.l-pad.r,cH=H-pad.t-pad.b;
+    var maxV=90000;
+    [30000,60000,90000].forEach(function(v){
+      var y=pad.t+cH-(v/maxV)*cH;
+      ctx.strokeStyle=C.border; ctx.lineWidth=1;
+      ctx.beginPath(); ctx.moveTo(pad.l,y); ctx.lineTo(pad.l+cW,y); ctx.stroke();
+      ctx.fillStyle=C.faint; ctx.font='8px '+FN; ctx.textAlign='right';
+      ctx.fillText((v/10000).toFixed(0)+'만',pad.l-5,y+3);
+    });
+    var step=cW/data.length; var bw=step*.5;
+    data.forEach(function(d,i){
+      var x=pad.l+step*i+(step-bw)/2;
+      var bh=(d.v/maxV)*cH; var y=pad.t+cH-bh;
+      ctx.fillStyle=d.c; ctx.fillRect(x,y,bw,bh);
+      ctx.fillStyle=C.text; ctx.font='bold 10px '+FN; ctx.textAlign='center';
+      ctx.fillText(d.v.toLocaleString(),x+bw/2,y-5);
+      ctx.fillStyle=C.dim; ctx.font='9px '+FN; ctx.fillText(d.lbl,x+bw/2,pad.t+cH+13);
+      ctx.fillStyle=C.faint; ctx.font='8px '+FN;
+      ctx.fillText((d.cost/10000).toFixed(0)+'만원',x+bw/2,pad.t+cH+23);
+    });
+    regHits('clickProg',data.map(function(d,i){
+      var x=pad.l+step*i+(step-bw)/2;
+      return {x:x,y:pad.t,w:bw,h:cH,lines:[d.lbl,d.v.toLocaleString()+'클릭 · '+(d.cost/10000).toFixed(0)+'만원']};
+    }));
+  })();
+
+  /* 소재별 CTR 비교 */
+  (function(){
+    var CDATA=[
+      {lbl:'스필버그',prog:'위클리',ctr:6.62,active:true},
+      {lbl:'딥다이브 아르테미스',prog:'딥다이브',ctr:3.55,active:false},
+      {lbl:'죽음',prog:'위클리',ctr:3.33,active:false},
+      {lbl:'마이클잭슨',prog:'위클리',ctr:3.29,active:false},
+      {lbl:'만달로리안',prog:'H&N',ctr:2.09,active:false},
+      {lbl:'딥다이브 붉은사막',prog:'딥다이브',ctr:2.09,active:false},
+      {lbl:'백룸',prog:'H&N',ctr:1.74,active:false},
+      {lbl:'토이스토리',prog:'위클리',ctr:1.69,active:true},
+      {lbl:'HOT&NEW 16화',prog:'H&N',ctr:1.23,active:true},
+    ];
+    var bH=16; var gap=3; var lpad=110; var rpad=48;
+    var totalH=CDATA.length*(bH+gap)+16;
+    var ctx=setup('clickCTR',totalH); if(!ctx)return;
+    var W=ctx._w;
+    var maxW=W-lpad-rpad; var maxCTR=10;
+    CDATA.forEach(function(d,i){
+      var y=8+i*(bH+gap);
+      var ratio=d.ctr/maxCTR;
+      var progC=d.prog==='위클리'?C.weekly:(d.prog==='H&N'?C.hot:C.deep);
+      var barCol=d.active?progC:progC+'99';
+      ctx.fillStyle=C.faint; ctx.font='9px '+FN; ctx.textAlign='right';
+      ctx.fillText(d.lbl,lpad-6,y+bH-3);
+      ctx.fillStyle='rgba(255,255,255,0.06)'; ctx.fillRect(lpad,y,maxW,bH);
+      var grd=ctx.createLinearGradient(lpad,0,lpad+ratio*maxW,0);
+      grd.addColorStop(0,barCol.replace(/99$/,'55')||barCol); grd.addColorStop(1,d.active?progC:progC+'bb');
+      ctx.fillStyle=grd; ctx.fillRect(lpad,y,ratio*maxW,bH);
+      ctx.fillStyle=d.active?progC:C.text;
+      ctx.font=(d.active?'bold 10px ':'9px ')+FN;
+      ctx.textAlign='left';
+      ctx.fillText(d.ctr+'%',lpad+ratio*maxW+5,y+bH-3);
+      if(d.active){
+        ctx.fillStyle=progC+'bb'; ctx.font='8px '+FN; ctx.textAlign='right';
+        ctx.fillText('●',W-4,y+bH-3);
+      }
+    });
+    regHits('clickCTR',CDATA.map(function(d,i){
+      var y=8+i*(bH+gap);
+      return {x:0,y:y,w:W,h:bH+gap,lines:[d.lbl+(d.active?' · 집행중':''),d.ctr+'% CTR']};
+    }));
+  })();
+
+  /* 소재별 클릭수 비교 */
+  (function(){
+    var CCLICKS=[
+      {lbl:'죽음',v:84441,c:C.weekly},
+      {lbl:'백룸',v:55027,c:C.hot},
+      {lbl:'토이스토리',v:33275,c:C.weekly},
+      {lbl:'마이클잭슨',v:37132,c:C.weekly},
+      {lbl:'붉은사막',v:24404,c:C.deep},
+      {lbl:'아르테미스',v:18523,c:C.deep},
+      {lbl:'스필버그',v:9007,c:C.weekly},
+      {lbl:'HOT&NEW 16화',v:7704,c:C.hot},
+      {lbl:'만달로리안',v:1760,c:C.hot},
+    ];
+    CCLICKS.sort(function(a,b){return b.v-a.v;});
+    var bH=16; var gap=3; var lpad=110; var rpad=52;
+    var totalH=CCLICKS.length*(bH+gap)+16;
+    var ctx=setup('clickCreativeClicks',totalH); if(!ctx)return;
+    var W=ctx._w;
+    var maxW=W-lpad-rpad; var maxV=90000;
+    CCLICKS.forEach(function(d,i){
+      var y=8+i*(bH+gap);
+      var ratio=d.v/maxV;
+      ctx.fillStyle=C.faint; ctx.font='9px '+FN; ctx.textAlign='right';
+      ctx.fillText(d.lbl,lpad-6,y+bH-3);
+      ctx.fillStyle='rgba(255,255,255,0.06)'; ctx.fillRect(lpad,y,maxW,bH);
+      ctx.fillStyle=d.c; ctx.fillRect(lpad,y,ratio*maxW,bH);
+      ctx.fillStyle=C.text; ctx.font='9px '+FN; ctx.textAlign='left';
+      ctx.fillText(d.v.toLocaleString(),lpad+ratio*maxW+5,y+bH-3);
+    });
+    regHits('clickCreativeClicks',CCLICKS.map(function(d,i){
+      var y=8+i*(bH+gap);
+      return {x:0,y:y,w:W,h:bH+gap,lines:[d.lbl,d.v.toLocaleString()+'클릭']};
+    }));
+  })();
+
+  /* 도넛 공통 헬퍼 */
+  function drawDonut(canvasId, slices, centerLabel, centerSub) {
+    var DCOLORS=[C.hot,C.weekly,'#8BBEFF',C.deep,'#5EE89A','#FF7090','#2D6FE8','#22E5A0'];
+    var legendH = Math.ceil(slices.length/2)*18+8;
+    var donutH = 180;
+    var ctx=setup(canvasId, donutH+legendH); if(!ctx)return;
+    var W=ctx._w, H=ctx._h;
+    var R=Math.min(W*0.38, donutH*0.44);
+    var r=R*0.54;
+    var cx=W/2, cy=donutH*0.50;
+    var total=slices.reduce(function(s,d){return s+d.v;},0);
+    var angle=-Math.PI/2;
+    slices.forEach(function(d,i){
+      var span=(d.v/total)*2*Math.PI;
+      ctx.beginPath(); ctx.moveTo(cx,cy);
+      ctx.arc(cx,cy,R,angle,angle+span);
+      ctx.closePath();
+      ctx.fillStyle=d.c||DCOLORS[i%DCOLORS.length]; ctx.fill();
+      angle+=span;
+    });
+    ctx.beginPath(); ctx.arc(cx,cy,r,0,2*Math.PI);
+    ctx.fillStyle='#131924'; ctx.fill();
+    ctx.fillStyle=C.text; ctx.font='bold 12px '+FN; ctx.textAlign='center';
+    ctx.fillText(centerLabel,cx,cy+4);
+    if(centerSub){ctx.fillStyle=C.dim;ctx.font='9px '+FN;ctx.fillText(centerSub,cx,cy+16);}
+    var cols=2; var colW=W/cols;
+    var lgY=donutH+6;
+    slices.forEach(function(d,i){
+      var col=i%cols; var row=Math.floor(i/cols);
+      var lx=col*colW+8; var ly=lgY+row*18;
+      var pct=((d.v/total)*100).toFixed(1);
+      ctx.fillStyle=d.c||DCOLORS[i%DCOLORS.length];
+      ctx.fillRect(lx,ly+2,8,8);
+      ctx.fillStyle=C.faint; ctx.font='9px '+FN; ctx.textAlign='left';
+      ctx.fillText(d.lbl,lx+12,ly+10);
+      ctx.fillStyle=C.text; ctx.font='bold 9px '+FN; ctx.textAlign='right';
+      ctx.fillText(pct+'%',col*colW+colW-6,ly+10);
+    });
+  }
+
+  /* 광고비 도넛 — 6월 기준 (소재별 실측, RAW Sheet) */
+  drawDonut('clickDonutCost',[
+    {lbl:'군체 (딥다이브)',    v:1784837, c:C.deep},
+    {lbl:'백룸 (H&N)',        v:1778197, c:C.hot},
+    {lbl:'마이클잭슨 (위클리)',v:1728353, c:C.weekly},
+    {lbl:'토이스토리 (위클리)',v:1656496, c:'#8BBEFF'},
+    {lbl:'스필버그 (위클리)', v:458050,  c:'#2060D0'},
+    {lbl:'HOT&NEW 16화 (H&N)',v:340957,  c:'#FF5830'},
+    {lbl:'원더풀스 (H&N)',    v:308933,  c:'#FF8CA0'},
+    {lbl:'만달로리안 (H&N)',  v:25810,   c:'#CC2840'},
+  ],'808만원','6월 총 광고비');
+
+  /* 클릭수 도넛 — 6월 기준 (소재별 실측) */
+  drawDonut('clickDonutClicks',[
+    {lbl:'백룸 (H&N)',        v:55027, c:C.hot},
+    {lbl:'토이스토리 (위클리)',v:33275, c:'#8BBEFF'},
+    {lbl:'마이클잭슨 (위클리)',v:48125, c:C.weekly},
+    {lbl:'군체 (딥다이브)',    v:43810, c:C.deep},
+    {lbl:'스필버그 (위클리)', v:9007,  c:'#2060D0'},
+    {lbl:'HOT&NEW 16화 (H&N)',v:7704,  c:'#FF5830'},
+    {lbl:'원더풀스 (H&N)',    v:8328,  c:'#FF8CA0'},
+    {lbl:'만달로리안 (H&N)',  v:784,   c:'#CC2840'},
+  ],'20.6만','6월 총 클릭수');
+
+  /* ── 일자별 운영 소재 (6월 1일~22일, 일별 추정 데이터) ── */
+  (function(){
+    var JUNE={
+  '6/1':[{lbl:'마이클잭슨',ep:'위클리 S6 15화',prog:'weekly',cost:224570,imp:179157,ctr:3.55,clicks:6359,cpc:35,cpv:1220},
+    {lbl:'원더풀스',ep:'HOT&NEW 11화',prog:'hot',cost:88669,imp:84104,ctr:2.73,clicks:2297,cpc:39,cpv:861},
+    {lbl:'만달로리안',ep:'HOT&NEW 12화',prog:'hot',cost:2426,imp:1139,ctr:5.71,clicks:65,cpc:37,cpv:64},
+    {lbl:'군체',ep:'딥다이브 6화',prog:'deep',cost:20530,imp:17427,ctr:3.32,clicks:579,cpc:35,cpv:1026}],
+  '6/2':[{lbl:'마이클잭슨',ep:'위클리 S6 15화',prog:'weekly',cost:201473,imp:158333,ctr:3.48,clicks:5507,cpc:37,cpv:1371},
+    {lbl:'원더풀스',ep:'HOT&NEW 11화',prog:'hot',cost:65532,imp:64803,ctr:2.73,clicks:1771,cpc:37,cpv:1111},
+    {lbl:'만달로리안',ep:'HOT&NEW 12화',prog:'hot',cost:2264,imp:2800,ctr:2.5,clicks:70,cpc:32,cpv:57},
+    {lbl:'군체',ep:'딥다이브 6화',prog:'deep',cost:67032,imp:68886,ctr:2.87,clicks:1979,cpc:34,cpv:1156}],
+  '6/3':[{lbl:'마이클잭슨',ep:'위클리 S6 15화',prog:'weekly',cost:214541,imp:186280,ctr:3.36,clicks:6264,cpc:34,cpv:1358},
+    {lbl:'원더풀스',ep:'HOT&NEW 11화',prog:'hot',cost:70240,imp:80481,ctr:2.51,clicks:2021,cpc:35,cpv:1033},
+    {lbl:'만달로리안',ep:'HOT&NEW 12화',prog:'hot',cost:1772,imp:1771,ctr:3.44,clicks:61,cpc:29,cpv:21},
+    {lbl:'군체',ep:'딥다이브 6화',prog:'deep',cost:49747,imp:51515,ctr:2.95,clicks:1522,cpc:33,cpv:1081}],
+  '6/4':[{lbl:'마이클잭슨',ep:'위클리 S6 15화',prog:'weekly',cost:208836,imp:189849,ctr:2.86,clicks:5436,cpc:38,cpv:1365},
+    {lbl:'원더풀스',ep:'HOT&NEW 11화',prog:'hot',cost:62659,imp:63164,ctr:2.73,clicks:1727,cpc:36,cpv:1011},
+    {lbl:'만달로리안',ep:'HOT&NEW 12화',prog:'hot',cost:1870,imp:1962,ctr:2.96,clicks:58,cpc:32,cpv:22},
+    {lbl:'군체',ep:'딥다이브 6화',prog:'deep',cost:63072,imp:69865,ctr:2.59,clicks:1812,cpc:35,cpv:830}],
+  '6/5':[{lbl:'마이클잭슨',ep:'위클리 S6 15화',prog:'weekly',cost:234693,imp:174686,ctr:3.55,clicks:6194,cpc:38,cpv:1514},
+    {lbl:'원더풀스',ep:'HOT&NEW 11화 (종료)',prog:'hot',cost:21833,imp:17903,ctr:2.86,clicks:512,cpc:43,cpv:992},
+    {lbl:'만달로리안',ep:'HOT&NEW 11화 (종료)',prog:'hot',cost:2052,imp:2163,ctr:2.5,clicks:54,cpc:38,cpv:23},
+    {lbl:'군체',ep:'딥다이브 6화',prog:'deep',cost:77858,imp:94017,ctr:2.18,clicks:2048,cpc:38,cpv:811}],
+  '6/6':[{lbl:'마이클잭슨',ep:'위클리 S6 15화',prog:'weekly',cost:215712,imp:159706,ctr:3.82,clicks:6108,cpc:35,cpv:1575},
+    {lbl:'만달로리안',ep:'HOT&NEW 12화',prog:'hot',cost:8016,imp:5828,ctr:4.22,clicks:246,cpc:33,cpv:118},
+    {lbl:'군체',ep:'딥다이브 6화',prog:'deep',cost:112596,imp:131660,ctr:2.62,clicks:3444,cpc:33,cpv:901}],
+  '6/7':[{lbl:'마이클잭슨',ep:'위클리 S6 15화',prog:'weekly',cost:183687,imp:133790,ctr:4.11,clicks:5495,cpc:33,cpv:1894},
+    {lbl:'만달로리안',ep:'HOT&NEW 12화',prog:'hot',cost:4159,imp:4793,ctr:2.96,clicks:142,cpc:29,cpv:47},
+    {lbl:'군체',ep:'딥다이브 6화',prog:'deep',cost:148436,imp:250186,ctr:1.93,clicks:4836,cpc:31,cpv:922}],
+  '6/8':[{lbl:'마이클잭슨',ep:'위클리 S6 15화',prog:'weekly',cost:185302,imp:133249,ctr:3.88,clicks:5171,cpc:36,cpv:2082},
+    {lbl:'만달로리안',ep:'HOT&NEW 12화 (종료)',prog:'hot',cost:2841,imp:3934,ctr:1.91,clicks:75,cpc:38,cpv:68},
+    {lbl:'군체',ep:'딥다이브 6화',prog:'deep',cost:148424,imp:283543,ctr:1.47,clicks:4161,cpc:36,cpv:1116}],
+  '6/9':[{lbl:'마이클잭슨',ep:'위클리 S6 15화 (종료)',prog:'weekly',cost:59538,imp:35964,ctr:4.42,clicks:1591,cpc:37,cpv:2382},
+    {lbl:'토이스토리',ep:'위클리 S5 13화 (시작)',prog:'weekly',cost:20898,imp:21334,ctr:2.27,clicks:485,cpc:43,cpv:85},
+    {lbl:'만달로리안',ep:'HOT&NEW 12화 (종료)',prog:'hot',cost:409,imp:562,ctr:2.31,clicks:13,cpc:31,cpv:34},
+    {lbl:'백룸',ep:'HOT&NEW 13화 (시작)',prog:'hot',cost:25786,imp:17668,ctr:4.91,clicks:867,cpc:30,cpv:29},
+    {lbl:'군체',ep:'딥다이브 6화',prog:'deep',cost:229713,imp:450652,ctr:1.26,clicks:5694,cpc:40,cpv:945}],
+  '6/10':[{lbl:'토이스토리',ep:'위클리 S5 13화',prog:'weekly',cost:11966,imp:17751,ctr:1.23,clicks:218,cpc:55,cpv:203},
+    {lbl:'백룸',ep:'HOT&NEW 13화',prog:'hot',cost:48560,imp:73748,ctr:2.18,clicks:1605,cpc:30,cpv:585},
+    {lbl:'군체',ep:'딥다이브 6화',prog:'deep',cost:275871,imp:573426,ctr:1.05,clicks:6016,cpc:46,cpv:1049}],
+  '6/11':[{lbl:'토이스토리',ep:'위클리 S5 13화',prog:'weekly',cost:1192,imp:1940,ctr:2.01,clicks:39,cpc:31,cpv:397},
+    {lbl:'백룸',ep:'HOT&NEW 13화',prog:'hot',cost:300987,imp:491792,ctr:1.91,clicks:9385,cpc:32,cpv:1031},
+    {lbl:'군체',ep:'딥다이브 6화',prog:'deep',cost:34170,imp:72033,ctr:1.1,clicks:789,cpc:43,cpv:1708}],
+  '6/12':[{lbl:'토이스토리',ep:'위클리 S5 13화',prog:'weekly',cost:1939,imp:2673,ctr:2.69,clicks:72,cpc:27,cpv:388},
+    {lbl:'백룸',ep:'HOT&NEW 13화',prog:'hot',cost:330088,imp:585289,ctr:1.65,clicks:9661,cpc:34,cpv:1119},
+    {lbl:'군체',ep:'딥다이브 6화',prog:'deep',cost:4181,imp:8744,ctr:1.53,clicks:134,cpc:31,cpv:523}],
+  '6/13':[{lbl:'토이스토리',ep:'위클리 S5 13화',prog:'weekly',cost:3646,imp:3590,ctr:3.06,clicks:110,cpc:33,cpv:912},
+    {lbl:'백룸',ep:'HOT&NEW 13화',prog:'hot',cost:329688,imp:604134,ctr:1.85,clicks:11152,cpc:30,cpv:942},
+    {lbl:'군체',ep:'딥다이브 6화',prog:'deep',cost:3013,imp:4112,ctr:2.43,clicks:100,cpc:30,cpv:301}],
+  '6/14':[{lbl:'토이스토리',ep:'위클리 S5 13화',prog:'weekly',cost:4330,imp:4182,ctr:3.42,clicks:143,cpc:30,cpv:1082},
+    {lbl:'백룸',ep:'HOT&NEW 13화',prog:'hot',cost:328610,imp:608196,ctr:1.81,clicks:11015,cpc:30,cpv:1053},
+    {lbl:'군체',ep:'딥다이브 6화',prog:'deep',cost:3527,imp:6859,ctr:1.81,clicks:124,cpc:28,cpv:705}],
+  '6/15':[{lbl:'토이스토리',ep:'위클리 S5 13화',prog:'weekly',cost:2076,imp:3309,ctr:1.81,clicks:60,cpc:35,cpv:346},
+    {lbl:'백룸',ep:'HOT&NEW 13화',prog:'hot',cost:329578,imp:626081,ctr:1.48,clicks:9269,cpc:36,cpv:1074},
+    {lbl:'군체',ep:'딥다이브 6화',prog:'deep',cost:4799,imp:11909,ctr:1.34,clicks:160,cpc:30,cpv:533}],
+  '6/16':[{lbl:'토이스토리',ep:'위클리 S5 13화',prog:'weekly',cost:38347,imp:27038,ctr:3.79,clicks:1026,cpc:37,cpv:737},
+    {lbl:'스필버그',ep:'위클리 S6 19화 (시작)',prog:'weekly',cost:22573,imp:17538,ctr:2.82,clicks:494,cpc:46,cpv:480},
+    {lbl:'백룸',ep:'HOT&NEW 13화 (종료)',prog:'hot',cost:84900,imp:154499,ctr:1.34,clicks:2073,cpc:41,cpv:1179},
+    {lbl:'군체',ep:'딥다이브 6화',prog:'deep',cost:190562,imp:377895,ctr:1.02,clicks:3853,cpc:49,cpv:1095}],
+  '6/17':[{lbl:'토이스토리',ep:'위클리 S5 13화',prog:'weekly',cost:43703,imp:68382,ctr:1.37,clicks:939,cpc:47,cpv:480},
+    {lbl:'스필버그',ep:'위클리 S6 19화',prog:'weekly',cost:22817,imp:9311,ctr:3.91,clicks:364,cpc:63,cpv:736},
+    {lbl:'군체',ep:'딥다이브 6화 (종료)',prog:'deep',cost:269870,imp:633778,ctr:0.81,clicks:5140,cpc:53,cpv:836}],
+  '6/18':[{lbl:'토이스토리',ep:'위클리 S5 13화',prog:'weekly',cost:177264,imp:341361,ctr:1.02,clicks:3491,cpc:51,cpv:791},
+    {lbl:'스필버그',ep:'위클리 S6 19화',prog:'weekly',cost:77805,imp:13146,ctr:14,clicks:1841,cpc:42,cpv:677},
+    {lbl:'군체',ep:'딥다이브 6화 (종료)',prog:'deep',cost:81434,imp:161496,ctr:0.88,clicks:1419,cpc:57,cpv:1086}],
+  '6/19':[{lbl:'토이스토리',ep:'위클리 S5 13화',prog:'weekly',cost:261252,imp:271650,ctr:1.8,clicks:4893,cpc:53,cpv:877},
+    {lbl:'스필버그',ep:'위클리 S6 19화',prog:'weekly',cost:74034,imp:15725,ctr:9.23,clicks:1452,cpc:51,cpv:392}],
+  '6/20':[{lbl:'토이스토리',ep:'위클리 S5 13화',prog:'weekly',cost:254853,imp:158024,ctr:3.29,clicks:5192,cpc:49,cpv:750},
+    {lbl:'스필버그',ep:'위클리 S6 19화',prog:'weekly',cost:78489,imp:12046,ctr:14.09,clicks:1697,cpc:46,cpv:344}],
+  '6/21':[{lbl:'토이스토리',ep:'위클리 S5 13화',prog:'weekly',cost:234174,imp:183890,ctr:3.08,clicks:5661,cpc:41,cpv:610},
+    {lbl:'스필버그',ep:'위클리 S6 19화',prog:'weekly',cost:101860,imp:14580,ctr:12.58,clicks:1834,cpc:56,cpv:437}],
+  '6/22':[{lbl:'토이스토리',ep:'위클리 S5 13화',prog:'weekly',cost:301293,imp:452638,ctr:1.09,clicks:4947,cpc:61,cpv:667},
+    {lbl:'스필버그',ep:'위클리 S6 19화',prog:'weekly',cost:38545,imp:24967,ctr:2.45,clicks:611,cpc:63,cpv:146}],
+  '6/23':[{lbl:'토이스토리',ep:'위클리 S5 13화',prog:'weekly',cost:206998,imp:345226,ctr:1.07,clicks:3705,cpc:56,cpv:787},
+    {lbl:'스필버그',ep:'위클리 S6 19화',prog:'weekly',cost:36943,imp:24797,ctr:2.54,clicks:631,cpc:59,cpv:199},
+    {lbl:'토이스토리',ep:'HOT&NEW 16화 (시작)',prog:'hot',cost:95753,imp:178662,ctr:1.23,clicks:2198,cpc:44,cpv:878}],
+  '6/24':[{lbl:'토이스토리',ep:'위클리 S5 13화',prog:'weekly',cost:92565,imp:68775,ctr:3.34,clicks:2294,cpc:40,cpv:347},
+    {lbl:'스필버그',ep:'위클리 S6 19화',prog:'weekly',cost:4984,imp:3914,ctr:2.12,clicks:83,cpc:60,cpv:40},
+    {lbl:'토이스토리',ep:'HOT&NEW 16화',prog:'hot',cost:245204,imp:446465,ctr:1.23,clicks:5506,cpc:45,cpv:577}],
+};
+
+    function renderDateCards(key){
+      var list=JUNE[key]; if(!list)return;
+      var d=parseInt(key.split('/')[1]);
+      var dowStr=['일','월','화','수','목','금','토'][d%7];
+      var totalCost=list.reduce(function(s,c){return s+c.cost;},0);
+      var ev=[];
+      if(d===6)ev.push('<span style="color:var(--prog-hot)">■ 원더풀스 종료</span>');
+      if(d===9)ev.push('<span style="color:var(--prog-weekly)">▲ 토이스토리 시작</span>');
+      if(d===9)ev.push('<span style="color:var(--prog-hot)">▲ 백룸 시작</span>');
+      if(d===9)ev.push('<span style="color:var(--prog-weekly)">▼ 마이클잭슨 종료</span>');
+      if(d===16)ev.push('<span style="color:var(--prog-weekly)">▲ 스필버그 시작</span>');
+      if(d===16)ev.push('<span style="color:var(--prog-hot)">■ 백룸 종료</span>');
+      if(d===19)ev.push('<span style="color:var(--deep,#22C55E)">■ 군체 종료</span>');
+      var noteEl=document.getElementById('click-date-note');
+      if(noteEl) noteEl.innerHTML='6월 '+d+'일 ('+dowStr+') &nbsp;·&nbsp; 운영 소재 <strong style="color:var(--text)">'+list.length+'개</strong> &nbsp;·&nbsp; 당일 총 집행 <strong style="color:var(--text)">'+totalCost.toLocaleString()+'원</strong>'
+        +(ev.length?' &nbsp;&nbsp;'+ev.join(' &nbsp; '):'');
+      var grid=document.getElementById('click-date-cards'); if(!grid)return;
+      grid.innerHTML=list.map(function(c){
+        var pname=c.prog==='weekly'?'라플위클리':c.prog==='hot'?'HOT&NEW':'딥다이브';
+        return '<div class="dcard-lg '+c.prog+'">'
+          +'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">'
+          +'<span class="dcard-prog">'+pname+'</span>'
+          +'<span style="font-size:9px;color:var(--faint);">'+c.ep+'</span>'
+          +'</div>'
+          +'<div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:14px;">'+c.lbl+'</div>'
+          +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px 14px;margin-bottom:14px;">'
+          +'<div><div style="font-size:9px;color:var(--dim);margin-bottom:3px;">CTR</div><div class="dcard-ctr">'+c.ctr+'%</div></div>'
+          +'<div><div style="font-size:9px;color:var(--dim);margin-bottom:3px;">클릭수</div><div style="font-size:20px;font-weight:700;font-family:var(--fn);color:var(--text);">'+c.clicks.toLocaleString()+'</div></div>'
+          +'<div><div style="font-size:9px;color:var(--dim);margin-bottom:3px;">노출수</div><div style="font-size:20px;font-weight:700;font-family:var(--fn);color:var(--text);">'+(c.imp?c.imp.toLocaleString():'-')+'</div></div>'
+          +'<div><div style="font-size:9px;color:var(--dim);margin-bottom:3px;">CPC</div><div style="font-size:20px;font-weight:700;font-family:var(--fn);color:var(--text);">'+c.cpc+'원</div></div>'
+          +'<div><div style="font-size:9px;color:var(--dim);margin-bottom:3px;">CPV</div><div style="font-size:20px;font-weight:700;font-family:var(--fn);color:var(--text);">'+c.cpv+'원</div></div>'
+          +'</div>'
+          +'<div style="border-top:1px solid var(--border);padding-top:10px;display:flex;justify-content:space-between;align-items:center;">'
+          +'<span style="font-size:9px;color:var(--dim);">당일 집행 예산</span>'
+          +'<span style="font-size:14px;font-weight:700;font-family:var(--fn);color:var(--text);">'+c.cost.toLocaleString()+'원</span>'
+          +'</div>'
+          +'</div>';
+      }).join('');
+    }
+
+    /* 버튼 24개 렌더링 */
+    var bc=document.getElementById('click-day-btns');
+    if(bc){
+      var h='';
+      for(var d2=1;d2<=24;d2++){
+        var dow2=d2%7;
+        var cls='date-btn'+(dow2===0||dow2===6?' wk':'')+(d2===24?' on':'')+(d2===6||d2===9||d2===16||d2===19?' ev':'');
+        h+='<button class="'+cls+'" data-date="6/'+d2+'">'+d2+'</button>';
+      }
+      bc.innerHTML=h;
+      bc.querySelectorAll('.date-btn').forEach(function(btn){
+        btn.addEventListener('click',function(){
+          bc.querySelectorAll('.date-btn').forEach(function(b){b.classList.remove('on');});
+          btn.classList.add('on');
+          renderDateCards(btn.getAttribute('data-date'));
+        });
+      });
+    }
+    renderDateCards('6/24');
+  })();
+
+}catch(e){}}
+
+/* === PAGE 4: Conv charts + daily cards === */
+function drawConvCharts(){try{
+  /* 일별 전환수 바 차트 (6/1~6/21 전체) */
+  (function(){
+    var ctx=setup('convDaily',220); if(!ctx)return;
+    var W=ctx._w,H=ctx._h;
+    var CD=[
+      {d:'6/1',v:200,rate:30},{d:'6/2',v:225,rate:32},{d:'6/3',v:240,rate:31},
+      {d:'6/4',v:235,rate:30},{d:'6/5',v:250,rate:33},{d:'6/6',v:260,rate:34},
+      {d:'6/7',v:245,rate:32},{d:'6/8',v:270,rate:35},{d:'6/9',v:255,rate:33},
+      {d:'6/10',v:225,rate:31},{d:'6/11',v:210,rate:30},{d:'6/12',v:230,rate:32},
+      {d:'6/13',v:245,rate:33},{d:'6/14',v:245,rate:34},{d:'6/15',v:228,rate:33},
+      {d:'6/16',v:234,rate:29},{d:'6/17',v:179,rate:25},{d:'6/18',v:362,rate:32},
+      {d:'6/19',v:316,rate:29},{d:'6/20',v:429,rate:38},{d:'6/21',v:310,rate:27},
+      {d:'6/22',v:285,rate:25},{d:'6/23',v:301,rate:25},
+      {d:'6/24',v:301,rate:25}
+    ];
+    var maxV=500;
+    var pad={t:18,r:52,b:26,l:32};
+    var cW=W-pad.l-pad.r, cH=H-pad.t-pad.b;
+    [100,200,300,400].forEach(function(v){
+      var y=pad.t+cH-(v/maxV)*cH;
+      ctx.strokeStyle=C.border; ctx.lineWidth=1;
+      ctx.beginPath(); ctx.moveTo(pad.l,y); ctx.lineTo(pad.l+cW,y); ctx.stroke();
+      ctx.fillStyle=C.faint; ctx.font='8px '+FN; ctx.textAlign='right';
+      ctx.fillText(v,pad.l-4,y+3);
+    });
+    var n=CD.length; var step=cW/n; var bw=step*.62;
+    var maxVal=Math.max.apply(null,CD.map(function(d){return d.v;}));
+    CD.forEach(function(d,i){
+      var x=pad.l+step*i+(step-bw)/2;
+      var bh=(d.v/maxV)*cH; var y=pad.t+cH-bh;
+      var best=d.v===maxVal;
+      ctx.fillStyle=best?C.teal:'rgba(0,201,167,0.45)';
+      ctx.fillRect(x,y,bw,bh);
+      if(best){ctx.fillStyle=C.teal;ctx.font='bold 9px '+FN;ctx.textAlign='center';ctx.fillText(d.v,x+bw/2,y-3);}
+      if(i%3===0||i===n-1){ctx.fillStyle=C.dim;ctx.font='7px '+FN;ctx.textAlign='center';ctx.fillText(d.d.split('/')[1],x+bw/2,pad.t+cH+10);}
+    });
+    var avg=Math.round(CD.reduce(function(s,d){return s+d.v;},0)/CD.length);
+    var avgY=pad.t+cH-(avg/maxV)*cH;
+    ctx.setLineDash([3,4]); ctx.strokeStyle='rgba(0,201,167,.3)'; ctx.lineWidth=1;
+    ctx.beginPath(); ctx.moveTo(pad.l,avgY); ctx.lineTo(pad.l+cW,avgY); ctx.stroke();
+    ctx.setLineDash([]); ctx.fillStyle=C.dim; ctx.font='8px '+FN; ctx.textAlign='left';
+    ctx.fillText('avg '+avg,pad.l+cW+3,avgY+3);
+    /* CVR 라인 (황색) */
+    ctx.strokeStyle='rgba(240,192,64,.8)'; ctx.lineWidth=1.5; ctx.lineJoin='round';
+    ctx.setLineDash([2,3]);
+    ctx.beginPath();
+    CD.forEach(function(d,i){
+      var x=pad.l+step*i+step/2; var y=pad.t+cH-(d.rate/50)*cH;
+      if(i===0)ctx.moveTo(x,y); else ctx.lineTo(x,y);
+    });
+    ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle='rgba(240,192,64,.9)'; ctx.font='8px '+FN; ctx.textAlign='left';
+    ctx.fillText('CVR%',pad.l+cW+3,pad.t+6);
+    regHits('convDaily',CD.map(function(d,i){
+      var x=pad.l+step*i+(step-bw)/2;
+      return {x:x,y:pad.t,w:bw,h:cH,lines:[d.d+' 구독전환',d.v+'건 · CVR '+d.rate+'%']};
+    }));
+  })();
+
+  /* 일자별 전환 카드 */
+  (function(){
+    var CONV={
+      '6/1':{conv:200,cvr:30,cost:223200},'6/2':{conv:225,cvr:32,cost:251100},
+      '6/3':{conv:240,cvr:31,cost:267840},'6/4':{conv:235,cvr:30,cost:262260},
+      '6/5':{conv:250,cvr:33,cost:279000},'6/6':{conv:260,cvr:34,cost:290160},
+      '6/7':{conv:245,cvr:32,cost:273420},'6/8':{conv:270,cvr:35,cost:301320},
+      '6/9':{conv:255,cvr:33,cost:284580},'6/10':{conv:225,cvr:31,cost:251100},
+      '6/11':{conv:210,cvr:30,cost:234360},'6/12':{conv:230,cvr:32,cost:256680},
+      '6/13':{conv:245,cvr:33,cost:273420},'6/14':{conv:245,cvr:34,cost:273420},
+      '6/15':{conv:228,cvr:33,cost:254448},'6/16':{conv:234,cvr:29,cost:261144},
+      '6/17':{conv:179,cvr:25,cost:199764},'6/18':{conv:362,cvr:32,cost:404232},
+      '6/19':{conv:316,cvr:29,cost:352656},'6/20':{conv:429,cvr:38,cost:478764},
+      '6/21':{conv:310,cvr:27,cost:345960},
+      '6/22':{conv:285,cvr:25,cost:442210},
+      '6/23':{conv:301,cvr:25,cost:442483},
+      '6/24':{conv:301,cvr:25,cost:442193}
+    };
+    /* 소재별 일별 데이터: [조회수, 클릭수, CTR(%), CPV(원), 일광고비(원)] — Sheet7 실측 */
+    var CC={
+      '군체':{prog:'deep',ep:'딥다이브 6화',d:{
+        '6/1':[62,24,'0.59',144,8925],'6/2':[251,102,'0.77',160,40143],
+        '6/3':[293,103,'0.62',127,37289],'6/4':[276,120,'0.98',169,46531],
+        '6/5':[185,70,'0.85',163,30203],'6/6':[311,139,'0.72',182,56584],
+        '6/7':[570,235,'0.67',124,70802],'6/8':[449,186,'0.61',142,63944],
+        '6/9':[1418,618,'0.59',157,223139],'6/10':[1554,660,'0.53',155,240429],
+        '6/11':[1302,597,'0.58',168,219186],'6/12':[1250,531,'0.53',175,218838],
+        '6/13':[1398,591,'0.51',159,221967],'6/14':[1526,717,'0.55',154,234958],
+        '6/15':[1512,691,'0.56',156,236121],'6/16':[1498,688,'0.57',158,237249],
+        '6/17':[1432,630,'0.48',168,240657],'6/18':[2569,1177,'0.61',164,420372],
+        '6/19':[2384,1023,'0.50',175,416919],'6/20':[2110,932,'0.44',179,378285],
+        '6/21':[1794,759,'0.48',165,296704],
+        '6/22':[918,397,'0.50',182,166614],'6/23':[681,286,'0.47',172,116908],
+        '6/24':[564,262,'0.43',189,106837]
+      }},
+      '토이스토리':{prog:'weekly',ep:'시즌5 13화',d:{
+        '6/9':[61,15,'0.21',104,6326],'6/10':[53,13,'0.18',130,6879],
+        '6/11':[88,37,'0.38',190,16692],'6/12':[139,46,'0.43',133,18555],
+        '6/13':[162,30,'0.28',94,15276],'6/14':[78,20,'0.33',95,7433],
+        '6/15':[67,21,'0.39',113,7576],'6/16':[52,20,'0.47',137,7135],
+        '6/17':[32,8,'0.29',129,4125],'6/18':[128,39,'0.53',121,15504],
+        '6/19':[39,11,'0.43',118,4586],'6/20':[69,13,'0.27',87,5973],
+        '6/21':[79,17,'0.27',91,7181],
+        '6/22':[44,12,'0.36',112,4917],'6/23':[46,17,'0.45',129,5913],
+        '6/24':[51,16,'0.35',122,6226]
+      }},
+      '스필버그':{prog:'weekly',ep:'시즌6 19화',d:{
+        '6/18':[8,7,'0.81',212,1694],'6/19':[85,43,'0.79',245,20807],
+        '6/20':[373,171,'0.99',156,58107],'6/21':[732,391,'0.83',189,138345],
+        '6/22':[1417,738,'0.75',191,270678],'6/23':[1623,880,'0.75',197,319663],
+        '6/24':[1637,879,'0.73',201,329130]
+      }},
+      '마이클잭슨':{prog:'weekly',ep:'시즌6 15화 (OFF)',d:{
+        '6/1':[1293,596,'0.65',183,236118],'6/2':[1189,499,'0.64',175,208563],
+        '6/3':[1276,609,'0.63',164,209556],'6/4':[1151,513,'0.58',171,196928],
+        '6/5':[1233,592,'0.67',176,216641],'6/6':[1020,464,'0.50',176,179616],
+        '6/7':[1139,546,'0.62',145,165578],'6/8':[1127,527,'0.66',160,180118],
+        '6/9':[86,58,'1.29',205,17648]
+      }},
+      '야구':{prog:'weekly',ep:'야구 소재 (OFF)',d:{
+        '6/1':[38,10,'0.59',100,3794],'6/2':[7,5,'0.50',184,1287],
+        '6/3':[27,5,'0.28',100,2688],'6/4':[52,11,'0.34',126,6564],
+        '6/5':[31,11,'0.71',102,3176],'6/6':[108,33,'0.43',128,13811],
+        '6/7':[134,38,'0.46',100,13356],'6/8':[66,17,'0.49',91,6010],
+        '6/9':[26,17,'0.69',111,2884],'6/10':[29,8,'0.19',95,2760],
+        '6/11':[159,33,'0.18',89,14082],'6/12':[128,17,'0.10',98,12555],
+        '6/13':[170,24,'0.10',75,12742],'6/14':[128,23,'0.11',59,7599],
+        '6/15':[104,20,'0.16',60,6290],'6/16':[75,8,'0.07',75,5613],
+        '6/17':[85,12,'0.08',61,5207],'6/18':[47,17,'0.35',108,5059]
+      }}
+    };
+    var DOW=['일','월','화','수','목','금','토'];
+    function renderConvDayCards(key){
+      var d=CONV[key]; if(!d)return;
+      var day=parseInt(key.split('/')[1]);
+      var dowStr=DOW[day%7]; /* 6/1=Mon→day%7=1 ✓ */
+      var noteEl=document.getElementById('conv-date-note');
+      if(noteEl) noteEl.innerHTML='6월 '+day+'일 ('+dowStr+')'
+        +' &nbsp;·&nbsp; 구독 전환 <strong style="color:var(--teal)">'+d.conv+'건</strong>'
+        +' &nbsp;·&nbsp; 일 광고비 <strong style="color:var(--text)">'+d.cost.toLocaleString()+'원</strong>'
+        +(d.conv===429?' &nbsp;&nbsp;<span style="color:var(--teal)">▲ 6월 최고 전환일</span>':'')
+        +(d.conv===179?' &nbsp;&nbsp;<span style="color:var(--accent)">▼ 6월 최저 전환일</span>':'');
+      var grid=document.getElementById('conv-date-cards'); if(!grid)return;
+      var cpsub=Math.round(d.cost/d.conv);
+      var aboveAvg=d.conv>=257;
+      /* 기존 요약 카드 */
+      var html='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;">'
+        +'<div class="dcard-lg weekly">'
+        +'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">'
+        +'<span class="dcard-prog">전환 캠페인</span>'
+        +'<span style="font-size:9px;color:var(--faint);">6월 '+day+'일 ('+dowStr+')</span>'
+        +'</div>'
+        +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px 14px;margin-bottom:14px;">'
+        +'<div><div style="font-size:9px;color:var(--dim);margin-bottom:3px;">구독 전환</div><div style="font-size:28px;font-weight:700;font-family:var(--fn);color:var(--teal);">'+d.conv+'건</div></div>'
+        +'<div><div style="font-size:9px;color:var(--dim);margin-bottom:3px;">CVR</div><div style="font-size:28px;font-weight:700;font-family:var(--fn);color:var(--text);">'+d.cvr+'%</div></div>'
+        +'<div><div style="font-size:9px;color:var(--dim);margin-bottom:3px;">구독단가</div><div style="font-size:20px;font-weight:700;font-family:var(--fn);color:var(--text);">'+cpsub.toLocaleString()+'원</div></div>'
+        +'<div><div style="font-size:9px;color:var(--dim);margin-bottom:3px;">일 광고비</div><div style="font-size:20px;font-weight:700;font-family:var(--fn);color:var(--text);">'+d.cost.toLocaleString()+'원</div></div>'
+        +'</div>'
+        +'<div style="border-top:1px solid var(--border);padding-top:10px;display:flex;justify-content:space-between;align-items:center;">'
+        +'<span style="font-size:9px;color:var(--dim);">일 평균 대비 (avg ~300건)</span>'
+        +'<span style="font-size:11px;font-weight:700;color:'+(aboveAvg?'var(--teal)':'var(--accent)')+';">'+(aboveAvg?'▲ 평균 이상':'▼ 평균 이하')+'</span>'
+        +'</div>'
+        +'</div>'
+        +'</div>';
+      /* 소재별 카드 */
+      var names=['군체','토이스토리','스필버그','마이클잭슨','야구'];
+      var activeCards='';
+      names.forEach(function(nm){
+        var cr=CC[nm]; if(!cr)return;
+        var rd=cr.d[key]; if(!rd)return;
+        var pc=cr.prog==='deep'?'var(--prog-deep)':'var(--prog-weekly)';
+        activeCards+='<div style="flex:1;min-width:150px;max-width:230px;'
+          +'background:rgba(255,255,255,.03);border:1px solid var(--border);'
+          +'border-left:3px solid '+pc+';border-radius:0 6px 6px 0;padding:10px 12px;">'
+          +'<div style="font-size:10px;font-weight:700;color:var(--text);margin-bottom:2px;">'+nm+'</div>'
+          +'<div style="font-size:8px;font-weight:700;color:'+pc+';margin-bottom:8px;">'+cr.ep+'</div>'
+          +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:5px 10px;">'
+          +'<div><div style="font-size:8px;color:var(--dim);">조회수</div><div style="font-size:13px;font-weight:700;font-family:var(--fn);color:var(--text);">'+rd[0].toLocaleString()+'</div></div>'
+          +'<div><div style="font-size:8px;color:var(--dim);">클릭수</div><div style="font-size:13px;font-weight:700;font-family:var(--fn);color:var(--text);">'+rd[1].toLocaleString()+'</div></div>'
+          +'<div><div style="font-size:8px;color:var(--dim);">CTR</div><div style="font-size:13px;font-weight:700;font-family:var(--fn);color:var(--text);">'+rd[2]+'%</div></div>'
+          +'<div><div style="font-size:8px;color:var(--dim);">CPV</div><div style="font-size:13px;font-weight:700;font-family:var(--fn);color:var(--text);">'+rd[3]+'원</div></div>'
+          +'<div style="grid-column:1/-1;">'
+          +'<div style="font-size:8px;color:var(--dim);">일 광고비</div>'
+          +'<div style="font-size:13px;font-weight:700;font-family:var(--fn);color:var(--text);">'+rd[4].toLocaleString()+'원</div>'
+          +'</div>'
+          +'</div>'
+          +'</div>';
+      });
+      if(activeCards){
+        html+='<div style="margin-top:14px;border-top:1px solid var(--border);padding-top:12px;">'
+          +'<div style="font-size:9px;font-weight:700;color:var(--dim);letter-spacing:.06em;margin-bottom:8px;text-transform:uppercase;">소재별 현황</div>'
+          +'<div style="display:flex;gap:8px;flex-wrap:wrap;">'+activeCards+'</div>'
+          +'</div>';
+      }
+      grid.innerHTML=html;
+    }
+    var bc=document.getElementById('conv-day-btns');
+    if(bc){
+      var h='';
+      for(var d2=1;d2<=24;d2++){
+        var dow2=d2%7; /* 6/1=Mon=1, 6/7=Sun=0, 6/13=Sat=6, 6/14=Sun=0, 6/20=Sat=6, 6/21=Sun=0 */
+        var isWk=dow2===0||dow2===6;
+        var isPeak=d2===18||d2===20;
+        var cls='date-btn'+(isWk?' wk':'')+(d2===24?' on':'')+(isPeak?' ev':'');
+        h+='<button class="'+cls+'" data-cdate="6/'+d2+'">'+d2+'</button>';
+      }
+      bc.innerHTML=h;
+      bc.querySelectorAll('.date-btn').forEach(function(btn){
+        btn.addEventListener('click',function(){
+          bc.querySelectorAll('.date-btn').forEach(function(b){b.classList.remove('on');});
+          btn.classList.add('on');
+          renderConvDayCards(btn.getAttribute('data-cdate'));
+        });
+      });
+    }
+    renderConvDayCards('6/24');
+  })();
+}catch(e){console.error('convCharts',e);}}
+
+/* === PAGE 5: Retarget daily chart + creative cards === */
+function drawRetargetCharts(){try{
+  /* 일별 조회수 바 차트 */
+  (function(){
+    var ctx=setup('retargetDaily',200); if(!ctx)return;
+    var W=ctx._w,H=ctx._h;
+    var raw=[
+      {d:'6/1',v:4492,ctr:247},{d:'6/2',v:12938,ctr:544},{d:'6/3',v:18878,ctr:314},
+      {d:'6/4',v:23553,ctr:312},{d:'6/5',v:25936,ctr:389},{d:'6/6',v:29697,ctr:274},
+      {d:'6/7',v:29074,ctr:316},{d:'6/8',v:32647,ctr:320},{d:'6/9',v:31889,ctr:265},
+      {d:'6/10',v:29025,ctr:236},{d:'6/11',v:27708,ctr:169},{d:'6/12',v:31769,ctr:243},
+      {d:'6/13',v:39162,ctr:454},{d:'6/14',v:38797,ctr:405},{d:'6/15',v:30146,ctr:240},
+      {d:'6/16',v:28488,ctr:308},{d:'6/17',v:20322,ctr:176},{d:'6/18',v:14689,ctr:136},
+      {d:'6/19',v:16303,ctr:137},{d:'6/20',v:21444,ctr:205},{d:'6/21',v:25812,ctr:253},
+      {d:'6/22',v:20879,ctr:183},{d:'6/23',v:25547,ctr:277},
+      {d:'6/24',v:25918,ctr:227}
+    ];
+    var maxV=42000;
+    var pad={t:20,r:12,b:30,l:42};
+    var cW=W-pad.l-pad.r,cH=H-pad.t-pad.b;
+    [10000,20000,30000,40000].forEach(function(v){
+      var y=pad.t+cH-(v/maxV)*cH;
+      ctx.strokeStyle=C.border; ctx.lineWidth=1;
+      ctx.beginPath(); ctx.moveTo(pad.l,y); ctx.lineTo(pad.l+cW,y); ctx.stroke();
+      ctx.fillStyle=C.faint; ctx.font='8px '+FN; ctx.textAlign='right';
+      ctx.fillText((v/10000).toFixed(0)+'만',pad.l-4,y+3);
+    });
+    var n=raw.length; var step=cW/n; var bw=step*.65;
+    raw.forEach(function(d,i){
+      var x=pad.l+step*i+(step-bw)/2;
+      var bh=(d.v/maxV)*cH; var y=pad.t+cH-bh;
+      var best=d.v===Math.max.apply(null,raw.map(function(x){return x.v;}));
+      ctx.fillStyle=best?C.teal:C.accent; ctx.globalAlpha=.7;
+      ctx.fillRect(x,y,bw,bh); ctx.globalAlpha=1;
+      if(i%3===0||best){
+        ctx.fillStyle=C.dim; ctx.font='7px '+FN; ctx.textAlign='center';
+        ctx.fillText(d.d,x+bw/2,pad.t+cH+11);
+      }
+    });
+    /* CTR line */
+    ctx.strokeStyle=C.teal; ctx.lineWidth=1.5; ctx.lineJoin='round';
+    ctx.beginPath();
+    raw.forEach(function(d,i){
+      var x=pad.l+step*i+step/2;
+      var y=pad.t+cH-(d.ctr/600)*cH;
+      if(i===0)ctx.moveTo(x,y); else ctx.lineTo(x,y);
+    });
+    ctx.stroke();
+    ctx.fillStyle=C.teal; ctx.font='8px '+FN; ctx.textAlign='left';
+    ctx.fillText('─ CTR 추이',pad.l+4,pad.t+10);
+    regHits('retargetDaily',raw.map(function(d,i){
+      var x=pad.l+step*i+(step-bw)/2;
+      return {x:x,y:pad.t,w:bw,h:cH,lines:[d.d+' 후속조회',d.v.toLocaleString()+'회 · CTR '+(d.ctr/100).toFixed(2)+'%']};
+    }));
+  })();
+
+  /* 일자별 후속조회 카드 */
+  (function(){
+    /* 일별 전체 집계: {views, ctr(조회율%), cpv원, cost원} */
+    var RD={
+      '6/1':{views:4492,ctr:'2.47',cpv:74,cost:333603},
+      '6/2':{views:12938,ctr:'5.44',cpv:26,cost:333187},
+      '6/3':{views:18878,ctr:'3.14',cpv:18,cost:333364},
+      '6/4':{views:23553,ctr:'3.12',cpv:14,cost:333755},
+      '6/5':{views:25936,ctr:'3.89',cpv:13,cost:333508},
+      '6/6':{views:29697,ctr:'2.74',cpv:11,cost:333526},
+      '6/7':{views:29074,ctr:'3.16',cpv:11,cost:333956},
+      '6/8':{views:32647,ctr:'3.20',cpv:10,cost:333898},
+      '6/9':{views:31889,ctr:'2.65',cpv:10,cost:333733},
+      '6/10':{views:29025,ctr:'2.36',cpv:12,cost:333814},
+      '6/11':{views:27708,ctr:'1.69',cpv:12,cost:333632},
+      '6/12':{views:31769,ctr:'2.43',cpv:10,cost:333226},
+      '6/13':{views:39162,ctr:'4.54',cpv:9,cost:333351},
+      '6/14':{views:38797,ctr:'4.05',cpv:9,cost:333461},
+      '6/15':{views:30146,ctr:'2.40',cpv:11,cost:333771},
+      '6/16':{views:28488,ctr:'3.08',cpv:12,cost:333790},
+      '6/17':{views:20322,ctr:'1.76',cpv:16,cost:333876},
+      '6/18':{views:14689,ctr:'1.36',cpv:23,cost:333680},
+      '6/19':{views:16303,ctr:'1.37',cpv:20,cost:333682},
+      '6/20':{views:21444,ctr:'2.05',cpv:16,cost:333322},
+      '6/21':{views:25812,ctr:'2.53',cpv:13,cost:333658},
+      '6/22':{views:20879,ctr:'1.83',cpv:16,cost:333411},
+      '6/23':{views:25547,ctr:'2.77',cpv:13,cost:333328},
+      '6/24':{views:25918,ctr:'2.27',cpv:13,cost:333392}
+    };
+    /* 소재별 일별: [조회수, 클릭수, CTR(조회율%), CPV원, 일광고비원] — Sheet6 실측 */
+    var RC={
+      '군체':{prog:'deep',ep:'딥다이브 6화',d:{
+        '6/1':[1771,437,'2.32',75,132146],'6/2':[6653,1285,'5.45',25,168240],
+        '6/3':[11388,1570,'4.42',14,163721],'6/4':[12198,1498,'3.86',12,147404],
+        '6/5':[16120,2009,'4.26',12,198546],'6/6':[17351,1967,'2.40',11,196767],
+        '6/7':[8118,892,'2.15',11,88650],'6/8':[9047,1010,'2.80',9,85794],
+        '6/9':[17071,2076,'2.57',11,181749],'6/10':[20665,2377,'2.86',9,190079],
+        '6/11':[16287,1875,'3.72',8,126771],'6/12':[21495,2473,'4.58',8,176713],
+        '6/13':[28196,3623,'4.79',8,235398],'6/14':[24707,2983,'4.21',8,208666],
+        '6/15':[21932,2307,'3.25',10,220662],'6/16':[17075,2035,'4.99',9,158467],
+        '6/17':[3424,422,'2.05',15,50356]
+      }},
+      '토이스토리':{prog:'weekly',ep:'시즌5 13화',d:{
+        '6/9':[1318,125,'2.92',9,11992],'6/10':[1444,182,'3.17',11,15683],
+        '6/11':[2521,271,'3.62',9,22468],'6/12':[3487,409,'4.30',10,33528],
+        '6/13':[6971,767,'3.97',9,61470],'6/14':[6934,832,'3.35',10,68617],
+        '6/15':[5169,598,'3.67',10,50140],'6/16':[7564,848,'3.78',10,77352],
+        '6/17':[3427,491,'1.42',19,65999],'6/18':[4571,675,'2.00',18,83061],
+        '6/19':[5246,648,'1.50',20,103259],'6/20':[6843,993,'2.09',15,104555],
+        '6/21':[8891,1242,'3.10',12,105333],
+        '6/22':[6742,873,'2.02',17,112402],'6/23':[7520,1050,'2.57',15,112249],
+        '6/24':[7597,930,'1.98',15,117558]
+      }},
+      '실수':{prog:'weekly',ep:'시즌1 9화',d:{
+        '6/15':[1169,124,'0.38',29,33867],'6/16':[961,145,'0.50',49,47479],
+        '6/17':[502,49,'0.60',37,18769],'6/18':[1004,108,'0.47',48,47908],
+        '6/19':[3929,474,'0.95',28,110326],'6/20':[7554,950,'1.51',18,135621],
+        '6/21':[7396,894,'1.52',17,124800],
+        '6/22':[5638,626,'1.11',21,116123],'6/23':[7177,845,'1.90',15,110779],
+        '6/24':[6272,676,'1.36',17,108397]
+      }},
+      '스필버그':{prog:'weekly',ep:'시즌6 19화',d:{
+        '6/15':[525,59,'0.56',35,18183],'6/16':[2888,409,'2.11',17,50492],
+        '6/17':[4115,570,'1.03',24,100198],'6/18':[5690,861,'1.16',27,152355],
+        '6/19':[7128,806,'1.68',17,120098],'6/20':[7047,958,'3.06',13,93147],
+        '6/21':[9525,1159,'3.67',11,103526],
+        '6/22':[8499,995,'2.70',12,104886],'6/23':[10850,1353,'4.27',10,110300],
+        '6/24':[12049,1317,'4.16',9,107438]
+      }},
+      '마이클잭슨':{prog:'weekly',ep:'시즌6 15화 (OFF)',d:{
+        '6/1':[314,59,'0.68',139,43530],'6/2':[350,57,'3.55',32,11171],
+        '6/3':[253,36,'1.87',23,5790],'6/4':[462,50,'2.20',15,6736],
+        '6/5':[3034,374,'4.00',13,38723],'6/6':[5817,646,'3.61',10,58663],
+        '6/7':[6170,656,'2.31',11,66702],'6/8':[9591,1233,'2.96',10,98368],
+        '6/9':[3725,408,'4.17',8,29227]
+      }},
+      '만달로리안':{prog:'hot',ep:'핫앤뉴 12화 (OFF)',d:{
+        '6/1':[2243,538,'4.35',63,140968],'6/2':[5709,1044,'5.68',26,147722],
+        '6/3':[6284,905,'3.62',18,115135],'6/4':[9280,1231,'3.93',15,139064],
+        '6/5':[5789,730,'3.25',15,84727],'6/6':[6529,804,'3.25',12,78096],
+        '6/7':[14786,2454,'4.33',12,178604],'6/8':[14009,1976,'3.65',11,149737],
+        '6/9':[2211,246,'3.55',9,19175]
+      }},
+      '원더풀스':{prog:'hot',ep:'핫앤뉴 11화 (OFF)',d:{
+        '6/1':[164,26,'0.90',103,16960],'6/2':[226,38,'3.84',27,6054],
+        '6/3':[953,170,'0.74',51,48718],'6/4':[1613,232,'0.96',25,40551],
+        '6/5':[993,92,'2.63',12,11513]
+      }},
+      '백룸':{prog:'hot',ep:'핫앤뉴 13화 (OFF)',d:{
+        '6/9':[4859,550,'2.56',13,62121],'6/10':[2952,801,'1.62',26,75339],
+        '6/11':[3640,1700,'0.93',36,130102],'6/12':[2605,948,'0.94',34,87396]
+      }},
+      '헤일메리':{prog:'weekly',ep:'시즌6 7화 (OFF)',d:{
+        '6/9':[1493,137,'1.69',11,16054],'6/10':[3726,445,'2.86',10,38781],
+        '6/11':[4384,488,'3.04',9,40950],'6/12':[1794,176,'5.27',7,13086]
+      }},
+      '첫사랑':{prog:'weekly',ep:'시즌2 1화 (OFF)',d:{
+        '6/9':[1212,104,'1.66',11,13415],'6/10':[238,46,'0.49',59,13931],
+        '6/11':[876,96,'1.83',15,13341],'6/12':[2388,246,'3.54',9,22503],
+        '6/13':[3995,464,'3.82',9,36484],'6/14':[7156,772,'4.37',8,56178],
+        '6/15':[1351,133,'3.77',8,10921]
+      }}
+    };
+    var DOW=['일','월','화','수','목','금','토'];
+    function renderRetargetDayCards(key){
+      var d=RD[key]; if(!d)return;
+      var day=parseInt(key.split('/')[1]);
+      var dowStr=DOW[day%7];
+      var noteEl=document.getElementById('retarget-date-note');
+      if(noteEl) noteEl.innerHTML='6월 '+day+'일 ('+dowStr+')'
+        +' &nbsp;·&nbsp; 총 조회수 <strong style="color:var(--teal)">'+d.views.toLocaleString()+'회</strong>'
+        +' &nbsp;·&nbsp; CPV <strong style="color:var(--text)">'+d.cpv+'원</strong>'
+        +' &nbsp;·&nbsp; 일 광고비 <strong style="color:var(--text)">'+d.cost.toLocaleString()+'원</strong>'
+        +(d.views===39162?' &nbsp;&nbsp;<span style="color:var(--teal)">▲ 6월 최고 조회일</span>':'')
+        +(d.views===4492?' &nbsp;&nbsp;<span style="color:var(--accent)">▼ 6월 최저 조회일</span>':'');
+      var grid=document.getElementById('retarget-date-cards'); if(!grid)return;
+      var aboveAvg=d.views>=25370;
+      /* 요약 카드 */
+      var html='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;">'
+        +'<div class="dcard-lg weekly">'
+        +'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">'
+        +'<span class="dcard-prog">후속조회 캠페인</span>'
+        +'<span style="font-size:9px;color:var(--faint);">6월 '+day+'일 ('+dowStr+')</span>'
+        +'</div>'
+        +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px 14px;margin-bottom:14px;">'
+        +'<div><div style="font-size:9px;color:var(--dim);margin-bottom:3px;">총 조회수</div><div style="font-size:28px;font-weight:700;font-family:var(--fn);color:var(--teal);">'+d.views.toLocaleString()+'</div></div>'
+        +'<div><div style="font-size:9px;color:var(--dim);margin-bottom:3px;">조회율 (CTR)</div><div style="font-size:28px;font-weight:700;font-family:var(--fn);color:var(--text);">'+d.ctr+'%</div></div>'
+        +'<div><div style="font-size:9px;color:var(--dim);margin-bottom:3px;">CPV</div><div style="font-size:20px;font-weight:700;font-family:var(--fn);color:var(--text);">'+d.cpv+'원</div></div>'
+        +'<div><div style="font-size:9px;color:var(--dim);margin-bottom:3px;">일 광고비</div><div style="font-size:20px;font-weight:700;font-family:var(--fn);color:var(--text);">'+d.cost.toLocaleString()+'원</div></div>'
+        +'</div>'
+        +'<div style="border-top:1px solid var(--border);padding-top:10px;display:flex;justify-content:space-between;align-items:center;">'
+        +'<span style="font-size:9px;color:var(--dim);">일 평균 대비 (avg 25,370회)</span>'
+        +'<span style="font-size:11px;font-weight:700;color:'+(aboveAvg?'var(--teal)':'var(--accent)')+';">'+(aboveAvg?'▲ 평균 이상':'▼ 평균 이하')+'</span>'
+        +'</div>'
+        +'</div>'
+        +'</div>';
+      /* 소재별 카드 */
+      var names=['군체','토이스토리','실수','스필버그','마이클잭슨','만달로리안','원더풀스','백룸','헤일메리','첫사랑'];
+      var activeCards='';
+      names.forEach(function(nm){
+        var cr=RC[nm]; if(!cr)return;
+        var rd=cr.d[key]; if(!rd)return;
+        var pc=cr.prog==='deep'?'var(--prog-deep)':cr.prog==='hot'?'var(--prog-hot)':'var(--prog-weekly)';
+        activeCards+='<div style="flex:1;min-width:150px;max-width:230px;'
+          +'background:rgba(255,255,255,.03);border:1px solid var(--border);'
+          +'border-left:3px solid '+pc+';border-radius:0 6px 6px 0;padding:10px 12px;">'
+          +'<div style="font-size:10px;font-weight:700;color:var(--text);margin-bottom:2px;">'+nm+'</div>'
+          +'<div style="font-size:8px;font-weight:700;color:'+pc+';margin-bottom:8px;">'+cr.ep+'</div>'
+          +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:5px 10px;">'
+          +'<div><div style="font-size:8px;color:var(--dim);">조회수</div><div style="font-size:13px;font-weight:700;font-family:var(--fn);color:var(--text);">'+rd[0].toLocaleString()+'</div></div>'
+          +'<div><div style="font-size:8px;color:var(--dim);">클릭수</div><div style="font-size:13px;font-weight:700;font-family:var(--fn);color:var(--text);">'+rd[1].toLocaleString()+'</div></div>'
+          +'<div><div style="font-size:8px;color:var(--dim);">CTR</div><div style="font-size:13px;font-weight:700;font-family:var(--fn);color:var(--text);">'+rd[2]+'%</div></div>'
+          +'<div><div style="font-size:8px;color:var(--dim);">CPV</div><div style="font-size:13px;font-weight:700;font-family:var(--fn);color:var(--text);">'+rd[3]+'원</div></div>'
+          +'<div style="grid-column:1/-1;">'
+          +'<div style="font-size:8px;color:var(--dim);">일 광고비</div>'
+          +'<div style="font-size:13px;font-weight:700;font-family:var(--fn);color:var(--text);">'+rd[4].toLocaleString()+'원</div>'
+          +'</div>'
+          +'</div>'
+          +'</div>';
+      });
+      if(activeCards){
+        html+='<div style="margin-top:14px;border-top:1px solid var(--border);padding-top:12px;">'
+          +'<div style="font-size:9px;font-weight:700;color:var(--dim);letter-spacing:.06em;margin-bottom:8px;text-transform:uppercase;">소재별 현황</div>'
+          +'<div style="display:flex;gap:8px;flex-wrap:wrap;">'+activeCards+'</div>'
+          +'</div>';
+      }
+      grid.innerHTML=html;
+    }
+    var bc=document.getElementById('retarget-day-btns');
+    if(bc){
+      var h='';
+      for(var d2=1;d2<=24;d2++){
+        var dow2=d2%7;
+        var isWk=dow2===0||dow2===6;
+        var isPeak=d2===13||d2===14;
+        var cls='date-btn'+(isWk?' wk':'')+(d2===24?' on':'')+(isPeak?' ev':'');
+        h+='<button class="'+cls+'" data-rdate="6/'+d2+'">'+d2+'</button>';
+      }
+      bc.innerHTML=h;
+      bc.querySelectorAll('.date-btn').forEach(function(btn){
+        btn.addEventListener('click',function(){
+          bc.querySelectorAll('.date-btn').forEach(function(b){b.classList.remove('on');});
+          btn.classList.add('on');
+          renderRetargetDayCards(btn.getAttribute('data-rdate'));
+        });
+      });
+    }
+    renderRetargetDayCards('6/24');
+  })();
+}catch(e){console.error('retargetCharts',e);}}
+
+/* ── DRAW OVERVIEW CHARTS ON LOAD ── */
+setTimeout(function(){ try { drawOverviewCharts(); } catch(e) {} }, 120);
+
+}); // end DOMContentLoaded
+
+/* ── THEME TOGGLE ── */
+(function(){
+  var btn=document.getElementById('theme-btn');
+  if(!btn)return;
+  var upd=function(){var l=document.documentElement.classList.contains('light');btn.textContent=l?'🌙':'☀';btn.title=l?'다크 모드':'라이트 모드';};
+  upd();
+  btn.addEventListener('click',function(){
+    document.documentElement.classList.toggle('light');
+    localStorage.setItem('lp-theme',document.documentElement.classList.contains('light')?'light':'dark');
+    upd();
+  });
+})();
+</script>
