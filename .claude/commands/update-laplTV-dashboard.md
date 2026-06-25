@@ -574,7 +574,8 @@ git push origin main
 ```
 
 > 커밋 메시지의 날짜(6/N)는 실제 업데이트한 날짜로 교체한다.  
-> 배포 현황: https://lifeplusdashboard.netlify.app/
+> 배포 현황: https://sjh0927-hash.github.io/hanwha-ax-dashboard/
+> 라플TV 대시보드: https://sjh0927-hash.github.io/hanwha-ax-dashboard/라플TV_캠페인_대시보드.html
 
 ---
 
