@@ -688,16 +688,16 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
             <td><div class="cn">시즌5_13화_토이스토리</div><div class="csub">라플위클리 S5</div></td>
             <td><span style="font-size:8px;color:var(--prog-weekly);font-weight:700;">위클리</span></td>
             <td style="font-family:var(--fn);font-size:10px;">6/9 ~ 현재</td>
-            <td>1,055,640원</td><td>1,105,124</td><td>1,714</td><td>22,329</td>
-            <td>2.02%</td><td>47원</td><td>616원</td>
+            <td>1,656,496원</td><td>1,971,763</td><td>2,697</td><td>33,275</td>
+            <td>1.69%</td><td>50원</td><td>614원</td>
             <td><span class="pill good">활성</span></td>
           </tr>
           <tr>
             <td><div class="cn">시즌6_19화_스티븐 스필버그</div><div class="csub">라플위클리 S6</div></td>
             <td><span style="font-size:8px;color:var(--prog-weekly);font-weight:700;">위클리</span></td>
             <td style="font-family:var(--fn);font-size:10px;">6/16 ~ 현재</td>
-            <td>377,578원</td><td>82,346</td><td>843</td><td>7,682</td>
-            <td style="color:var(--teal);font-weight:700;">9.33%</td><td>49원</td><td>448원</td>
+            <td>458,050원</td><td>136,024</td><td>1,418</td><td>9,007</td>
+            <td style="color:var(--teal);font-weight:700;">6.62%</td><td>51원</td><td>323원</td>
             <td><span class="pill good">활성</span></td>
           </tr>
           <tr>
@@ -725,6 +725,14 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
             <td><span class="pill warn">중단</span></td>
           </tr>
           <tr>
+            <td><div class="cn">핫앤뉴_16화_토이스토리</div><div class="csub">HOT&amp;NEW</div></td>
+            <td><span style="font-size:8px;color:var(--prog-hot);font-weight:700;">H&amp;N</span></td>
+            <td style="font-family:var(--fn);font-size:10px;">6/23 ~ 현재</td>
+            <td>340,957원</td><td>625,127</td><td>534</td><td>7,704</td>
+            <td>1.23%</td><td>44원</td><td>639원</td>
+            <td><span class="pill good">활성</span></td>
+          </tr>
+          <tr>
             <td><div class="cn">딥다이브_6화_군체</div><div class="csub">딥다이브</div></td>
             <td><span style="font-size:8px;color:var(--prog-deep);font-weight:700;">딥다이브</span></td>
             <td style="font-family:var(--fn);font-size:10px;">6/1 ~ 6/18</td>
@@ -743,7 +751,7 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
         <div>
           <div style="font-size:9px;font-weight:700;color:var(--dim);letter-spacing:.08em;margin-bottom:7px;">상태 기준</div>
           <div style="display:flex;flex-direction:column;gap:5px;">
-            <div style="display:flex;align-items:center;gap:7px;"><span class="pill good">활성</span><span style="font-size:10px;color:var(--faint);">6/22 기준 현재 집행 중인 소재</span></div>
+            <div style="display:flex;align-items:center;gap:7px;"><span class="pill good">활성</span><span style="font-size:10px;color:var(--faint);">6/24 기준 현재 집행 중인 소재</span></div>
             <div style="display:flex;align-items:center;gap:7px;"><span class="pill warn">중단</span><span style="font-size:10px;color:var(--faint);">특정 일자 OFF — 예산 소진·소재 교체 등</span></div>
             <div style="display:flex;align-items:center;gap:7px;"><span class="pill neu">종료</span><span style="font-size:10px;color:var(--faint);">CTR 지속 하락 등 구조적 사유로 캠페인 종료</span></div>
           </div>
@@ -1505,8 +1513,8 @@ function drawClickCharts(){try{
     var ctx=setup('clickTrend',180); if(!ctx)return;
     var W=ctx._w,H=ctx._h;
     var months=['4월','5월','6월(~24일)'];
-    var ctrs=[3.08,3.24,1.92];
-    var costs=[6984753,12951479,7726513];
+    var ctrs=[3.08,3.24,1.90];
+    var costs=[6984753,12951479,8081632];
     var pad={t:20,r:16,b:36,l:36};
     var cW=W-pad.l-pad.r,cH=H-pad.t-pad.b;
     [1,2,3,4].forEach(function(v){
@@ -1544,8 +1552,8 @@ function drawClickCharts(){try{
     var ctx=setup('clickProg',180); if(!ctx)return;
     var W=ctx._w,H=ctx._h;
     var data=[
-      {lbl:'라플위클리',v:78136,cost:3161571,c:C.weekly},
-      {lbl:'HOT&NEW',v:64139,cost:2112940,c:C.hot},
+      {lbl:'라플위클리',v:90407,cost:3842899,c:C.weekly},
+      {lbl:'HOT&NEW',v:71843,cost:2453897,c:C.hot},
       {lbl:'딥다이브',v:43810,cost:1784837,c:C.deep}
     ];
     var pad={t:18,r:12,b:36,l:36};
@@ -1578,14 +1586,15 @@ function drawClickCharts(){try{
   /* 소재별 CTR 비교 */
   (function(){
     var CDATA=[
-      {lbl:'스필버그',prog:'위클리',ctr:9.33,active:true},
+      {lbl:'스필버그',prog:'위클리',ctr:6.62,active:true},
       {lbl:'딥다이브 아르테미스',prog:'딥다이브',ctr:3.55,active:false},
       {lbl:'죽음',prog:'위클리',ctr:3.33,active:false},
       {lbl:'마이클잭슨',prog:'위클리',ctr:3.29,active:false},
-      {lbl:'토이스토리',prog:'위클리',ctr:2.02,active:true},
       {lbl:'만달로리안',prog:'H&N',ctr:2.09,active:false},
       {lbl:'딥다이브 붉은사막',prog:'딥다이브',ctr:2.09,active:false},
       {lbl:'백룸',prog:'H&N',ctr:1.74,active:false},
+      {lbl:'토이스토리',prog:'위클리',ctr:1.69,active:true},
+      {lbl:'HOT&NEW 16화',prog:'H&N',ctr:1.23,active:true},
     ];
     var bH=16; var gap=3; var lpad=110; var rpad=48;
     var totalH=CDATA.length*(bH+gap)+16;
@@ -1623,11 +1632,12 @@ function drawClickCharts(){try{
     var CCLICKS=[
       {lbl:'죽음',v:84441,c:C.weekly},
       {lbl:'백룸',v:55027,c:C.hot},
+      {lbl:'토이스토리',v:33275,c:C.weekly},
       {lbl:'마이클잭슨',v:37132,c:C.weekly},
       {lbl:'붉은사막',v:24404,c:C.deep},
-      {lbl:'토이스토리',v:22329,c:C.weekly},
       {lbl:'아르테미스',v:18523,c:C.deep},
-      {lbl:'스필버그',v:7682,c:C.weekly},
+      {lbl:'스필버그',v:9007,c:C.weekly},
+      {lbl:'HOT&NEW 16화',v:7704,c:C.hot},
       {lbl:'만달로리안',v:1760,c:C.hot},
     ];
     CCLICKS.sort(function(a,b){return b.v-a.v;});
@@ -1694,25 +1704,27 @@ function drawClickCharts(){try{
 
   /* 광고비 도넛 — 6월 기준 (소재별 실측, RAW Sheet) */
   drawDonut('clickDonutCost',[
-    {lbl:'마이클잭슨 (위클리)',v:1728353, c:C.weekly},
-    {lbl:'백룸 (H&N)',        v:1778197, c:C.hot},
     {lbl:'군체 (딥다이브)',    v:1784837, c:C.deep},
-    {lbl:'토이스토리 (위클리)',v:1055640, c:'#8BBEFF'},
-    {lbl:'스필버그 (위클리)', v:377578,  c:'#2060D0'},
+    {lbl:'백룸 (H&N)',        v:1778197, c:C.hot},
+    {lbl:'마이클잭슨 (위클리)',v:1728353, c:C.weekly},
+    {lbl:'토이스토리 (위클리)',v:1656496, c:'#8BBEFF'},
+    {lbl:'스필버그 (위클리)', v:458050,  c:'#2060D0'},
+    {lbl:'HOT&NEW 16화 (H&N)',v:340957,  c:'#FF5830'},
     {lbl:'원더풀스 (H&N)',    v:308933,  c:'#FF8CA0'},
     {lbl:'만달로리안 (H&N)',  v:25810,   c:'#CC2840'},
-  ],'706만원','6월 총 광고비');
+  ],'808만원','6월 총 광고비');
 
   /* 클릭수 도넛 — 6월 기준 (소재별 실측) */
   drawDonut('clickDonutClicks',[
-    {lbl:'마이클잭슨 (위클리)',v:48125, c:C.weekly},
     {lbl:'백룸 (H&N)',        v:55027, c:C.hot},
+    {lbl:'토이스토리 (위클리)',v:33275, c:'#8BBEFF'},
+    {lbl:'마이클잭슨 (위클리)',v:48125, c:C.weekly},
     {lbl:'군체 (딥다이브)',    v:43810, c:C.deep},
-    {lbl:'토이스토리 (위클리)',v:22329, c:'#8BBEFF'},
+    {lbl:'스필버그 (위클리)', v:9007,  c:'#2060D0'},
+    {lbl:'HOT&NEW 16화 (H&N)',v:7704,  c:'#FF5830'},
     {lbl:'원더풀스 (H&N)',    v:8328,  c:'#FF8CA0'},
-    {lbl:'스필버그 (위클리)', v:7682,  c:'#2060D0'},
     {lbl:'만달로리안 (H&N)',  v:784,   c:'#CC2840'},
-  ],'18.6만','6월 총 클릭수');
+  ],'20.6만','6월 총 클릭수');
 
   /* ── 일자별 운영 소재 (6월 1일~22일, 일별 추정 데이터) ── */
   (function(){
