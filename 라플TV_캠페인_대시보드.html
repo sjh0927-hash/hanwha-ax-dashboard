@@ -236,7 +236,6 @@ body{background:var(--ground);color:var(--text);font-family:var(--fk);font-size:
   .two-col{grid-template-columns:1fr;}
   .fmt-pair{grid-template-columns:1fr;}
   .prog-cards{grid-template-columns:1fr 1fr;}
-  .icard-grid{grid-template-columns:1fr;}
 
   /* 소재 테이블: 좌우 스크롤 */
   .card{overflow-x:auto;}
@@ -245,6 +244,9 @@ body{background:var(--ground);color:var(--text);font-family:var(--fk);font-size:
 @media(max-width:520px){
   /* KPI: 6→2열 */
   .kpi-grid{grid-template-columns:repeat(2,1fr);}
+
+  /* 인사이트 카드: 단열 */
+  .icard-grid{grid-template-columns:1fr;}
 
   /* 프로그램 카드 단열 */
   .prog-cards{grid-template-columns:1fr;}
