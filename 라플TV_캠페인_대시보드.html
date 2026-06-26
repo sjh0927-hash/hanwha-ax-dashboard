@@ -17,26 +17,26 @@
   --fk:'Malgun Gothic','Apple SD Gothic Neo',-apple-system,sans-serif;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-body{background:var(--ground);color:var(--text);font-family:var(--fk);font-size:13px;line-height:1.6;padding-bottom:48px;}
+body{background:var(--ground);color:var(--text);font-family:var(--fk);font-size:14px;line-height:1.6;padding-bottom:48px;}
 
 /* HEADER */
 .hdr{position:relative;background:var(--surface);border-bottom:1px solid var(--border);padding:16px 28px 14px;display:flex;align-items:center;justify-content:space-between;overflow:hidden;}
 .hdr::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.035) 3px,rgba(0,0,0,.035) 4px);pointer-events:none;}
 .hdr-wm{position:absolute;right:-8px;top:50%;transform:translateY(-50%);font-family:var(--fn);font-size:140px;font-weight:700;color:rgba(255,107,43,.055);letter-spacing:-6px;line-height:1;user-select:none;pointer-events:none;}
 .hdr-brand{display:flex;align-items:center;gap:12px;position:relative;z-index:1;}
-.hdr-mark{width:32px;height:32px;background:var(--accent);border-radius:4px;display:flex;align-items:center;justify-content:center;font-family:var(--fn);font-size:10px;font-weight:700;color:#fff;letter-spacing:-.5px;flex-shrink:0;}
-.hdr-title{font-size:14px;font-weight:700;letter-spacing:-.2px;}
-.hdr-sub{font-size:10px;color:var(--dim);margin-top:1px;}
+.hdr-mark{width:32px;height:32px;background:var(--accent);border-radius:4px;display:flex;align-items:center;justify-content:center;font-family:var(--fn);font-size:12px;font-weight:700;color:#fff;letter-spacing:-.5px;flex-shrink:0;}
+.hdr-title{font-size:16px;font-weight:700;letter-spacing:-.2px;}
+.hdr-sub{font-size:12px;color:var(--dim);margin-top:1px;}
 .hdr-right{display:flex;align-items:center;gap:16px;position:relative;z-index:1;}
-.live{display:flex;align-items:center;gap:5px;font-family:var(--fn);font-size:10px;color:var(--accent);letter-spacing:1.8px;}
+.live{display:flex;align-items:center;gap:5px;font-family:var(--fn);font-size:12px;color:var(--accent);letter-spacing:1.8px;}
 .live-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s ease-in-out infinite;}
 @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
 @media(prefers-reduced-motion:reduce){.live-dot{animation:none;}}
-.hdr-date{font-family:var(--fn);font-size:11px;color:var(--dim);}
+.hdr-date{font-family:var(--fn);font-size:13px;color:var(--dim);}
 
 /* TABS */
 .tab-nav{background:var(--surface);border-bottom:1px solid var(--border);padding:0 28px;display:flex;gap:0;position:sticky;top:0;z-index:100;}
-.tab-btn{padding:10px 16px;font-family:var(--fk);font-size:11px;font-weight:600;color:var(--dim);border:none;background:transparent;cursor:pointer;border-bottom:2px solid transparent;transition:color .15s,border-color .15s;white-space:nowrap;letter-spacing:.2px;}
+.tab-btn{padding:10px 16px;font-family:var(--fk);font-size:13px;font-weight:600;color:var(--dim);border:none;background:transparent;cursor:pointer;border-bottom:2px solid transparent;transition:color .15s,border-color .15s;white-space:nowrap;letter-spacing:.2px;}
 .tab-btn:hover{color:var(--text);}
 .tab-btn.active{color:var(--accent);border-bottom-color:var(--accent);}
 
@@ -44,51 +44,51 @@ body{background:var(--ground);color:var(--text);font-family:var(--fk);font-size:
 .page{display:none;}.page.active{display:block;}
 .wrap{max-width:1260px;margin:0 auto;padding:0 28px;}
 .sect{margin-top:22px;}
-.sect-lbl{font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--faint);margin-bottom:9px;}
+.sect-lbl{font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--faint);margin-bottom:9px;}
 
 /* KPI */
 .kpi-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;}
 .kpi{background:var(--surface);border:1px solid var(--border);border-top:2px solid var(--border);border-radius:4px;padding:12px 13px 10px;}
 .kpi.a{border-top-color:var(--accent);}.kpi.t{border-top-color:var(--teal);}.kpi.y{border-top-color:var(--yellow);}
-.kv{font-family:var(--fn);font-size:21px;font-weight:700;line-height:1.1;letter-spacing:-.5px;}
+.kv{font-family:var(--fn);font-size:23px;font-weight:700;line-height:1.1;letter-spacing:-.5px;}
 .kpi.a .kv{color:var(--accent);}.kpi.t .kv{color:var(--teal);}
-.ku{font-family:var(--fn);font-size:10px;color:var(--dim);margin-left:1px;}
-.kl{font-size:10px;color:var(--dim);margin-top:4px;}
-.ks{font-family:var(--fn);font-size:9px;color:var(--faint);margin-top:1px;}
+.ku{font-family:var(--fn);font-size:12px;color:var(--dim);margin-left:1px;}
+.kl{font-size:12px;color:var(--dim);margin-top:4px;}
+.ks{font-family:var(--fn);font-size:11px;color:var(--faint);margin-top:1px;}
 
 /* CAMPAIGN ROWS */
 .camp-list{display:flex;flex-direction:column;gap:6px;}
 .camp{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:12px 15px;display:grid;grid-template-columns:195px 1fr 95px 85px 100px 76px;align-items:center;gap:12px;}
-.cnm{font-size:12px;font-weight:700;}.ctp{font-size:10px;color:var(--dim);margin-top:2px;}
+.cnm{font-size:14px;font-weight:700;}.ctp{font-size:12px;color:var(--dim);margin-top:2px;}
 .pw{display:flex;flex-direction:column;gap:4px;}
-.pls{display:flex;justify-content:space-between;font-family:var(--fn);font-size:9px;color:var(--dim);}
+.pls{display:flex;justify-content:space-between;font-family:var(--fn);font-size:11px;color:var(--dim);}
 .pb{height:3px;background:var(--border-2);border-radius:2px;overflow:hidden;}
 .pf{height:100%;border-radius:2px;background:var(--accent);}.pf.t{background:var(--teal);}
-.cm{text-align:right;}.cmv{font-family:var(--fn);font-size:13px;font-weight:700;}.cml{font-size:9px;color:var(--dim);margin-top:1px;}
-.badge{display:inline-block;padding:2px 7px;border-radius:3px;font-size:9px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;}
+.cm{text-align:right;}.cmv{font-family:var(--fn);font-size:15px;font-weight:700;}.cml{font-size:11px;color:var(--dim);margin-top:1px;}
+.badge{display:inline-block;padding:2px 7px;border-radius:3px;font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;}
 .bg{background:var(--tdim);color:var(--teal);}.ba{background:var(--adim);color:var(--accent);}
 .by{background:rgba(240,192,64,.1);color:var(--yellow);}
 
 /* CHARTS */
 .charts-row{display:grid;grid-template-columns:1fr 300px;gap:8px;margin-top:8px;}
 .card{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:15px 17px;}
-.ct{font-size:10px;font-weight:600;color:var(--dim);letter-spacing:.3px;margin-bottom:11px;}
+.ct{font-size:12px;font-weight:600;color:var(--dim);letter-spacing:.3px;margin-bottom:11px;}
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;}
 
 /* CREATIVE TABLE */
 .ctbl{width:100%;border-collapse:collapse;margin-top:4px;}
-.ctbl th{font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--dim);text-align:left;padding:5px 8px;border-bottom:1px solid var(--border);}
+.ctbl th{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--dim);text-align:left;padding:5px 8px;border-bottom:1px solid var(--border);}
 .ctbl th:not(:first-child){text-align:right;}
-.ctbl td{padding:6px 8px;border-bottom:1px solid var(--border-2);font-size:11px;vertical-align:middle;}
-.ctbl td:not(:first-child){font-family:var(--fn);text-align:right;font-size:11px;}
+.ctbl td{padding:6px 8px;border-bottom:1px solid var(--border-2);font-size:13px;vertical-align:middle;}
+.ctbl td:not(:first-child){font-family:var(--fn);text-align:right;font-size:13px;}
 .ctbl tr:last-child td{border-bottom:none;}
 .ctbl tr:hover td{background:rgba(255,255,255,.02);}
-.cn{font-weight:600;font-size:11px;max-width:200px;}
-.csub{font-size:9px;color:var(--dim);}
+.cn{font-weight:600;font-size:13px;max-width:200px;}
+.csub{font-size:11px;color:var(--dim);}
 .vtr-bar{display:inline-flex;align-items:center;gap:5px;}
 .vtr-bg{width:50px;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
 .vtr-fg{height:100%;border-radius:2px;}
-.pill{display:inline-block;padding:1px 5px;border-radius:2px;font-size:9px;font-weight:700;}
+.pill{display:inline-block;padding:1px 5px;border-radius:2px;font-size:11px;font-weight:700;}
 .good{background:rgba(0,201,167,.12);color:var(--teal);}
 .warn{background:rgba(255,107,43,.12);color:var(--accent);}
 .neu{background:rgba(255,255,255,.06);color:var(--dim);}
@@ -101,15 +101,15 @@ body{background:var(--ground);color:var(--text);font-family:var(--fk);font-size:
 .dcard-lg.weekly{border-top-color:var(--prog-weekly);}
 .dcard-lg.hot{border-top-color:var(--prog-hot);}
 .dcard-lg.deep{border-top-color:var(--prog-deep);}
-.dcard-lg .dcard-prog{display:inline-block;padding:2px 7px;border-radius:2px;font-size:9px;font-weight:700;}
+.dcard-lg .dcard-prog{display:inline-block;padding:2px 7px;border-radius:2px;font-size:11px;font-weight:700;}
 .dcard-lg.weekly .dcard-prog{background:var(--prog-weekly-dim);color:var(--prog-weekly);}
 .dcard-lg.hot .dcard-prog{background:var(--prog-hot-dim);color:var(--prog-hot);}
 .dcard-lg.deep .dcard-prog{background:var(--prog-deep-dim);color:var(--prog-deep);}
-.dcard-lg .dcard-ctr{font-size:22px;font-weight:700;font-family:var(--fn);line-height:1.1;}
+.dcard-lg .dcard-ctr{font-size:24px;font-weight:700;font-family:var(--fn);line-height:1.1;}
 .dcard-lg.weekly .dcard-ctr{color:var(--prog-weekly);}
 .dcard-lg.hot .dcard-ctr{color:var(--prog-hot);}
 .dcard-lg.deep .dcard-ctr{color:var(--prog-deep);}
-.date-btn{width:30px;height:30px;border-radius:4px;border:1px solid var(--border);background:transparent;color:var(--dim);font-family:var(--fn);font-size:10px;cursor:pointer;flex-shrink:0;position:relative;}
+.date-btn{width:30px;height:30px;border-radius:4px;border:1px solid var(--border);background:transparent;color:var(--dim);font-family:var(--fn);font-size:12px;cursor:pointer;flex-shrink:0;position:relative;}
 .date-btn:hover{border-color:var(--prog-weekly);color:var(--prog-weekly);}
 .date-btn.on{background:var(--prog-weekly);border-color:var(--prog-weekly);color:#fff;font-weight:700;}
 .date-btn.wk{color:var(--accent);}
@@ -119,70 +119,70 @@ body{background:var(--ground);color:var(--text);font-family:var(--fk);font-size:
 .dcard.weekly{border-top-color:var(--prog-weekly);}
 .dcard.hot{border-top-color:var(--prog-hot);}
 .dcard.deep{border-top-color:var(--prog-deep);}
-.dcard-prog{display:inline-block;padding:1px 5px;border-radius:2px;font-size:8px;font-weight:700;}
+.dcard-prog{display:inline-block;padding:1px 5px;border-radius:2px;font-size:10px;font-weight:700;}
 .dcard.weekly .dcard-prog{background:var(--prog-weekly-dim);color:var(--prog-weekly);}
 .dcard.hot .dcard-prog{background:var(--prog-hot-dim);color:var(--prog-hot);}
 .dcard.deep .dcard-prog{background:var(--prog-deep-dim);color:var(--prog-deep);}
-.dcard-ctr{font-size:20px;font-weight:700;font-family:var(--fn);line-height:1.1;}
+.dcard-ctr{font-size:22px;font-weight:700;font-family:var(--fn);line-height:1.1;}
 .dcard.weekly .dcard-ctr{color:var(--prog-weekly);}
 .dcard.hot .dcard-ctr{color:var(--prog-hot);}
 .dcard.deep .dcard-ctr{color:var(--prog-deep);}
 /* FORMAT COMPARE */
 .fmt-pair{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px;}
 .fcard{background:var(--surface-2);border-radius:4px;padding:12px;}
-.flbl{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--dim);margin-bottom:8px;}
+.flbl{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--dim);margin-bottom:8px;}
 .frow{display:flex;justify-content:space-between;align-items:baseline;padding:4px 0;border-bottom:1px solid var(--border);}
 .frow:last-child{border-bottom:none;}
-.fnm{font-size:10px;color:var(--dim);}.fval{font-family:var(--fn);font-size:12px;font-weight:600;}
+.fnm{font-size:12px;color:var(--dim);}.fval{font-family:var(--fn);font-size:14px;font-weight:600;}
 
 /* PROGRAM CARDS */
 .prog-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
 .pcard{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:14px;}
 .pcard-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
-.pcard-nm{font-size:12px;font-weight:700;}
+.pcard-nm{font-size:14px;font-weight:700;}
 .pcard-rows{display:flex;flex-direction:column;gap:0;}
 .pcard-row{display:flex;justify-content:space-between;align-items:baseline;padding:5px 0;border-bottom:1px solid var(--border-2);}
 .pcard-row:last-child{border-bottom:none;}
-.pr-lbl{font-size:10px;color:var(--dim);}
-.pr-val{font-family:var(--fn);font-size:13px;font-weight:700;}
+.pr-lbl{font-size:12px;color:var(--dim);}
+.pr-val{font-family:var(--fn);font-size:15px;font-weight:700;}
 
 /* INSIGHT */
-.insight{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 4px 4px 0;padding:10px 14px;margin-top:8px;font-size:11px;color:var(--dim);line-height:1.8;}
+.insight{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 4px 4px 0;padding:10px 14px;margin-top:8px;font-size:13px;color:var(--dim);line-height:1.8;}
 .insight strong{color:var(--text);}
-.tag{display:inline-block;padding:1px 5px;border-radius:2px;font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-left:2px;vertical-align:middle;}
+.tag{display:inline-block;padding:1px 5px;border-radius:2px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-left:2px;vertical-align:middle;}
 .tg{background:var(--tdim);color:var(--teal);}.ta{background:var(--adim);color:var(--accent);}
 
 /* FUNNEL */
 .funnel{display:flex;flex-direction:column;gap:6px;margin-top:8px;}
 .funnel-step{background:var(--surface-2);border-radius:4px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;}
-.funnel-lbl{font-size:11px;color:var(--dim);}
-.funnel-val{font-family:var(--fn);font-size:15px;font-weight:700;}
-.funnel-rate{font-family:var(--fn);font-size:10px;color:var(--teal);}
+.funnel-lbl{font-size:13px;color:var(--dim);}
+.funnel-val{font-family:var(--fn);font-size:17px;font-weight:700;}
+.funnel-rate{font-family:var(--fn);font-size:12px;color:var(--teal);}
 
 /* TOGGLE */
 .toggle-row{display:flex;gap:6px;margin-bottom:12px;}
-.tog-btn{padding:4px 12px;border-radius:20px;font-size:10px;font-weight:600;letter-spacing:.3px;border:1px solid var(--border);background:transparent;color:var(--dim);cursor:pointer;transition:all .15s;}
+.tog-btn{padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;letter-spacing:.3px;border:1px solid var(--border);background:transparent;color:var(--dim);cursor:pointer;transition:all .15s;}
 .tog-btn.on{background:var(--accent);border-color:var(--accent);color:#fff;}
 .tog-pane{display:none;}.tog-pane.on{display:block;}
 
 /* MINI BAR */
 .mbar-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
-.mbar-lbl{font-size:10px;color:var(--dim);width:68px;flex-shrink:0;}
+.mbar-lbl{font-size:12px;color:var(--dim);width:68px;flex-shrink:0;}
 .mbar-track{flex:1;height:16px;background:var(--border-2);border-radius:2px;overflow:hidden;position:relative;}
 .mbar-fill{height:100%;border-radius:2px;display:flex;align-items:center;justify-content:flex-end;padding-right:6px;}
-.mbar-num{font-family:var(--fn);font-size:9px;font-weight:700;color:#fff;}
+.mbar-num{font-family:var(--fn);font-size:11px;font-weight:700;color:#fff;}
 
 /* INSIGHT CARDS */
 .icard-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:0;}
 .icard{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:14px 16px;}
 .icard-hd{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
-.icard-icon{width:22px;height:22px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;}
-.icard-nm{font-size:12px;font-weight:700;}
-.icard-status{font-size:9px;padding:2px 7px;border-radius:3px;font-weight:700;letter-spacing:.5px;margin-left:auto;}
+.icard-icon{width:22px;height:22px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;}
+.icard-nm{font-size:14px;font-weight:700;}
+.icard-status{font-size:11px;padding:2px 7px;border-radius:3px;font-weight:700;letter-spacing:.5px;margin-left:auto;}
 .st-ok{background:rgba(0,201,167,.12);color:var(--teal);}
 .st-warn{background:rgba(255,107,43,.12);color:var(--accent);}
 .icard-rows{display:flex;flex-direction:column;gap:0;}
-.icard-row{display:flex;align-items:flex-start;gap:6px;padding:4px 0;border-bottom:1px solid var(--border-2);font-size:11px;color:var(--dim);line-height:1.5;}
+.icard-row{display:flex;align-items:flex-start;gap:6px;padding:4px 0;border-bottom:1px solid var(--border-2);font-size:13px;color:var(--dim);line-height:1.5;}
 .icard-row:last-child{border-bottom:none;}
 .icard-dot{width:4px;height:4px;border-radius:50%;flex-shrink:0;margin-top:6px;}
 .icard-row strong{color:var(--text);}
@@ -191,19 +191,19 @@ body{background:var(--ground);color:var(--text);font-family:var(--fk);font-size:
 
 /* SUMMARY INSIGHT */
 .sum-insight{background:var(--surface-2);border-radius:4px;padding:14px 16px;margin-bottom:8px;}
-.sum-insight-row{display:flex;align-items:flex-start;gap:10px;padding:5px 0;border-bottom:1px solid var(--border);font-size:11px;color:var(--dim);line-height:1.6;}
+.sum-insight-row{display:flex;align-items:flex-start;gap:10px;padding:5px 0;border-bottom:1px solid var(--border);font-size:13px;color:var(--dim);line-height:1.6;}
 .sum-insight-row:last-child{border-bottom:none;}
 .sum-insight-row strong{color:var(--text);}
 
 /* OP COMMENT */
-.op-comment{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 4px 4px 0;padding:10px 14px;font-size:11px;color:var(--dim);line-height:1.8;display:flex;align-items:flex-start;gap:10px;}
-.op-date{font-family:var(--fn);font-size:9px;font-weight:700;color:var(--accent);letter-spacing:1px;white-space:nowrap;padding-top:2px;}
+.op-comment{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 4px 4px 0;padding:10px 14px;font-size:13px;color:var(--dim);line-height:1.8;display:flex;align-items:flex-start;gap:10px;}
+.op-date{font-family:var(--fn);font-size:11px;font-weight:700;color:var(--accent);letter-spacing:1px;white-space:nowrap;padding-top:2px;}
 
 /* TOOLTIP */
 #tt{position:fixed;pointer-events:none;z-index:9999;background:rgba(11,15,26,.97);border:1px solid var(--border);border-radius:6px;padding:7px 11px;display:none;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,.55);}
-#tt .tt-l{font-size:9px;color:var(--dim);font-family:var(--fk);margin-bottom:3px;letter-spacing:.03em;}
-#tt .tt-v{font-size:13px;font-weight:700;color:var(--text);font-family:var(--fn);}
-#tt .tt-v2{font-size:10px;color:var(--dim);font-family:var(--fn);margin-top:2px;}
+#tt .tt-l{font-size:11px;color:var(--dim);font-family:var(--fk);margin-bottom:3px;letter-spacing:.03em;}
+#tt .tt-v{font-size:15px;font-weight:700;color:var(--text);font-family:var(--fn);}
+#tt .tt-v2{font-size:12px;color:var(--dim);font-family:var(--fn);margin-top:2px;}
 
 /* ── RESPONSIVE ── */
 @media(max-width:860px){
@@ -215,13 +215,13 @@ body{background:var(--ground);color:var(--text);font-family:var(--fk);font-size:
   .hdr{padding:12px 14px;}
   .hdr-wm{display:none;}
   .hdr-date{display:none;}
-  .hdr-title{font-size:12px;}
+  .hdr-title{font-size:14px;}
   .hdr-sub{display:none;}
 
   /* Tabs: 가로 스크롤 */
   .tab-nav{padding:0 10px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
   .tab-nav::-webkit-scrollbar{display:none;}
-  .tab-btn{padding:10px 12px;font-size:10px;}
+  .tab-btn{padding:10px 12px;font-size:12px;}
 
   /* KPI: 6→3열 */
   .kpi-grid{grid-template-columns:repeat(3,1fr);}
@@ -254,7 +254,7 @@ body{background:var(--ground);color:var(--text);font-family:var(--fk);font-size:
   .hdr-right{gap:8px;}
 
   /* 탭 글씨 더 작게 */
-  .tab-btn{padding:10px 10px;font-size:9px;}
+  .tab-btn{padding:10px 10px;font-size:11px;}
 }
 
 /* ── THEME TOGGLE ── */
@@ -429,7 +429,7 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
           <div class="ct" style="margin-bottom:8px;">조회캠페인 프로그램별 CPV</div>
           <div class="mbar-row"><div class="mbar-lbl">라플위클리</div><div class="mbar-track"><div class="mbar-fill" style="width:65%;background:linear-gradient(90deg,var(--prog-weekly),rgba(75,142,255,.4));"><span class="mbar-num">26원</span></div></div></div>
           <div class="mbar-row"><div class="mbar-lbl">HOT &amp; NEW</div><div class="mbar-track"><div class="mbar-fill" style="width:55%;background:linear-gradient(90deg,var(--prog-hot),rgba(255,59,92,.4));"><span class="mbar-num">22원</span></div></div></div>
-          <div class="mbar-row"><div class="mbar-lbl">딥다이브</div><div class="mbar-track" style="background:var(--border-2);"><div style="height:100%;display:flex;align-items:center;padding-left:8px;"><span style="font-family:var(--fn);font-size:9px;color:var(--faint);">미집행</span></div></div></div>
+          <div class="mbar-row"><div class="mbar-lbl">딥다이브</div><div class="mbar-track" style="background:var(--border-2);"><div style="height:100%;display:flex;align-items:center;padding-left:8px;"><span style="font-family:var(--fn);font-size:11px;color:var(--faint);">미집행</span></div></div></div>
         </div>
       </div>
     </div>
@@ -440,7 +440,7 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
 
     <div class="sum-insight">
       <div class="sum-insight-row">
-        <span style="font-family:var(--fn);font-size:9px;color:var(--accent);white-space:nowrap;padding-top:2px;font-weight:700;">전체 요약</span>
+        <span style="font-family:var(--fn);font-size:11px;color:var(--accent);white-space:nowrap;padding-top:2px;font-weight:700;">전체 요약</span>
         <span>총 예산 6,983만원 중 <strong>68% 소진</strong>. 4개 캠페인 동시 운영 안정화. 후속조회 CPV 13원·구독단가 1,172원으로 <strong>효율 지표 목표 달성</strong>. 유튜브 조회캠페인(YouTube만) 60% 소진. 딥다이브 7화 집행 중·핫앤뉴 16화 CTR 1.74% 기록.</span>
       </div>
     </div>
@@ -533,7 +533,7 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
         <button class="tog-btn" id="vfmt-shorts" data-vfmt="쇼츠">쇼츠 (13개)</button>
       </div>
       <div style="display:flex;gap:6px;">
-        <span style="font-size:9px;color:var(--faint);align-self:center;letter-spacing:1px;">프로그램</span>
+        <span style="font-size:11px;color:var(--faint);align-self:center;letter-spacing:1px;">프로그램</span>
         <button class="tog-btn on" id="vprog-all" data-vprog="전체">전체</button>
         <button class="tog-btn" id="vprog-rapple" data-vprog="라플위클리">라플위클리</button>
         <button class="tog-btn" id="vprog-hot" data-vprog="HOT&amp;NEW">HOT&amp;NEW</button>
@@ -555,10 +555,10 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
 
   <section class="sect">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-      <div class="card"><div class="ct" id="ch-vtr-title">VTR (%) <span style="font-size:9px;font-weight:400;color:var(--faint);">조회율 — 노출 대비 영상 조회 비율</span></div><canvas id="ch-vtr" style="width:100%;display:block;"></canvas></div>
-      <div class="card"><div class="ct" id="ch-cpv-title">CPV (원) <span style="font-size:9px;font-weight:400;color:var(--faint);">조회당 비용 — 1회 조회에 소요된 광고비</span></div><canvas id="ch-cpv" style="width:100%;display:block;"></canvas></div>
-      <div class="card"><div class="ct" id="ch-ctr-title">CTR (%) <span style="font-size:9px;font-weight:400;color:var(--faint);">클릭률 — 노출 대비 광고 클릭 비율</span></div><canvas id="ch-ctr" style="width:100%;display:block;"></canvas></div>
-      <div class="card"><div class="ct" id="ch-views-title">조회수 <span style="font-size:9px;font-weight:400;color:var(--faint);">소재별 실제 영상 조회 횟수</span></div><canvas id="ch-views" style="width:100%;display:block;"></canvas></div>
+      <div class="card"><div class="ct" id="ch-vtr-title">VTR (%) <span style="font-size:11px;font-weight:400;color:var(--faint);">조회율 — 노출 대비 영상 조회 비율</span></div><canvas id="ch-vtr" style="width:100%;display:block;"></canvas></div>
+      <div class="card"><div class="ct" id="ch-cpv-title">CPV (원) <span style="font-size:11px;font-weight:400;color:var(--faint);">조회당 비용 — 1회 조회에 소요된 광고비</span></div><canvas id="ch-cpv" style="width:100%;display:block;"></canvas></div>
+      <div class="card"><div class="ct" id="ch-ctr-title">CTR (%) <span style="font-size:11px;font-weight:400;color:var(--faint);">클릭률 — 노출 대비 광고 클릭 비율</span></div><canvas id="ch-ctr" style="width:100%;display:block;"></canvas></div>
+      <div class="card"><div class="ct" id="ch-views-title">조회수 <span style="font-size:11px;font-weight:400;color:var(--faint);">소재별 실제 영상 조회 횟수</span></div><canvas id="ch-views" style="width:100%;display:block;"></canvas></div>
     </div>
   </section>
 
@@ -682,64 +682,64 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
         <tbody>
           <tr>
             <td><div class="cn">시즌6_15화_마이클잭슨</div><div class="csub">라플위클리 S6</div></td>
-            <td><span style="font-size:8px;color:var(--prog-weekly);font-weight:700;">위클리</span></td>
-            <td style="font-family:var(--fn);font-size:10px;">6/1 ~ 6/9</td>
+            <td><span style="font-size:10px;color:var(--prog-weekly);font-weight:700;">위클리</span></td>
+            <td style="font-family:var(--fn);font-size:12px;">6/1 ~ 6/9</td>
             <td>1,728,353원</td><td>1,351,014</td><td>1,145</td><td>48,125</td>
             <td>3.56%</td><td>36원</td><td>1,509원</td>
             <td><span class="pill warn">중단</span></td>
           </tr>
           <tr>
             <td><div class="cn">시즌5_13화_토이스토리</div><div class="csub">라플위클리 S5</div></td>
-            <td><span style="font-size:8px;color:var(--prog-weekly);font-weight:700;">위클리</span></td>
-            <td style="font-family:var(--fn);font-size:10px;">6/9 ~ 현재</td>
+            <td><span style="font-size:10px;color:var(--prog-weekly);font-weight:700;">위클리</span></td>
+            <td style="font-family:var(--fn);font-size:12px;">6/9 ~ 현재</td>
             <td>1,656,496원</td><td>1,971,763</td><td>2,697</td><td>33,275</td>
             <td>1.69%</td><td>50원</td><td>614원</td>
             <td><span class="pill good">활성</span></td>
           </tr>
           <tr>
             <td><div class="cn">시즌6_19화_스티븐 스필버그</div><div class="csub">라플위클리 S6</div></td>
-            <td><span style="font-size:8px;color:var(--prog-weekly);font-weight:700;">위클리</span></td>
-            <td style="font-family:var(--fn);font-size:10px;">6/16 ~ 현재</td>
+            <td><span style="font-size:10px;color:var(--prog-weekly);font-weight:700;">위클리</span></td>
+            <td style="font-family:var(--fn);font-size:12px;">6/16 ~ 현재</td>
             <td>458,050원</td><td>136,024</td><td>1,418</td><td>9,007</td>
             <td style="color:var(--teal);font-weight:700;">6.62%</td><td>51원</td><td>323원</td>
             <td><span class="pill good">활성</span></td>
           </tr>
           <tr>
             <td><div class="cn">핫앤뉴_11화_원더풀스</div><div class="csub">HOT&amp;NEW</div></td>
-            <td><span style="font-size:8px;color:var(--prog-hot);font-weight:700;">H&amp;N</span></td>
-            <td style="font-family:var(--fn);font-size:10px;">6/1 ~ 6/5</td>
+            <td><span style="font-size:10px;color:var(--prog-hot);font-weight:700;">H&amp;N</span></td>
+            <td style="font-family:var(--fn);font-size:12px;">6/1 ~ 6/5</td>
             <td>308,933원</td><td>310,455</td><td>314</td><td>8,328</td>
             <td>2.68%</td><td>37원</td><td>984원</td>
             <td><span class="pill neu">종료</span></td>
           </tr>
           <tr>
             <td><div class="cn">핫앤뉴_12화_만달로리안</div><div class="csub">HOT&amp;NEW</div></td>
-            <td><span style="font-size:8px;color:var(--prog-hot);font-weight:700;">H&amp;N</span></td>
-            <td style="font-family:var(--fn);font-size:10px;">6/1 ~ 6/9</td>
+            <td><span style="font-size:10px;color:var(--prog-hot);font-weight:700;">H&amp;N</span></td>
+            <td style="font-family:var(--fn);font-size:12px;">6/1 ~ 6/9</td>
             <td>25,810원</td><td>24,952</td><td>549</td><td>784</td>
             <td>3.14%</td><td>33원</td><td>47원</td>
             <td><span class="pill warn">중단</span></td>
           </tr>
           <tr>
             <td><div class="cn">핫앤뉴_13화_백룸</div><div class="csub">HOT&amp;NEW</div></td>
-            <td><span style="font-size:8px;color:var(--prog-hot);font-weight:700;">H&amp;N</span></td>
-            <td style="font-family:var(--fn);font-size:10px;">6/9 ~ 6/16</td>
+            <td><span style="font-size:10px;color:var(--prog-hot);font-weight:700;">H&amp;N</span></td>
+            <td style="font-family:var(--fn);font-size:12px;">6/9 ~ 6/16</td>
             <td>1,778,197원</td><td>3,161,407</td><td>2,615</td><td>55,027</td>
             <td>1.74%</td><td>32원</td><td>680원</td>
             <td><span class="pill warn">중단</span></td>
           </tr>
           <tr>
             <td><div class="cn">핫앤뉴_16화_토이스토리</div><div class="csub">HOT&amp;NEW</div></td>
-            <td><span style="font-size:8px;color:var(--prog-hot);font-weight:700;">H&amp;N</span></td>
-            <td style="font-family:var(--fn);font-size:10px;">6/23 ~ 현재</td>
+            <td><span style="font-size:10px;color:var(--prog-hot);font-weight:700;">H&amp;N</span></td>
+            <td style="font-family:var(--fn);font-size:12px;">6/23 ~ 현재</td>
             <td>340,957원</td><td>625,127</td><td>534</td><td>7,704</td>
             <td>1.23%</td><td>44원</td><td>639원</td>
             <td><span class="pill good">활성</span></td>
           </tr>
           <tr>
             <td><div class="cn">딥다이브_6화_군체</div><div class="csub">딥다이브</div></td>
-            <td><span style="font-size:8px;color:var(--prog-deep);font-weight:700;">딥다이브</span></td>
-            <td style="font-family:var(--fn);font-size:10px;">6/1 ~ 6/18</td>
+            <td><span style="font-size:10px;color:var(--prog-deep);font-weight:700;">딥다이브</span></td>
+            <td style="font-family:var(--fn);font-size:12px;">6/1 ~ 6/18</td>
             <td>1,784,837원</td><td>3,268,003</td><td>1,846</td><td>43,810</td>
             <td>1.34%</td><td>41원</td><td>967원</td>
             <td><span class="pill warn">중단</span></td>
@@ -753,20 +753,20 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
     <div class="card" style="padding:12px 16px;border-left:3px solid rgba(255,107,43,.4);">
       <div style="display:flex;gap:32px;flex-wrap:wrap;">
         <div>
-          <div style="font-size:9px;font-weight:700;color:var(--dim);letter-spacing:.08em;margin-bottom:7px;">상태 기준</div>
+          <div style="font-size:11px;font-weight:700;color:var(--dim);letter-spacing:.08em;margin-bottom:7px;">상태 기준</div>
           <div style="display:flex;flex-direction:column;gap:5px;">
-            <div style="display:flex;align-items:center;gap:7px;"><span class="pill good">활성</span><span style="font-size:10px;color:var(--faint);">6/24 기준 현재 집행 중인 소재</span></div>
-            <div style="display:flex;align-items:center;gap:7px;"><span class="pill warn">중단</span><span style="font-size:10px;color:var(--faint);">특정 일자 OFF — 예산 소진·소재 교체 등</span></div>
-            <div style="display:flex;align-items:center;gap:7px;"><span class="pill neu">종료</span><span style="font-size:10px;color:var(--faint);">CTR 지속 하락 등 구조적 사유로 캠페인 종료</span></div>
+            <div style="display:flex;align-items:center;gap:7px;"><span class="pill good">활성</span><span style="font-size:12px;color:var(--faint);">6/24 기준 현재 집행 중인 소재</span></div>
+            <div style="display:flex;align-items:center;gap:7px;"><span class="pill warn">중단</span><span style="font-size:12px;color:var(--faint);">특정 일자 OFF — 예산 소진·소재 교체 등</span></div>
+            <div style="display:flex;align-items:center;gap:7px;"><span class="pill neu">종료</span><span style="font-size:12px;color:var(--faint);">CTR 지속 하락 등 구조적 사유로 캠페인 종료</span></div>
           </div>
         </div>
         <div>
-          <div style="font-size:9px;font-weight:700;color:var(--dim);letter-spacing:.08em;margin-bottom:7px;">차트 색상 기준 — 프로그램별</div>
+          <div style="font-size:11px;font-weight:700;color:var(--dim);letter-spacing:.08em;margin-bottom:7px;">차트 색상 기준 — 프로그램별</div>
           <div style="display:flex;flex-direction:column;gap:5px;">
-            <div style="display:flex;align-items:center;gap:7px;"><span style="display:inline-block;width:10px;height:10px;background:var(--prog-weekly);border-radius:2px;flex-shrink:0;"></span><span style="font-size:10px;color:var(--faint);">파랑 — 라플위클리 소재</span></div>
-            <div style="display:flex;align-items:center;gap:7px;"><span style="display:inline-block;width:10px;height:10px;background:var(--prog-hot);border-radius:2px;flex-shrink:0;"></span><span style="font-size:10px;color:var(--faint);">빨강 — HOT&amp;NEW 소재</span></div>
-            <div style="display:flex;align-items:center;gap:7px;"><span style="display:inline-block;width:10px;height:10px;background:var(--prog-deep);border-radius:2px;flex-shrink:0;"></span><span style="font-size:10px;color:var(--faint);">그린 — 딥다이브 소재</span></div>
-            <div style="display:flex;align-items:center;gap:7px;"><span style="font-size:10px;color:var(--faint);">※ 활성 소재는 진하게, 종료 소재는 반투명하게 표시</span></div>
+            <div style="display:flex;align-items:center;gap:7px;"><span style="display:inline-block;width:10px;height:10px;background:var(--prog-weekly);border-radius:2px;flex-shrink:0;"></span><span style="font-size:12px;color:var(--faint);">파랑 — 라플위클리 소재</span></div>
+            <div style="display:flex;align-items:center;gap:7px;"><span style="display:inline-block;width:10px;height:10px;background:var(--prog-hot);border-radius:2px;flex-shrink:0;"></span><span style="font-size:12px;color:var(--faint);">빨강 — HOT&amp;NEW 소재</span></div>
+            <div style="display:flex;align-items:center;gap:7px;"><span style="display:inline-block;width:10px;height:10px;background:var(--prog-deep);border-radius:2px;flex-shrink:0;"></span><span style="font-size:12px;color:var(--faint);">그린 — 딥다이브 소재</span></div>
+            <div style="display:flex;align-items:center;gap:7px;"><span style="font-size:12px;color:var(--faint);">※ 활성 소재는 진하게, 종료 소재는 반투명하게 표시</span></div>
           </div>
         </div>
       </div>
@@ -803,7 +803,7 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
     <div class="sect-lbl">일자별 운영 소재 현황 · 6월 (주말 <span style="color:var(--accent)">●</span> / 이벤트일 <span style="color:var(--teal)">●</span>)</div>
     <div class="card" style="padding:14px 16px;">
       <div id="click-day-btns" style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:14px;"></div>
-      <div id="click-date-note" style="font-size:10px;color:var(--dim);margin-bottom:14px;min-height:16px;padding:8px 10px;background:rgba(255,255,255,.04);border-radius:4px;border-left:2px solid var(--border);"></div>
+      <div id="click-date-note" style="font-size:12px;color:var(--dim);margin-bottom:14px;min-height:16px;padding:8px 10px;background:rgba(255,255,255,.04);border-radius:4px;border-left:2px solid var(--border);"></div>
       <div id="click-date-cards" class="date-cards-grid-lg"></div>
     </div>
   </section>
@@ -842,15 +842,15 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
             <div style="text-align:right;"><div class="funnel-val">3,537,617</div></div>
           </div>
           <div class="funnel-step" style="border-left:3px solid #FF9B5E;">
-            <div><div class="funnel-lbl">조회수 (Views)</div><div style="font-family:var(--fn);font-size:9px;color:var(--faint);">노출 대비 1.25%</div></div>
+            <div><div class="funnel-lbl">조회수 (Views)</div><div style="font-family:var(--fn);font-size:11px;color:var(--faint);">노출 대비 1.25%</div></div>
             <div style="text-align:right;"><div class="funnel-val">44,302</div></div>
           </div>
           <div class="funnel-step" style="border-left:3px solid var(--accent);">
-            <div><div class="funnel-lbl">클릭수 (Clicks)</div><div style="font-family:var(--fn);font-size:9px;color:var(--faint);">노출 대비 CTR 0.56%</div></div>
+            <div><div class="funnel-lbl">클릭수 (Clicks)</div><div style="font-family:var(--fn);font-size:11px;color:var(--faint);">노출 대비 CTR 0.56%</div></div>
             <div style="text-align:right;"><div class="funnel-val">19,698</div></div>
           </div>
           <div class="funnel-step" style="border-left:3px solid var(--teal);">
-            <div><div class="funnel-lbl">구독 전환 (Conversions)</div><div style="font-family:var(--fn);font-size:9px;color:var(--teal);">클릭 대비 CVR 31.8%</div></div>
+            <div><div class="funnel-lbl">구독 전환 (Conversions)</div><div style="font-family:var(--fn);font-size:11px;color:var(--teal);">클릭 대비 CVR 31.8%</div></div>
             <div style="text-align:right;"><div class="funnel-val" style="color:var(--teal)">6,267</div><div class="funnel-rate">단가 1,172원</div></div>
           </div>
         </div>
@@ -862,13 +862,13 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
     <div class="sect-lbl">소재별 6월 성과 (전환 캠페인 소재)</div>
     <!-- 롱폼 합계 callout -->
     <div style="display:flex;gap:20px;flex-wrap:wrap;padding:10px 16px;background:rgba(0,201,167,.08);border-radius:6px;border:1px solid rgba(0,201,167,.2);margin-bottom:12px;align-items:center;">
-      <div style="font-size:9px;font-weight:700;color:var(--teal);letter-spacing:.08em;">롱폼 합계 (디맨드젠 전환)</div>
+      <div style="font-size:11px;font-weight:700;color:var(--teal);letter-spacing:.08em;">롱폼 합계 (디맨드젠 전환)</div>
       <div style="display:flex;gap:16px;flex-wrap:wrap;">
-        <div><span style="font-size:9px;color:var(--dim);">6월 광고비 </span><span style="font-size:12px;font-weight:700;font-family:var(--fn);color:var(--text);">7,345,747원</span></div>
-        <div><span style="font-size:9px;color:var(--dim);">구독 전환 </span><span style="font-size:12px;font-weight:700;font-family:var(--fn);color:var(--teal);">6,267건</span></div>
-        <div><span style="font-size:9px;color:var(--dim);">구독단가 </span><span style="font-size:12px;font-weight:700;font-family:var(--fn);color:var(--text);">1,172원</span></div>
-        <div><span style="font-size:9px;color:var(--dim);">CTR </span><span style="font-size:12px;font-weight:700;font-family:var(--fn);color:var(--text);">0.56%</span></div>
-        <div><span style="font-size:9px;color:var(--dim);">CVR </span><span style="font-size:12px;font-weight:700;font-family:var(--fn);color:var(--text);">31.8%</span></div>
+        <div><span style="font-size:11px;color:var(--dim);">6월 광고비 </span><span style="font-size:14px;font-weight:700;font-family:var(--fn);color:var(--text);">7,345,747원</span></div>
+        <div><span style="font-size:11px;color:var(--dim);">구독 전환 </span><span style="font-size:14px;font-weight:700;font-family:var(--fn);color:var(--teal);">6,267건</span></div>
+        <div><span style="font-size:11px;color:var(--dim);">구독단가 </span><span style="font-size:14px;font-weight:700;font-family:var(--fn);color:var(--text);">1,172원</span></div>
+        <div><span style="font-size:11px;color:var(--dim);">CTR </span><span style="font-size:14px;font-weight:700;font-family:var(--fn);color:var(--text);">0.56%</span></div>
+        <div><span style="font-size:11px;color:var(--dim);">CVR </span><span style="font-size:14px;font-weight:700;font-family:var(--fn);color:var(--text);">31.8%</span></div>
       </div>
     </div>
     <div class="card" style="padding:12px 16px;">
@@ -879,47 +879,47 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
         <tbody>
           <tr>
             <td><div class="cn">딥다이브_6화_군체</div><div class="csub">구독 전환 소재</div></td>
-            <td><span style="font-size:8px;color:var(--prog-deep);font-weight:700;">딥다이브</span></td>
-            <td style="font-family:var(--fn);font-size:10px;">6/1 ~ 현재</td>
+            <td><span style="font-size:10px;color:var(--prog-deep);font-weight:700;">딥다이브</span></td>
+            <td style="font-family:var(--fn);font-size:12px;">6/1 ~ 현재</td>
             <td>2,165,883</td><td>11,538</td>
             <td>0.53%</td><td>165원</td><td>4,329,614원</td>
             <td><span class="pill good">활성</span></td>
           </tr>
           <tr>
             <td><div class="cn">시즌6_19화_스티븐 스필버그</div><div class="csub">구독 전환 소재</div></td>
-            <td><span style="font-size:8px;color:var(--prog-weekly);font-weight:700;">위클리</span></td>
-            <td style="font-family:var(--fn);font-size:10px;">6/16 ~ 현재</td>
+            <td><span style="font-size:10px;color:var(--prog-weekly);font-weight:700;">위클리</span></td>
+            <td style="font-family:var(--fn);font-size:12px;">6/16 ~ 현재</td>
             <td>406,641</td><td>3,109</td>
             <td style="color:var(--teal);font-weight:700;">0.76%</td><td>194원</td><td>1,138,424원</td>
             <td><span class="pill good">활성</span></td>
           </tr>
           <tr>
             <td><div class="cn">시즌5_13화_토이스토리</div><div class="csub">구독 전환 소재</div></td>
-            <td><span style="font-size:8px;color:var(--prog-weekly);font-weight:700;">위클리</span></td>
-            <td style="font-family:var(--fn);font-size:10px;">6/9 ~ 현재</td>
+            <td><span style="font-size:10px;color:var(--prog-weekly);font-weight:700;">위클리</span></td>
+            <td style="font-family:var(--fn);font-size:12px;">6/9 ~ 현재</td>
             <td>96,712</td><td>335</td>
             <td>0.35%</td><td>118원</td><td>140,297원</td>
             <td><span class="pill good">활성</span></td>
           </tr>
           <tr>
             <td><div class="cn">시즌6_15화_마이클잭슨</div><div class="csub">OFF 캠페인</div></td>
-            <td><span style="font-size:8px;color:var(--prog-weekly);font-weight:700;">위클리</span></td>
-            <td style="font-family:var(--fn);font-size:10px;">6/1 ~ 6/9</td>
+            <td><span style="font-size:10px;color:var(--prog-weekly);font-weight:700;">위클리</span></td>
+            <td style="font-family:var(--fn);font-size:12px;">6/1 ~ 6/9</td>
             <td>710,038</td><td>4,404</td>
             <td>0.62%</td><td>169원</td><td>1,610,769원</td>
             <td><span class="pill warn">중단</span></td>
           </tr>
           <tr>
             <td><div class="cn">야구 소재</div><div class="csub">OFF 캠페인</div></td>
-            <td><span style="font-size:8px;color:var(--prog-weekly);font-weight:700;">위클리</span></td>
-            <td style="font-family:var(--fn);font-size:10px;">6/1 ~ 6/21</td>
+            <td><span style="font-size:10px;color:var(--prog-weekly);font-weight:700;">위클리</span></td>
+            <td style="font-family:var(--fn);font-size:12px;">6/1 ~ 6/21</td>
             <td>158,139</td><td>309</td>
             <td>0.20%</td><td>89원</td><td>125,477원</td>
             <td><span class="pill warn">중단</span></td>
           </tr>
         </tbody>
       </table>
-      <div style="font-size:9px;color:var(--faint);margin-top:8px;padding-top:8px;border-top:1px solid var(--border);">※ 소재별 지표는 디맨드젠_전환캠페인 실측 기준 (6/24 기준) · 마이클잭슨·야구는 OFF 캠페인 집행 실적 포함</div>
+      <div style="font-size:11px;color:var(--faint);margin-top:8px;padding-top:8px;border-top:1px solid var(--border);">※ 소재별 지표는 디맨드젠_전환캠페인 실측 기준 (6/24 기준) · 마이클잭슨·야구는 OFF 캠페인 집행 실적 포함</div>
     </div>
   </section>
 
@@ -927,7 +927,7 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
     <div class="sect-lbl">일자별 전환 현황 · 6월 (주말 <span style="color:var(--accent)">●</span> / 고전환일 <span style="color:var(--teal)">●</span>)</div>
     <div class="card" style="padding:14px 16px;">
       <div id="conv-day-btns" style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:14px;"></div>
-      <div id="conv-date-note" style="font-size:10px;color:var(--dim);margin-bottom:14px;min-height:16px;padding:8px 10px;background:rgba(255,255,255,.04);border-radius:4px;border-left:2px solid var(--border);"></div>
+      <div id="conv-date-note" style="font-size:12px;color:var(--dim);margin-bottom:14px;min-height:16px;padding:8px 10px;background:rgba(255,255,255,.04);border-radius:4px;border-left:2px solid var(--border);"></div>
       <div id="conv-date-cards"></div>
     </div>
   </section>
@@ -999,27 +999,27 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
           <!-- 활성 소재 (운영 중) -->
           <tr>
             <td><div class="cn">시즌5_13화_토이스토리</div></td>
-            <td><span style="font-size:8px;color:var(--prog-weekly);font-weight:700;">위클리</span></td>
-            <td style="font-family:var(--fn);font-size:10px;font-weight:700;">1,260,232원</td>
-            <td style="font-family:var(--fn);font-size:10px;">6/9 ~ 현재</td>
+            <td><span style="font-size:10px;color:var(--prog-weekly);font-weight:700;">위클리</span></td>
+            <td style="font-family:var(--fn);font-size:12px;font-weight:700;">1,260,232원</td>
+            <td style="font-family:var(--fn);font-size:12px;">6/9 ~ 현재</td>
             <td>86,245</td><td>10,934</td>
             <td>2.48%</td><td>13원</td><td>1,145,665원</td>
             <td><span class="pill good">활성</span></td>
           </tr>
           <tr>
             <td><div class="cn">시즌6_19화_스티븐 스필버그</div></td>
-            <td><span style="font-size:8px;color:var(--prog-weekly);font-weight:700;">위클리</span></td>
-            <td style="font-family:var(--fn);font-size:10px;font-weight:700;">1,056,688원</td>
-            <td style="font-family:var(--fn);font-size:10px;">6/15 ~ 현재</td>
+            <td><span style="font-size:10px;color:var(--prog-weekly);font-weight:700;">위클리</span></td>
+            <td style="font-family:var(--fn);font-size:12px;font-weight:700;">1,056,688원</td>
+            <td style="font-family:var(--fn);font-size:12px;">6/15 ~ 현재</td>
             <td>68,316</td><td>8,487</td>
             <td>2.29%</td><td>14원</td><td>960,625원</td>
             <td><span class="pill good">활성</span></td>
           </tr>
           <tr>
             <td><div class="cn">시즌1_9화_실수</div></td>
-            <td><span style="font-size:8px;color:var(--prog-weekly);font-weight:700;">위클리</span></td>
-            <td style="font-family:var(--fn);font-size:10px;font-weight:700;">939,474원</td>
-            <td style="font-family:var(--fn);font-size:10px;">6/15 ~ 현재</td>
+            <td><span style="font-size:10px;color:var(--prog-weekly);font-weight:700;">위클리</span></td>
+            <td style="font-family:var(--fn);font-size:12px;font-weight:700;">939,474원</td>
+            <td style="font-family:var(--fn);font-size:12px;">6/15 ~ 현재</td>
             <td>41,602</td><td>4,891</td>
             <td>1.18%</td><td>21원</td><td>854,067원</td>
             <td><span class="pill good">활성</span></td>
@@ -1027,70 +1027,70 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
           <!-- 종료 소재 -->
           <tr>
             <td><div class="cn">딥다이브_6화_군체</div><div class="csub">OFF 캠페인</div></td>
-            <td><span style="font-size:8px;color:var(--prog-deep);font-weight:700;">딥다이브</span></td>
-            <td style="font-family:var(--fn);font-size:10px;font-weight:700;">1,867,546원</td>
-            <td style="font-family:var(--fn);font-size:10px;">6/1 ~ 6/17</td>
+            <td><span style="font-size:10px;color:var(--prog-deep);font-weight:700;">딥다이브</span></td>
+            <td style="font-family:var(--fn);font-size:12px;font-weight:700;">1,867,546원</td>
+            <td style="font-family:var(--fn);font-size:12px;">6/1 ~ 6/17</td>
             <td style="color:var(--teal);font-weight:700;">183,130</td><td>21,668</td>
             <td style="color:var(--teal);font-weight:700;">3.63%</td><td>9원</td><td>1,697,769원</td>
             <td><span class="pill warn">중단</span></td>
           </tr>
           <tr>
             <td><div class="cn">시즌6_15화_마이클잭슨</div><div class="csub">OFF 캠페인</div></td>
-            <td><span style="font-size:8px;color:var(--prog-weekly);font-weight:700;">위클리</span></td>
-            <td style="font-family:var(--fn);font-size:10px;font-weight:700;">394,801원</td>
-            <td style="font-family:var(--fn);font-size:10px;">6/1 ~ 6/9</td>
+            <td><span style="font-size:10px;color:var(--prog-weekly);font-weight:700;">위클리</span></td>
+            <td style="font-family:var(--fn);font-size:12px;font-weight:700;">394,801원</td>
+            <td style="font-family:var(--fn);font-size:12px;">6/1 ~ 6/9</td>
             <td>29,716</td><td>3,519</td>
             <td>2.89%</td><td>12원</td><td>358,910원</td>
             <td><span class="pill warn">중단</span></td>
           </tr>
           <tr>
             <td><div class="cn">핫앤뉴_12화_만달로리안</div><div class="csub">OFF 캠페인</div></td>
-            <td><span style="font-size:8px;color:var(--prog-hot);font-weight:700;">H&amp;N</span></td>
-            <td style="font-family:var(--fn);font-size:10px;font-weight:700;">1,158,551원</td>
-            <td style="font-family:var(--fn);font-size:10px;">6/1 ~ 6/9</td>
+            <td><span style="font-size:10px;color:var(--prog-hot);font-weight:700;">H&amp;N</span></td>
+            <td style="font-family:var(--fn);font-size:12px;font-weight:700;">1,158,551원</td>
+            <td style="font-family:var(--fn);font-size:12px;">6/1 ~ 6/9</td>
             <td>66,840</td><td>9,928</td>
             <td style="color:var(--teal);font-weight:700;">3.94%</td><td>16원</td><td>1,053,228원</td>
             <td><span class="pill warn">중단</span></td>
           </tr>
           <tr>
             <td><div class="cn">핫앤뉴_11화_원더풀스</div><div class="csub">OFF 캠페인</div></td>
-            <td><span style="font-size:8px;color:var(--prog-hot);font-weight:700;">H&amp;N</span></td>
-            <td style="font-family:var(--fn);font-size:10px;font-weight:700;">136,175원</td>
-            <td style="font-family:var(--fn);font-size:10px;">6/1 ~ 6/5</td>
+            <td><span style="font-size:10px;color:var(--prog-hot);font-weight:700;">H&amp;N</span></td>
+            <td style="font-family:var(--fn);font-size:12px;font-weight:700;">136,175원</td>
+            <td style="font-family:var(--fn);font-size:12px;">6/1 ~ 6/5</td>
             <td>3,949</td><td>558</td>
             <td>1.03%</td><td>31원</td><td>123,795원</td>
             <td><span class="pill warn">중단</span></td>
           </tr>
           <tr>
             <td><div class="cn">핫앤뉴_13화_백룸</div><div class="csub">OFF 캠페인</div></td>
-            <td><span style="font-size:8px;color:var(--prog-hot);font-weight:700;">H&amp;N</span></td>
-            <td style="font-family:var(--fn);font-size:10px;font-weight:700;">390,456원</td>
-            <td style="font-family:var(--fn);font-size:10px;">6/9 ~ 6/12</td>
+            <td><span style="font-size:10px;color:var(--prog-hot);font-weight:700;">H&amp;N</span></td>
+            <td style="font-family:var(--fn);font-size:12px;font-weight:700;">390,456원</td>
+            <td style="font-family:var(--fn);font-size:12px;">6/9 ~ 6/12</td>
             <td>14,056</td><td>3,999</td>
             <td>1.12%</td><td>25원</td><td>354,960원</td>
             <td><span class="pill warn">중단</span></td>
           </tr>
           <tr>
             <td><div class="cn">시즌6_7화_헤일메리</div><div class="csub">OFF 캠페인</div></td>
-            <td><span style="font-size:8px;color:var(--prog-weekly);font-weight:700;">위클리</span></td>
-            <td style="font-family:var(--fn);font-size:10px;font-weight:700;">119,759원</td>
-            <td style="font-family:var(--fn);font-size:10px;">6/9 ~ 6/12</td>
+            <td><span style="font-size:10px;color:var(--prog-weekly);font-weight:700;">위클리</span></td>
+            <td style="font-family:var(--fn);font-size:12px;font-weight:700;">119,759원</td>
+            <td style="font-family:var(--fn);font-size:12px;">6/9 ~ 6/12</td>
             <td>11,397</td><td>1,246</td>
             <td>2.89%</td><td>10원</td><td>108,872원</td>
             <td><span class="pill warn">중단</span></td>
           </tr>
           <tr>
             <td><div class="cn">시즌2_1화_첫사랑</div><div class="csub">OFF 캠페인</div></td>
-            <td><span style="font-size:8px;color:var(--prog-weekly);font-weight:700;">위클리</span></td>
-            <td style="font-family:var(--fn);font-size:10px;font-weight:700;">183,451원</td>
-            <td style="font-family:var(--fn);font-size:10px;">6/9 ~ 6/15</td>
+            <td><span style="font-size:10px;color:var(--prog-weekly);font-weight:700;">위클리</span></td>
+            <td style="font-family:var(--fn);font-size:12px;font-weight:700;">183,451원</td>
+            <td style="font-family:var(--fn);font-size:12px;">6/9 ~ 6/15</td>
             <td>17,216</td><td>1,861</td>
             <td>3.05%</td><td>10원</td><td>166,774원</td>
             <td><span class="pill warn">중단</span></td>
           </tr>
         </tbody>
       </table>
-      <div style="font-size:9px;color:var(--faint);margin-top:8px;padding-top:8px;border-top:1px solid var(--border);">※ CTR은 조회율(조회수/노출수) · 실측 기준 (6/24) · OFF 캠페인은 중단 소재 포함</div>
+      <div style="font-size:11px;color:var(--faint);margin-top:8px;padding-top:8px;border-top:1px solid var(--border);">※ CTR은 조회율(조회수/노출수) · 실측 기준 (6/24) · OFF 캠페인은 중단 소재 포함</div>
     </div>
   </section>
 
@@ -1105,7 +1105,7 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
     <div class="sect-lbl">일자별 후속조회 현황 · 6월 (주말 <span style="color:var(--accent)">●</span> / 고조회일 <span style="color:var(--teal)">●</span>)</div>
     <div class="card" style="padding:14px 16px;">
       <div id="retarget-day-btns" style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:14px;"></div>
-      <div id="retarget-date-note" style="font-size:10px;color:var(--dim);margin-bottom:14px;min-height:16px;padding:8px 10px;background:rgba(255,255,255,.04);border-radius:4px;border-left:2px solid var(--border);"></div>
+      <div id="retarget-date-note" style="font-size:12px;color:var(--dim);margin-bottom:14px;min-height:16px;padding:8px 10px;background:rgba(255,255,255,.04);border-radius:4px;border-left:2px solid var(--border);"></div>
       <div id="retarget-date-cards"></div>
     </div>
   </section>
@@ -1287,10 +1287,10 @@ function drawHBar(id, data, maxV, unit, color) {
     ctx.fillStyle = tagColor + '33';
     ctx.fillRect(0, y, 6, rowH - 6);
     /* label */
-    ctx.fillStyle = C.dim; ctx.font = '9px ' + FN; ctx.textAlign = 'right';
+    ctx.fillStyle = C.dim; ctx.font = '11px ' + FN; ctx.textAlign = 'right';
     ctx.fillText(d.ep + ' ' + d.lbl, lpad - 8, y + rowH - 10);
     /* value */
-    ctx.fillStyle = C.text; ctx.font = 'bold 9px ' + FN; ctx.textAlign = 'left';
+    ctx.fillStyle = C.text; ctx.font = 'bold 11px ' + FN; ctx.textAlign = 'left';
     ctx.fillText(d.v + unit, lpad + blen + 4, y + rowH - 10);
   });
   regHits(id, data.map(function(d,i){
@@ -1313,7 +1313,7 @@ function drawVBar(id, data, color) {
     var y = pad.t + cH - (v / maxV) * cH;
     ctx.strokeStyle = C.border; ctx.lineWidth = 1;
     ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(pad.l + cW, y); ctx.stroke();
-    ctx.fillStyle = C.faint; ctx.font = '8px ' + FN; ctx.textAlign = 'right';
+    ctx.fillStyle = C.faint; ctx.font = '10px ' + FN; ctx.textAlign = 'right';
     ctx.fillText((v/1000).toFixed(0)+'K', pad.l - 4, y + 3);
   });
   var n = data.length;
@@ -1327,7 +1327,7 @@ function drawVBar(id, data, color) {
     ctx.globalAlpha = 0.72;
     ctx.fillRect(x, y, bw, bh);
     ctx.globalAlpha = 1;
-    ctx.fillStyle = C.dim; ctx.font = '8px ' + FN; ctx.textAlign = 'center';
+    ctx.fillStyle = C.dim; ctx.font = '10px ' + FN; ctx.textAlign = 'center';
     ctx.fillText(d.ep, x + bw/2, pad.t + cH + 11);
   });
   regHits(id, data.map(function(d,i){
@@ -1345,15 +1345,15 @@ function renderViewTable(data) {
     var vtrC = d.vtr >= 60 ? C.teal : d.vtr >= 45 ? C.yellow : C.accent;
     var pill = d.vtr >= 60 ? '<span class="pill good">우수</span>' : d.vtr >= 45 ? '<span class="pill neu">보통</span>' : '<span class="pill warn">저조</span>';
     var progBadge = d.prog === '라플위클리'
-      ? '<span style="font-size:8px;color:var(--prog-weekly);font-weight:700;">위클리</span>'
+      ? '<span style="font-size:10px;color:var(--prog-weekly);font-weight:700;">위클리</span>'
       : d.prog === 'HOT&NEW'
-      ? '<span style="font-size:8px;color:var(--prog-hot);font-weight:700;">H&amp;N</span>'
-      : '<span style="font-size:8px;color:var(--prog-deep);font-weight:700;">딥다이브</span>';
+      ? '<span style="font-size:10px;color:var(--prog-hot);font-weight:700;">H&amp;N</span>'
+      : '<span style="font-size:10px;color:var(--prog-deep);font-weight:700;">딥다이브</span>';
     var spendStr = d.spend ? Math.round(d.spend/10000) + '만원' : '-';
     return '<tr>' +
       '<td><div class="cn">' + d.ep + ' ' + d.title + '</div></td>' +
       '<td>' + progBadge + '</td>' +
-      '<td style="font-size:9px;font-family:var(--fn);color:var(--dim);">' + spendStr + '</td>' +
+      '<td style="font-size:11px;font-family:var(--fn);color:var(--dim);">' + spendStr + '</td>' +
       '<td>' + d.imp.toLocaleString() + '</td>' +
       '<td>' + d.views.toLocaleString() + '</td>' +
       '<td>' + d.clicks.toLocaleString() + '</td>' +
@@ -1407,7 +1407,7 @@ function grid(ctx,W,H,pad,maxV,ticks){
     var y=pad.t+H-(v/maxV)*H;
     ctx.strokeStyle=C.border; ctx.lineWidth=1;
     ctx.beginPath(); ctx.moveTo(pad.l,y); ctx.lineTo(pad.l+W,y); ctx.stroke();
-    ctx.fillStyle=C.faint; ctx.font='9px '+FN; ctx.textAlign='right';
+    ctx.fillStyle=C.faint; ctx.font='11px '+FN; ctx.textAlign='right';
     ctx.fillText(v,pad.l-5,y+3);
   });
 }
@@ -1422,10 +1422,10 @@ function bars(ctx,data,W,H,pad,maxV,color,id){
     var c=best?C.teal:color;
     ctx.fillStyle=c; ctx.globalAlpha=best?1:.75;
     ctx.fillRect(x,y,bw,bh); ctx.globalAlpha=1;
-    ctx.fillStyle=best?C.teal:C.text; ctx.font='bold 10px '+FN; ctx.textAlign='center';
+    ctx.fillStyle=best?C.teal:C.text; ctx.font='bold 12px '+FN; ctx.textAlign='center';
     ctx.fillText(d.v,x+bw/2,y-4);
-    ctx.fillStyle=C.dim; ctx.font='9px '+FN; ctx.fillText(d.lbl,x+bw/2,pad.t+H+12);
-    if(d.sub){ctx.fillStyle=C.faint;ctx.font='8px '+FN;ctx.fillText(d.sub,x+bw/2,pad.t+H+22);}
+    ctx.fillStyle=C.dim; ctx.font='11px '+FN; ctx.fillText(d.lbl,x+bw/2,pad.t+H+12);
+    if(d.sub){ctx.fillStyle=C.faint;ctx.font='10px '+FN;ctx.fillText(d.sub,x+bw/2,pad.t+H+22);}
     hits.push({x:x,y:pad.t,w:bw,h:H,lines:[d.lbl+(d.sub?' ('+d.sub+')':''),d.v.toLocaleString()+'건']});
   });
   if(id)regHits(id,hits);
@@ -1444,7 +1444,7 @@ function drawOverviewCharts(){
     var avgY=pad.t+cH-(avg/500)*cH;
     ctx.setLineDash([3,4]); ctx.strokeStyle='rgba(255,107,43,.3)'; ctx.lineWidth=1;
     ctx.beginPath(); ctx.moveTo(pad.l,avgY); ctx.lineTo(pad.l+cW,avgY); ctx.stroke();
-    ctx.setLineDash([]); ctx.fillStyle=C.accent; ctx.font='9px '+FN; ctx.textAlign='left';
+    ctx.setLineDash([]); ctx.fillStyle=C.accent; ctx.font='11px '+FN; ctx.textAlign='left';
     ctx.fillText('avg '+avg,pad.l+cW+3,avgY+3);
     bars(ctx,data,cW,cH,pad,500,C.accent,'cv1');
   }catch(e){}
@@ -1461,14 +1461,14 @@ function drawOverviewCharts(){
       ctx2.fillStyle=sg.c; ctx2.fill(); sa+=a;
     });
     ctx2.beginPath(); ctx2.arc(cx,cy,ri,0,2*Math.PI); ctx2.fillStyle=C.surface; ctx2.fill();
-    ctx2.fillStyle=C.text; ctx2.font='bold 13px '+FN; ctx2.textAlign='center';
-    ctx2.fillText('4,466',cx,cy+1); ctx2.fillStyle=C.dim; ctx2.font='9px '+FN; ctx2.fillText('만원',cx,cy+13);
+    ctx2.fillStyle=C.text; ctx2.font='bold 15px '+FN; ctx2.textAlign='center';
+    ctx2.fillText('4,466',cx,cy+1); ctx2.fillStyle=C.dim; ctx2.font='11px '+FN; ctx2.fillText('만원',cx,cy+13);
     var lx=cx+r+10;
     segs.forEach(function(sg,i){
       var pct=((sg.v/tot)*100).toFixed(0);
       var ly=H2/2-(segs.length*18)/2+i*20+2;
       ctx2.fillStyle=sg.c; ctx2.fillRect(lx,ly,7,7);
-      ctx2.fillStyle=C.dim; ctx2.font='9px '+FN; ctx2.textAlign='left';
+      ctx2.fillStyle=C.dim; ctx2.font='11px '+FN; ctx2.textAlign='left';
       ctx2.fillText(sg.lbl,lx+11,ly+7);
       var tw=ctx2.measureText(sg.lbl).width;
       ctx2.fillStyle=C.text; ctx2.fillText(pct+'%',lx+11+tw+3,ly+7);
@@ -1502,11 +1502,11 @@ function _legacyVtrChart_unused(){try{
     var maxW=W-lpad-rpad;
     items.forEach(function(d,i){
       var y=8+i*(bH+gap);
-      ctx.fillStyle=C.faint; ctx.font='9px '+FN; ctx.textAlign='right';
+      ctx.fillStyle=C.faint; ctx.font='11px '+FN; ctx.textAlign='right';
       ctx.fillText(d.lbl,lpad-6,y+bH-2);
       ctx.fillStyle=C.border; ctx.fillRect(lpad,y,maxW,bH);
       ctx.fillStyle=d.c; ctx.fillRect(lpad,y,(d.vtr/100)*maxW,bH);
-      ctx.fillStyle=C.text; ctx.font='bold 9px '+FN; ctx.textAlign='left';
+      ctx.fillStyle=C.text; ctx.font='bold 11px '+FN; ctx.textAlign='left';
       ctx.fillText(d.vtr+'%',lpad+(d.vtr/100)*maxW+4,y+bH-2);
     });
   })();
@@ -1532,11 +1532,11 @@ function _legacyVtrChart_unused(){try{
     var maxW=W-lpad-rpad; var maxCPV=40;
     items.forEach(function(d,i){
       var y=8+i*(bH+gap);
-      ctx.fillStyle=C.faint; ctx.font='9px '+FN; ctx.textAlign='right';
+      ctx.fillStyle=C.faint; ctx.font='11px '+FN; ctx.textAlign='right';
       ctx.fillText(d.lbl,lpad-6,y+bH-2);
       ctx.fillStyle=C.border; ctx.fillRect(lpad,y,maxW,bH);
       ctx.fillStyle=d.c; ctx.fillRect(lpad,y,(d.cpv/maxCPV)*maxW,bH);
-      ctx.fillStyle=C.text; ctx.font='bold 9px '+FN; ctx.textAlign='left';
+      ctx.fillStyle=C.text; ctx.font='bold 11px '+FN; ctx.textAlign='left';
       ctx.fillText(d.cpv+'원',lpad+(d.cpv/maxCPV)*maxW+4,y+bH-2);
     });
   })();
@@ -1556,7 +1556,7 @@ function drawClickCharts(){try{
       var y=pad.t+cH-(v/4)*cH;
       ctx.strokeStyle=C.border; ctx.lineWidth=1;
       ctx.beginPath(); ctx.moveTo(pad.l,y); ctx.lineTo(pad.l+cW,y); ctx.stroke();
-      ctx.fillStyle=C.faint; ctx.font='9px '+FN; ctx.textAlign='right';
+      ctx.fillStyle=C.faint; ctx.font='11px '+FN; ctx.textAlign='right';
       ctx.fillText(v+'%',pad.l-5,y+3);
     });
     var step=cW/(months.length-1);
@@ -1570,10 +1570,10 @@ function drawClickCharts(){try{
     ctrs.forEach(function(v,i){
       var x=pad.l+i*step; var y=pad.t+cH-(v/4)*cH;
       ctx.fillStyle=C.accent; ctx.beginPath(); ctx.arc(x,y,4,0,2*Math.PI); ctx.fill();
-      ctx.fillStyle=C.text; ctx.font='bold 10px '+FN; ctx.textAlign='center';
+      ctx.fillStyle=C.text; ctx.font='bold 12px '+FN; ctx.textAlign='center';
       ctx.fillText(v+'%',x,y-8);
-      ctx.fillStyle=C.dim; ctx.font='9px '+FN; ctx.fillText(months[i],x,pad.t+cH+14);
-      ctx.fillStyle=C.faint; ctx.font='8px '+FN;
+      ctx.fillStyle=C.dim; ctx.font='11px '+FN; ctx.fillText(months[i],x,pad.t+cH+14);
+      ctx.fillStyle=C.faint; ctx.font='10px '+FN;
       var m=(costs[i]/10000).toFixed(0);
       ctx.fillText(m+'만원',x,pad.t+cH+24);
     });
@@ -1598,7 +1598,7 @@ function drawClickCharts(){try{
       var y=pad.t+cH-(v/maxV)*cH;
       ctx.strokeStyle=C.border; ctx.lineWidth=1;
       ctx.beginPath(); ctx.moveTo(pad.l,y); ctx.lineTo(pad.l+cW,y); ctx.stroke();
-      ctx.fillStyle=C.faint; ctx.font='8px '+FN; ctx.textAlign='right';
+      ctx.fillStyle=C.faint; ctx.font='10px '+FN; ctx.textAlign='right';
       ctx.fillText((v/10000).toFixed(0)+'만',pad.l-5,y+3);
     });
     var step=cW/data.length; var bw=step*.5;
@@ -1606,10 +1606,10 @@ function drawClickCharts(){try{
       var x=pad.l+step*i+(step-bw)/2;
       var bh=(d.v/maxV)*cH; var y=pad.t+cH-bh;
       ctx.fillStyle=d.c; ctx.fillRect(x,y,bw,bh);
-      ctx.fillStyle=C.text; ctx.font='bold 10px '+FN; ctx.textAlign='center';
+      ctx.fillStyle=C.text; ctx.font='bold 12px '+FN; ctx.textAlign='center';
       ctx.fillText(d.v.toLocaleString(),x+bw/2,y-5);
-      ctx.fillStyle=C.dim; ctx.font='9px '+FN; ctx.fillText(d.lbl,x+bw/2,pad.t+cH+13);
-      ctx.fillStyle=C.faint; ctx.font='8px '+FN;
+      ctx.fillStyle=C.dim; ctx.font='11px '+FN; ctx.fillText(d.lbl,x+bw/2,pad.t+cH+13);
+      ctx.fillStyle=C.faint; ctx.font='10px '+FN;
       ctx.fillText((d.cost/10000).toFixed(0)+'만원',x+bw/2,pad.t+cH+23);
     });
     regHits('clickProg',data.map(function(d,i){
@@ -1641,18 +1641,18 @@ function drawClickCharts(){try{
       var ratio=d.ctr/maxCTR;
       var progC=d.prog==='위클리'?C.weekly:(d.prog==='H&N'?C.hot:C.deep);
       var barCol=d.active?progC:progC+'99';
-      ctx.fillStyle=C.faint; ctx.font='9px '+FN; ctx.textAlign='right';
+      ctx.fillStyle=C.faint; ctx.font='11px '+FN; ctx.textAlign='right';
       ctx.fillText(d.lbl,lpad-6,y+bH-3);
       ctx.fillStyle='rgba(255,255,255,0.06)'; ctx.fillRect(lpad,y,maxW,bH);
       var grd=ctx.createLinearGradient(lpad,0,lpad+ratio*maxW,0);
       grd.addColorStop(0,barCol.replace(/99$/,'55')||barCol); grd.addColorStop(1,d.active?progC:progC+'bb');
       ctx.fillStyle=grd; ctx.fillRect(lpad,y,ratio*maxW,bH);
       ctx.fillStyle=d.active?progC:C.text;
-      ctx.font=(d.active?'bold 10px ':'9px ')+FN;
+      ctx.font=(d.active?'bold 12px ':'11px ')+FN;
       ctx.textAlign='left';
       ctx.fillText(d.ctr+'%',lpad+ratio*maxW+5,y+bH-3);
       if(d.active){
-        ctx.fillStyle=progC+'bb'; ctx.font='8px '+FN; ctx.textAlign='right';
+        ctx.fillStyle=progC+'bb'; ctx.font='10px '+FN; ctx.textAlign='right';
         ctx.fillText('●',W-4,y+bH-3);
       }
     });
@@ -1684,11 +1684,11 @@ function drawClickCharts(){try{
     CCLICKS.forEach(function(d,i){
       var y=8+i*(bH+gap);
       var ratio=d.v/maxV;
-      ctx.fillStyle=C.faint; ctx.font='9px '+FN; ctx.textAlign='right';
+      ctx.fillStyle=C.faint; ctx.font='11px '+FN; ctx.textAlign='right';
       ctx.fillText(d.lbl,lpad-6,y+bH-3);
       ctx.fillStyle='rgba(255,255,255,0.06)'; ctx.fillRect(lpad,y,maxW,bH);
       ctx.fillStyle=d.c; ctx.fillRect(lpad,y,ratio*maxW,bH);
-      ctx.fillStyle=C.text; ctx.font='9px '+FN; ctx.textAlign='left';
+      ctx.fillStyle=C.text; ctx.font='11px '+FN; ctx.textAlign='left';
       ctx.fillText(d.v.toLocaleString(),lpad+ratio*maxW+5,y+bH-3);
     });
     regHits('clickCreativeClicks',CCLICKS.map(function(d,i){
@@ -1719,9 +1719,9 @@ function drawClickCharts(){try{
     });
     ctx.beginPath(); ctx.arc(cx,cy,r,0,2*Math.PI);
     ctx.fillStyle='#131924'; ctx.fill();
-    ctx.fillStyle=C.text; ctx.font='bold 12px '+FN; ctx.textAlign='center';
+    ctx.fillStyle=C.text; ctx.font='bold 14px '+FN; ctx.textAlign='center';
     ctx.fillText(centerLabel,cx,cy+4);
-    if(centerSub){ctx.fillStyle=C.dim;ctx.font='9px '+FN;ctx.fillText(centerSub,cx,cy+16);}
+    if(centerSub){ctx.fillStyle=C.dim;ctx.font='11px '+FN;ctx.fillText(centerSub,cx,cy+16);}
     var cols=2; var colW=W/cols;
     var lgY=donutH+6;
     slices.forEach(function(d,i){
@@ -1730,9 +1730,9 @@ function drawClickCharts(){try{
       var pct=((d.v/total)*100).toFixed(1);
       ctx.fillStyle=d.c||DCOLORS[i%DCOLORS.length];
       ctx.fillRect(lx,ly+2,8,8);
-      ctx.fillStyle=C.faint; ctx.font='9px '+FN; ctx.textAlign='left';
+      ctx.fillStyle=C.faint; ctx.font='11px '+FN; ctx.textAlign='left';
       ctx.fillText(d.lbl,lx+12,ly+10);
-      ctx.fillStyle=C.text; ctx.font='bold 9px '+FN; ctx.textAlign='right';
+      ctx.fillStyle=C.text; ctx.font='bold 11px '+FN; ctx.textAlign='right';
       ctx.fillText(pct+'%',col*colW+colW-6,ly+10);
     });
   }
@@ -1864,19 +1864,19 @@ function drawClickCharts(){try{
         return '<div class="dcard-lg '+c.prog+'">'
           +'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">'
           +'<span class="dcard-prog">'+pname+'</span>'
-          +'<span style="font-size:9px;color:var(--faint);">'+c.ep+'</span>'
+          +'<span style="font-size:11px;color:var(--faint);">'+c.ep+'</span>'
           +'</div>'
-          +'<div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:14px;">'+c.lbl+'</div>'
+          +'<div style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:14px;">'+c.lbl+'</div>'
           +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px 14px;margin-bottom:14px;">'
-          +'<div><div style="font-size:9px;color:var(--dim);margin-bottom:3px;">CTR</div><div class="dcard-ctr">'+c.ctr+'%</div></div>'
-          +'<div><div style="font-size:9px;color:var(--dim);margin-bottom:3px;">클릭수</div><div style="font-size:20px;font-weight:700;font-family:var(--fn);color:var(--text);">'+c.clicks.toLocaleString()+'</div></div>'
-          +'<div><div style="font-size:9px;color:var(--dim);margin-bottom:3px;">노출수</div><div style="font-size:20px;font-weight:700;font-family:var(--fn);color:var(--text);">'+(c.imp?c.imp.toLocaleString():'-')+'</div></div>'
-          +'<div><div style="font-size:9px;color:var(--dim);margin-bottom:3px;">CPC</div><div style="font-size:20px;font-weight:700;font-family:var(--fn);color:var(--text);">'+c.cpc+'원</div></div>'
-          +'<div><div style="font-size:9px;color:var(--dim);margin-bottom:3px;">CPV</div><div style="font-size:20px;font-weight:700;font-family:var(--fn);color:var(--text);">'+c.cpv+'원</div></div>'
+          +'<div><div style="font-size:11px;color:var(--dim);margin-bottom:3px;">CTR</div><div class="dcard-ctr">'+c.ctr+'%</div></div>'
+          +'<div><div style="font-size:11px;color:var(--dim);margin-bottom:3px;">클릭수</div><div style="font-size:22px;font-weight:700;font-family:var(--fn);color:var(--text);">'+c.clicks.toLocaleString()+'</div></div>'
+          +'<div><div style="font-size:11px;color:var(--dim);margin-bottom:3px;">노출수</div><div style="font-size:22px;font-weight:700;font-family:var(--fn);color:var(--text);">'+(c.imp?c.imp.toLocaleString():'-')+'</div></div>'
+          +'<div><div style="font-size:11px;color:var(--dim);margin-bottom:3px;">CPC</div><div style="font-size:22px;font-weight:700;font-family:var(--fn);color:var(--text);">'+c.cpc+'원</div></div>'
+          +'<div><div style="font-size:11px;color:var(--dim);margin-bottom:3px;">CPV</div><div style="font-size:22px;font-weight:700;font-family:var(--fn);color:var(--text);">'+c.cpv+'원</div></div>'
           +'</div>'
           +'<div style="border-top:1px solid var(--border);padding-top:10px;display:flex;justify-content:space-between;align-items:center;">'
-          +'<span style="font-size:9px;color:var(--dim);">당일 집행 예산</span>'
-          +'<span style="font-size:14px;font-weight:700;font-family:var(--fn);color:var(--text);">'+c.cost.toLocaleString()+'원</span>'
+          +'<span style="font-size:11px;color:var(--dim);">당일 집행 예산</span>'
+          +'<span style="font-size:16px;font-weight:700;font-family:var(--fn);color:var(--text);">'+c.cost.toLocaleString()+'원</span>'
           +'</div>'
           +'</div>';
       }).join('');
@@ -1929,7 +1929,7 @@ function drawConvCharts(){try{
       var y=pad.t+cH-(v/maxV)*cH;
       ctx.strokeStyle=C.border; ctx.lineWidth=1;
       ctx.beginPath(); ctx.moveTo(pad.l,y); ctx.lineTo(pad.l+cW,y); ctx.stroke();
-      ctx.fillStyle=C.faint; ctx.font='8px '+FN; ctx.textAlign='right';
+      ctx.fillStyle=C.faint; ctx.font='10px '+FN; ctx.textAlign='right';
       ctx.fillText(v,pad.l-4,y+3);
     });
     var n=CD.length; var step=cW/n; var bw=step*.62;
@@ -1940,14 +1940,14 @@ function drawConvCharts(){try{
       var best=d.v===maxVal;
       ctx.fillStyle=best?C.teal:'rgba(0,201,167,0.45)';
       ctx.fillRect(x,y,bw,bh);
-      if(best){ctx.fillStyle=C.teal;ctx.font='bold 9px '+FN;ctx.textAlign='center';ctx.fillText(d.v,x+bw/2,y-3);}
-      if(i%3===0||i===n-1){ctx.fillStyle=C.dim;ctx.font='7px '+FN;ctx.textAlign='center';ctx.fillText(d.d.split('/')[1],x+bw/2,pad.t+cH+10);}
+      if(best){ctx.fillStyle=C.teal;ctx.font='bold 11px '+FN;ctx.textAlign='center';ctx.fillText(d.v,x+bw/2,y-3);}
+      if(i%3===0||i===n-1){ctx.fillStyle=C.dim;ctx.font='9px '+FN;ctx.textAlign='center';ctx.fillText(d.d.split('/')[1],x+bw/2,pad.t+cH+10);}
     });
     var avg=Math.round(CD.reduce(function(s,d){return s+d.v;},0)/CD.length);
     var avgY=pad.t+cH-(avg/maxV)*cH;
     ctx.setLineDash([3,4]); ctx.strokeStyle='rgba(0,201,167,.3)'; ctx.lineWidth=1;
     ctx.beginPath(); ctx.moveTo(pad.l,avgY); ctx.lineTo(pad.l+cW,avgY); ctx.stroke();
-    ctx.setLineDash([]); ctx.fillStyle=C.dim; ctx.font='8px '+FN; ctx.textAlign='left';
+    ctx.setLineDash([]); ctx.fillStyle=C.dim; ctx.font='10px '+FN; ctx.textAlign='left';
     ctx.fillText('avg '+avg,pad.l+cW+3,avgY+3);
     /* CVR 라인 (황색) */
     ctx.strokeStyle='rgba(240,192,64,.8)'; ctx.lineWidth=1.5; ctx.lineJoin='round';
@@ -1958,7 +1958,7 @@ function drawConvCharts(){try{
       if(i===0)ctx.moveTo(x,y); else ctx.lineTo(x,y);
     });
     ctx.stroke(); ctx.setLineDash([]);
-    ctx.fillStyle='rgba(240,192,64,.9)'; ctx.font='8px '+FN; ctx.textAlign='left';
+    ctx.fillStyle='rgba(240,192,64,.9)'; ctx.font='10px '+FN; ctx.textAlign='left';
     ctx.fillText('CVR%',pad.l+cW+3,pad.t+6);
     regHits('convDaily',CD.map(function(d,i){
       var x=pad.l+step*i+(step-bw)/2;
@@ -2056,17 +2056,17 @@ function drawConvCharts(){try{
         +'<div class="dcard-lg weekly">'
         +'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">'
         +'<span class="dcard-prog">전환 캠페인</span>'
-        +'<span style="font-size:9px;color:var(--faint);">6월 '+day+'일 ('+dowStr+')</span>'
+        +'<span style="font-size:11px;color:var(--faint);">6월 '+day+'일 ('+dowStr+')</span>'
         +'</div>'
         +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px 14px;margin-bottom:14px;">'
-        +'<div><div style="font-size:9px;color:var(--dim);margin-bottom:3px;">구독 전환</div><div style="font-size:28px;font-weight:700;font-family:var(--fn);color:var(--teal);">'+d.conv+'건</div></div>'
-        +'<div><div style="font-size:9px;color:var(--dim);margin-bottom:3px;">CVR</div><div style="font-size:28px;font-weight:700;font-family:var(--fn);color:var(--text);">'+d.cvr+'%</div></div>'
-        +'<div><div style="font-size:9px;color:var(--dim);margin-bottom:3px;">구독단가</div><div style="font-size:20px;font-weight:700;font-family:var(--fn);color:var(--text);">'+cpsub.toLocaleString()+'원</div></div>'
-        +'<div><div style="font-size:9px;color:var(--dim);margin-bottom:3px;">일 광고비</div><div style="font-size:20px;font-weight:700;font-family:var(--fn);color:var(--text);">'+d.cost.toLocaleString()+'원</div></div>'
+        +'<div><div style="font-size:11px;color:var(--dim);margin-bottom:3px;">구독 전환</div><div style="font-size:28px;font-weight:700;font-family:var(--fn);color:var(--teal);">'+d.conv+'건</div></div>'
+        +'<div><div style="font-size:11px;color:var(--dim);margin-bottom:3px;">CVR</div><div style="font-size:28px;font-weight:700;font-family:var(--fn);color:var(--text);">'+d.cvr+'%</div></div>'
+        +'<div><div style="font-size:11px;color:var(--dim);margin-bottom:3px;">구독단가</div><div style="font-size:22px;font-weight:700;font-family:var(--fn);color:var(--text);">'+cpsub.toLocaleString()+'원</div></div>'
+        +'<div><div style="font-size:11px;color:var(--dim);margin-bottom:3px;">일 광고비</div><div style="font-size:22px;font-weight:700;font-family:var(--fn);color:var(--text);">'+d.cost.toLocaleString()+'원</div></div>'
         +'</div>'
         +'<div style="border-top:1px solid var(--border);padding-top:10px;display:flex;justify-content:space-between;align-items:center;">'
-        +'<span style="font-size:9px;color:var(--dim);">일 평균 대비 (avg ~300건)</span>'
-        +'<span style="font-size:11px;font-weight:700;color:'+(aboveAvg?'var(--teal)':'var(--accent)')+';">'+(aboveAvg?'▲ 평균 이상':'▼ 평균 이하')+'</span>'
+        +'<span style="font-size:11px;color:var(--dim);">일 평균 대비 (avg ~300건)</span>'
+        +'<span style="font-size:13px;font-weight:700;color:'+(aboveAvg?'var(--teal)':'var(--accent)')+';">'+(aboveAvg?'▲ 평균 이상':'▼ 평균 이하')+'</span>'
         +'</div>'
         +'</div>'
         +'</div>';
@@ -2080,23 +2080,23 @@ function drawConvCharts(){try{
         activeCards+='<div style="flex:1;min-width:150px;max-width:230px;'
           +'background:rgba(255,255,255,.03);border:1px solid var(--border);'
           +'border-left:3px solid '+pc+';border-radius:0 6px 6px 0;padding:10px 12px;">'
-          +'<div style="font-size:10px;font-weight:700;color:var(--text);margin-bottom:2px;">'+nm+'</div>'
-          +'<div style="font-size:8px;font-weight:700;color:'+pc+';margin-bottom:8px;">'+cr.ep+'</div>'
+          +'<div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:2px;">'+nm+'</div>'
+          +'<div style="font-size:10px;font-weight:700;color:'+pc+';margin-bottom:8px;">'+cr.ep+'</div>'
           +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:5px 10px;">'
-          +'<div><div style="font-size:8px;color:var(--dim);">조회수</div><div style="font-size:13px;font-weight:700;font-family:var(--fn);color:var(--text);">'+rd[0].toLocaleString()+'</div></div>'
-          +'<div><div style="font-size:8px;color:var(--dim);">클릭수</div><div style="font-size:13px;font-weight:700;font-family:var(--fn);color:var(--text);">'+rd[1].toLocaleString()+'</div></div>'
-          +'<div><div style="font-size:8px;color:var(--dim);">CTR</div><div style="font-size:13px;font-weight:700;font-family:var(--fn);color:var(--text);">'+rd[2]+'%</div></div>'
-          +'<div><div style="font-size:8px;color:var(--dim);">CPV</div><div style="font-size:13px;font-weight:700;font-family:var(--fn);color:var(--text);">'+rd[3]+'원</div></div>'
+          +'<div><div style="font-size:10px;color:var(--dim);">조회수</div><div style="font-size:15px;font-weight:700;font-family:var(--fn);color:var(--text);">'+rd[0].toLocaleString()+'</div></div>'
+          +'<div><div style="font-size:10px;color:var(--dim);">클릭수</div><div style="font-size:15px;font-weight:700;font-family:var(--fn);color:var(--text);">'+rd[1].toLocaleString()+'</div></div>'
+          +'<div><div style="font-size:10px;color:var(--dim);">CTR</div><div style="font-size:15px;font-weight:700;font-family:var(--fn);color:var(--text);">'+rd[2]+'%</div></div>'
+          +'<div><div style="font-size:10px;color:var(--dim);">CPV</div><div style="font-size:15px;font-weight:700;font-family:var(--fn);color:var(--text);">'+rd[3]+'원</div></div>'
           +'<div style="grid-column:1/-1;">'
-          +'<div style="font-size:8px;color:var(--dim);">일 광고비</div>'
-          +'<div style="font-size:13px;font-weight:700;font-family:var(--fn);color:var(--text);">'+rd[4].toLocaleString()+'원</div>'
+          +'<div style="font-size:10px;color:var(--dim);">일 광고비</div>'
+          +'<div style="font-size:15px;font-weight:700;font-family:var(--fn);color:var(--text);">'+rd[4].toLocaleString()+'원</div>'
           +'</div>'
           +'</div>'
           +'</div>';
       });
       if(activeCards){
         html+='<div style="margin-top:14px;border-top:1px solid var(--border);padding-top:12px;">'
-          +'<div style="font-size:9px;font-weight:700;color:var(--dim);letter-spacing:.06em;margin-bottom:8px;text-transform:uppercase;">소재별 현황</div>'
+          +'<div style="font-size:11px;font-weight:700;color:var(--dim);letter-spacing:.06em;margin-bottom:8px;text-transform:uppercase;">소재별 현황</div>'
           +'<div style="display:flex;gap:8px;flex-wrap:wrap;">'+activeCards+'</div>'
           +'</div>';
       }
@@ -2149,7 +2149,7 @@ function drawRetargetCharts(){try{
       var y=pad.t+cH-(v/maxV)*cH;
       ctx.strokeStyle=C.border; ctx.lineWidth=1;
       ctx.beginPath(); ctx.moveTo(pad.l,y); ctx.lineTo(pad.l+cW,y); ctx.stroke();
-      ctx.fillStyle=C.faint; ctx.font='8px '+FN; ctx.textAlign='right';
+      ctx.fillStyle=C.faint; ctx.font='10px '+FN; ctx.textAlign='right';
       ctx.fillText((v/10000).toFixed(0)+'만',pad.l-4,y+3);
     });
     var n=raw.length; var step=cW/n; var bw=step*.65;
@@ -2160,7 +2160,7 @@ function drawRetargetCharts(){try{
       ctx.fillStyle=best?C.teal:C.accent; ctx.globalAlpha=.7;
       ctx.fillRect(x,y,bw,bh); ctx.globalAlpha=1;
       if(i%3===0||best){
-        ctx.fillStyle=C.dim; ctx.font='7px '+FN; ctx.textAlign='center';
+        ctx.fillStyle=C.dim; ctx.font='9px '+FN; ctx.textAlign='center';
         ctx.fillText(d.d,x+bw/2,pad.t+cH+11);
       }
     });
@@ -2173,7 +2173,7 @@ function drawRetargetCharts(){try{
       if(i===0)ctx.moveTo(x,y); else ctx.lineTo(x,y);
     });
     ctx.stroke();
-    ctx.fillStyle=C.teal; ctx.font='8px '+FN; ctx.textAlign='left';
+    ctx.fillStyle=C.teal; ctx.font='10px '+FN; ctx.textAlign='left';
     ctx.fillText('─ CTR 추이',pad.l+4,pad.t+10);
     regHits('retargetDaily',raw.map(function(d,i){
       var x=pad.l+step*i+(step-bw)/2;
@@ -2303,17 +2303,17 @@ function drawRetargetCharts(){try{
         +'<div class="dcard-lg weekly">'
         +'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">'
         +'<span class="dcard-prog">후속조회 캠페인</span>'
-        +'<span style="font-size:9px;color:var(--faint);">6월 '+day+'일 ('+dowStr+')</span>'
+        +'<span style="font-size:11px;color:var(--faint);">6월 '+day+'일 ('+dowStr+')</span>'
         +'</div>'
         +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px 14px;margin-bottom:14px;">'
-        +'<div><div style="font-size:9px;color:var(--dim);margin-bottom:3px;">총 조회수</div><div style="font-size:28px;font-weight:700;font-family:var(--fn);color:var(--teal);">'+d.views.toLocaleString()+'</div></div>'
-        +'<div><div style="font-size:9px;color:var(--dim);margin-bottom:3px;">조회율 (CTR)</div><div style="font-size:28px;font-weight:700;font-family:var(--fn);color:var(--text);">'+d.ctr+'%</div></div>'
-        +'<div><div style="font-size:9px;color:var(--dim);margin-bottom:3px;">CPV</div><div style="font-size:20px;font-weight:700;font-family:var(--fn);color:var(--text);">'+d.cpv+'원</div></div>'
-        +'<div><div style="font-size:9px;color:var(--dim);margin-bottom:3px;">일 광고비</div><div style="font-size:20px;font-weight:700;font-family:var(--fn);color:var(--text);">'+d.cost.toLocaleString()+'원</div></div>'
+        +'<div><div style="font-size:11px;color:var(--dim);margin-bottom:3px;">총 조회수</div><div style="font-size:28px;font-weight:700;font-family:var(--fn);color:var(--teal);">'+d.views.toLocaleString()+'</div></div>'
+        +'<div><div style="font-size:11px;color:var(--dim);margin-bottom:3px;">조회율 (CTR)</div><div style="font-size:28px;font-weight:700;font-family:var(--fn);color:var(--text);">'+d.ctr+'%</div></div>'
+        +'<div><div style="font-size:11px;color:var(--dim);margin-bottom:3px;">CPV</div><div style="font-size:22px;font-weight:700;font-family:var(--fn);color:var(--text);">'+d.cpv+'원</div></div>'
+        +'<div><div style="font-size:11px;color:var(--dim);margin-bottom:3px;">일 광고비</div><div style="font-size:22px;font-weight:700;font-family:var(--fn);color:var(--text);">'+d.cost.toLocaleString()+'원</div></div>'
         +'</div>'
         +'<div style="border-top:1px solid var(--border);padding-top:10px;display:flex;justify-content:space-between;align-items:center;">'
-        +'<span style="font-size:9px;color:var(--dim);">일 평균 대비 (avg 25,370회)</span>'
-        +'<span style="font-size:11px;font-weight:700;color:'+(aboveAvg?'var(--teal)':'var(--accent)')+';">'+(aboveAvg?'▲ 평균 이상':'▼ 평균 이하')+'</span>'
+        +'<span style="font-size:11px;color:var(--dim);">일 평균 대비 (avg 25,370회)</span>'
+        +'<span style="font-size:13px;font-weight:700;color:'+(aboveAvg?'var(--teal)':'var(--accent)')+';">'+(aboveAvg?'▲ 평균 이상':'▼ 평균 이하')+'</span>'
         +'</div>'
         +'</div>'
         +'</div>';
@@ -2327,23 +2327,23 @@ function drawRetargetCharts(){try{
         activeCards+='<div style="flex:1;min-width:150px;max-width:230px;'
           +'background:rgba(255,255,255,.03);border:1px solid var(--border);'
           +'border-left:3px solid '+pc+';border-radius:0 6px 6px 0;padding:10px 12px;">'
-          +'<div style="font-size:10px;font-weight:700;color:var(--text);margin-bottom:2px;">'+nm+'</div>'
-          +'<div style="font-size:8px;font-weight:700;color:'+pc+';margin-bottom:8px;">'+cr.ep+'</div>'
+          +'<div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:2px;">'+nm+'</div>'
+          +'<div style="font-size:10px;font-weight:700;color:'+pc+';margin-bottom:8px;">'+cr.ep+'</div>'
           +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:5px 10px;">'
-          +'<div><div style="font-size:8px;color:var(--dim);">조회수</div><div style="font-size:13px;font-weight:700;font-family:var(--fn);color:var(--text);">'+rd[0].toLocaleString()+'</div></div>'
-          +'<div><div style="font-size:8px;color:var(--dim);">클릭수</div><div style="font-size:13px;font-weight:700;font-family:var(--fn);color:var(--text);">'+rd[1].toLocaleString()+'</div></div>'
-          +'<div><div style="font-size:8px;color:var(--dim);">CTR</div><div style="font-size:13px;font-weight:700;font-family:var(--fn);color:var(--text);">'+rd[2]+'%</div></div>'
-          +'<div><div style="font-size:8px;color:var(--dim);">CPV</div><div style="font-size:13px;font-weight:700;font-family:var(--fn);color:var(--text);">'+rd[3]+'원</div></div>'
+          +'<div><div style="font-size:10px;color:var(--dim);">조회수</div><div style="font-size:15px;font-weight:700;font-family:var(--fn);color:var(--text);">'+rd[0].toLocaleString()+'</div></div>'
+          +'<div><div style="font-size:10px;color:var(--dim);">클릭수</div><div style="font-size:15px;font-weight:700;font-family:var(--fn);color:var(--text);">'+rd[1].toLocaleString()+'</div></div>'
+          +'<div><div style="font-size:10px;color:var(--dim);">CTR</div><div style="font-size:15px;font-weight:700;font-family:var(--fn);color:var(--text);">'+rd[2]+'%</div></div>'
+          +'<div><div style="font-size:10px;color:var(--dim);">CPV</div><div style="font-size:15px;font-weight:700;font-family:var(--fn);color:var(--text);">'+rd[3]+'원</div></div>'
           +'<div style="grid-column:1/-1;">'
-          +'<div style="font-size:8px;color:var(--dim);">일 광고비</div>'
-          +'<div style="font-size:13px;font-weight:700;font-family:var(--fn);color:var(--text);">'+rd[4].toLocaleString()+'원</div>'
+          +'<div style="font-size:10px;color:var(--dim);">일 광고비</div>'
+          +'<div style="font-size:15px;font-weight:700;font-family:var(--fn);color:var(--text);">'+rd[4].toLocaleString()+'원</div>'
           +'</div>'
           +'</div>'
           +'</div>';
       });
       if(activeCards){
         html+='<div style="margin-top:14px;border-top:1px solid var(--border);padding-top:12px;">'
-          +'<div style="font-size:9px;font-weight:700;color:var(--dim);letter-spacing:.06em;margin-bottom:8px;text-transform:uppercase;">소재별 현황</div>'
+          +'<div style="font-size:11px;font-weight:700;color:var(--dim);letter-spacing:.06em;margin-bottom:8px;text-transform:uppercase;">소재별 현황</div>'
           +'<div style="display:flex;gap:8px;flex-wrap:wrap;">'+activeCards+'</div>'
           +'</div>';
       }

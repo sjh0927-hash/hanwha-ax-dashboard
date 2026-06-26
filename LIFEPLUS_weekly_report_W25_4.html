@@ -20,19 +20,19 @@
   --r:4px;--r2:8px;
 }
 html{scroll-behavior:smooth;}
-body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);font-size:13px;line-height:1.5;min-height:100vh;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);font-size:14px;line-height:1.5;min-height:100vh;}
 
 /* ── STICKY NAV ── */
 .sidenav{position:fixed;left:0;top:0;bottom:0;width:200px;background:var(--navy);padding:20px 0;z-index:100;display:flex;flex-direction:column;overflow-y:auto;}
 .sidenav-logo{padding:0 18px 16px;border-bottom:1px solid rgba(255,255,255,.1);margin-bottom:12px;}
-.sidenav-logo-brand{font-size:9px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:3px;}
-.sidenav-logo-title{font-size:13px;font-weight:700;color:#fff;line-height:1.3;}
-.sidenav-logo-period{font-size:10px;color:#93C5FD;margin-top:2px;}
+.sidenav-logo-brand{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:3px;}
+.sidenav-logo-title{font-size:15px;font-weight:700;color:#fff;line-height:1.3;}
+.sidenav-logo-period{font-size:12px;color:#93C5FD;margin-top:2px;}
 .nav-item{display:flex;align-items:center;gap:9px;padding:7px 18px;cursor:pointer;transition:background .15s;text-decoration:none;}
 .nav-item:hover{background:rgba(255,255,255,.08);}
 .nav-item.active{background:rgba(255,255,255,.13);border-right:2px solid #93C5FD;}
-.nav-num{font-size:9px;font-weight:700;color:rgba(255,255,255,.4);width:18px;flex-shrink:0;}
-.nav-label{font-size:11px;color:rgba(255,255,255,.75);font-weight:500;}
+.nav-num{font-size:11px;font-weight:700;color:rgba(255,255,255,.4);width:18px;flex-shrink:0;}
+.nav-label{font-size:13px;color:rgba(255,255,255,.75);font-weight:500;}
 .nav-item.active .nav-label{color:#fff;}
 
 /* ── MAIN CONTENT ── */
@@ -41,122 +41,122 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);font-s
 /* ── HEADER ── */
 .hdr{background:var(--navy);color:#fff;}
 .hdr-top{padding:24px 32px 18px;display:flex;justify-content:space-between;align-items:flex-start;gap:16px;border-bottom:1px solid rgba(255,255,255,.12);}
-.hdr-brand{font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;opacity:.55;margin-bottom:5px;}
-.hdr-title{font-size:26px;font-weight:700;letter-spacing:-.02em;}
+.hdr-brand{font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;opacity:.55;margin-bottom:5px;}
+.hdr-title{font-size:28px;font-weight:700;letter-spacing:-.02em;}
 .hdr-right{text-align:right;}
-.hdr-period{font-size:14px;font-weight:600;color:#93C5FD;margin-bottom:3px;}
-.hdr-meta{font-size:11px;opacity:.55;line-height:1.8;}
+.hdr-period{font-size:16px;font-weight:600;color:#93C5FD;margin-bottom:3px;}
+.hdr-meta{font-size:13px;opacity:.55;line-height:1.8;}
 .hdr-kpi-bar{display:grid;grid-template-columns:repeat(5,1fr);}
 .hkpi{padding:12px 20px;border-right:1px solid rgba(255,255,255,.1);}
 .hkpi:last-child{border-right:none;}
-.hkpi-l{font-size:9px;opacity:.55;font-weight:500;letter-spacing:.07em;text-transform:uppercase;margin-bottom:4px;}
-.hkpi-v{font-size:19px;font-weight:700;letter-spacing:-.01em;}
-.hkpi-d{font-size:10px;margin-top:2px;opacity:.55;}
+.hkpi-l{font-size:11px;opacity:.55;font-weight:500;letter-spacing:.07em;text-transform:uppercase;margin-bottom:4px;}
+.hkpi-v{font-size:21px;font-weight:700;letter-spacing:-.01em;}
+.hkpi-d{font-size:12px;margin-top:2px;opacity:.55;}
 
 /* ── SECTIONS ── */
 .sec{padding:28px 32px;border-bottom:1px solid var(--border);}
 .sec:last-child{border-bottom:none;}
 .sec-hd{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
-.sec-num{font-size:10px;font-weight:700;color:#fff;background:var(--navy);padding:2px 7px;border-radius:2px;letter-spacing:.06em;}
-.sec-title{font-size:14px;font-weight:700;color:var(--ink);letter-spacing:-.01em;}
-.sec-sub{font-size:11px;color:var(--ink3);margin-left:auto;}
+.sec-num{font-size:12px;font-weight:700;color:#fff;background:var(--navy);padding:2px 7px;border-radius:2px;letter-spacing:.06em;}
+.sec-title{font-size:16px;font-weight:700;color:var(--ink);letter-spacing:-.01em;}
+.sec-sub{font-size:13px;color:var(--ink3);margin-left:auto;}
 
 /* ── GOAL CARDS ── */
 .goal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
 .goal-card{background:var(--surf);border:1px solid var(--border);border-radius:var(--r2);padding:16px 18px;}
-.goal-label{font-size:10px;font-weight:600;color:var(--ink3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;}
+.goal-label{font-size:12px;font-weight:600;color:var(--ink3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;}
 .goal-nums{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;}
-.goal-cur{font-size:20px;font-weight:700;}
-.goal-target{font-size:11px;color:var(--ink3);}
+.goal-cur{font-size:22px;font-weight:700;}
+.goal-target{font-size:13px;color:var(--ink3);}
 .prog-bar{height:7px;background:var(--border);border-radius:4px;overflow:hidden;margin-bottom:5px;}
 .prog-fill{height:100%;border-radius:4px;transition:width .6s ease;}
-.goal-sub{font-size:10px;color:var(--ink4);}
+.goal-sub{font-size:12px;color:var(--ink4);}
 
 /* ── EXEC SUMMARY ── */
 .exec-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
 .exec-card{background:var(--surf2);border:1px solid var(--border);border-radius:var(--r2);padding:14px 16px;}
-.exec-icon{font-size:16px;margin-bottom:7px;}
-.exec-head{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--ink3);margin-bottom:6px;}
-.exec-body{font-size:12px;color:var(--ink2);line-height:1.7;}
+.exec-icon{font-size:18px;margin-bottom:7px;}
+.exec-head{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--ink3);margin-bottom:6px;}
+.exec-body{font-size:14px;color:var(--ink2);line-height:1.7;}
 .exec-body strong{font-weight:600;color:var(--ink);}
 
 /* ── IP BLOCKS ── */
 .ip-section-hd{display:flex;align-items:center;gap:8px;margin-bottom:12px;}
-.period-badge{font-size:9px;font-weight:700;color:#fff;padding:2px 8px;border-radius:2px;letter-spacing:.05em;}
-.period-note{font-size:11px;color:var(--ink3);}
+.period-badge{font-size:11px;font-weight:700;color:#fff;padding:2px 8px;border-radius:2px;letter-spacing:.05em;}
+.period-note{font-size:13px;color:var(--ink3);}
 .ip-block{margin-bottom:20px;}
 .ip-block:last-child{margin-bottom:0;}
 .ip-block-hd{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
 .ip-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0;}
-.ip-block-name{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;}
-.ip-block-count{font-size:10px;color:var(--ink3);}
+.ip-block-name{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;}
+.ip-block-count{font-size:12px;color:var(--ink3);}
 .divider{height:1px;background:var(--border);margin:20px 0;}
 
 /* ── TABLES ── */
 .tbl-wrap{overflow-x:auto;}
-.ip-tbl{width:100%;border-collapse:collapse;font-size:11px;}
+.ip-tbl{width:100%;border-collapse:collapse;font-size:13px;}
 .ip-tbl thead tr{background:var(--navy);}
-.ip-tbl thead th{padding:8px 11px;text-align:left;color:#fff;font-size:9px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;white-space:nowrap;}
+.ip-tbl thead th{padding:8px 11px;text-align:left;color:#fff;font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;white-space:nowrap;}
 .ip-tbl tbody td{padding:8px 11px;border-bottom:1px solid var(--border);color:var(--ink);vertical-align:middle;}
 .ip-tbl tbody tr:last-child td{border-bottom:none;}
 .ip-tbl tbody tr:hover td{background:var(--surf2);}
-.ip-tag{display:inline-block;font-size:9px;font-weight:700;padding:2px 6px;border-radius:2px;letter-spacing:.03em;white-space:nowrap;}
+.ip-tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 6px;border-radius:2px;letter-spacing:.03em;white-space:nowrap;}
 .t-wk{background:#EEF2FF;color:#3730A3;}
 .t-hn{background:#FEF3C7;color:#92400E;}
 .t-dd{background:#ECFDF5;color:#065F46;}
-.grade{display:inline-block;font-size:9px;font-weight:800;padding:2px 6px;border-radius:2px;letter-spacing:.04em;}
+.grade{display:inline-block;font-size:11px;font-weight:800;padding:2px 6px;border-radius:2px;letter-spacing:.04em;}
 .g-s{background:#047857;color:#fff;}.g-a{background:#1A3C5E;color:#fff;}
 .g-b{background:#92400E;color:#fff;}.g-c{background:#B91C1C;color:#fff;}
 .g-x{background:#E5E7EB;color:#6B7280;}
 .up-t{color:var(--up);font-weight:600;}.dn-t{color:var(--dn);font-weight:600;}.nt-t{color:var(--ink3);}
 
 /* ── BEST/WORST ── */
-.bw-section-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--border);}
+.bw-section-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--border);}
 .bw-pair{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;}
 .bw-card{background:var(--surf);border:1px solid var(--border);border-radius:var(--r2);overflow:hidden;}
 .bw-head{padding:10px 16px;display:flex;align-items:center;gap:9px;border-bottom:1px solid var(--border);}
 .bw-head.best{background:#ECFDF5;}.bw-head.worst{background:#FEF2F2;}
-.bw-icon{font-size:14px;}.bw-label{font-size:11px;font-weight:700;}
+.bw-icon{font-size:16px;}.bw-label{font-size:13px;font-weight:700;}
 .bw-head.best .bw-label{color:#065F46;}.bw-head.worst .bw-label{color:#991B1B;}
-.bw-ep{font-size:11px;font-weight:600;color:var(--ink);margin-left:auto;}
+.bw-ep{font-size:13px;font-weight:600;color:var(--ink);margin-left:auto;}
 .bw-body{padding:12px 16px;}
 .bw-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid var(--border);}
 .bw-row:last-child{border-bottom:none;}
-.bw-k{font-size:10px;color:var(--ink3);}.bw-v{font-size:11px;font-weight:600;color:var(--ink);}
-.bw-insight{margin-top:10px;padding:8px 11px;background:var(--surf2);border-radius:var(--r);font-size:10px;color:var(--ink2);line-height:1.65;border-left:2px solid var(--navy2);}
+.bw-k{font-size:12px;color:var(--ink3);}.bw-v{font-size:13px;font-weight:600;color:var(--ink);}
+.bw-insight{margin-top:10px;padding:8px 11px;background:var(--surf2);border-radius:var(--r);font-size:12px;color:var(--ink2);line-height:1.65;border-left:2px solid var(--navy2);}
 
 /* ── CHARTS ── */
 .chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
 .chart-box{background:var(--surf);border:1px solid var(--border);border-radius:var(--r2);padding:16px 18px;}
-.chart-ttl{font-size:11px;font-weight:700;color:var(--ink);margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;}
-.chart-ttl span{font-size:10px;font-weight:400;color:var(--ink3);}
+.chart-ttl{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;}
+.chart-ttl span{font-size:12px;font-weight:400;color:var(--ink3);}
 .cw{position:relative;}
 
 /* ── TRAFFIC ── */
 .ts-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
 .ts-card{background:var(--surf);border:1px solid var(--border);border-radius:var(--r2);padding:14px 16px;}
-.ts-name{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;padding-bottom:9px;margin-bottom:9px;border-bottom:1px solid var(--border);}
+.ts-name{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;padding-bottom:9px;margin-bottom:9px;border-bottom:1px solid var(--border);}
 .ts-row{display:flex;align-items:center;gap:7px;margin-bottom:6px;}
 .ts-row:last-child{margin-bottom:0;}
-.ts-lbl{font-size:10px;color:var(--ink3);width:54px;flex-shrink:0;}
+.ts-lbl{font-size:12px;color:var(--ink3);width:54px;flex-shrink:0;}
 .ts-bg{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden;}
 .ts-fill{height:100%;border-radius:3px;}
-.ts-n{font-size:10px;font-weight:600;color:var(--ink);width:44px;text-align:right;flex-shrink:0;}
+.ts-n{font-size:12px;font-weight:600;color:var(--ink);width:44px;text-align:right;flex-shrink:0;}
 
 /* ── TREND TABLE ── */
-.trend-tbl,.crit-tbl,.nxt-tbl{width:100%;border-collapse:collapse;font-size:12px;}
-.trend-tbl th,.crit-tbl th,.nxt-tbl th{padding:7px 12px;background:var(--surf2);color:var(--ink3);font-size:9px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;border-bottom:1px solid var(--border);text-align:left;}
+.trend-tbl,.crit-tbl,.nxt-tbl{width:100%;border-collapse:collapse;font-size:14px;}
+.trend-tbl th,.crit-tbl th,.nxt-tbl th{padding:7px 12px;background:var(--surf2);color:var(--ink3);font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;border-bottom:1px solid var(--border);text-align:left;}
 .trend-tbl td,.crit-tbl td,.nxt-tbl td{padding:8px 12px;border-bottom:1px solid var(--border);color:var(--ink);}
 .trend-tbl tr:last-child td,.crit-tbl tr:last-child td,.nxt-tbl tr:last-child td{border-bottom:none;}
 .trend-tbl tbody tr:hover td,.nxt-tbl tbody tr:hover td{background:var(--surf2);}
 .cur-wk{background:#EEF2FF!important;}.cur-wk td{font-weight:600;}
 .crit-tbl th{background:var(--navy);color:#fff;}
 .c-good{color:var(--up);font-weight:600;}.c-mid{color:var(--warn);font-weight:600;}.c-bad{color:var(--dn);font-weight:600;}
-.status{display:inline-block;font-size:9px;font-weight:600;padding:2px 7px;border-radius:2px;}
+.status{display:inline-block;font-size:11px;font-weight:600;padding:2px 7px;border-radius:2px;}
 .st-ok{background:#D1FAE5;color:#065F46;}.st-mid{background:#FEF3C7;color:#92400E;}.st-plan{background:#EEF2FF;color:#3730A3;}
 
 /* ── FOOTER ── */
-.ftr{background:var(--navy);color:#fff;padding:12px 32px;display:flex;justify-content:space-between;align-items:center;font-size:10px;opacity:.8;}
+.ftr{background:var(--navy);color:#fff;padding:12px 32px;display:flex;justify-content:space-between;align-items:center;font-size:12px;opacity:.8;}
 
 /* ── PRINT ── */
 @media print{
@@ -178,7 +178,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);font-s
 .theme-btn{position:fixed;bottom:20px;right:20px;z-index:9999;
   width:38px;height:38px;border-radius:50%;
   border:1px solid var(--border);background:var(--surf);
-  cursor:pointer;font-size:18px;line-height:1;
+  cursor:pointer;font-size:20px;line-height:1;
   display:flex;align-items:center;justify-content:center;
   box-shadow:0 2px 12px rgba(0,0,0,.12);transition:border-color .15s,background .15s,box-shadow .15s;
   color:var(--ink3);}
@@ -220,7 +220,7 @@ html.dark .bw-head.worst .bw-label{color:#F87171;}
   <a class="nav-item" href="#s8"><span class="nav-num">⑧</span><span class="nav-label">다음 주 발행 예정</span></a>
   <a class="nav-item" href="#s9"><span class="nav-num">⑨</span><span class="nav-label">지표 기준선</span></a>
   <div style="margin-top:auto;padding:14px 18px;border-top:1px solid rgba(255,255,255,.1);">
-    <button onclick="window.print()" style="width:100%;padding:7px 0;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:4px;color:#fff;font-size:11px;font-family:inherit;cursor:pointer;font-weight:500;letter-spacing:.04em;">🖨 인쇄 / PDF</button>
+    <button onclick="window.print()" style="width:100%;padding:7px 0;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:4px;color:#fff;font-size:13px;font-family:inherit;cursor:pointer;font-weight:500;letter-spacing:.04em;">🖨 인쇄 / PDF</button>
   </div>
 </nav>
 
@@ -305,7 +305,7 @@ html.dark .bw-head.worst .bw-label{color:#F87171;}
       <div class="ip-dot" style="background:var(--col1);"></div>
       <span class="ip-block-name" style="color:var(--col1);">라플위클리 S6</span>
     </div>
-    <div style="font-size:9px;font-weight:700;color:#fff;background:var(--navy);display:inline-block;padding:2px 8px;border-radius:2px;letter-spacing:.05em;margin-bottom:6px;">1D 기준</div>
+    <div style="font-size:11px;font-weight:700;color:#fff;background:var(--navy);display:inline-block;padding:2px 8px;border-radius:2px;letter-spacing:.05em;margin-bottom:6px;">1D 기준</div>
     <div class="tbl-wrap" style="margin-bottom:10px;">
     <table class="ip-tbl">
       <thead><tr><th>에피소드</th><th>발행일</th><th>조회수</th><th>자연유입%</th><th>평균조회율</th><th>구독↑</th><th>CTR</th><th>시청시간</th><th>반응</th><th>등급</th></tr></thead>
@@ -315,7 +315,7 @@ html.dark .bw-head.worst .bw-label{color:#F87171;}
       </tbody>
     </table>
     </div>
-    <div style="font-size:9px;font-weight:700;color:#fff;background:#047857;display:inline-block;padding:2px 8px;border-radius:2px;letter-spacing:.05em;margin-bottom:6px;">7D 확정</div>
+    <div style="font-size:11px;font-weight:700;color:#fff;background:#047857;display:inline-block;padding:2px 8px;border-radius:2px;letter-spacing:.05em;margin-bottom:6px;">7D 확정</div>
     <div class="tbl-wrap" style="margin-bottom:10px;">
     <table class="ip-tbl">
       <thead><tr><th>에피소드</th><th>발행일</th><th>조회수</th><th>자연유입%</th><th>평균조회율</th><th>구독↑</th><th>CTR</th><th>시청시간</th><th>반응</th><th>등급</th></tr></thead>
@@ -324,9 +324,9 @@ html.dark .bw-head.worst .bw-label{color:#F87171;}
         <tr><td><strong>ep.19 — 스티븐스필버그</strong></td><td>6/12 (금)</td><td>314,156</td><td class="dn-t">29.5%</td><td class="dn-t">14.9%</td><td>+156</td><td>4.0%</td><td>8.0분</td><td>2,384</td><td><span class="grade g-b">B</span></td></tr>
       </tbody>
     </table>
-    <div style="font-size:10px;color:var(--ink4);margin-top:4px;">※ 스필버그 7D: 광고 증액 운영 구간. 자연유입% 29.5%는 S6 19편 중 7위권 — 광고 효과 걷어내면 유기 확산력 낮음</div>
+    <div style="font-size:12px;color:var(--ink4);margin-top:4px;">※ 스필버그 7D: 광고 증액 운영 구간. 자연유입% 29.5%는 S6 19편 중 7위권 — 광고 효과 걷어내면 유기 확산력 낮음</div>
     </div>
-    <div style="font-size:9px;font-weight:700;color:#fff;background:#1A3C5E;display:inline-block;padding:2px 8px;border-radius:2px;letter-spacing:.05em;margin-bottom:6px;">28D 누적</div>
+    <div style="font-size:11px;font-weight:700;color:#fff;background:#1A3C5E;display:inline-block;padding:2px 8px;border-radius:2px;letter-spacing:.05em;margin-bottom:6px;">28D 누적</div>
     <div class="tbl-wrap">
     <table class="ip-tbl">
       <thead><tr><th>에피소드</th><th>발행일</th><th>조회수</th><th>자연유입%</th><th>평균조회율</th><th>구독↑</th><th>CTR</th><th>시청시간</th><th>반응</th><th>등급</th></tr></thead>
@@ -344,7 +344,7 @@ html.dark .bw-head.worst .bw-label{color:#F87171;}
       <div class="ip-dot" style="background:var(--col3);"></div>
       <span class="ip-block-name" style="color:var(--col3);">HOT & NEW</span>
     </div>
-    <div style="font-size:9px;font-weight:700;color:#fff;background:var(--navy);display:inline-block;padding:2px 8px;border-radius:2px;letter-spacing:.05em;margin-bottom:6px;">1D 기준</div>
+    <div style="font-size:11px;font-weight:700;color:#fff;background:var(--navy);display:inline-block;padding:2px 8px;border-radius:2px;letter-spacing:.05em;margin-bottom:6px;">1D 기준</div>
     <div class="tbl-wrap" style="margin-bottom:10px;">
     <table class="ip-tbl">
       <thead><tr><th>에피소드</th><th>발행일</th><th>조회수</th><th>자연유입%</th><th>평균조회율</th><th>구독↑</th><th>CTR</th><th>시청시간</th><th>반응</th><th>등급</th></tr></thead>
@@ -354,7 +354,7 @@ html.dark .bw-head.worst .bw-label{color:#F87171;}
       </tbody>
     </table>
     </div>
-    <div style="font-size:9px;font-weight:700;color:#fff;background:#047857;display:inline-block;padding:2px 8px;border-radius:2px;letter-spacing:.05em;margin-bottom:6px;">7D 확정</div>
+    <div style="font-size:11px;font-weight:700;color:#fff;background:#047857;display:inline-block;padding:2px 8px;border-radius:2px;letter-spacing:.05em;margin-bottom:6px;">7D 확정</div>
     <div class="tbl-wrap" style="margin-bottom:10px;">
     <table class="ip-tbl">
       <thead><tr><th>에피소드</th><th>발행일</th><th>조회수</th><th>자연유입%</th><th>평균조회율</th><th>구독↑</th><th>CTR</th><th>시청시간</th><th>반응</th><th>등급</th></tr></thead>
@@ -364,7 +364,7 @@ html.dark .bw-head.worst .bw-label{color:#F87171;}
       </tbody>
     </table>
     </div>
-    <div style="font-size:9px;font-weight:700;color:#fff;background:#1A3C5E;display:inline-block;padding:2px 8px;border-radius:2px;letter-spacing:.05em;margin-bottom:6px;">28D 누적</div>
+    <div style="font-size:11px;font-weight:700;color:#fff;background:#1A3C5E;display:inline-block;padding:2px 8px;border-radius:2px;letter-spacing:.05em;margin-bottom:6px;">28D 누적</div>
     <div class="tbl-wrap">
     <table class="ip-tbl">
       <thead><tr><th>에피소드</th><th>발행일</th><th>조회수</th><th>자연유입%</th><th>평균조회율</th><th>구독↑</th><th>CTR</th><th>시청시간</th><th>반응</th><th>등급</th></tr></thead>
@@ -382,7 +382,7 @@ html.dark .bw-head.worst .bw-label{color:#F87171;}
       <div class="ip-dot" style="background:var(--col2);"></div>
       <span class="ip-block-name" style="color:var(--col2);">딥다이브</span>
     </div>
-    <div style="font-size:9px;font-weight:700;color:#fff;background:var(--navy);display:inline-block;padding:2px 8px;border-radius:2px;letter-spacing:.05em;margin-bottom:6px;">1D 기준</div>
+    <div style="font-size:11px;font-weight:700;color:#fff;background:var(--navy);display:inline-block;padding:2px 8px;border-radius:2px;letter-spacing:.05em;margin-bottom:6px;">1D 기준</div>
     <div class="tbl-wrap" style="margin-bottom:10px;">
     <table class="ip-tbl">
       <thead><tr><th>에피소드</th><th>발행일</th><th>조회수</th><th>자연유입%</th><th>평균조회율</th><th>구독↑</th><th>CTR</th><th>시청시간</th><th>반응</th><th>등급</th></tr></thead>
@@ -392,7 +392,7 @@ html.dark .bw-head.worst .bw-label{color:#F87171;}
       </tbody>
     </table>
     </div>
-    <div style="font-size:9px;font-weight:700;color:#fff;background:#047857;display:inline-block;padding:2px 8px;border-radius:2px;letter-spacing:.05em;margin-bottom:6px;">7D 확정</div>
+    <div style="font-size:11px;font-weight:700;color:#fff;background:#047857;display:inline-block;padding:2px 8px;border-radius:2px;letter-spacing:.05em;margin-bottom:6px;">7D 확정</div>
     <div class="tbl-wrap" style="margin-bottom:10px;">
     <table class="ip-tbl">
       <thead><tr><th>에피소드</th><th>발행일</th><th>조회수</th><th>자연유입%</th><th>평균조회율</th><th>구독↑</th><th>CTR</th><th>시청시간</th><th>반응</th><th>등급</th></tr></thead>
@@ -402,7 +402,7 @@ html.dark .bw-head.worst .bw-label{color:#F87171;}
       </tbody>
     </table>
     </div>
-    <div style="font-size:9px;font-weight:700;color:#fff;background:#1A3C5E;display:inline-block;padding:2px 8px;border-radius:2px;letter-spacing:.05em;margin-bottom:6px;">28D 누적</div>
+    <div style="font-size:11px;font-weight:700;color:#fff;background:#1A3C5E;display:inline-block;padding:2px 8px;border-radius:2px;letter-spacing:.05em;margin-bottom:6px;">28D 누적</div>
     <div class="tbl-wrap">
     <table class="ip-tbl">
       <thead><tr><th>에피소드</th><th>발행일</th><th>조회수</th><th>자연유입%</th><th>평균조회율</th><th>구독↑</th><th>CTR</th><th>시청시간</th><th>반응</th><th>등급</th></tr></thead>
@@ -424,7 +424,7 @@ html.dark .bw-head.worst .bw-label{color:#F87171;}
   <div class="bw-section-title" style="color:var(--col1);">라플위클리 토크</div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;">
     <div>
-      <div style="font-size:10px;font-weight:600;color:var(--up);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;">▲ BEST</div>
+      <div style="font-size:12px;font-weight:600;color:var(--up);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;">▲ BEST</div>
       <div style="display:flex;flex-direction:column;gap:10px;">
         <div class="bw-card">
           <div class="bw-head best"><span class="bw-icon">🥇</span><span class="bw-label">BEST 1</span><span class="bw-ep">ep.7 — 프로젝트헤일메리</span></div>
@@ -453,7 +453,7 @@ html.dark .bw-head.worst .bw-label{color:#F87171;}
       </div>
     </div>
     <div>
-      <div style="font-size:10px;font-weight:600;color:var(--dn);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;">▼ WORST</div>
+      <div style="font-size:12px;font-weight:600;color:var(--dn);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;">▼ WORST</div>
       <div style="display:flex;flex-direction:column;gap:10px;">
         <div class="bw-card">
           <div class="bw-head worst"><span class="bw-icon">⚠️</span><span class="bw-label">WORST 1</span><span class="bw-ep">ep.5 — 야구</span></div>
@@ -487,7 +487,7 @@ html.dark .bw-head.worst .bw-label{color:#F87171;}
   <div class="bw-section-title" style="color:var(--col3);">HOT & NEW</div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;">
     <div>
-      <div style="font-size:10px;font-weight:600;color:var(--up);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;">▲ BEST</div>
+      <div style="font-size:12px;font-weight:600;color:var(--up);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;">▲ BEST</div>
       <div style="display:flex;flex-direction:column;gap:10px;">
         <div class="bw-card">
           <div class="bw-head best"><span class="bw-icon">🥇</span><span class="bw-label">BEST 1</span><span class="bw-ep">ep.10 — 마이클</span></div>
@@ -516,7 +516,7 @@ html.dark .bw-head.worst .bw-label{color:#F87171;}
       </div>
     </div>
     <div>
-      <div style="font-size:10px;font-weight:600;color:var(--dn);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;">▼ WORST</div>
+      <div style="font-size:12px;font-weight:600;color:var(--dn);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;">▼ WORST</div>
       <div style="display:flex;flex-direction:column;gap:10px;">
         <div class="bw-card">
           <div class="bw-head worst"><span class="bw-icon">⚠️</span><span class="bw-label">WORST 1</span><span class="bw-ep">ep.5 — 체이스인피니티</span></div>
@@ -550,7 +550,7 @@ html.dark .bw-head.worst .bw-label{color:#F87171;}
   <div class="bw-section-title" style="color:var(--col2);">딥다이브</div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:0;">
     <div>
-      <div style="font-size:10px;font-weight:600;color:var(--up);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;">▲ BEST</div>
+      <div style="font-size:12px;font-weight:600;color:var(--up);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;">▲ BEST</div>
       <div style="display:flex;flex-direction:column;gap:10px;">
         <div class="bw-card">
           <div class="bw-head best"><span class="bw-icon">🥇</span><span class="bw-label">BEST 1</span><span class="bw-ep">ep.6 — 군체</span></div>
@@ -579,7 +579,7 @@ html.dark .bw-head.worst .bw-label{color:#F87171;}
       </div>
     </div>
     <div>
-      <div style="font-size:10px;font-weight:600;color:var(--dn);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;">▼ WORST</div>
+      <div style="font-size:12px;font-weight:600;color:var(--dn);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;">▼ WORST</div>
       <div style="display:flex;flex-direction:column;gap:10px;">
         <div class="bw-card">
           <div class="bw-head worst"><span class="bw-icon">⚠️</span><span class="bw-label">WORST 1</span><span class="bw-ep">ep.1 — 세이버매트릭스</span></div>
@@ -664,7 +664,7 @@ html.dark .bw-head.worst .bw-label{color:#F87171;}
       <div class="ts-row"><span class="ts-lbl">알림</span><div class="ts-bg"><div class="ts-fill" style="width:0.2%;background:#9CA3AF;"></div></div><span class="ts-n" style="color:var(--ink3);">90</span></div>
     </div>
   </div>
-  <p style="margin-top:10px;font-size:10px;color:var(--ink4);">※ 광고 막대는 상대 비교용 / 탐색기능·알고리즘·검색 합산 = 유기 자연유입</p>
+  <p style="margin-top:10px;font-size:12px;color:var(--ink4);">※ 광고 막대는 상대 비교용 / 탐색기능·알고리즘·검색 합산 = 유기 자연유입</p>
 </div>
 
 <!-- ⑦ 누적 트렌드 -->
@@ -706,12 +706,12 @@ html.dark .bw-head.worst .bw-label{color:#F87171;}
 <!-- ⑨ 지표 기준선 -->
 <div class="sec" id="s9">
   <div class="sec-hd"><span class="sec-num">⑨</span><span class="sec-title">지표 기준선 (IP별 판정 기준)</span><span class="sec-sub">각 IP 시즌 내 분포 기반 · 7D 기준</span></div>
-  <div style="font-size:10px;color:var(--ink3);margin-bottom:10px;">※ 프로그램별 콘텐츠 구조(시청시간·자연유입 구조)가 다르므로 IP별로 분리 적용합니다.</div>
+  <div style="font-size:12px;color:var(--ink3);margin-bottom:10px;">※ 프로그램별 콘텐츠 구조(시청시간·자연유입 구조)가 다르므로 IP별로 분리 적용합니다.</div>
   <table class="crit-tbl">
     <thead><tr><th>IP</th><th>지표</th><th>● 우수 (A 이상)</th><th>▲ 보통 (B)</th><th>▼ 주의 (C)</th></tr></thead>
     <tbody>
       <tr>
-        <td rowspan="3" style="font-weight:600;color:var(--col1);vertical-align:middle;">위클리 S6<br><span style="font-size:9px;font-weight:400;color:var(--ink3);">1D 기준</span></td>
+        <td rowspan="3" style="font-weight:600;color:var(--col1);vertical-align:middle;">위클리 S6<br><span style="font-size:11px;font-weight:400;color:var(--ink3);">1D 기준</span></td>
         <td>자연유입% (1D)</td><td class="c-good">40% 이상</td><td class="c-mid">36–40%</td><td class="c-bad">36% 미만</td>
       </tr>
       <tr>
@@ -721,7 +721,7 @@ html.dark .bw-head.worst .bw-label{color:#F87171;}
         <td>시청시간 (1D)</td><td class="c-good">11분 이상</td><td class="c-mid">9–11분</td><td class="c-bad">9분 미만</td>
       </tr>
       <tr style="border-top:2px solid var(--border);">
-        <td rowspan="3" style="font-weight:600;color:var(--col3);vertical-align:middle;">HOT & NEW<br><span style="font-size:9px;font-weight:400;color:var(--ink3);">1D 기준</span></td>
+        <td rowspan="3" style="font-weight:600;color:var(--col3);vertical-align:middle;">HOT & NEW<br><span style="font-size:11px;font-weight:400;color:var(--ink3);">1D 기준</span></td>
         <td>자연유입% (1D)</td><td class="c-good">21% 이상</td><td class="c-mid">12–21%</td><td class="c-bad">12% 미만</td>
       </tr>
       <tr>
@@ -731,7 +731,7 @@ html.dark .bw-head.worst .bw-label{color:#F87171;}
         <td>시청시간 (1D)</td><td class="c-good">4.4분 이상</td><td class="c-mid">2.9–4.4분</td><td class="c-bad">2.9분 미만</td>
       </tr>
       <tr style="border-top:2px solid var(--border);">
-        <td rowspan="3" style="font-weight:600;color:var(--col2);vertical-align:middle;">딥다이브<br><span style="font-size:9px;font-weight:400;color:var(--ink3);">1D 기준</span></td>
+        <td rowspan="3" style="font-weight:600;color:var(--col2);vertical-align:middle;">딥다이브<br><span style="font-size:11px;font-weight:400;color:var(--ink3);">1D 기준</span></td>
         <td>자연유입% (1D)</td><td class="c-good">34% 이상</td><td class="c-mid">21–34%</td><td class="c-bad">21% 미만</td>
       </tr>
       <tr>
@@ -742,7 +742,7 @@ html.dark .bw-head.worst .bw-label{color:#F87171;}
       </tr>
     </tbody>
   </table>
-  <div style="margin-top:8px;font-size:10px;color:var(--ink4);">※ 기준선 = IP별 시즌 내 상위 25%(A) / 중앙값 ±기준(B) / 하위 25%(C) 분포 기반 · 편수 누적에 따라 주기적 업데이트</div>
+  <div style="margin-top:8px;font-size:12px;color:var(--ink4);">※ 기준선 = IP별 시즌 내 상위 25%(A) / 중앙값 ±기준(B) / 하위 25%(C) 분포 기반 · 편수 누적에 따라 주기적 업데이트</div>
 </div>
 
 <div class="ftr">
