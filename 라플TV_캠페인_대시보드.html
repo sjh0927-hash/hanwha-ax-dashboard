@@ -272,7 +272,10 @@ html.light{
   --border:#CDD4E8;--border-2:#DDE3F0;
   --text:#1A2035;--dim:#556080;--faint:#8A9AB8;
 }
-html.light #tt{background:rgba(26,32,53,.95)!important;color:#D8DFEE!important;}
+html.light #tt{background:rgba(26,32,53,.95)!important;}
+html.light #tt .tt-l{color:#8A9AB8!important;}
+html.light #tt .tt-v{color:#D8DFEE!important;}
+html.light #tt .tt-v2{color:#A0AABE!important;}
 html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
 </style>
 
@@ -1129,6 +1132,7 @@ document.querySelectorAll('.tab-btn[data-tab]').forEach(function(btn) {
     if (!drawn[name]) {
       drawn[name] = true;
       setTimeout(function() {
+        updateC();
         if (name === 'view') try{drawViewCharts();}catch(e){}
         if (name === 'click') try{drawClickCharts();}catch(e){}
         if (name === 'conv') try{drawConvCharts();}catch(e){}
@@ -1159,6 +1163,20 @@ var C = {ground:'#0B0F1A',surface:'#131924',border:'#273049',
   accent:'#FF6B2B',teal:'#00C9A7',yellow:'#F0C040',
   orange2:'#FF9B5E',
   weekly:'#4B8EFF', hot:'#FF3B5C', deep:'#22C55E'};
+var _Cdark = {ground:'#0B0F1A',surface:'#131924',border:'#273049',
+  text:'#D8DFEE',dim:'#6B7B9A',faint:'#3A4A68',
+  accent:'#FF6B2B',teal:'#00C9A7',yellow:'#F0C040',
+  orange2:'#FF9B5E',
+  weekly:'#4B8EFF', hot:'#FF3B5C', deep:'#22C55E'};
+var _Clight = {ground:'#F0F3FA',surface:'#FFFFFF',border:'#CDD4E8',
+  text:'#1A2035',dim:'#556080',faint:'#8A9AB8',
+  accent:'#FF6B2B',teal:'#009E83',yellow:'#B88A00',
+  orange2:'#D96020',
+  weekly:'#2463D4', hot:'#CC1A35', deep:'#15803D'};
+function updateC(){
+  var src=document.documentElement.classList.contains('light')?_Clight:_Cdark;
+  Object.keys(src).forEach(function(k){C[k]=src[k];});
+}
 
 function setup(id, h) {
   var el = document.getElementById(id);
@@ -2355,6 +2373,7 @@ function drawRetargetCharts(){try{
 }catch(e){console.error('retargetCharts',e);}}
 
 /* ── DRAW OVERVIEW CHARTS ON LOAD ── */
+updateC();
 setTimeout(function(){ try { drawOverviewCharts(); } catch(e) {} }, 120);
 
 }); // end DOMContentLoaded
@@ -2369,6 +2388,16 @@ setTimeout(function(){ try { drawOverviewCharts(); } catch(e) {} }, 120);
     document.documentElement.classList.toggle('light');
     localStorage.setItem('lp-theme',document.documentElement.classList.contains('light')?'light':'dark');
     upd();
+    updateC();
+    try{drawOverviewCharts();}catch(e){}
+    var active=document.querySelector('.tab-btn.active');
+    if(active){
+      var name=active.getAttribute('data-tab');
+      if(name==='view')try{drawViewCharts();}catch(e){}
+      else if(name==='click')try{drawClickCharts();}catch(e){}
+      else if(name==='conv')try{drawConvCharts();}catch(e){}
+      else if(name==='retarget')try{drawRetargetCharts();}catch(e){}
+    }
   });
 })();
 </script>
