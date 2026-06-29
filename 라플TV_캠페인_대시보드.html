@@ -1455,7 +1455,7 @@ function drawOverviewCharts(){
   try{
     var ctx2=setup('dn1',170); if(!ctx2)return;
     var W2=ctx2._w,H2=ctx2._h;
-    var segs=[{lbl:'유튜브조회',v:22345367,c:C.accent},{lbl:'클릭최대화',v:7738879,c:C.orange2},{lbl:'후속조회',v:7672540,c:C.teal},{lbl:'구독전환',v:6903554,c:'#00E5C0'}];
+    var segs=[{lbl:'유튜브조회',v:31742042,c:C.accent},{lbl:'클릭최대화',v:9453555,c:C.orange2},{lbl:'후속조회',v:9338816,c:C.teal},{lbl:'구독전환',v:9114458,c:'#00E5C0'}];
     var tot=segs.reduce(function(s,sg){return s+sg.v;},0);
     var cx=H2/2+4,cy=H2/2,r=cy-14,ri=r*.58;
     var sa=-Math.PI/2;
@@ -1466,7 +1466,8 @@ function drawOverviewCharts(){
     });
     ctx2.beginPath(); ctx2.arc(cx,cy,ri,0,2*Math.PI); ctx2.fillStyle=C.surface; ctx2.fill();
     ctx2.fillStyle=C.text; ctx2.font='bold 15px '+FN; ctx2.textAlign='center';
-    ctx2.fillText('4,466',cx,cy+1); ctx2.fillStyle=C.dim; ctx2.font='11px '+FN; ctx2.fillText('만원',cx,cy+13);
+    var totM=Math.round(tot/10000);
+    ctx2.fillText(totM.toLocaleString(),cx,cy+1); ctx2.fillStyle=C.dim; ctx2.font='11px '+FN; ctx2.fillText('만원',cx,cy+13);
     var lx=cx+r+10;
     segs.forEach(function(sg,i){
       var pct=((sg.v/tot)*100).toFixed(0);
@@ -1722,7 +1723,7 @@ function drawClickCharts(){try{
       angle+=span;
     });
     ctx.beginPath(); ctx.arc(cx,cy,r,0,2*Math.PI);
-    ctx.fillStyle='#131924'; ctx.fill();
+    ctx.fillStyle=C.surface; ctx.fill();
     ctx.fillStyle=C.text; ctx.font='bold 14px '+FN; ctx.textAlign='center';
     ctx.fillText(centerLabel,cx,cy+4);
     if(centerSub){ctx.fillStyle=C.dim;ctx.font='11px '+FN;ctx.fillText(centerSub,cx,cy+16);}
@@ -1746,24 +1747,24 @@ function drawClickCharts(){try{
     {lbl:'군체 (딥다이브)',    v:1784837, c:C.deep},
     {lbl:'백룸 (H&N)',        v:1778197, c:C.hot},
     {lbl:'마이클잭슨 (위클리)',v:1728353, c:C.weekly},
-    {lbl:'토이스토리 (위클리)',v:1656496, c:'#8BBEFF'},
-    {lbl:'스필버그 (위클리)', v:458050,  c:'#2060D0'},
-    {lbl:'HOT&NEW 16화 (H&N)',v:340957,  c:'#FF5830'},
+    {lbl:'토이스토리 (위클리)',v:1970498, c:'#8BBEFF'},
+    {lbl:'스필버그 (위클리)', v:467529,  c:'#2060D0'},
+    {lbl:'HOT&NEW 16화 (H&N)',v:1389399, c:'#FF5830'},
     {lbl:'원더풀스 (H&N)',    v:308933,  c:'#FF8CA0'},
     {lbl:'만달로리안 (H&N)',  v:25810,   c:'#CC2840'},
-  ],'808만원','6월 총 광고비');
+  ],'945만원','6월 총 광고비');
 
   /* 클릭수 도넛 — 6월 기준 (소재별 실측) */
   drawDonut('clickDonutClicks',[
     {lbl:'백룸 (H&N)',        v:55027, c:C.hot},
-    {lbl:'토이스토리 (위클리)',v:33275, c:'#8BBEFF'},
+    {lbl:'토이스토리 (위클리)',v:41629, c:'#8BBEFF'},
     {lbl:'마이클잭슨 (위클리)',v:48125, c:C.weekly},
     {lbl:'군체 (딥다이브)',    v:43810, c:C.deep},
-    {lbl:'스필버그 (위클리)', v:9007,  c:'#2060D0'},
-    {lbl:'HOT&NEW 16화 (H&N)',v:7704,  c:'#FF5830'},
+    {lbl:'스필버그 (위클리)', v:9266,  c:'#2060D0'},
+    {lbl:'HOT&NEW 16화 (H&N)',v:31876, c:'#FF5830'},
     {lbl:'원더풀스 (H&N)',    v:8328,  c:'#FF8CA0'},
     {lbl:'만달로리안 (H&N)',  v:784,   c:'#CC2840'},
-  ],'20.6만','6월 총 클릭수');
+  ],'23.9만','6월 총 클릭수');
 
   /* ── 일자별 운영 소재 (6월 1일~22일, 일별 추정 데이터) ── */
   (function(){
