@@ -166,17 +166,17 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
 <div class="kpi-strip">
   <div class="kpi-card purple">
     <p class="kpi-label">채널 평균 LTV</p>
-    <p class="kpi-val purple">0.51</p>
-    <span class="kpi-badge neu">* 트래픽소스 데이터 미반영</span>
+    <p class="kpi-val purple">0.52</p>
+    <span class="kpi-badge up">트래픽소스 실데이터 반영 완료</span>
   </div>
   <div class="kpi-card teal">
     <p class="kpi-label">S / A 등급</p>
-    <p class="kpi-val teal">21편</p>
-    <span class="kpi-badge up">S 5 · A 16</span>
+    <p class="kpi-val teal">23편</p>
+    <span class="kpi-badge up">S 5 · A 18</span>
   </div>
   <div class="kpi-card amber">
     <p class="kpi-label">B 등급</p>
-    <p class="kpi-val amber">12편</p>
+    <p class="kpi-val amber">10편</p>
     <span class="kpi-badge neu">보완 필요</span>
   </div>
   <div class="kpi-card red">
@@ -385,7 +385,7 @@ function sw(id,btn){
     <span class="badge new">위클리 S5 3편 신규 추가 (봉준호·토이스토리·이사랑통역)</span>
     <span class="badge new">뮤지컬1 (W6-20) 집계 완료</span>
     <span class="badge new">디스클로저데이 (H-15) 집계 완료</span>
-    <span class="badge upd">채널 평균 0.51 (참여도 반영 · 트래픽소스 반영 시 추가 상향 예상)</span>
+    <span class="badge upd">채널 평균 0.52 (참여도 · 트래픽소스 알고리즘/검색 실데이터 반영)</span>
   </div>
 
   <div class="card">
@@ -461,47 +461,47 @@ const IPC={w:'#60A5FA',h:'#F472B6',d:'#34D399'};
 const IPNAME={w:'위클리',h:'HOT&NEW',d:'딥다이브'};
 
 const DATA=[
-  {ip:'h',e:'마이클',          v2:.978,v1:.828, nat:.5506,vr:.315, ctr:.053,eng:3256,sub:450, watch:3.58, b_org:.05,b_algo:.050,b_srch:0,pen:0},
-  {ip:'d',e:'군체',             v2:.909,v1:.768, nat:.4102,vr:.226, ctr:.037,eng:3589,sub:187, watch:7.19, b_org:.05,b_algo:.041,b_srch:0,pen:0},
-  {ip:'w',e:'프로젝트헤일메리', v2:.779,v1:.629, nat:.4516,vr:.170, ctr:.038,eng:6071,sub:740, watch:9.92, b_org:.05,b_algo:.045,b_srch:0,pen:0},
-  {ip:'w',e:'마이클잭슨',       v2:.760,v1:.620, nat:.4657,vr:.189, ctr:.027,eng:4693,sub:393, watch:10.64,b_org:.05,b_algo:.047,b_srch:0,pen:0},
-  {ip:'h',e:'HOT헤일메리',      v2:.708,v1:.558, nat:.2258,vr:.204, ctr:.049,eng:2266,sub:294, watch:4.28, b_org:0,  b_algo:.023,b_srch:0,pen:0},
-  {ip:'w',e:'죽음',             v2:.660,v1:.567, nat:.3528,vr:.207, ctr:.037,eng:3118,sub:260, watch:10.63,b_org:.05,b_algo:.035,b_srch:0,pen:0},
-  {ip:'h',e:'백룸',             v2:.653,v1:.582, nat:.2652,vr:.298, ctr:.050,eng:714, sub:48,  watch:3.03, b_org:0,  b_algo:.027,b_srch:0,pen:0},
-  {ip:'h',e:'아카데미',         v2:.626,v1:.545, nat:.197, vr:.299, ctr:.042,eng:804, sub:127, watch:3.07, b_org:0,  b_algo:.020,b_srch:0,pen:0},
-  {ip:'w',e:'행운',             v2:.603,v1:.509, nat:.2796,vr:.209, ctr:.039,eng:3111,sub:382, watch:7.62, b_org:0,  b_algo:.028,b_srch:0,pen:0},
-  {ip:'w',e:'루머',             v2:.602,v1:.534, nat:.313, vr:.166, ctr:.035,eng:2268,sub:345, watch:8.17, b_org:.05,b_algo:.031,b_srch:0,pen:0},
-  {ip:'w',e:'럭셔리',           v2:.596,v1:.545, nat:.3633,vr:.227, ctr:.040,eng:1713,sub:81,  watch:10.47,b_org:.05,b_algo:.036,b_srch:0,pen:0},
-  {ip:'w',e:'호기심',           v2:.590,v1:.512, nat:.3228,vr:.190, ctr:.039,eng:2572,sub:148, watch:9.44, b_org:.05,b_algo:.032,b_srch:0,pen:0},
-  {ip:'d',e:'붉은사막AAA',      v2:.584,v1:.499, nat:.2677,vr:.136, ctr:.031,eng:1592,sub:168, watch:6.14, b_org:0,  b_algo:.027,b_srch:0,pen:0},
-  {ip:'h',e:'악프입2',          v2:.574,v1:.519, nat:.1893,vr:.371, ctr:.037,eng:549, sub:44,  watch:3.95, b_org:0,  b_algo:.019,b_srch:0,pen:0},
-  {ip:'w',e:'프랑스',           v2:.569,v1:.516, nat:.3483,vr:.217, ctr:.039,eng:1753,sub:43,  watch:10.5, b_org:.05,b_algo:.035,b_srch:0,pen:0},
-  {ip:'w',e:'다이어트',         v2:.564,v1:.516, nat:.3487,vr:.227, ctr:.035,eng:1614,sub:57,  watch:10.16,b_org:.05,b_algo:.035,b_srch:0,pen:0},
-  {ip:'w',e:'본능',             v2:.555,v1:.491, nat:.3263,vr:.164, ctr:.042,eng:2142,sub:96,  watch:8.94, b_org:.05,b_algo:.033,b_srch:0,pen:0},
-  {ip:'w',e:'디저트',           v2:.545,v1:.492, nat:.3236,vr:.207, ctr:.038,eng:1779,sub:40,  watch:8.37, b_org:.05,b_algo:.032,b_srch:0,pen:0},
-  {ip:'w',e:'실패',             v2:.538,v1:.467, nat:.3019,vr:.172, ctr:.039,eng:2367,sub:72,  watch:7.23, b_org:.05,b_algo:.030,b_srch:0,pen:0},
-  {ip:'w',e:'뮤지컬1',          v2:.529,v1:null, nat:.3449,vr:.193, ctr:.034,eng:1332,sub:59,  watch:6.84, b_org:.05,b_algo:.034,b_srch:0,pen:0,isNew:true},
-  {ip:'w',e:'초능력',           v2:.528,v1:.484, nat:.3229,vr:.216, ctr:.035,eng:1477,sub:21,  watch:9.01, b_org:.05,b_algo:.032,b_srch:0,pen:0},
-  {ip:'w',e:'스티븐스필버그',   v2:.495,v1:.424, nat:.2954,vr:.149, ctr:.040,eng:2384,sub:156, watch:7.98, b_org:0,  b_algo:.030,b_srch:0,pen:0},
-  {ip:'w',e:'신분',             v2:.487,v1:.429, nat:.2798,vr:.192, ctr:.039,eng:1949,sub:111, watch:8.40, b_org:0,  b_algo:.028,b_srch:0,pen:0},
-  {ip:'d',e:'K-POP',            v2:.485,v1:.434, nat:.1831,vr:.178, ctr:.043,eng:942, sub:47,  watch:5.01, b_org:0,  b_algo:.018,b_srch:0,pen:0},
-  {ip:'d',e:'데이미언허스트',   v2:.473,v1:.396, nat:.1571,vr:.158, ctr:.034,eng:1435,sub:95,  watch:5.55, b_org:0,  b_algo:.016,b_srch:0,pen:0},
-  {ip:'w',e:'이탈리아',         v2:.446,v1:.388, nat:.269, vr:.156, ctr:.034,eng:1913,sub:125, watch:7.26, b_org:0,  b_algo:.027,b_srch:0,pen:0},
-  {ip:'w',e:'부동산',           v2:.431,v1:.380, nat:.2683,vr:.153, ctr:.036,eng:1732,sub:82,  watch:7.87, b_org:0,  b_algo:.027,b_srch:0,pen:0},
-  {ip:'h',e:'원더풀스',         v2:.425,v1:.329, nat:.1585,vr:.120, ctr:.034,eng:958, sub:38,  watch:4.60, b_org:0,  b_algo:.016,b_srch:0,pen:0},
-  {ip:'h',e:'성난사람들2',      v2:.420,v1:.376, nat:.2453,vr:.092, ctr:.041,eng:443, sub:22,  watch:2.02, b_org:0,  b_algo:.025,b_srch:0,pen:.025},
-  {ip:'h',e:'데이미언HOT',      v2:.417,v1:.351, nat:.1289,vr:.207, ctr:.033,eng:664, sub:36,  watch:2.87, b_org:0,  b_algo:.013,b_srch:0,pen:0},
-  {ip:'w',e:'리더쉽',           v2:.413,v1:.359, nat:.2295,vr:.156, ctr:.035,eng:1797,sub:91,  watch:6.51, b_org:0,  b_algo:.023,b_srch:0,pen:0},
-  {ip:'h',e:'만달로리안',       v2:.403,v1:.355, nat:.0994,vr:.273, ctr:.029,eng:487, sub:40,  watch:2.69, b_org:0,  b_algo:.010,b_srch:0,pen:0},
-  {ip:'d',e:'세이버매트릭스',   v2:.364,v1:.324, nat:.1252,vr:.153, ctr:.028,eng:759, sub:48,  watch:6.60, b_org:0,  b_algo:.013,b_srch:0,pen:0},
-  {ip:'d',e:'아르테미스2호',    v2:.333,v1:.312, nat:.1102,vr:.173, ctr:.025,eng:398, sub:37,  watch:5.98, b_org:0,  b_algo:.011,b_srch:0,pen:0},
-  {ip:'w',e:'야구',             v2:.302,v1:.270, nat:.1734,vr:.121, ctr:.030,eng:1077,sub:20,  watch:6.81, b_org:0,  b_algo:.017,b_srch:0,pen:0},
-  {ip:'h',e:'건물주',           v2:.272,v1:.249, nat:.0724,vr:.190, ctr:.026,eng:228, sub:1,   watch:3.14, b_org:0,  b_algo:.007,b_srch:0,pen:0},
-  {ip:'h',e:'F1',               v2:.253,v1:.235, nat:.1124,vr:.100, ctr:.037,eng:223, sub:-7,  watch:1.32, b_org:0,  b_algo:.011,b_srch:0,pen:.025},
-  {ip:'h',e:'아웃사이더즈',     v2:.237,v1:.211, nat:.049, vr:.164, ctr:.023,eng:263, sub:12,  watch:null, b_org:0,  b_algo:.005,b_srch:0,pen:0},
-  {ip:'h',e:'디스클로저데이',   v2:.231,v1:null, nat:.052, vr:.177, ctr:.024,eng:138, sub:0,   watch:2.82, b_org:0,  b_algo:.005,b_srch:0,pen:0,isNew:true},
-  {ip:'h',e:'체이스인피니티',   v2:.223,v1:.201, nat:.0443,vr:.165, ctr:.033,eng:232, sub:-2,  watch:1.48, b_org:0,  b_algo:.004,b_srch:0,pen:.025},
-  {ip:'h',e:'골드랜드',         v2:.204,v1:.167, nat:.1014,vr:.080, ctr:.029,eng:376, sub:-2,  watch:2.97, b_org:0,  b_algo:.010,b_srch:0,pen:.050},
+  {ip:'h',e:'마이클',          v2:.960,v1:.978, nat:.5506,vr:.315, ctr:.053,eng:3256,sub:450, watch:3.58, b_org:.05,b_algo:.023,b_srch:.009,pen:0},
+  {ip:'d',e:'군체',             v2:.939,v1:.909, nat:.4102,vr:.226, ctr:.037,eng:3589,sub:187, watch:7.19, b_org:.05,b_algo:.050,b_srch:.021,pen:0},
+  {ip:'w',e:'프로젝트헤일메리', v2:.814,v1:.779, nat:.4516,vr:.170, ctr:.038,eng:6071,sub:740, watch:9.92, b_org:.05,b_algo:.050,b_srch:.030,pen:0},
+  {ip:'w',e:'마이클잭슨',       v2:.778,v1:.760, nat:.4657,vr:.189, ctr:.027,eng:4693,sub:393, watch:10.64,b_org:.05,b_algo:.050,b_srch:.014,pen:0},
+  {ip:'h',e:'HOT헤일메리',      v2:.704,v1:.708, nat:.2258,vr:.204, ctr:.049,eng:2266,sub:294, watch:4.28, b_org:0,  b_algo:.009,b_srch:.010,pen:0},
+  {ip:'w',e:'죽음',             v2:.683,v1:.660, nat:.3528,vr:.207, ctr:.037,eng:3118,sub:260, watch:10.63,b_org:.05,b_algo:.048,b_srch:.010,pen:0},
+  {ip:'h',e:'백룸',             v2:.648,v1:.653, nat:.2652,vr:.298, ctr:.050,eng:714, sub:48,  watch:3.03, b_org:0,  b_algo:.015,b_srch:.007,pen:0},
+  {ip:'w',e:'루머',             v2:.625,v1:.602, nat:.313, vr:.166, ctr:.035,eng:2268,sub:345, watch:8.17, b_org:.05,b_algo:.046,b_srch:.008,pen:0},
+  {ip:'h',e:'아카데미',         v2:.624,v1:.626, nat:.197, vr:.299, ctr:.042,eng:804, sub:127, watch:3.07, b_org:0,  b_algo:.010,b_srch:.008,pen:0},
+  {ip:'w',e:'행운',             v2:.617,v1:.603, nat:.2796,vr:.209, ctr:.039,eng:3111,sub:382, watch:7.62, b_org:0,  b_algo:.033,b_srch:.009,pen:0},
+  {ip:'w',e:'럭셔리',           v2:.612,v1:.596, nat:.3633,vr:.227, ctr:.040,eng:1713,sub:81,  watch:10.47,b_org:.05,b_algo:.045,b_srch:.007,pen:0},
+  {ip:'w',e:'호기심',           v2:.608,v1:.590, nat:.3228,vr:.190, ctr:.039,eng:2572,sub:148, watch:9.44, b_org:.05,b_algo:.045,b_srch:.006,pen:0},
+  {ip:'d',e:'붉은사막AAA',      v2:.599,v1:.584, nat:.2677,vr:.136, ctr:.031,eng:1592,sub:168, watch:6.14, b_org:0,  b_algo:.038,b_srch:.004,pen:0},
+  {ip:'w',e:'다이어트',         v2:.589,v1:.564, nat:.3487,vr:.227, ctr:.035,eng:1614,sub:57,  watch:10.16,b_org:.05,b_algo:.050,b_srch:.009,pen:0},
+  {ip:'w',e:'프랑스',           v2:.588,v1:.569, nat:.3483,vr:.217, ctr:.039,eng:1753,sub:43,  watch:10.5, b_org:.05,b_algo:.044,b_srch:.010,pen:0},
+  {ip:'w',e:'본능',             v2:.574,v1:.555, nat:.3263,vr:.164, ctr:.042,eng:2142,sub:96,  watch:8.94, b_org:.05,b_algo:.045,b_srch:.007,pen:0},
+  {ip:'h',e:'악프입2',          v2:.571,v1:.574, nat:.1893,vr:.371, ctr:.037,eng:549, sub:44,  watch:3.95, b_org:0,  b_algo:.013,b_srch:.003,pen:0},
+  {ip:'w',e:'디저트',           v2:.568,v1:.545, nat:.3236,vr:.207, ctr:.038,eng:1779,sub:40,  watch:8.37, b_org:.05,b_algo:.048,b_srch:.007,pen:0},
+  {ip:'w',e:'실패',             v2:.565,v1:.538, nat:.3019,vr:.172, ctr:.039,eng:2367,sub:72,  watch:7.23, b_org:.05,b_algo:.050,b_srch:.007,pen:0},
+  {ip:'w',e:'초능력',           v2:.554,v1:.528, nat:.3229,vr:.216, ctr:.035,eng:1477,sub:21,  watch:9.01, b_org:.05,b_algo:.050,b_srch:.008,pen:0},
+  {ip:'w',e:'뮤지컬1',          v2:.522,v1:.529, nat:.3449,vr:.193, ctr:.034,eng:1332,sub:59,  watch:6.84, b_org:.05,b_algo:.022,b_srch:.006,pen:0},
+  {ip:'w',e:'스티븐스필버그',   v2:.512,v1:.495, nat:.2954,vr:.149, ctr:.040,eng:2384,sub:156, watch:7.98, b_org:0,  b_algo:.023,b_srch:.023,pen:0},
+  {ip:'w',e:'신분',             v2:.505,v1:.487, nat:.2798,vr:.192, ctr:.039,eng:1949,sub:111, watch:8.40, b_org:0,  b_algo:.041,b_srch:.005,pen:0},
+  {ip:'d',e:'K-POP',            v2:.490,v1:.485, nat:.1831,vr:.178, ctr:.043,eng:942, sub:47,  watch:5.01, b_org:0,  b_algo:.017,b_srch:.006,pen:0},
+  {ip:'d',e:'데이미언허스트',   v2:.474,v1:.473, nat:.1571,vr:.158, ctr:.034,eng:1435,sub:95,  watch:5.55, b_org:0,  b_algo:.010,b_srch:.007,pen:0},
+  {ip:'w',e:'이탈리아',         v2:.462,v1:.446, nat:.269, vr:.156, ctr:.034,eng:1913,sub:125, watch:7.26, b_org:0,  b_algo:.036,b_srch:.007,pen:0},
+  {ip:'w',e:'부동산',           v2:.445,v1:.431, nat:.2683,vr:.153, ctr:.036,eng:1732,sub:82,  watch:7.87, b_org:0,  b_algo:.034,b_srch:.006,pen:0},
+  {ip:'h',e:'원더풀스',         v2:.425,v1:.425, nat:.1585,vr:.120, ctr:.034,eng:958, sub:38,  watch:4.60, b_org:0,  b_algo:.011,b_srch:.005,pen:0},
+  {ip:'w',e:'리더쉽',           v2:.423,v1:.413, nat:.2295,vr:.156, ctr:.035,eng:1797,sub:91,  watch:6.51, b_org:0,  b_algo:.027,b_srch:.006,pen:0},
+  {ip:'h',e:'성난사람들2',      v2:.416,v1:.420, nat:.2453,vr:.092, ctr:.041,eng:443, sub:22,  watch:2.02, b_org:0,  b_algo:.009,b_srch:.011,pen:.025},
+  {ip:'h',e:'데이미언HOT',      v2:.411,v1:.417, nat:.1289,vr:.207, ctr:.033,eng:664, sub:36,  watch:2.87, b_org:0,  b_algo:.002,b_srch:.005,pen:0},
+  {ip:'h',e:'만달로리안',       v2:.398,v1:.403, nat:.0994,vr:.273, ctr:.029,eng:487, sub:40,  watch:2.69, b_org:0,  b_algo:.004,b_srch:.001,pen:0},
+  {ip:'d',e:'세이버매트릭스',   v2:.374,v1:.364, nat:.1252,vr:.153, ctr:.028,eng:759, sub:48,  watch:6.60, b_org:0,  b_algo:.018,b_srch:.004,pen:0},
+  {ip:'d',e:'아르테미스2호',    v2:.328,v1:.333, nat:.1102,vr:.173, ctr:.025,eng:398, sub:37,  watch:5.98, b_org:0,  b_algo:.005,b_srch:.001,pen:0},
+  {ip:'w',e:'야구',             v2:.316,v1:.302, nat:.1734,vr:.121, ctr:.030,eng:1077,sub:20,  watch:6.81, b_org:0,  b_algo:.027,b_srch:.004,pen:0},
+  {ip:'h',e:'건물주',           v2:.271,v1:.272, nat:.0724,vr:.190, ctr:.026,eng:228, sub:1,   watch:3.14, b_org:0,  b_algo:.003,b_srch:.003,pen:0},
+  {ip:'h',e:'F1',               v2:.250,v1:.253, nat:.1124,vr:.100, ctr:.037,eng:223, sub:-7,  watch:1.32, b_org:0,  b_algo:.002,b_srch:.002,pen:.025},
+  {ip:'h',e:'아웃사이더즈',     v2:.234,v1:.237, nat:.049, vr:.164, ctr:.023,eng:263, sub:12,  watch:null, b_org:0,  b_algo:.001,b_srch:.001,pen:0},
+  {ip:'h',e:'디스클로저데이',   v2:.227,v1:.231, nat:.052, vr:.177, ctr:.024,eng:138, sub:0,   watch:2.82, b_org:0,  b_algo:.001,b_srch:.001,pen:0},
+  {ip:'h',e:'체이스인피니티',   v2:.221,v1:.223, nat:.0443,vr:.165, ctr:.033,eng:232, sub:-2,  watch:1.48, b_org:0,  b_algo:.001,b_srch:0,  pen:.025},
+  {ip:'h',e:'골드랜드',         v2:.206,v1:.204, nat:.1014,vr:.080, ctr:.029,eng:376, sub:-2,  watch:2.97, b_org:0,  b_algo:.005,b_srch:.006,pen:.050},
 ];
 
 const PENDING=[
@@ -518,7 +518,7 @@ Chart.defaults.color='#6E6D7A';
 // 도넛
 new Chart(document.getElementById('c_donut'),{type:'doughnut',
   data:{labels:['S','A','B','C'],
-    datasets:[{data:[5,16,12,8],backgroundColor:['#9F8FF7','#3DD68C','#F5A623','rgba(110,109,122,.4)'],
+    datasets:[{data:[5,18,10,8],backgroundColor:['#9F8FF7','#3DD68C','#F5A623','rgba(110,109,122,.4)'],
       borderWidth:0,hoverOffset:6}]},
   options:{responsive:true,maintainAspectRatio:false,cutout:'68%',
     plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`${c.label}: ${c.parsed}편`}}}}});
