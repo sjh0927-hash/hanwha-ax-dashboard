@@ -1021,9 +1021,18 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
             <td><div class="cn">시즌1_9화_실수</div></td>
             <td><span style="font-size:10px;color:var(--prog-weekly);font-weight:700;">위클리</span></td>
             <td style="font-family:var(--fn);font-size:12px;font-weight:700;">939,474원</td>
-            <td style="font-family:var(--fn);font-size:12px;">6/15 ~ 현재</td>
+            <td style="font-family:var(--fn);font-size:12px;">6/15 ~ 6/25</td>
             <td>41,602</td><td>4,891</td>
             <td>1.18%</td><td>21원</td><td>854,067원</td>
+            <td><span class="pill warn">중단</span></td>
+          </tr>
+          <tr>
+            <td><div class="cn">시즌6_5화_야구</div></td>
+            <td><span style="font-size:10px;color:var(--prog-weekly);font-weight:700;">위클리</span></td>
+            <td style="font-family:var(--fn);font-size:12px;font-weight:700;">101,327원</td>
+            <td style="font-family:var(--fn);font-size:12px;">6/26 ~ 현재</td>
+            <td>4,339</td><td>538</td>
+            <td>1.36%</td><td>21원</td><td>92,115원</td>
             <td><span class="pill good">활성</span></td>
           </tr>
           <!-- 종료 소재 -->
@@ -2282,7 +2291,9 @@ function drawRetargetCharts(){try{
         '6/21':[7396,894,'1.52',17,124800],
         '6/22':[5638,626,'1.11',21,116123],'6/23':[7177,845,'1.90',15,110779],
         '6/24':[6272,676,'1.36',17,108397],
-        '6/25':[2677,308,'1.07',23,60719],
+        '6/25':[2677,308,'1.07',23,60719]
+      }},
+      '야구':{prog:'weekly',ep:'시즌6 5화',d:{
         '6/26':[861,85,'0.50',40,34364],
         '6/27':[635,63,'0.63',33,21067],
         '6/28':[2843,390,'3.08',13,36684]
@@ -2367,7 +2378,7 @@ function drawRetargetCharts(){try{
         +'</div>'
         +'</div>';
       /* 소재별 카드 */
-      var names=['군체','토이스토리','실수','스필버그','마이클잭슨','만달로리안','원더풀스','백룸','헤일메리','첫사랑'];
+      var names=['군체','토이스토리','실수','야구','스필버그','마이클잭슨','만달로리안','원더풀스','백룸','헤일메리','첫사랑'];
       var activeCards='';
       names.forEach(function(nm){
         var cr=RC[nm]; if(!cr)return;
