@@ -2137,11 +2137,11 @@ function drawConvCharts(){try{
     var bc=document.getElementById('conv-day-btns');
     if(bc){
       var h='';
-      for(var d2=1;d2<=25;d2++){
+      for(var d2=1;d2<=28;d2++){
         var dow2=d2%7; /* 6/1=Mon=1, 6/7=Sun=0, 6/13=Sat=6, 6/14=Sun=0, 6/20=Sat=6, 6/21=Sun=0 */
         var isWk=dow2===0||dow2===6;
         var isPeak=d2===18||d2===20;
-        var cls='date-btn'+(isWk?' wk':'')+(d2===25?' on':'')+(isPeak?' ev':'');
+        var cls='date-btn'+(isWk?' wk':'')+(d2===28?' on':'')+(isPeak?' ev':'');
         h+='<button class="'+cls+'" data-cdate="6/'+d2+'">'+d2+'</button>';
       }
       bc.innerHTML=h;
@@ -2153,7 +2153,7 @@ function drawConvCharts(){try{
         });
       });
     }
-    renderConvDayCards('6/25');
+    renderConvDayCards('6/28');
   })();
 }catch(e){console.error('convCharts',e);}}
 
@@ -2400,11 +2400,11 @@ function drawRetargetCharts(){try{
     var bc=document.getElementById('retarget-day-btns');
     if(bc){
       var h='';
-      for(var d2=1;d2<=25;d2++){
+      for(var d2=1;d2<=28;d2++){
         var dow2=d2%7;
         var isWk=dow2===0||dow2===6;
         var isPeak=d2===13||d2===14;
-        var cls='date-btn'+(isWk?' wk':'')+(d2===25?' on':'')+(isPeak?' ev':'');
+        var cls='date-btn'+(isWk?' wk':'')+(d2===28?' on':'')+(isPeak?' ev':'');
         h+='<button class="'+cls+'" data-rdate="6/'+d2+'">'+d2+'</button>';
       }
       bc.innerHTML=h;
@@ -2416,7 +2416,7 @@ function drawRetargetCharts(){try{
         });
       });
     }
-    renderRetargetDayCards('6/25');
+    renderRetargetDayCards('6/28');
   })();
 }catch(e){console.error('retargetCharts',e);}}
 
