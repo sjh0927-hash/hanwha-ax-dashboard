@@ -431,7 +431,7 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
           <div class="ct" style="margin-bottom:8px;">조회캠페인 프로그램별 CPV</div>
           <div class="mbar-row"><div class="mbar-lbl">라플위클리</div><div class="mbar-track"><div class="mbar-fill" style="width:65%;background:linear-gradient(90deg,var(--prog-weekly),rgba(75,142,255,.4));"><span class="mbar-num">26원</span></div></div></div>
           <div class="mbar-row"><div class="mbar-lbl">HOT &amp; NEW</div><div class="mbar-track"><div class="mbar-fill" style="width:55%;background:linear-gradient(90deg,var(--prog-hot),rgba(255,59,92,.4));"><span class="mbar-num">22원</span></div></div></div>
-          <div class="mbar-row"><div class="mbar-lbl">딥다이브</div><div class="mbar-track" style="background:var(--border-2);"><div style="height:100%;display:flex;align-items:center;padding-left:8px;"><span style="font-family:var(--fn);font-size:11px;color:var(--faint);">미집행</span></div></div></div>
+          <div class="mbar-row"><div class="mbar-lbl">딥다이브</div><div class="mbar-track"><div class="mbar-fill" style="width:53%;background:linear-gradient(90deg,var(--prog-deep),rgba(34,197,94,.4));"><span class="mbar-num">21원</span></div></div></div>
         </div>
       </div>
     </div>
@@ -1600,31 +1600,36 @@ function drawClickCharts(){try{
   (function(){
     var ctx=setup('clickProg',180); if(!ctx)return;
     var W=ctx._w,H=ctx._h;
-    var data=[{lbl:'6/23',sub:'화',v:301},{lbl:'6/24',sub:'수',v:301},{lbl:'6/25',sub:'목',v:321},{lbl:'6/26',sub:'금',v:324},{lbl:'6/27',sub:'토',v:363},{lbl:'6/28',sub:'일',v:342},{lbl:'6/29',sub:'월',v:308}];
-    var pad={t:18,r:12,b:36,l:36};
+    var data=[
+      {lbl:'라플위클리', sub:'429만원', v:101385, c:C.weekly},
+      {lbl:'HOT&NEW',   sub:'372만원', v:100129, c:C.hot},
+      {lbl:'딥다이브',  sub:'178만원', v:43810,  c:C.deep}
+    ];
+    var pad={t:18,r:12,b:38,l:42};
     var cW=W-pad.l-pad.r,cH=H-pad.t-pad.b;
-    var maxV=90000;
-    [30000,60000,90000].forEach(function(v){
+    var maxV=120000;
+    [40000,80000,120000].forEach(function(v){
       var y=pad.t+cH-(v/maxV)*cH;
       ctx.strokeStyle=C.border; ctx.lineWidth=1;
       ctx.beginPath(); ctx.moveTo(pad.l,y); ctx.lineTo(pad.l+cW,y); ctx.stroke();
       ctx.fillStyle=C.faint; ctx.font='10px '+FN; ctx.textAlign='right';
       ctx.fillText((v/10000).toFixed(0)+'만',pad.l-5,y+3);
     });
-    var step=cW/data.length; var bw=step*.5;
+    var step=cW/data.length; var bw=step*.52;
     data.forEach(function(d,i){
       var x=pad.l+step*i+(step-bw)/2;
       var bh=(d.v/maxV)*cH; var y=pad.t+cH-bh;
-      ctx.fillStyle=d.c; ctx.fillRect(x,y,bw,bh);
-      ctx.fillStyle=C.text; ctx.font='bold 12px '+FN; ctx.textAlign='center';
-      ctx.fillText(d.v.toLocaleString(),x+bw/2,y-5);
-      ctx.fillStyle=C.dim; ctx.font='11px '+FN; ctx.fillText(d.lbl,x+bw/2,pad.t+cH+13);
+      ctx.fillStyle=d.c; ctx.globalAlpha=0.82; ctx.fillRect(x,y,bw,bh); ctx.globalAlpha=1;
+      ctx.fillStyle=d.c; ctx.font='bold 11px '+FN; ctx.textAlign='center';
+      ctx.fillText(Math.round(d.v/10000*10)/10+'만',x+bw/2,y-4);
+      ctx.fillStyle=C.dim; ctx.font='11px '+FN;
+      ctx.fillText(d.lbl,x+bw/2,pad.t+cH+13);
       ctx.fillStyle=C.faint; ctx.font='10px '+FN;
-      ctx.fillText((d.cost/10000).toFixed(0)+'만원',x+bw/2,pad.t+cH+23);
+      ctx.fillText(d.sub,x+bw/2,pad.t+cH+25);
     });
     regHits('clickProg',data.map(function(d,i){
       var x=pad.l+step*i+(step-bw)/2;
-      return {x:x,y:pad.t,w:bw,h:cH,lines:[d.lbl,d.v.toLocaleString()+'클릭 · '+(d.cost/10000).toFixed(0)+'만원']};
+      return {x:x,y:pad.t,w:bw,h:cH,lines:[d.lbl,d.v.toLocaleString()+'클릭 · '+d.sub]};
     }));
   })();
 
