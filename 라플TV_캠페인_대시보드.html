@@ -1603,11 +1603,7 @@ function drawClickCharts(){try{
   (function(){
     var ctx=setup('clickProg',180); if(!ctx)return;
     var W=ctx._w,H=ctx._h;
-    var data=[
-      {lbl:'라플위클리', sub:'429만원', v:101385, c:C.weekly},
-      {lbl:'HOT&NEW',   sub:'372만원', v:100129, c:C.hot},
-      {lbl:'딥다이브',  sub:'178만원', v:43810,  c:C.deep}
-    ];
+    var data=[{lbl:'6/23',sub:'화',v:301},{lbl:'6/24',sub:'수',v:301},{lbl:'6/25',sub:'목',v:321},{lbl:'6/26',sub:'금',v:324},{lbl:'6/27',sub:'토',v:363},{lbl:'6/28',sub:'일',v:342},{lbl:'6/29',sub:'월',v:308}];
     var pad={t:18,r:12,b:38,l:42};
     var cW=W-pad.l-pad.r,cH=H-pad.t-pad.b;
     var maxV=120000;
