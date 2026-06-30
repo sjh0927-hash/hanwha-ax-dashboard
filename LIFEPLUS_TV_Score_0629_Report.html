@@ -166,13 +166,13 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
 <div class="kpi-strip">
   <div class="kpi-card purple">
     <p class="kpi-label">채널 평균 LTV</p>
-    <p class="kpi-val purple">0.52</p>
-    <span class="kpi-badge up">트래픽소스 실데이터 반영 완료</span>
+    <p class="kpi-val purple">0.51</p>
+    <span class="kpi-badge up">자연유입 절대수(nat_abs) 기반 재계산</span>
   </div>
   <div class="kpi-card teal">
     <p class="kpi-label">S / A 등급</p>
-    <p class="kpi-val teal">23편</p>
-    <span class="kpi-badge up">S 5 · A 18</span>
+    <p class="kpi-val teal">22편</p>
+    <span class="kpi-badge up">S 6 · A 16</span>
   </div>
   <div class="kpi-card amber">
     <p class="kpi-label">B 등급</p>
@@ -181,7 +181,7 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
   </div>
   <div class="kpi-card red">
     <p class="kpi-label">C 등급</p>
-    <p class="kpi-val red">8편</p>
+    <p class="kpi-val red">9편</p>
     <span class="kpi-badge dn">개선 필요</span>
   </div>
   <div class="kpi-card blue">
@@ -214,10 +214,10 @@ function sw(id,btn){
       <p class="card-title">등급 분포</p>
       <p class="card-sub">41편 집계 기준 · 0629</p>
       <div class="legend">
-        <span class="leg"><span class="leg-dot" style="background:#9F8FF7"></span>S 5편</span>
+        <span class="leg"><span class="leg-dot" style="background:#9F8FF7"></span>S 6편</span>
         <span class="leg"><span class="leg-dot" style="background:#3DD68C"></span>A 16편</span>
-        <span class="leg"><span class="leg-dot" style="background:#F5A623"></span>B 12편</span>
-        <span class="leg"><span class="leg-dot" style="background:#6E6D7A"></span>C 8편</span>
+        <span class="leg"><span class="leg-dot" style="background:#F5A623"></span>B 10편</span>
+        <span class="leg"><span class="leg-dot" style="background:#6E6D7A"></span>C 9편</span>
       </div>
       <div class="chart-box" style="height:200px"><canvas id="c_donut"></canvas></div>
     </div>
@@ -285,7 +285,7 @@ function sw(id,btn){
   </div>
   <div class="card">
     <p class="card-title">LTV Score 구성 분해 — 상위 20편</p>
-    <p class="card-sub">기본점수(5지표) + 자연유입보너스 + 자연유입추정보너스 · 참여도(eng) 반영 · 트래픽소스 미반영</p>
+    <p class="card-sub">기본점수(5지표) + 롱테일보너스 + 알고리즘/검색보너스 · nat_abs 기반 정규화 · 광고비 영향 제거</p>
     <div class="legend">
       <span class="leg"><span class="leg-dot" style="background:rgba(96,165,250,.7)"></span>자연유입 ×0.30</span>
       <span class="leg"><span class="leg-dot" style="background:rgba(159,143,247,.7)"></span>조회율 ×0.25</span>
@@ -361,36 +361,34 @@ function sw(id,btn){
     </div>
     <div class="formula-line">
       &nbsp;&nbsp;<span class="plus">+ 알고리즘 보너스 N(알고리즘비중)×0.05</span>
-      <span class="cmt">&nbsp;&nbsp;최대 +0.05 · 0629 미입력 → 자연유입 비례 추정</span>
+      <span class="cmt">&nbsp;&nbsp;최대 +0.05 · 추천동영상 유입 7D 절대수 실데이터 반영</span>
     </div>
     <div class="formula-line">
       &nbsp;&nbsp;<span class="plus">+ 검색유입 보너스 N(검색비중)×0.03</span>
-      <span class="cmt">&nbsp;&nbsp;최대 +0.03 · 0629 데이터 미입력</span>
+      <span class="cmt">&nbsp;&nbsp;최대 +0.03 · 검색 유입 7D 절대수 실데이터 반영</span>
     </div>
     <div class="formula-line">
       &nbsp;&nbsp;<span class="minus">− 광고의존 패널티 (광고비중−0.70)×0.15</span>
-      <span class="cmt">&nbsp;&nbsp;최대 −0.05 · 0629 데이터 미입력</span>
+      <span class="cmt">&nbsp;&nbsp;최대 −0.05 · 광고 패널티 미적용 (광고의존 에피소드 없음)</span>
     </div>
     <p class="formula-note">
       N(지표) = min(1.0, 실측값 ÷ (IP 기대값 × 2)) &nbsp;|&nbsp;
-      참여도(좋아요+공유+댓글) 7D 절대수 반영 · IP 벤치마크 w=2500 h=750 d=1400 &nbsp;|&nbsp;
-      트래픽소스(알고리즘·검색·광고) 미입력 → 알고리즘 보너스는 자연유입 비중으로 추정 &nbsp;|&nbsp;
-      검색·광고 패널티 미적용
+      자연유입 조회수(nat_abs) 기반 정규화 · IP 벤치마크 w=100,196회 h=27,286회 d=54,618회 &nbsp;|&nbsp;
+      참여도(좋아요+공유+댓글) 7D 절대수 반영 · IP 벤치마크 w=2,500 h=750 d=1,400 &nbsp;|&nbsp;
+      롱테일 보너스: 자연유입 비중 7D ≥ 30% 조건 유지 (nat_abs 전환과 독립 적용)
     </p>
   </div>
 
   <div class="change-row">
-    <span class="badge upd">참여도(eng) 신규 반영 — 좋아요+공유+댓글 7D · v1은 eng 미반영 기준</span>
-    <span class="badge upd">알고리즘·검색·광고 트래픽소스 미반영</span>
-    <span class="badge new">위클리 S5 3편 신규 추가 (봉준호·토이스토리·이사랑통역)</span>
-    <span class="badge new">뮤지컬1 (W6-20) 집계 완료</span>
-    <span class="badge new">디스클로저데이 (H-15) 집계 완료</span>
-    <span class="badge upd">채널 평균 0.52 (참여도 · 트래픽소스 알고리즘/검색 실데이터 반영)</span>
+    <span class="badge new">자연유입 절대수(nat_abs) 기반 정규화 적용 — 광고비 영향 제거</span>
+    <span class="badge upd">IP별 nat_abs 벤치마크 w=100,196 h=27,286 d=54,618 (회차 평균)</span>
+    <span class="badge upd">채널 평균 0.51 · S=6 A=16 B=10 C=9 (41편 기준)</span>
+    <span class="badge upd">롱테일 보너스 조건(자연유입 비중 ≥ 30%) 유지 · 알고리즘/검색 보너스 실데이터 반영</span>
   </div>
 
   <div class="card">
     <p class="card-title">IP별 기대값 — 0622 기준</p>
-    <p class="card-sub">정규화 기준선 · N(지표) = 실측값 ÷ (기대값 × 2) · 기대값의 2배가 정규화 만점</p>
+    <p class="card-sub">정규화 기준선 · N(지표) = 실측값 ÷ (기대값 × 2) · 자연유입은 절대수(회) 기준 · 나머지는 비율 기준</p>
     <div class="tbl-scroll">
       <table class="bench-tbl">
         <thead><tr>
@@ -461,47 +459,47 @@ const IPC={w:'#60A5FA',h:'#F472B6',d:'#34D399'};
 const IPNAME={w:'위클리',h:'HOT&NEW',d:'딥다이브'};
 
 const DATA=[
-  {ip:'h',e:'마이클',          v2:.960,v1:.978, nat:.5506,vr:.315, ctr:.053,eng:3256,sub:450, watch:3.58, b_org:.05,b_algo:.023,b_srch:.009,pen:0},
-  {ip:'d',e:'군체',             v2:.939,v1:.909, nat:.4102,vr:.226, ctr:.037,eng:3589,sub:187, watch:7.19, b_org:.05,b_algo:.050,b_srch:.021,pen:0},
-  {ip:'w',e:'프로젝트헤일메리', v2:.814,v1:.779, nat:.4516,vr:.170, ctr:.038,eng:6071,sub:740, watch:9.92, b_org:.05,b_algo:.050,b_srch:.030,pen:0},
-  {ip:'w',e:'마이클잭슨',       v2:.778,v1:.760, nat:.4657,vr:.189, ctr:.027,eng:4693,sub:393, watch:10.64,b_org:.05,b_algo:.050,b_srch:.014,pen:0},
-  {ip:'h',e:'HOT헤일메리',      v2:.704,v1:.708, nat:.2258,vr:.204, ctr:.049,eng:2266,sub:294, watch:4.28, b_org:0,  b_algo:.009,b_srch:.010,pen:0},
-  {ip:'w',e:'죽음',             v2:.683,v1:.660, nat:.3528,vr:.207, ctr:.037,eng:3118,sub:260, watch:10.63,b_org:.05,b_algo:.048,b_srch:.010,pen:0},
-  {ip:'h',e:'백룸',             v2:.648,v1:.653, nat:.2652,vr:.298, ctr:.050,eng:714, sub:48,  watch:3.03, b_org:0,  b_algo:.015,b_srch:.007,pen:0},
-  {ip:'w',e:'루머',             v2:.625,v1:.602, nat:.313, vr:.166, ctr:.035,eng:2268,sub:345, watch:8.17, b_org:.05,b_algo:.046,b_srch:.008,pen:0},
-  {ip:'h',e:'아카데미',         v2:.624,v1:.626, nat:.197, vr:.299, ctr:.042,eng:804, sub:127, watch:3.07, b_org:0,  b_algo:.010,b_srch:.008,pen:0},
-  {ip:'w',e:'행운',             v2:.617,v1:.603, nat:.2796,vr:.209, ctr:.039,eng:3111,sub:382, watch:7.62, b_org:0,  b_algo:.033,b_srch:.009,pen:0},
-  {ip:'w',e:'럭셔리',           v2:.612,v1:.596, nat:.3633,vr:.227, ctr:.040,eng:1713,sub:81,  watch:10.47,b_org:.05,b_algo:.045,b_srch:.007,pen:0},
-  {ip:'w',e:'호기심',           v2:.608,v1:.590, nat:.3228,vr:.190, ctr:.039,eng:2572,sub:148, watch:9.44, b_org:.05,b_algo:.045,b_srch:.006,pen:0},
-  {ip:'d',e:'붉은사막AAA',      v2:.599,v1:.584, nat:.2677,vr:.136, ctr:.031,eng:1592,sub:168, watch:6.14, b_org:0,  b_algo:.038,b_srch:.004,pen:0},
-  {ip:'w',e:'다이어트',         v2:.589,v1:.564, nat:.3487,vr:.227, ctr:.035,eng:1614,sub:57,  watch:10.16,b_org:.05,b_algo:.050,b_srch:.009,pen:0},
-  {ip:'w',e:'프랑스',           v2:.588,v1:.569, nat:.3483,vr:.217, ctr:.039,eng:1753,sub:43,  watch:10.5, b_org:.05,b_algo:.044,b_srch:.010,pen:0},
-  {ip:'w',e:'본능',             v2:.574,v1:.555, nat:.3263,vr:.164, ctr:.042,eng:2142,sub:96,  watch:8.94, b_org:.05,b_algo:.045,b_srch:.007,pen:0},
-  {ip:'h',e:'악프입2',          v2:.571,v1:.574, nat:.1893,vr:.371, ctr:.037,eng:549, sub:44,  watch:3.95, b_org:0,  b_algo:.013,b_srch:.003,pen:0},
-  {ip:'w',e:'디저트',           v2:.568,v1:.545, nat:.3236,vr:.207, ctr:.038,eng:1779,sub:40,  watch:8.37, b_org:.05,b_algo:.048,b_srch:.007,pen:0},
-  {ip:'w',e:'실패',             v2:.565,v1:.538, nat:.3019,vr:.172, ctr:.039,eng:2367,sub:72,  watch:7.23, b_org:.05,b_algo:.050,b_srch:.007,pen:0},
-  {ip:'w',e:'초능력',           v2:.554,v1:.528, nat:.3229,vr:.216, ctr:.035,eng:1477,sub:21,  watch:9.01, b_org:.05,b_algo:.050,b_srch:.008,pen:0},
-  {ip:'w',e:'뮤지컬1',          v2:.522,v1:.529, nat:.3449,vr:.193, ctr:.034,eng:1332,sub:59,  watch:6.84, b_org:.05,b_algo:.022,b_srch:.006,pen:0},
-  {ip:'w',e:'스티븐스필버그',   v2:.512,v1:.495, nat:.2954,vr:.149, ctr:.040,eng:2384,sub:156, watch:7.98, b_org:0,  b_algo:.023,b_srch:.023,pen:0},
-  {ip:'w',e:'신분',             v2:.505,v1:.487, nat:.2798,vr:.192, ctr:.039,eng:1949,sub:111, watch:8.40, b_org:0,  b_algo:.041,b_srch:.005,pen:0},
-  {ip:'d',e:'K-POP',            v2:.490,v1:.485, nat:.1831,vr:.178, ctr:.043,eng:942, sub:47,  watch:5.01, b_org:0,  b_algo:.017,b_srch:.006,pen:0},
-  {ip:'d',e:'데이미언허스트',   v2:.474,v1:.473, nat:.1571,vr:.158, ctr:.034,eng:1435,sub:95,  watch:5.55, b_org:0,  b_algo:.010,b_srch:.007,pen:0},
-  {ip:'w',e:'이탈리아',         v2:.462,v1:.446, nat:.269, vr:.156, ctr:.034,eng:1913,sub:125, watch:7.26, b_org:0,  b_algo:.036,b_srch:.007,pen:0},
-  {ip:'w',e:'부동산',           v2:.445,v1:.431, nat:.2683,vr:.153, ctr:.036,eng:1732,sub:82,  watch:7.87, b_org:0,  b_algo:.034,b_srch:.006,pen:0},
-  {ip:'h',e:'원더풀스',         v2:.425,v1:.425, nat:.1585,vr:.120, ctr:.034,eng:958, sub:38,  watch:4.60, b_org:0,  b_algo:.011,b_srch:.005,pen:0},
-  {ip:'w',e:'리더쉽',           v2:.423,v1:.413, nat:.2295,vr:.156, ctr:.035,eng:1797,sub:91,  watch:6.51, b_org:0,  b_algo:.027,b_srch:.006,pen:0},
-  {ip:'h',e:'성난사람들2',      v2:.416,v1:.420, nat:.2453,vr:.092, ctr:.041,eng:443, sub:22,  watch:2.02, b_org:0,  b_algo:.009,b_srch:.011,pen:.025},
-  {ip:'h',e:'데이미언HOT',      v2:.411,v1:.417, nat:.1289,vr:.207, ctr:.033,eng:664, sub:36,  watch:2.87, b_org:0,  b_algo:.002,b_srch:.005,pen:0},
-  {ip:'h',e:'만달로리안',       v2:.398,v1:.403, nat:.0994,vr:.273, ctr:.029,eng:487, sub:40,  watch:2.69, b_org:0,  b_algo:.004,b_srch:.001,pen:0},
-  {ip:'d',e:'세이버매트릭스',   v2:.374,v1:.364, nat:.1252,vr:.153, ctr:.028,eng:759, sub:48,  watch:6.60, b_org:0,  b_algo:.018,b_srch:.004,pen:0},
-  {ip:'d',e:'아르테미스2호',    v2:.328,v1:.333, nat:.1102,vr:.173, ctr:.025,eng:398, sub:37,  watch:5.98, b_org:0,  b_algo:.005,b_srch:.001,pen:0},
-  {ip:'w',e:'야구',             v2:.316,v1:.302, nat:.1734,vr:.121, ctr:.030,eng:1077,sub:20,  watch:6.81, b_org:0,  b_algo:.027,b_srch:.004,pen:0},
-  {ip:'h',e:'건물주',           v2:.271,v1:.272, nat:.0724,vr:.190, ctr:.026,eng:228, sub:1,   watch:3.14, b_org:0,  b_algo:.003,b_srch:.003,pen:0},
-  {ip:'h',e:'F1',               v2:.250,v1:.253, nat:.1124,vr:.100, ctr:.037,eng:223, sub:-7,  watch:1.32, b_org:0,  b_algo:.002,b_srch:.002,pen:.025},
-  {ip:'h',e:'아웃사이더즈',     v2:.234,v1:.237, nat:.049, vr:.164, ctr:.023,eng:263, sub:12,  watch:null, b_org:0,  b_algo:.001,b_srch:.001,pen:0},
-  {ip:'h',e:'디스클로저데이',   v2:.227,v1:.231, nat:.052, vr:.177, ctr:.024,eng:138, sub:0,   watch:2.82, b_org:0,  b_algo:.001,b_srch:.001,pen:0},
-  {ip:'h',e:'체이스인피니티',   v2:.221,v1:.223, nat:.0443,vr:.165, ctr:.033,eng:232, sub:-2,  watch:1.48, b_org:0,  b_algo:.001,b_srch:0,  pen:.025},
-  {ip:'h',e:'골드랜드',         v2:.206,v1:.204, nat:.1014,vr:.080, ctr:.029,eng:376, sub:-2,  watch:2.97, b_org:0,  b_algo:.005,b_srch:.006,pen:.050},
+  {ip:'h',e:'마이클',          v2:.960,v1:.960, nat:137077,vr:.315, ctr:.053,eng:3256,sub:450, watch:3.58, b_org:.05,b_algo:.023,b_srch:.009,pen:0},
+  {ip:'d',e:'군체',             v2:.945,v1:.939, nat:150450,vr:.226, ctr:.037,eng:3589,sub:187, watch:7.19, b_org:.05,b_algo:.050,b_srch:.021,pen:0},
+  {ip:'w',e:'프로젝트헤일메리', v2:.900,v1:.814, nat:219055,vr:.170, ctr:.038,eng:6071,sub:740, watch:9.92, b_org:.05,b_algo:.050,b_srch:.030,pen:0},
+  {ip:'w',e:'마이클잭슨',       v2:.857,v1:.778, nat:200210,vr:.189, ctr:.027,eng:4693,sub:393, watch:10.64,b_org:.05,b_algo:.050,b_srch:.014,pen:0},
+  {ip:'w',e:'죽음',             v2:.726,v1:.683, nat:140003,vr:.207, ctr:.037,eng:3118,sub:260, watch:10.63,b_org:.05,b_algo:.048,b_srch:.010,pen:0},
+  {ip:'h',e:'HOT헤일메리',      v2:.715,v1:.704, nat:35472, vr:.204, ctr:.049,eng:2266,sub:294, watch:4.28, b_org:0,  b_algo:.009,b_srch:.010,pen:0},
+  {ip:'h',e:'아카데미',         v2:.660,v1:.624, nat:35674, vr:.299, ctr:.042,eng:804, sub:127, watch:3.07, b_org:0,  b_algo:.010,b_srch:.008,pen:0},
+  {ip:'h',e:'백룸',             v2:.640,v1:.648, nat:37749, vr:.298, ctr:.050,eng:714, sub:48,  watch:3.03, b_org:0,  b_algo:.015,b_srch:.007,pen:0},
+  {ip:'w',e:'루머',             v2:.637,v1:.625, nat:107245,vr:.166, ctr:.035,eng:2268,sub:345, watch:8.17, b_org:.05,b_algo:.046,b_srch:.008,pen:0},
+  {ip:'w',e:'행운',             v2:.633,v1:.617, nat:99686, vr:.209, ctr:.039,eng:3111,sub:382, watch:7.62, b_org:0,  b_algo:.033,b_srch:.009,pen:0},
+  {ip:'w',e:'호기심',           v2:.629,v1:.608, nat:115668,vr:.190, ctr:.039,eng:2572,sub:148, watch:9.44, b_org:.05,b_algo:.045,b_srch:.006,pen:0},
+  {ip:'d',e:'붉은사막AAA',      v2:.572,v1:.599, nat:59994, vr:.136, ctr:.031,eng:1592,sub:168, watch:6.14, b_org:0,  b_algo:.038,b_srch:.004,pen:0},
+  {ip:'w',e:'럭셔리',           v2:.569,v1:.612, nat:86014, vr:.227, ctr:.040,eng:1713,sub:81,  watch:10.47,b_org:.05,b_algo:.045,b_srch:.007,pen:0},
+  {ip:'w',e:'실패',             v2:.562,v1:.565, nat:93493, vr:.172, ctr:.039,eng:2367,sub:72,  watch:7.23, b_org:.05,b_algo:.050,b_srch:.007,pen:0},
+  {ip:'h',e:'악프입2',          v2:.562,v1:.571, nat:26323, vr:.371, ctr:.037,eng:549, sub:44,  watch:3.95, b_org:0,  b_algo:.013,b_srch:.003,pen:0},
+  {ip:'w',e:'본능',             v2:.561,v1:.574, nat:94195, vr:.164, ctr:.042,eng:2142,sub:96,  watch:8.94, b_org:.05,b_algo:.045,b_srch:.007,pen:0},
+  {ip:'w',e:'신분',             v2:.530,v1:.505, nat:104834,vr:.192, ctr:.039,eng:1949,sub:111, watch:8.40, b_org:0,  b_algo:.041,b_srch:.005,pen:0},
+  {ip:'w',e:'디저트',           v2:.530,v1:.568, nat:77435, vr:.207, ctr:.038,eng:1779,sub:40,  watch:8.37, b_org:.05,b_algo:.048,b_srch:.007,pen:0},
+  {ip:'w',e:'다이어트',         v2:.525,v1:.589, nat:67523, vr:.227, ctr:.035,eng:1614,sub:57,  watch:10.16,b_org:.05,b_algo:.050,b_srch:.009,pen:0},
+  {ip:'w',e:'프랑스',           v2:.525,v1:.588, nat:67858, vr:.217, ctr:.039,eng:1753,sub:43,  watch:10.5, b_org:.05,b_algo:.044,b_srch:.010,pen:0},
+  {ip:'w',e:'스티븐스필버그',   v2:.511,v1:.512, nat:92815, vr:.149, ctr:.040,eng:2384,sub:156, watch:7.98, b_org:0,  b_algo:.023,b_srch:.023,pen:0},
+  {ip:'w',e:'초능력',           v2:.506,v1:.554, nat:70641, vr:.216, ctr:.035,eng:1477,sub:21,  watch:9.01, b_org:.05,b_algo:.050,b_srch:.008,pen:0},
+  {ip:'d',e:'K-POP',            v2:.467,v1:.490, nat:39868, vr:.178, ctr:.043,eng:942, sub:47,  watch:5.01, b_org:0,  b_algo:.017,b_srch:.006,pen:0},
+  {ip:'w',e:'이탈리아',         v2:.467,v1:.462, nat:88681, vr:.156, ctr:.034,eng:1913,sub:125, watch:7.26, b_org:0,  b_algo:.036,b_srch:.007,pen:0},
+  {ip:'w',e:'뮤지컬1',          v2:.463,v1:.522, nat:70066, vr:.193, ctr:.034,eng:1332,sub:59,  watch:6.84, b_org:.05,b_algo:.022,b_srch:.006,pen:0},
+  {ip:'d',e:'데이미언허스트',   v2:.457,v1:.474, nat:34945, vr:.158, ctr:.034,eng:1435,sub:95,  watch:5.55, b_org:0,  b_algo:.010,b_srch:.007,pen:0},
+  {ip:'w',e:'부동산',           v2:.442,v1:.445, nat:83115, vr:.153, ctr:.036,eng:1732,sub:82,  watch:7.87, b_org:0,  b_algo:.034,b_srch:.006,pen:0},
+  {ip:'h',e:'원더풀스',         v2:.434,v1:.425, nat:24965, vr:.120, ctr:.034,eng:958, sub:38,  watch:4.60, b_org:0,  b_algo:.011,b_srch:.005,pen:0},
+  {ip:'w',e:'리더쉽',           v2:.430,v1:.423, nat:77674, vr:.156, ctr:.035,eng:1797,sub:91,  watch:6.51, b_org:0,  b_algo:.027,b_srch:.006,pen:0},
+  {ip:'h',e:'데이미언HOT',      v2:.393,v1:.411, nat:15799, vr:.207, ctr:.033,eng:664, sub:36,  watch:2.87, b_org:0,  b_algo:.002,b_srch:.005,pen:0},
+  {ip:'h',e:'만달로리안',       v2:.389,v1:.398, nat:12875, vr:.273, ctr:.029,eng:487, sub:40,  watch:2.69, b_org:0,  b_algo:.004,b_srch:.001,pen:0},
+  {ip:'h',e:'성난사람들2',      v2:.359,v1:.416, nat:25947, vr:.092, ctr:.041,eng:443, sub:22,  watch:2.02, b_org:0,  b_algo:.009,b_srch:.011,pen:.025},
+  {ip:'d',e:'세이버매트릭스',   v2:.347,v1:.374, nat:23116, vr:.153, ctr:.028,eng:759, sub:48,  watch:6.60, b_org:0,  b_algo:.018,b_srch:.004,pen:0},
+  {ip:'w',e:'야구',             v2:.306,v1:.316, nat:47706, vr:.121, ctr:.030,eng:1077,sub:20,  watch:6.81, b_org:0,  b_algo:.027,b_srch:.004,pen:0},
+  {ip:'d',e:'아르테미스2호',    v2:.302,v1:.328, nat:19335, vr:.173, ctr:.025,eng:398, sub:37,  watch:5.98, b_org:0,  b_algo:.005,b_srch:.001,pen:0},
+  {ip:'h',e:'건물주',           v2:.262,v1:.271, nat:9236,  vr:.190, ctr:.026,eng:228, sub:1,   watch:3.14, b_org:0,  b_algo:.003,b_srch:.003,pen:0},
+  {ip:'h',e:'체이스인피니티',   v2:.252,v1:.221, nat:12250, vr:.165, ctr:.033,eng:232, sub:-2,  watch:1.48, b_org:0,  b_algo:.001,b_srch:0,  pen:.025},
+  {ip:'h',e:'아웃사이더즈',     v2:.221,v1:.234, nat:4982,  vr:.164, ctr:.023,eng:263, sub:12,  watch:null, b_org:0,  b_algo:.001,b_srch:.001,pen:0},
+  {ip:'h',e:'F1',               v2:.220,v1:.250, nat:11230, vr:.100, ctr:.037,eng:223, sub:-7,  watch:1.32, b_org:0,  b_algo:.002,b_srch:.002,pen:.025},
+  {ip:'h',e:'디스클로저데이',   v2:.214,v1:.227, nat:5306,  vr:.177, ctr:.024,eng:138, sub:0,   watch:2.82, b_org:0,  b_algo:.001,b_srch:.001,pen:0},
+  {ip:'h',e:'골드랜드',         v2:.202,v1:.206, nat:14398, vr:.080, ctr:.029,eng:376, sub:-2,  watch:2.97, b_org:0,  b_algo:.005,b_srch:.006,pen:.050},
 ];
 
 const PENDING=[
@@ -518,7 +516,7 @@ Chart.defaults.color='#6E6D7A';
 // 도넛
 new Chart(document.getElementById('c_donut'),{type:'doughnut',
   data:{labels:['S','A','B','C'],
-    datasets:[{data:[5,18,10,8],backgroundColor:['#9F8FF7','#3DD68C','#F5A623','rgba(110,109,122,.4)'],
+    datasets:[{data:[6,16,10,9],backgroundColor:['#9F8FF7','#3DD68C','#F5A623','rgba(110,109,122,.4)'],
       borderWidth:0,hoverOffset:6}]},
   options:{responsive:true,maintainAspectRatio:false,cutout:'68%',
     plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`${c.label}: ${c.parsed}편`}}}}});
@@ -580,9 +578,9 @@ new Chart(document.getElementById('c_ip_grade'),{type:'bar',
 
 // 점수 분해
 const top20=DATA.slice(0,20);
-const BENCH_W={nat:.317,vr:.184,ctr:.0364,eng:2500,sub:180};
-const BENCH_H={nat:.184,vr:.209,ctr:.0379,eng:750, sub:84};
-const BENCH_D={nat:.209,vr:.171,ctr:.0330,eng:1400,sub:97};
+const BENCH_W={nat:100196,vr:.184,ctr:.0364,eng:2500,sub:180};
+const BENCH_H={nat:27286, vr:.209,ctr:.0379,eng:750, sub:84};
+const BENCH_D={nat:54618, vr:.171,ctr:.0330,eng:1400,sub:97};
 function getBench(ip){return ip==='w'?BENCH_W:ip==='h'?BENCH_H:BENCH_D}
 function nm(v,bv){return v!=null?Math.min(1,Math.max(0,v/(bv*2))):0}
 function calcComp(d){
@@ -643,36 +641,36 @@ new Chart(document.getElementById('c_corrbar'),{type:'bar',
     scales:{x:{grid:{color:GRID},ticks:TICK,min:-.6,max:1.05},
             y:{grid:{display:false},ticks:{...TICK,font:{size:10}}}}}});
 
-// 산점도 1 — 시청시간 vs 자연유입
+// 산점도 1 — 시청시간 vs 자연유입 조회수
 new Chart(document.getElementById('c_sc1'),{type:'scatter',
   data:{datasets:[
-    {label:'위클리', data:DATA.filter(d=>d.ip==='w'&&d.watch).map(d=>({x:d.watch,y:d.nat*100,l:d.e})),
+    {label:'위클리', data:DATA.filter(d=>d.ip==='w'&&d.watch).map(d=>({x:d.watch,y:d.nat/10000,l:d.e})),
       backgroundColor:'rgba(96,165,250,.8)',pointRadius:5},
-    {label:'HOT&NEW',data:DATA.filter(d=>d.ip==='h'&&d.watch).map(d=>({x:d.watch,y:d.nat*100,l:d.e})),
+    {label:'HOT&NEW',data:DATA.filter(d=>d.ip==='h'&&d.watch).map(d=>({x:d.watch,y:d.nat/10000,l:d.e})),
       backgroundColor:'rgba(244,114,182,.8)',pointRadius:5},
-    {label:'딥다이브',data:DATA.filter(d=>d.ip==='d'&&d.watch).map(d=>({x:d.watch,y:d.nat*100,l:d.e})),
+    {label:'딥다이브',data:DATA.filter(d=>d.ip==='d'&&d.watch).map(d=>({x:d.watch,y:d.nat/10000,l:d.e})),
       backgroundColor:'rgba(52,211,153,.8)',pointRadius:5},
   ]},
   options:{responsive:true,maintainAspectRatio:false,
     plugins:{legend:{labels:{font:{size:10},boxWidth:8,color:'#9997A8'}},
-      tooltip:{callbacks:{label:c=>`${c.raw.l||''}: ${c.raw.x?.toFixed(1)}분 · ${c.raw.y?.toFixed(1)}%`}}},
+      tooltip:{callbacks:{label:c=>`${c.raw.l||''}: ${c.raw.x?.toFixed(1)}분 · ${c.raw.y?.toFixed(1)}만회`}}},
     scales:{x:{grid:{color:GRID},ticks:{...TICK,callback:v=>v+'분'},title:{display:true,text:'평균시청시간(분)',font:{size:10},color:'#6E6D7A'}},
-            y:{grid:{color:GRID},ticks:{...TICK,callback:v=>v+'%'},title:{display:true,text:'자연유입(%)',font:{size:10},color:'#6E6D7A'}}}}});
+            y:{grid:{color:GRID},ticks:{...TICK,callback:v=>v+'만'},title:{display:true,text:'자연유입 조회수(만회)',font:{size:10},color:'#6E6D7A'}}}}});
 
-// 산점도 2 — 자연유입 vs LTV
+// 산점도 2 — 자연유입 조회수 vs LTV
 new Chart(document.getElementById('c_sc2'),{type:'scatter',
   data:{datasets:[
-    {label:'위클리', data:DATA.filter(d=>d.ip==='w').map(d=>({x:d.nat*100,y:d.v2,l:d.e})),
+    {label:'위클리', data:DATA.filter(d=>d.ip==='w').map(d=>({x:d.nat/10000,y:d.v2,l:d.e})),
       backgroundColor:'rgba(96,165,250,.8)',pointRadius:5},
-    {label:'HOT&NEW',data:DATA.filter(d=>d.ip==='h').map(d=>({x:d.nat*100,y:d.v2,l:d.e})),
+    {label:'HOT&NEW',data:DATA.filter(d=>d.ip==='h').map(d=>({x:d.nat/10000,y:d.v2,l:d.e})),
       backgroundColor:'rgba(244,114,182,.8)',pointRadius:5},
-    {label:'딥다이브',data:DATA.filter(d=>d.ip==='d').map(d=>({x:d.nat*100,y:d.v2,l:d.e})),
+    {label:'딥다이브',data:DATA.filter(d=>d.ip==='d').map(d=>({x:d.nat/10000,y:d.v2,l:d.e})),
       backgroundColor:'rgba(52,211,153,.8)',pointRadius:5},
   ]},
   options:{responsive:true,maintainAspectRatio:false,
     plugins:{legend:{labels:{font:{size:10},boxWidth:8,color:'#9997A8'}},
-      tooltip:{callbacks:{label:c=>`${c.raw.l||''}: nat ${c.raw.x?.toFixed(1)}% · LTV ${c.raw.y?.toFixed(3)}`}}},
-    scales:{x:{grid:{color:GRID},ticks:{...TICK,callback:v=>v+'%'},title:{display:true,text:'자연유입(%)',font:{size:10},color:'#6E6D7A'}},
+      tooltip:{callbacks:{label:c=>`${c.raw.l||''}: nat ${c.raw.x?.toFixed(1)}만회 · LTV ${c.raw.y?.toFixed(3)}`}}},
+    scales:{x:{grid:{color:GRID},ticks:{...TICK,callback:v=>v+'만'},title:{display:true,text:'자연유입 조회수(만회)',font:{size:10},color:'#6E6D7A'}},
             y:{grid:{color:GRID},ticks:{...TICK,callback:v=>v.toFixed(2)},title:{display:true,text:'LTV Score',font:{size:10},color:'#6E6D7A'}}}}});
 
 /* 순위 테이블 */
@@ -698,23 +696,23 @@ function renderRank(){
       <td><span class="ip-tag ${ipcls}">${IPNAME[d.ip]}</span></td>
       <td class="tr" style="font-weight:600;color:${bc(d.v2)}">${d.v2.toFixed(3)}</td>
       <td><span class="gpill ${gc}">${g}</span></td>
-      <td class="tr">${(d.nat*100).toFixed(1)}%</td>
+      <td class="tr">${Math.round(d.nat/1000).toLocaleString()}K</td>
       <td class="tr">${d.vr?(d.vr*100).toFixed(1)+'%':'—'}</td>
       <td class="tr">${d.ctr?(d.ctr*100).toFixed(2)+'%':'—'}</td>
       <td class="tr">${d.sub!=null?(d.sub>0?'+':'')+d.sub:'—'}</td>
       <td style="font-size:12px">${b_str}</td>
       <td style="min-width:72px">
         <div style="display:flex;height:8px;border-radius:3px;overflow:hidden;gap:1px">
-          ${[
-            [d.nat*100/63.4,'#60A5FA','자연유입'],
-            [(d.vr||0)*100/36.8,'#9F8FF7','조회율'],
-            [(d.ctr||0)*100/7.28,'#F472B6','CTR'],
+          ${(function(){const b=getBench(d.ip);return[
+            [Math.min(1,d.nat/(b.nat*2)),'#60A5FA','자연유입'],
+            [(d.vr||0)/(b.vr*2),'#9F8FF7','조회율'],
+            [(d.ctr||0)/(b.ctr*2),'#F472B6','CTR'],
             [0,'#3DD68C','반응효율'],
-            [Math.max(0,d.sub||0)/360,'#F5A623','구독자'],
-          ].map(([ratio,color,label])=>`<div title="${label}" style="flex:${Math.min(1,ratio||0)};background:${color};min-width:${(ratio||0)>0.05?2:0}px"></div>`).join('')}
+            [Math.max(0,d.sub||0)/(b.sub*2),'#F5A623','구독자'],
+          ].map(([ratio,color,label])=>`<div title="${label}" style="flex:${Math.min(1,ratio||0)};background:${color};min-width:${(ratio||0)>0.05?2:0}px"></div>`).join('')})()}
         </div>
         <div style="display:flex;justify-content:space-between;margin-top:2px">
-          ${[['N',d.nat*100/63.4,'#60A5FA'],['V',(d.vr||0)*100/36.8,'#9F8FF7'],['C',(d.ctr||0)*100/7.28,'#F472B6'],['E',0,'#3DD68C'],['S',Math.max(0,d.sub||0)/360,'#F5A623']].map(([lbl,r,col])=>`<span style="font-size:10px;color:${col};opacity:${(r||0)>0.3?1:.4}">${lbl}</span>`).join('')}
+          ${(function(){const b=getBench(d.ip);return[['N',Math.min(1,d.nat/(b.nat*2)),'#60A5FA'],['V',(d.vr||0)/(b.vr*2),'#9F8FF7'],['C',(d.ctr||0)/(b.ctr*2),'#F472B6'],['E',0,'#3DD68C'],['S',Math.max(0,d.sub||0)/(b.sub*2),'#F5A623']].map(([lbl,r,col])=>`<span style="font-size:10px;color:${col};opacity:${(r||0)>0.3?1:.4}">${lbl}</span>`).join('')})()
         </div>
       </td>`;
     tbody.appendChild(tr);
@@ -741,7 +739,7 @@ PENDING.forEach(p=>{
 
 /* Bench table */
 const benchRows=[
-  ['자연유입 비중 (7D)','31.7%','18.4%','20.9%','IP 전체 평균 기준선'],
+  ['자연유입 조회수 7D (nat_abs)','100,000회','27,000회','55,000회','IP별 절대수 평균 기준선'],
   ['평균 조회율 (7D)','18.4%','20.9%','17.1%','짧은 포맷이 구조적으로 높음'],
   ['CTR (7D)','3.64%','3.79%','3.30%','IP 전체 평균'],
   ['참여도 (좋아요+공유+댓글 7D)','2,500건','750건','1,400건','IP별 평균 기준 · 만점=기대값×2'],
