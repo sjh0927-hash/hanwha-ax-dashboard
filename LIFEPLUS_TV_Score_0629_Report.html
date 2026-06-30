@@ -712,7 +712,7 @@ function renderRank(){
           ].map(([ratio,color,label])=>`<div title="${label}" style="flex:${Math.min(1,ratio||0)};background:${color};min-width:${(ratio||0)>0.05?2:0}px"></div>`).join('')})()}
         </div>
         <div style="display:flex;justify-content:space-between;margin-top:2px">
-          ${(function(){const b=getBench(d.ip);return[['N',Math.min(1,d.nat/(b.nat*2)),'#60A5FA'],['V',(d.vr||0)/(b.vr*2),'#9F8FF7'],['C',(d.ctr||0)/(b.ctr*2),'#F472B6'],['E',0,'#3DD68C'],['S',Math.max(0,d.sub||0)/(b.sub*2),'#F5A623']].map(([lbl,r,col])=>`<span style="font-size:10px;color:${col};opacity:${(r||0)>0.3?1:.4}">${lbl}</span>`).join('')})()
+          ${(function(){const b=getBench(d.ip);return[['N',Math.min(1,d.nat/(b.nat*2)),'#60A5FA'],['V',(d.vr||0)/(b.vr*2),'#9F8FF7'],['C',(d.ctr||0)/(b.ctr*2),'#F472B6'],['E',0,'#3DD68C'],['S',Math.max(0,d.sub||0)/(b.sub*2),'#F5A623']].map(([lbl,r,col])=>`<span style="font-size:10px;color:${col};opacity:${(r||0)>0.3?1:.4}">${lbl}</span>`).join('')})()}
         </div>
       </td>`;
     tbody.appendChild(tr);
