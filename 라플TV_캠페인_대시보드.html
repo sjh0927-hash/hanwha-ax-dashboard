@@ -1564,7 +1564,7 @@ function drawClickCharts(){try{
   (function(){
     var ctx=setup('clickTrend',180); if(!ctx)return;
     var W=ctx._w,H=ctx._h;
-    var months=['4월','5월','6월(~28일)'];
+    var months=['4월','5월','6월(~30일)'];
     var ctrs=[3.08,3.24,1.86];
     var costs=[6984753,12951479,8420000];
     var pad={t:20,r:16,b:36,l:36};
@@ -1603,11 +1603,15 @@ function drawClickCharts(){try{
   (function(){
     var ctx=setup('clickProg',180); if(!ctx)return;
     var W=ctx._w,H=ctx._h;
-    var data=[{lbl:'6/24',sub:'수',v:301},{lbl:'6/25',sub:'목',v:321},{lbl:'6/26',sub:'금',v:324},{lbl:'6/27',sub:'토',v:363},{lbl:'6/28',sub:'일',v:342},{lbl:'6/29',sub:'월',v:308},{lbl:'6/30',sub:'화',v:556}];
+    var data=[
+      {lbl:'라플위클리',sub:'2,787만원',v:57663,c:C.weekly},
+      {lbl:'HOT&NEW',   sub:'1,868만원',v:41160,c:C.hot},
+      {lbl:'딥다이브',  sub:'1,785만원',v:43810,c:C.deep}
+    ];
     var pad={t:18,r:12,b:38,l:42};
     var cW=W-pad.l-pad.r,cH=H-pad.t-pad.b;
-    var maxV=120000;
-    [40000,80000,120000].forEach(function(v){
+    var maxV=70000;
+    [20000,40000,60000].forEach(function(v){
       var y=pad.t+cH-(v/maxV)*cH;
       ctx.strokeStyle=C.border; ctx.lineWidth=1;
       ctx.beginPath(); ctx.moveTo(pad.l,y); ctx.lineTo(pad.l+cW,y); ctx.stroke();
