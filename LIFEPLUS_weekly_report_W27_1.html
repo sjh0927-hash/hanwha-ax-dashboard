@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LIFEPLUS 위클리 리포트 W27 · 2026.06.29–07.05</title>
+<script>(function(){var t=localStorage.getItem('lp-theme');if(t==='dark')document.documentElement.classList.add('dark');})();</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --navy:#1A3C5E;--navy2:#2558A0;
+  --ink:#111827;--ink2:#374151;--ink3:#6B7280;--ink4:#9CA3AF;
+  --bg:#F5F6F8;--surf:#FFFFFF;--surf2:#F9FAFB;
+  --border:#E5E7EB;
+  --up:#047857;--dn:#B91C1C;--warn:#92400E;
+  --col1:#4F46E5;--col2:#0D9488;--col3:#D97706;
+  --r:4px;--r2:8px;
+}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);font-size:14px;line-height:1.5;min-height:100vh;}
+.sidenav{position:fixed;left:0;top:0;bottom:0;width:200px;background:var(--navy);padding:20px 0;z-index:100;display:flex;flex-direction:column;overflow-y:auto;}
+.sidenav-logo{padding:0 18px 16px;border-bottom:1px solid rgba(255,255,255,.1);margin-bottom:12px;}
+.sidenav-logo-brand{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:3px;}
+.sidenav-logo-title{font-size:15px;font-weight:700;color:#fff;line-height:1.3;}
+.sidenav-logo-period{font-size:12px;color:#93C5FD;margin-top:2px;}
+.nav-item{display:flex;align-items:center;gap:9px;padding:7px 18px;cursor:pointer;transition:background .15s;text-decoration:none;}
+.nav-item:hover{background:rgba(255,255,255,.08);}
+.nav-item.active{background:rgba(255,255,255,.13);border-right:2px solid #93C5FD;}
+.nav-num{font-size:11px;font-weight:700;color:rgba(255,255,255,.4);width:18px;flex-shrink:0;}
+.nav-label{font-size:13px;color:rgba(255,255,255,.75);font-weight:500;}
+.nav-item.active .nav-label{color:#fff;}
+.main{margin-left:200px;max-width:1100px;}
+.hdr{background:var(--navy);color:#fff;}
+.hdr-top{padding:24px 32px 18px;display:flex;justify-content:space-between;align-items:flex-start;gap:16px;border-bottom:1px solid rgba(255,255,255,.12);}
+.hdr-brand{font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;opacity:.55;margin-bottom:5px;}
+.hdr-title{font-size:28px;font-weight:700;letter-spacing:-.02em;}
+.hdr-right{text-align:right;}
+.hdr-period{font-size:16px;font-weight:600;color:#93C5FD;margin-bottom:3px;}
+.hdr-meta{font-size:13px;opacity:.55;line-height:1.8;}
+.hdr-kpi-bar{display:grid;grid-template-columns:repeat(5,1fr);}
+.hkpi{padding:12px 20px;border-right:1px solid rgba(255,255,255,.1);}
+.hkpi:last-child{border-right:none;}
+.hkpi-l{font-size:11px;opacity:.55;font-weight:500;letter-spacing:.07em;text-transform:uppercase;margin-bottom:4px;}
+.hkpi-v{font-size:21px;font-weight:700;letter-spacing:-.01em;}
+.hkpi-d{font-size:12px;margin-top:2px;opacity:.55;}
+.hkpi-ph{font-size:13px;font-weight:400;color:#FCD34D;margin-top:2px;opacity:1;}
+.sec{padding:28px 32px;border-bottom:1px solid var(--border);}
+.sec:last-child{border-bottom:none;}
+.sec-hd{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+.sec-num{font-size:12px;font-weight:700;color:#fff;background:var(--navy);padding:2px 7px;border-radius:2px;letter-spacing:.06em;}
+.sec-title{font-size:16px;font-weight:700;color:var(--ink);letter-spacing:-.01em;}
+.sec-sub{font-size:13px;color:var(--ink3);margin-left:auto;}
+.goal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.goal-card{background:var(--surf);border:1px solid var(--border);border-radius:var(--r2);padding:16px 18px;}
+.goal-label{font-size:12px;font-weight:600;color:var(--ink3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;}
+.goal-nums{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;}
+.goal-cur{font-size:22px;font-weight:700;}
+.goal-target{font-size:13px;color:var(--ink3);}
+.prog-bar{height:7px;background:var(--border);border-radius:4px;overflow:hidden;margin-bottom:5px;}
+.prog-fill{height:100%;border-radius:4px;transition:width .6s ease;}
+.goal-sub{font-size:12px;color:var(--ink4);}
+.exec-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.exec-card{background:var(--surf2);border:1px solid var(--border);border-radius:var(--r2);padding:14px 16px;}
+.exec-icon{font-size:18px;margin-bottom:7px;}
+.exec-head{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--ink3);margin-bottom:6px;}
+.exec-body{font-size:14px;color:var(--ink2);line-height:1.7;}
+.exec-body strong{font-weight:600;color:var(--ink);}
+.ip-block{margin-bottom:20px;}
+.ip-block:last-child{margin-bottom:0;}
+.ip-block-hd{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.ip-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0;}
+.ip-block-name{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;}
+.ip-block-count{font-size:12px;color:var(--ink3);}
+.divider{height:1px;background:var(--border);margin:20px 0;}
+.tbl-wrap{overflow-x:auto;}
+.ip-tbl{width:100%;border-collapse:collapse;font-size:13px;}
+.ip-tbl thead tr{background:var(--navy);}
+.ip-tbl thead th{padding:8px 11px;text-align:left;color:#fff;font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;white-space:nowrap;}
+.ip-tbl tbody td{padding:8px 11px;border-bottom:1px solid var(--border);color:var(--ink);vertical-align:middle;}
+.ip-tbl tbody tr:last-child td{border-bottom:none;}
+.ip-tbl tbody tr:hover td{background:var(--surf2);}
+.ip-tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 6px;border-radius:2px;letter-spacing:.03em;white-space:nowrap;}
+.t-wk{background:#EEF2FF;color:#3730A3;}
+.t-hn{background:#FEF3C7;color:#92400E;}
+.t-dd{background:#ECFDF5;color:#065F46;}
+.grade{display:inline-block;font-size:11px;font-weight:800;padding:2px 6px;border-radius:2px;letter-spacing:.04em;}
+.g-s{background:#047857;color:#fff;}.g-a{background:#1A3C5E;color:#fff;}
+.g-b{background:#92400E;color:#fff;}.g-c{background:#B91C1C;color:#fff;}
+.g-x{background:#E5E7EB;color:#6B7280;}
+.up-t{color:var(--up);font-weight:600;}.dn-t{color:var(--dn);font-weight:600;}.nt-t{color:var(--ink3);}
+.bw-section-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--border);}
+.bw-pair{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;}
+.bw-card{background:var(--surf);border:1px solid var(--border);border-radius:var(--r2);overflow:hidden;}
+.bw-head{padding:10px 16px;display:flex;align-items:center;gap:9px;border-bottom:1px solid var(--border);}
+.bw-head.best{background:#ECFDF5;}.bw-head.worst{background:#FEF2F2;}
+.bw-icon{font-size:16px;}.bw-label{font-size:13px;font-weight:700;}
+.bw-head.best .bw-label{color:#065F46;}.bw-head.worst .bw-label{color:#991B1B;}
+.bw-ep{font-size:13px;font-weight:600;color:var(--ink);margin-left:auto;}
+.bw-body{padding:12px 16px;}
+.bw-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid var(--border);}
+.bw-row:last-child{border-bottom:none;}
+.bw-k{font-size:12px;color:var(--ink3);}.bw-v{font-size:13px;font-weight:600;color:var(--ink);}
+.bw-insight{margin-top:10px;padding:8px 11px;background:var(--surf2);border-radius:var(--r);font-size:12px;color:var(--ink2);line-height:1.65;border-left:2px solid var(--navy2);}
+.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.chart-box{background:var(--surf);border:1px solid var(--border);border-radius:var(--r2);padding:16px 18px;}
+.chart-ttl{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;}
+.chart-ttl span{font-size:12px;font-weight:400;color:var(--ink3);}
+.cw{position:relative;}
+.ts-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.ts-card{background:var(--surf);border:1px solid var(--border);border-radius:var(--r2);padding:14px 16px;}
+.ts-name{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;padding-bottom:9px;margin-bottom:9px;border-bottom:1px solid var(--border);}
+.ts-row{display:flex;align-items:center;gap:7px;margin-bottom:6px;}
+.ts-row:last-child{margin-bottom:0;}
+.ts-lbl{font-size:12px;color:var(--ink3);width:54px;flex-shrink:0;}
+.ts-bg{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden;}
+.ts-fill{height:100%;border-radius:3px;}
+.ts-n{font-size:12px;font-weight:600;color:var(--ink);width:44px;text-align:right;flex-shrink:0;}
+.trend-tbl,.crit-tbl,.nxt-tbl{width:100%;border-collapse:collapse;font-size:14px;}
+.trend-tbl th,.crit-tbl th,.nxt-tbl th{padding:7px 12px;background:var(--surf2);color:var(--ink3);font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;border-bottom:1px solid var(--border);text-align:left;}
+.trend-tbl td,.crit-tbl td,.nxt-tbl td{padding:8px 12px;border-bottom:1px solid var(--border);color:var(--ink);}
+.trend-tbl tr:last-child td,.crit-tbl tr:last-child td,.nxt-tbl tr:last-child td{border-bottom:none;}
+.trend-tbl tbody tr:hover td,.nxt-tbl tbody tr:hover td{background:var(--surf2);}
+.cur-wk{background:#EEF2FF!important;}.cur-wk td{font-weight:600;}
+.crit-tbl th{background:var(--navy);color:#fff;}
+.c-good{color:var(--up);font-weight:600;}.c-mid{color:var(--warn);font-weight:600;}.c-bad{color:var(--dn);font-weight:600;}
+.status{display:inline-block;font-size:11px;font-weight:600;padding:2px 7px;border-radius:2px;}
+.st-ok{background:#D1FAE5;color:#065F46;}.st-mid{background:#FEF3C7;color:#92400E;}.st-plan{background:#EEF2FF;color:#3730A3;}
+.ph-badge{display:inline-block;background:#FEF3C7;color:#92400E;font-size:11px;font-weight:600;padding:1px 6px;border-radius:2px;border:1px solid #FDE68A;}
+.ftr{background:var(--navy);color:#fff;padding:12px 32px;display:flex;justify-content:space-between;align-items:center;font-size:12px;opacity:.8;}
+@media print{
+  .sidenav{display:none;}
+  .main{margin-left:0;}
+  .sec{page-break-inside:avoid;}
+  .bw-pair{page-break-inside:avoid;}
+}
+@media(max-width:900px){
+  .sidenav{display:none;}
+  .main{margin-left:0;}
+  .hdr-kpi-bar{grid-template-columns:repeat(3,1fr);}
+  .goal-grid,.exec-grid,.chart-grid,.bw-pair,.ts-grid{grid-template-columns:1fr;}
+}
+.theme-btn{position:fixed;bottom:20px;right:20px;z-index:9999;
+  width:38px;height:38px;border-radius:50%;
+  border:1px solid var(--border);background:var(--surf);
+  cursor:pointer;font-size:20px;line-height:1;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 2px 12px rgba(0,0,0,.12);transition:border-color .15s,background .15s,box-shadow .15s;
+  color:var(--ink3);}
+.theme-btn:hover{border-color:var(--navy2);color:var(--ink);}
+html.dark{
+  --bg:#0D1220;--surf:#131924;--surf2:#1C2438;
+  --border:#273049;
+  --ink:#D8DFEE;--ink2:#9AA5BC;--ink3:#6B7B9A;--ink4:#4A5568;
+  --up:#34D399;--dn:#F87171;--warn:#FBBF24;
+}
+html.dark .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.5);}
+html.dark .t-wk{background:rgba(79,70,229,.2);color:#A5B4FC;}
+html.dark .t-hn{background:rgba(217,119,6,.2);color:#FCD34D;}
+html.dark .t-dd{background:rgba(5,150,105,.2);color:#6EE7B7;}
+html.dark .bw-head.best{background:rgba(5,150,105,.12);}
+html.dark .bw-head.worst{background:rgba(185,28,28,.12);}
+html.dark .bw-head.best .bw-label{color:#34D399;}
+html.dark .bw-head.worst .bw-label{color:#F87171;}
+</style>
+</head>
+<body>
+
+<!-- ── SIDE NAV ── -->
+<nav class="sidenav">
+  <div class="sidenav-logo">
+    <div class="sidenav-logo-brand">LIFEPLUS YouTube</div>
+    <div class="sidenav-logo-title">위클리 리포트</div>
+    <div class="sidenav-logo-period">W27 · 2026.06.29–07.05</div>
+  </div>
+  <a class="nav-item active" href="#s1"><span class="nav-num">①</span><span class="nav-label">연간 목표 현황</span></a>
+  <a class="nav-item" href="#s2"><span class="nav-num">②</span><span class="nav-label">핵심 요약</span></a>
+  <a class="nav-item" href="#s3"><span class="nav-num">③</span><span class="nav-label">IP별 성과 비교</span></a>
+  <a class="nav-item" href="#s4"><span class="nav-num">④</span><span class="nav-label">주목 영상 분석</span></a>
+  <a class="nav-item" href="#s5"><span class="nav-num">⑤</span><span class="nav-label">지표 트렌드 차트</span></a>
+  <a class="nav-item" href="#s6"><span class="nav-num">⑥</span><span class="nav-label">트래픽 소스</span></a>
+  <a class="nav-item" href="#s7"><span class="nav-num">⑦</span><span class="nav-label">채널 누적 트렌드</span></a>
+  <a class="nav-item" href="#s8"><span class="nav-num">⑧</span><span class="nav-label">다음 주 발행 예정</span></a>
+  <a class="nav-item" href="#s9"><span class="nav-num">⑨</span><span class="nav-label">지표 기준선</span></a>
+  <div style="margin-top:auto;padding:14px 18px;border-top:1px solid rgba(255,255,255,.1);">
+    <button onclick="window.print()" style="width:100%;padding:7px 0;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:4px;color:#fff;font-size:13px;font-family:inherit;cursor:pointer;font-weight:500;letter-spacing:.04em;">🖨 인쇄 / PDF</button>
+  </div>
+</nav>
+
+<!-- ── MAIN ── -->
+<div class="main">
+
+<!-- HEADER -->
+<div class="hdr">
+  <div class="hdr-top">
+    <div>
+      <div class="hdr-brand">LIFEPLUS YouTube Channel</div>
+      <div class="hdr-title">위클리 리포트</div>
+    </div>
+    <div class="hdr-right">
+      <div class="hdr-period">2026.6.29 — 2026.7.5 &nbsp;·&nbsp; W27</div>
+      <div class="hdr-meta">기준: 발행 후 7D 누적 · 본편(26년) 시트<br>라플위클리 S6 · HOT & NEW · 딥다이브</div>
+    </div>
+  </div>
+  <div class="hdr-kpi-bar">
+    <div class="hkpi">
+      <div class="hkpi-l">구독자 증감</div>
+      <div class="hkpi-v">+8,612</div>
+      <div class="hkpi-d">주간 순증</div>
+    </div>
+    <div class="hkpi">
+      <div class="hkpi-l">주간 조회수</div>
+      <div class="hkpi-v">97.6만</div>
+      <div class="hkpi-d">본편 발행 콘텐츠 기준</div>
+    </div>
+    <div class="hkpi">
+      <div class="hkpi-l">본편 발행</div>
+      <div class="hkpi-v">3건</div>
+      <div class="hkpi-d">위클리 1 · H&N 1 · DD 1</div>
+    </div>
+    <div class="hkpi">
+      <div class="hkpi-l">평균 클릭율</div>
+      <div class="hkpi-v">3.8%</div>
+      <div class="hkpi-d">이번 주 발행 1D 평균</div>
+    </div>
+    <div class="hkpi">
+      <div class="hkpi-l">누적 조회수</div>
+      <div class="hkpi-v">4,563만</div>
+      <div class="hkpi-d">목표 6천만 / 76.1%</div>
+    </div>
+  </div>
+</div>
+
+<!-- ① 연간 목표 -->
+<div class="sec" id="s1">
+  <div class="sec-hd"><span class="sec-num">①</span><span class="sec-title">연간 목표 지표 달성 현황</span><span class="sec-sub">기준일 2026.7.5</span></div>
+  <div class="goal-grid">
+    <div class="goal-card">
+      <div class="goal-label">구독자 목표</div>
+      <div class="goal-nums"><span class="goal-cur">940,200</span><span class="goal-target">목표 1,100,000</span></div>
+      <div class="prog-bar"><div class="prog-fill" style="width:85.5%;background:var(--col1);"></div></div>
+      <div style="display:flex;justify-content:space-between;margin-top:5px;"><span class="goal-sub">달성률 <strong style="color:var(--col1);">85.5%</strong></span><span class="goal-sub">잔여 159,800명</span></div>
+    </div>
+    <div class="goal-card">
+      <div class="goal-label">누적 조회수 목표</div>
+      <div class="goal-nums"><span class="goal-cur">45,632,566</span><span class="goal-target">목표 60,000,000</span></div>
+      <div class="prog-bar"><div class="prog-fill" style="width:76.1%;background:var(--col2);"></div></div>
+      <div style="display:flex;justify-content:space-between;margin-top:5px;"><span class="goal-sub">달성률 <strong style="color:var(--col2);">76.1%</strong></span><span class="goal-sub">잔여 14,367,434회</span></div>
+    </div>
+    <div class="goal-card">
+      <div class="goal-label">HIT 콘텐츠 목표</div>
+      <div class="goal-nums"><span class="goal-cur">9편</span><span class="goal-target">목표 12편</span></div>
+      <div class="prog-bar"><div class="prog-fill" style="width:75%;background:var(--col3);"></div></div>
+      <div style="display:flex;justify-content:space-between;margin-top:5px;"><span class="goal-sub">달성률 <strong style="color:var(--col3);">75.0%</strong></span><span class="goal-sub">잔여 3편</span></div>
+    </div>
+  </div>
+  <div style="margin-top:10px;font-size:12px;color:var(--ink4);">※ 2026년 경과율(7/5 기준) 약 51.0% 대비 구독자·조회수·HIT 모두 앞선 페이스 — 조회수는 페이스 대비 +25.1%p 초과 진행</div>
+</div>
+
+<!-- ② 핵심 요약 -->
+<div class="sec" id="s2">
+  <div class="sec-hd"><span class="sec-num">②</span><span class="sec-title">이번 주 핵심 요약 (Executive Summary)</span></div>
+  <div class="exec-grid">
+    <div class="exec-card" style="border-color:#A7F3D0;">
+      <div class="exec-icon">🚀</div>
+      <div class="exec-head">하이라이트 — 연간 목표 페이스 대폭 초과</div>
+      <div class="exec-body">2026년 경과율 약 <strong>51.0%</strong>(7/5 기준) 대비 구독자 <strong style="color:var(--up);">85.5%</strong>·조회수 <strong style="color:var(--up);">76.1%</strong>·HIT <strong style="color:var(--up);">75.0%</strong> 모두 크게 앞선 페이스. 특히 조회수는 목표 대비 진행률이 경과율보다 <strong>+25.1%p</strong> 높아, 이 추세 유지 시 3분기 중 연간 목표 조기 달성 가능성.</div>
+    </div>
+    <div class="exec-card" style="border-color:#FECACA;">
+      <div class="exec-icon">⚠️</div>
+      <div class="exec-head">주의 — 딥다이브 뉴뮤지엄 자연유입 역대 최저 확정</div>
+      <div class="exec-body">뉴뮤지엄 7D 자연유입 <strong style="color:var(--dn);">2.7%</strong>(4,418건)로 딥다이브 역대 최저 기록(종전 최저 아르테미스2호 11.0%도 하회). 이번 주 신규 발행 3편(더베어5 7.7%·장송의프리렌 8.9%·시선 24.1%)도 모두 자사 기준선 미달 — <strong>디스클로저데이→토이스토리5→뉴뮤지엄→더베어5·장송의프리렌</strong>까지 5편 연속 신규 콘텐츠 자연유입 부진, 구조적 흐름으로 확산.</div>
+    </div>
+    <div class="exec-card">
+      <div class="exec-icon">💡</div>
+      <div class="exec-head">관찰 — 뮤지컬2 7D 확정, S6 사실상 최저권 진입</div>
+      <div class="exec-body">뮤지컬2 7D 자연유입 <strong style="color:var(--dn);">18.8%</strong>로 S6 21편 중 최하위권(최저 야구 17.3%에 근접) — 소재 연속 편성 피로 가설 재확인. 반면 더베어5는 평균조회율 <strong style="color:var(--up);">37.3%</strong>로 H&N 역대 최상위권. <strong>발견(자연유입)은 부진하나 완주(리텐션)는 우수</strong> — 알고리즘 노출만 개선되면 폭발력 있는 콘텐츠로 판단.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ③ IP별 성과 -->
+<div class="sec" id="s3">
+  <div class="sec-hd"><span class="sec-num">③</span><span class="sec-title">IP별 주간 성과 비교</span><span class="sec-sub">1D · 7D · 28D 기준</span></div>
+
+  <!-- ===== 라플위클리 S6 ===== -->
+  <div class="ip-block" style="margin-bottom:24px;">
+    <div class="ip-block-hd">
+      <div class="ip-dot" style="background:var(--col1);"></div>
+      <span class="ip-block-name" style="color:var(--col1);">라플위클리 S6</span>
+    </div>
+
+    <div style="font-size:11px;font-weight:700;color:#fff;background:var(--navy);display:inline-block;padding:2px 8px;border-radius:2px;letter-spacing:.05em;margin-bottom:6px;">1D 기준 · 최근 2편</div>
+    <div class="tbl-wrap" style="margin-bottom:10px;">
+    <table class="ip-tbl">
+      <thead><tr><th>에피소드</th><th>발행일</th><th>조회수</th><th>자연유입%</th><th>평균조회율</th><th>구독↑</th><th>CTR</th><th>시청시간</th><th>반응</th><th>등급</th></tr></thead>
+      <tbody>
+        <tr><td><strong>ep.22 — 시선</strong></td><td>7/3 (목)</td><td>99,788</td><td class="dn-t">24.1%</td><td class="dn-t">15.8%</td><td>+24</td><td>4.8%</td><td class="dn-t">6.8분</td><td>782</td><td><span class="grade g-c">C</span></td></tr>
+        <tr><td><strong>ep.21 — 뮤지컬2</strong></td><td>6/26 (목)</td><td>111,635</td><td class="dn-t">23.2%</td><td class="dn-t">15.7%</td><td>+18</td><td>4.3%</td><td class="dn-t">5.2분</td><td>865</td><td><span class="grade g-c">C</span></td></tr>
+      </tbody>
+    </table>
+    <div style="font-size:12px;color:var(--ink4);margin-top:4px;">※ 시선 1D: 자연유입·평균조회율·시청시간 3개 지표 모두 기준선 미달. 뮤지컬2와 유사하게 초반 발견 지표 부진. 반응 782건은 최근 위클리 신규편 중 준수한 수준</div>
+    </div>
+
+    <div style="font-size:11px;font-weight:700;color:#fff;background:#047857;display:inline-block;padding:2px 8px;border-radius:2px;letter-spacing:.05em;margin-bottom:6px;">7D 확정 · 최근 2편</div>
+    <div class="tbl-wrap" style="margin-bottom:10px;">
+    <table class="ip-tbl">
+      <thead><tr><th>에피소드</th><th>발행일</th><th>조회수</th><th>자연유입%</th><th>평균조회율</th><th>구독↑</th><th>CTR</th><th>시청시간</th><th>반응</th><th>등급</th></tr></thead>
+      <tbody>
+        <tr style="background:#FEF2F2;"><td><strong>ep.21 — 뮤지컬2</strong></td><td>6/26 (목)</td><td>253,104</td><td class="dn-t">18.8%</td><td class="dn-t">17.8%</td><td class="dn-t">+44</td><td class="dn-t">3.5%</td><td class="dn-t">5.5분</td><td>1,361</td><td><span class="grade g-c">C</span></td></tr>
+        <tr><td><strong>ep.20 — 뮤지컬1</strong></td><td>6/19 (목)</td><td>203,137</td><td class="dn-t">34.5%</td><td>19.3%</td><td>+59</td><td class="dn-t">3.4%</td><td class="dn-t">6.8분</td><td>1,332</td><td><span class="grade g-b">B</span></td></tr>
+      </tbody>
+    </table>
+    <div style="font-size:12px;color:var(--ink4);margin-top:4px;">※ 뮤지컬2 7D: 자연유입 18.8%로 S6 21편 중 사실상 최저권(최저 야구 17.3%) — 1D(23.2%)보다도 더 하락. 뮤지컬 2부작 연속 편성 피로 가설 뒷받침</div>
+    </div>
+
+    <div style="font-size:11px;font-weight:700;color:#fff;background:#1A3C5E;display:inline-block;padding:2px 8px;border-radius:2px;letter-spacing:.05em;margin-bottom:6px;">28D 경과 · 최근 2편</div>
+    <div class="tbl-wrap">
+    <table class="ip-tbl">
+      <thead><tr><th>에피소드</th><th>발행일</th><th>조회수</th><th>자연유입%</th><th>평균조회율</th><th>구독↑</th><th>CTR</th><th>시청시간</th><th>반응</th><th>등급</th></tr></thead>
+      <tbody>
+        <tr><td><strong>ep.18 — 프랑스</strong></td><td>6/5 (금)</td><td>206,832</td><td>38.6%</td><td>22.2%</td><td>+84</td><td>3.7%</td><td>10.9분</td><td>2,037</td><td><span class="grade g-b">B</span></td></tr>
+        <tr><td><strong>ep.17 — 다이어트</strong></td><td>5/29 (목)</td><td>210,688</td><td class="up-t">40.1%</td><td class="up-t">24.0%</td><td>+75</td><td>3.4%</td><td class="up-t">10.8분</td><td>1,800</td><td><span class="grade g-a">A</span></td></tr>
+      </tbody>
+    </table>
+    <div style="font-size:12px;color:var(--ink4);margin-top:4px;">※ 최근 2편 28D 모두 자연유입 38%↑·시청시간 11분 안팎으로 안정적 장기 확산 — 다만 7D(프랑스 34.8%·다이어트 34.9%) 대비 28D 상승폭은 완만한 수준</div>
+    </div>
+  </div>
+
+  <!-- ===== HOT & NEW ===== -->
+  <div class="ip-block" style="margin-bottom:24px;">
+    <div class="ip-block-hd">
+      <div class="ip-dot" style="background:var(--col3);"></div>
+      <span class="ip-block-name" style="color:var(--col3);">HOT & NEW</span>
+    </div>
+
+    <div style="font-size:11px;font-weight:700;color:#fff;background:var(--navy);display:inline-block;padding:2px 8px;border-radius:2px;letter-spacing:.05em;margin-bottom:6px;">1D 기준 · 최근 2편</div>
+    <div class="tbl-wrap" style="margin-bottom:10px;">
+    <table class="ip-tbl">
+      <thead><tr><th>에피소드</th><th>발행일</th><th>조회수</th><th>자연유입%</th><th>평균조회율</th><th>구독↑</th><th>CTR</th><th>시청시간</th><th>반응</th><th>등급</th></tr></thead>
+      <tbody>
+        <tr><td><strong>ep.17 — 더베어5</strong></td><td>6/29 (일)</td><td>32,063</td><td class="dn-t">7.7%</td><td class="up-t">37.3%</td><td>+6</td><td>2.9%</td><td class="dn-t">2.8분</td><td>128</td><td><span class="grade g-c">C</span></td></tr>
+        <tr><td><strong>ep.16 — 토이스토리5</strong></td><td>6/22 (일)</td><td>76,521</td><td class="dn-t">7.8%</td><td>18.7%</td><td>+7</td><td>4.0%</td><td class="dn-t">1.9분</td><td>372</td><td><span class="grade g-c">C</span></td></tr>
+      </tbody>
+    </table>
+    <div style="font-size:12px;color:var(--ink4);margin-top:4px;">※ 더베어5 평균조회율 37.3%는 H&N 역대 최상위권(전체 최고 마이클 55.1% 대비도 준수) — 자연유입은 부진해도 클릭 후 완주율은 매우 높음. 발견·완주 지표 괴리 패턴 주목</div>
+    </div>
+
+    <div style="font-size:11px;font-weight:700;color:#fff;background:#047857;display:inline-block;padding:2px 8px;border-radius:2px;letter-spacing:.05em;margin-bottom:6px;">7D 확정 · 최근 2편</div>
+    <div class="tbl-wrap" style="margin-bottom:10px;">
+    <table class="ip-tbl">
+      <thead><tr><th>에피소드</th><th>발행일</th><th>조회수</th><th>자연유입%</th><th>평균조회율</th><th>구독↑</th><th>CTR</th><th>시청시간</th><th>반응</th><th>등급</th></tr></thead>
+      <tbody>
+        <tr><td><strong>ep.16 — 토이스토리5</strong></td><td>6/22 (일)</td><td>209,444</td><td class="dn-t">17.6%</td><td>17.1%</td><td>+101</td><td>4.2%</td><td class="dn-t">1.9분</td><td>1,225</td><td><span class="grade g-b">B</span></td></tr>
+        <tr><td><strong>ep.15 — 디스클로저데이</strong></td><td>6/15 (일)</td><td>101,983</td><td class="dn-t">5.2%</td><td>17.7%</td><td>0</td><td class="dn-t">2.4%</td><td class="dn-t">2.8분</td><td>138</td><td><span class="grade g-c">C</span></td></tr>
+      </tbody>
+    </table>
+    <div style="font-size:12px;color:var(--ink4);margin-top:4px;">※ 토이스토리5 7D: 자연유입 17.6%로 H&N 중위권 진입(1D 7.8%에서 개선), 구독전환 +101건은 최근 5편 중 최고 — 시청시간(1.9분)은 여전히 H&N 최하위 수준</div>
+    </div>
+
+    <div style="font-size:11px;font-weight:700;color:#fff;background:#1A3C5E;display:inline-block;padding:2px 8px;border-radius:2px;letter-spacing:.05em;margin-bottom:6px;">28D 경과 · 최근 2편</div>
+    <div class="tbl-wrap">
+    <table class="ip-tbl">
+      <thead><tr><th>에피소드</th><th>발행일</th><th>조회수</th><th>자연유입%</th><th>평균조회율</th><th>구독↑</th><th>CTR</th><th>시청시간</th><th>반응</th><th>등급</th></tr></thead>
+      <tbody>
+        <tr><td><strong>ep.13 — 백룸</strong></td><td>6/1 (월)</td><td>229,884</td><td class="up-t">34.9%</td><td>27.3%</td><td>+142</td><td class="up-t">5.0%</td><td>2.6분</td><td>1,151</td><td><span class="grade g-b">B</span></td></tr>
+        <tr><td><strong>ep.12 — 만달로리안·그로구</strong></td><td>5/25 (일)</td><td>351,885</td><td class="dn-t">8.1%</td><td>30.1%</td><td>+62</td><td>3.0%</td><td>2.0분</td><td>654</td><td><span class="grade g-b">B</span></td></tr>
+      </tbody>
+    </table>
+    <div style="font-size:12px;color:var(--ink4);margin-top:4px;">※ 백룸 28D: 자연유입 34.9%·CTR 5.0%로 28D 기준 H&N 최상위권 신규 진입 — 7D(26.5%) 대비 장기 확산 우수. 만달로리안은 7D(9.9%) 대비 28D 2.7배 성장 유지</div>
+    </div>
+  </div>
+
+  <!-- ===== 딥다이브 ===== -->
+  <div class="ip-block">
+    <div class="ip-block-hd">
+      <div class="ip-dot" style="background:var(--col2);"></div>
+      <span class="ip-block-name" style="color:var(--col2);">딥다이브</span>
+    </div>
+
+    <div style="font-size:11px;font-weight:700;color:#fff;background:var(--navy);display:inline-block;padding:2px 8px;border-radius:2px;letter-spacing:.05em;margin-bottom:6px;">1D 기준 · 최근 2편</div>
+    <div class="tbl-wrap" style="margin-bottom:10px;">
+    <table class="ip-tbl">
+      <thead><tr><th>에피소드</th><th>발행일</th><th>조회수</th><th>자연유입%</th><th>평균조회율</th><th>구독↑</th><th>CTR</th><th>시청시간</th><th>반응</th><th>등급</th></tr></thead>
+      <tbody>
+        <tr><td><strong>ep.8 — 장송의프리렌</strong></td><td>7/1 (화)</td><td>54,762</td><td class="dn-t">8.9%</td><td>17.0%</td><td>+2</td><td>3.8%</td><td class="dn-t">4.8분</td><td>345</td><td><span class="grade g-c">C</span></td></tr>
+        <tr><td><strong>ep.7 — 뉴뮤지엄</strong></td><td>6/24 (화)</td><td>55,926</td><td class="dn-t">3.1%</td><td>16.3%</td><td>0</td><td class="dn-t">1.9%</td><td>5.4분</td><td>81</td><td><span class="grade g-c">C</span></td></tr>
+      </tbody>
+    </table>
+    <div style="font-size:12px;color:var(--ink4);margin-top:4px;">※ 장송의프리렌 자연유입 8.9%는 뉴뮤지엄(3.1%)보다는 낫지만 여전히 기준선(21%) 크게 미달. 애니메이션 IP 연계 소재도 초반 발견 지표는 부진</div>
+    </div>
+
+    <div style="font-size:11px;font-weight:700;color:#fff;background:#047857;display:inline-block;padding:2px 8px;border-radius:2px;letter-spacing:.05em;margin-bottom:6px;">7D 확정 · 최근 2편</div>
+    <div class="tbl-wrap" style="margin-bottom:10px;">
+    <table class="ip-tbl">
+      <thead><tr><th>에피소드</th><th>발행일</th><th>조회수</th><th>자연유입%</th><th>평균조회율</th><th>구독↑</th><th>CTR</th><th>시청시간</th><th>반응</th><th>등급</th></tr></thead>
+      <tbody>
+        <tr style="background:#FEF2F2;"><td><strong>ep.7 — 뉴뮤지엄</strong></td><td>6/24 (화)</td><td>162,623</td><td class="dn-t">2.7%</td><td>13.7%</td><td class="dn-t">+7</td><td class="dn-t">2.2%</td><td>5.0분</td><td>236</td><td><span class="grade g-c">C</span></td></tr>
+        <tr style="background:#ECFDF5;"><td><strong>ep.6 — 군체 🏆</strong></td><td>5/27 (화)</td><td><strong style="color:var(--up);">366,767</strong></td><td class="up-t">41.0%</td><td class="up-t">22.6%</td><td class="up-t">+187</td><td>3.7%</td><td class="up-t">7.2분</td><td>3,589</td><td><span class="grade g-s">S</span></td></tr>
+      </tbody>
+    </table>
+    <div style="font-size:12px;color:var(--ink4);margin-top:4px;">※ 뉴뮤지엄 7D: 자연유입 2.7%로 딥다이브 역대 최저 기록 확정(종전 최저 아르테미스2호 11.0%). 군체와 극명한 대비 — 뮤지엄 소재 자체의 화제성 부재가 7D까지 지속</div>
+    </div>
+
+    <div style="font-size:11px;font-weight:700;color:#fff;background:#1A3C5E;display:inline-block;padding:2px 8px;border-radius:2px;letter-spacing:.05em;margin-bottom:6px;">28D 경과 · 최근 2편</div>
+    <div class="tbl-wrap">
+    <table class="ip-tbl">
+      <thead><tr><th>에피소드</th><th>발행일</th><th>조회수</th><th>자연유입%</th><th>평균조회율</th><th>구독↑</th><th>CTR</th><th>시청시간</th><th>반응</th><th>등급</th></tr></thead>
+      <tbody>
+        <tr style="background:#ECFDF5;">
+          <td><strong>ep.6 — 군체 🏆</strong></td><td>5/27 (화)</td>
+          <td><strong style="color:var(--up);">1,105,968</strong></td>
+          <td class="up-t">27.0%</td>
+          <td class="up-t">23.9%</td>
+          <td class="up-t">+420</td>
+          <td>3.7%</td>
+          <td class="up-t">6.2분</td>
+          <td>6,161</td>
+          <td><span class="grade g-s">S</span></td>
+        </tr>
+        <tr><td><strong>ep.5 — 아르테미스2호</strong></td><td>5/6 (화)</td><td>192,798</td><td class="dn-t">18.8%</td><td>16.5%</td><td>+73</td><td>2.4%</td><td>5.8분</td><td>621</td><td><span class="grade g-c">C</span></td></tr>
+      </tbody>
+    </table>
+    <div style="font-size:12px;color:var(--ink4);margin-top:4px;">※ 군체 28D: 7D(366,767) 대비 <strong style="color:var(--up);">+201% 성장</strong> — 딥다이브 역대 최고 유지, HIT 콘텐츠 확정 상태 지속</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ④ BEST/WORST -->
+<div class="sec" id="s4">
+  <div class="sec-hd"><span class="sec-num">④</span><span class="sec-title">주목 영상 주간 성과 분석</span><span class="sec-sub">IP별 BEST 2편 · WORST 2편 · S6/시리즈 전체 기준</span></div>
+
+  <!-- 위클리 -->
+  <div class="bw-section-title" style="color:var(--col1);">라플위클리 토크</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;">
+    <div>
+      <div style="font-size:12px;font-weight:600;color:var(--up);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;">▲ BEST</div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div class="bw-card">
+          <div class="bw-head best"><span class="bw-icon">🥇</span><span class="bw-label">BEST 1</span><span class="bw-ep">ep.7 — 프로젝트헤일메리</span></div>
+          <div class="bw-body">
+            <div class="bw-row"><span class="bw-k">조회수 (7D)</span><span class="bw-v">485,109</span></div>
+            <div class="bw-row"><span class="bw-k">자연유입%</span><span class="bw-v up-t">45.2%</span></div>
+            <div class="bw-row"><span class="bw-k">시청시간</span><span class="bw-v up-t">9.9분</span></div>
+            <div class="bw-row"><span class="bw-k">자연유입(절대)</span><span class="bw-v">219,055</span></div>
+            <div class="bw-row"><span class="bw-k">구독↑</span><span class="bw-v up-t">+740</span></div>
+            <div class="bw-row"><span class="bw-k">반응</span><span class="bw-v">6,071</span></div>
+            <div class="bw-insight">S6 21편 중 조회수·자연유입 모두 1위 유지. H&N 동주 연계 발행 + 보편 SF 소재 시너지가 여전히 최고 기록.</div>
+          </div>
+        </div>
+        <div class="bw-card">
+          <div class="bw-head best"><span class="bw-icon">🥈</span><span class="bw-label">BEST 2</span><span class="bw-ep">ep.15 — 마이클잭슨</span></div>
+          <div class="bw-body">
+            <div class="bw-row"><span class="bw-k">조회수 (7D)</span><span class="bw-v">429,902</span></div>
+            <div class="bw-row"><span class="bw-k">자연유입%</span><span class="bw-v up-t">46.6%</span></div>
+            <div class="bw-row"><span class="bw-k">시청시간</span><span class="bw-v up-t">10.6분</span></div>
+            <div class="bw-row"><span class="bw-k">자연유입(절대)</span><span class="bw-v">200,210</span></div>
+            <div class="bw-row"><span class="bw-k">구독↑</span><span class="bw-v up-t">+393</span></div>
+            <div class="bw-row"><span class="bw-k">반응</span><span class="bw-v">4,693</span></div>
+            <div class="bw-insight">자연유입% S6 전체 최고(46.6%) 그대로 유지. H&N 마이클 연계 효과가 여전히 최고 수준 확산력 견인.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:12px;font-weight:600;color:var(--dn);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;">▼ WORST</div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div class="bw-card">
+          <div class="bw-head worst"><span class="bw-icon">⚠️</span><span class="bw-label">WORST 1 (신규)</span><span class="bw-ep">ep.21 — 뮤지컬2</span></div>
+          <div class="bw-body">
+            <div class="bw-row"><span class="bw-k">조회수 (7D)</span><span class="bw-v">253,104</span></div>
+            <div class="bw-row"><span class="bw-k">자연유입%</span><span class="bw-v dn-t">18.8%</span></div>
+            <div class="bw-row"><span class="bw-k">시청시간</span><span class="bw-v dn-t">5.5분</span></div>
+            <div class="bw-row"><span class="bw-k">자연유입(절대)</span><span class="bw-v dn-t">47,456</span></div>
+            <div class="bw-row"><span class="bw-k">구독↑</span><span class="bw-v dn-t">+44</span></div>
+            <div class="bw-row"><span class="bw-k">반응</span><span class="bw-v dn-t">1,361</span></div>
+            <div class="bw-insight">7D 확정 결과 자연유입 18.8%로 S6 21편 중 2번째로 낮음(최저 야구 17.3%에 근접) — 뮤지컬1(34.5%)보다도 크게 하락. 연속 편성 피로 가설의 가장 강력한 증거.</div>
+          </div>
+        </div>
+        <div class="bw-card">
+          <div class="bw-head worst"><span class="bw-icon">⚠️</span><span class="bw-label">WORST 2</span><span class="bw-ep">ep.5 — 야구</span></div>
+          <div class="bw-body">
+            <div class="bw-row"><span class="bw-k">조회수 (7D)</span><span class="bw-v">275,107</span></div>
+            <div class="bw-row"><span class="bw-k">자연유입%</span><span class="bw-v dn-t">17.3%</span></div>
+            <div class="bw-row"><span class="bw-k">시청시간</span><span class="bw-v">6.8분</span></div>
+            <div class="bw-row"><span class="bw-k">자연유입(절대)</span><span class="bw-v dn-t">47,706</span></div>
+            <div class="bw-row"><span class="bw-k">구독↑</span><span class="bw-v dn-t">+20</span></div>
+            <div class="bw-row"><span class="bw-k">반응</span><span class="bw-v dn-t">1,077</span></div>
+            <div class="bw-insight">S6 전체 자연유입 최저 기록 그대로 유지. 팬덤 특화 소재의 알고리즘 확산 한계.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- H&N -->
+  <div class="bw-section-title" style="color:var(--col3);">HOT & NEW</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;">
+    <div>
+      <div style="font-size:12px;font-weight:600;color:var(--up);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;">▲ BEST</div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div class="bw-card">
+          <div class="bw-head best"><span class="bw-icon">🥇</span><span class="bw-label">BEST 1</span><span class="bw-ep">ep.10 — 마이클</span></div>
+          <div class="bw-body">
+            <div class="bw-row"><span class="bw-k">조회수 (7D)</span><span class="bw-v">248,978</span></div>
+            <div class="bw-row"><span class="bw-k">자연유입%</span><span class="bw-v up-t">55.1%</span></div>
+            <div class="bw-row"><span class="bw-k">시청시간</span><span class="bw-v">3.6분</span></div>
+            <div class="bw-row"><span class="bw-k">자연유입(절대)</span><span class="bw-v up-t">137,077</span></div>
+            <div class="bw-row"><span class="bw-k">구독↑</span><span class="bw-v up-t">+450</span></div>
+            <div class="bw-row"><span class="bw-k">반응</span><span class="bw-v up-t">3,256</span></div>
+            <div class="bw-insight">위클리 마이클잭슨 연계. H&N 전 지표 역대 최고 그대로 유지. 28D 자연유입 70.5%.</div>
+          </div>
+        </div>
+        <div class="bw-card">
+          <div class="bw-head best"><span class="bw-icon">🥈</span><span class="bw-label">BEST 2</span><span class="bw-ep">ep.13 — 백룸</span></div>
+          <div class="bw-body">
+            <div class="bw-row"><span class="bw-k">조회수 (7D)</span><span class="bw-v">142,366</span></div>
+            <div class="bw-row"><span class="bw-k">자연유입%</span><span class="bw-v up-t">26.5%</span></div>
+            <div class="bw-row"><span class="bw-k">시청시간</span><span class="bw-v">3.0분</span></div>
+            <div class="bw-row"><span class="bw-k">자연유입(절대)</span><span class="bw-v">37,749</span></div>
+            <div class="bw-row"><span class="bw-k">구독↑</span><span class="bw-v">+48</span></div>
+            <div class="bw-row"><span class="bw-k">반응</span><span class="bw-v">714</span></div>
+            <div class="bw-insight">CTR 5.0%로 H&N 최고 유지. 28D 확정 결과도 자연유입 34.9%로 상승 — 공포·미스터리 소재 장기 확산력까지 입증.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:12px;font-weight:600;color:var(--dn);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;">▼ WORST</div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div class="bw-card">
+          <div class="bw-head worst"><span class="bw-icon">⚠️</span><span class="bw-label">WORST 1</span><span class="bw-ep">ep.5 — 체이스인피니티</span></div>
+          <div class="bw-body">
+            <div class="bw-row"><span class="bw-k">조회수 (7D)</span><span class="bw-v">276,777</span></div>
+            <div class="bw-row"><span class="bw-k">자연유입%</span><span class="bw-v dn-t">4.4%</span></div>
+            <div class="bw-row"><span class="bw-k">시청시간</span><span class="bw-v dn-t">1.5분</span></div>
+            <div class="bw-row"><span class="bw-k">자연유입(절대)</span><span class="bw-v dn-t">12,250</span></div>
+            <div class="bw-row"><span class="bw-k">구독↑</span><span class="bw-v dn-t">-2</span></div>
+            <div class="bw-row"><span class="bw-k">반응</span><span class="bw-v dn-t">232</span></div>
+            <div class="bw-insight">H&N 전 지표 구조적 최하위 유지. 조회수 96% 광고 의존.</div>
+          </div>
+        </div>
+        <div class="bw-card">
+          <div class="bw-head worst"><span class="bw-icon">⚠️</span><span class="bw-label">WORST 2</span><span class="bw-ep">ep.14 — 아웃사이더즈</span></div>
+          <div class="bw-body">
+            <div class="bw-row"><span class="bw-k">조회수 (7D)</span><span class="bw-v">101,744</span></div>
+            <div class="bw-row"><span class="bw-k">자연유입%</span><span class="bw-v dn-t">4.9%</span></div>
+            <div class="bw-row"><span class="bw-k">시청시간</span><span class="bw-v">3.9분</span></div>
+            <div class="bw-row"><span class="bw-k">자연유입(절대)</span><span class="bw-v dn-t">4,982</span></div>
+            <div class="bw-row"><span class="bw-k">구독↑</span><span class="bw-v">+12</span></div>
+            <div class="bw-row"><span class="bw-k">반응</span><span class="bw-v dn-t">263</span></div>
+            <div class="bw-insight">디스클로저데이(5.2%)보다도 근소하게 낮은 자연유입 — H&N 최하위권 재확인. 이번 주 신규 확정편 중 이 구간 진입 없음.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 딥다이브 -->
+  <div class="bw-section-title" style="color:var(--col2);">딥다이브</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:0;">
+    <div>
+      <div style="font-size:12px;font-weight:600;color:var(--up);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;">▲ BEST</div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div class="bw-card" style="border-color:#A7F3D0;">
+          <div class="bw-head best"><span class="bw-icon">🏆</span><span class="bw-label">BEST 1 (28D)</span><span class="bw-ep">ep.6 — 군체</span></div>
+          <div class="bw-body">
+            <div class="bw-row"><span class="bw-k">조회수 (28D)</span><span class="bw-v up-t" style="font-size:15px;">1,105,968</span></div>
+            <div class="bw-row"><span class="bw-k">자연유입%</span><span class="bw-v up-t">27.0%</span></div>
+            <div class="bw-row"><span class="bw-k">시청시간</span><span class="bw-v up-t">6.2분</span></div>
+            <div class="bw-row"><span class="bw-k">자연유입(절대)</span><span class="bw-v up-t">298,708</span></div>
+            <div class="bw-row"><span class="bw-k">구독↑ (28D)</span><span class="bw-v up-t">+420</span></div>
+            <div class="bw-row"><span class="bw-k">7D 대비 성장</span><span class="bw-v up-t">+201%</span></div>
+            <div class="bw-insight">딥다이브 역대 최고 · HIT 콘텐츠 유지. 과학·자연 소재의 유튜브 알고리즘 장기 순환 패턴 여전히 최고 사례.</div>
+          </div>
+        </div>
+        <div class="bw-card">
+          <div class="bw-head best"><span class="bw-icon">🥈</span><span class="bw-label">BEST 2</span><span class="bw-ep">ep.4 — 붉은사막·AAA</span></div>
+          <div class="bw-body">
+            <div class="bw-row"><span class="bw-k">조회수 (7D)</span><span class="bw-v">224,074</span></div>
+            <div class="bw-row"><span class="bw-k">자연유입%</span><span class="bw-v up-t">26.8%</span></div>
+            <div class="bw-row"><span class="bw-k">시청시간</span><span class="bw-v">6.1분</span></div>
+            <div class="bw-row"><span class="bw-k">자연유입(절대)</span><span class="bw-v">59,994</span></div>
+            <div class="bw-row"><span class="bw-k">구독↑</span><span class="bw-v up-t">+168</span></div>
+            <div class="bw-row"><span class="bw-k">반응</span><span class="bw-v">1,877</span></div>
+            <div class="bw-insight">28D 자연유입 35.4%로 장기 확산력 입증 유지. 게임 문화 소재의 폭넓은 관심 유인.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:12px;font-weight:600;color:var(--dn);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;">▼ WORST</div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div class="bw-card">
+          <div class="bw-head worst"><span class="bw-icon">⚠️</span><span class="bw-label">WORST 1 (신규)</span><span class="bw-ep">ep.7 — 뉴뮤지엄</span></div>
+          <div class="bw-body">
+            <div class="bw-row"><span class="bw-k">조회수 (7D)</span><span class="bw-v dn-t">162,623</span></div>
+            <div class="bw-row"><span class="bw-k">자연유입%</span><span class="bw-v dn-t">2.7%</span></div>
+            <div class="bw-row"><span class="bw-k">시청시간</span><span class="bw-v">5.0분</span></div>
+            <div class="bw-row"><span class="bw-k">자연유입(절대)</span><span class="bw-v dn-t">4,418</span></div>
+            <div class="bw-row"><span class="bw-k">구독↑</span><span class="bw-v dn-t">+7</span></div>
+            <div class="bw-row"><span class="bw-k">CTR</span><span class="bw-v dn-t">2.2%</span></div>
+            <div class="bw-insight">7D 확정 결과 자연유입 2.7% — 딥다이브 역대 최저 신기록. 종전 최저 아르테미스2호(11.0%)를 큰 폭으로 하회, 뮤지엄 소재의 대중 도달 한계가 최종 확인됨.</div>
+          </div>
+        </div>
+        <div class="bw-card">
+          <div class="bw-head worst"><span class="bw-icon">⚠️</span><span class="bw-label">WORST 2</span><span class="bw-ep">ep.5 — 아르테미스2호</span></div>
+          <div class="bw-body">
+            <div class="bw-row"><span class="bw-k">조회수 (7D)</span><span class="bw-v">175,409</span></div>
+            <div class="bw-row"><span class="bw-k">자연유입%</span><span class="bw-v dn-t">11.0%</span></div>
+            <div class="bw-row"><span class="bw-k">시청시간</span><span class="bw-v">6.0분</span></div>
+            <div class="bw-row"><span class="bw-k">자연유입(절대)</span><span class="bw-v dn-t">19,335</span></div>
+            <div class="bw-row"><span class="bw-k">구독↑</span><span class="bw-v dn-t">+37</span></div>
+            <div class="bw-row"><span class="bw-k">반응</span><span class="bw-v dn-t">398</span></div>
+            <div class="bw-insight">뉴뮤지엄에 최저 기록을 넘겨주며 2위로 후퇴. 우주·항공 마니아 편중 소재의 확산 제한은 여전.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ⑤ 차트 -->
+<div class="sec" id="s5">
+  <div class="sec-hd"><span class="sec-num">⑤</span><span class="sec-title">주요 지표 트렌드</span></div>
+  <div class="chart-grid">
+    <div class="chart-box">
+      <div class="chart-ttl">라플위클리 S6 자연유입 비중 (%)<span>ep.1–22 · 7D 기준 (ep.22은 1D)</span></div>
+      <div class="cw" style="height:180px;"><canvas id="c_org"></canvas></div>
+    </div>
+    <div class="chart-box">
+      <div class="chart-ttl">라플위클리 S6 평균 시청시간 (분)<span>7D 기준 (ep.22은 1D)</span></div>
+      <div class="cw" style="height:180px;"><canvas id="c_awt"></canvas></div>
+    </div>
+    <div class="chart-box">
+      <div class="chart-ttl">딥다이브 자연유입 비중 성장 (%)<span>ep.1–8 추이 (ep.8은 1D)</span></div>
+      <div class="cw" style="height:180px;"><canvas id="c_dd"></canvas></div>
+    </div>
+    <div class="chart-box">
+      <div class="chart-ttl">3개 IP 자연유입 평균 조회수<span>시즌 누적 평균 / 만 단위</span></div>
+      <div class="cw" style="height:180px;"><canvas id="c_prog"></canvas></div>
+    </div>
+  </div>
+</div>
+
+<!-- ⑥ 트래픽 -->
+<div class="sec" id="s6">
+  <div class="sec-hd"><span class="sec-num">⑥</span><span class="sec-title">트래픽 소스 분석</span><span class="sec-sub">이번 주 발행 1D 자연유입 기준</span></div>
+  <div class="ts-grid">
+    <div class="ts-card">
+      <div class="ts-name" style="color:var(--col1);">라플위클리 S6 (ep.22)</div>
+      <div class="ts-row"><span class="ts-lbl">자연유입</span><div class="ts-bg"><div class="ts-fill" style="width:24%;background:var(--col1);"></div></div><span class="ts-n">24,019</span></div>
+      <div class="ts-row"><span class="ts-lbl">광고</span><div class="ts-bg"><div class="ts-fill" style="width:100%;background:#FCA5A5;"></div></div><span class="ts-n" style="color:var(--dn);">75,769</span></div>
+      <div class="ts-row"><span class="ts-lbl">자연유입%</span><div class="ts-bg"><div class="ts-fill" style="width:24%;background:rgba(79,70,229,.5);"></div></div><span class="ts-n">24.1%</span></div>
+    </div>
+    <div class="ts-card">
+      <div class="ts-name" style="color:var(--col3);">HOT & NEW (ep.17)</div>
+      <div class="ts-row"><span class="ts-lbl">자연유입</span><div class="ts-bg"><div class="ts-fill" style="width:8%;background:var(--col3);"></div></div><span class="ts-n">2,479</span></div>
+      <div class="ts-row"><span class="ts-lbl">광고</span><div class="ts-bg"><div class="ts-fill" style="width:100%;background:#FCA5A5;"></div></div><span class="ts-n" style="color:var(--dn);">29,584</span></div>
+      <div class="ts-row"><span class="ts-lbl">자연유입%</span><div class="ts-bg"><div class="ts-fill" style="width:8%;background:rgba(217,119,6,.5);"></div></div><span class="ts-n">7.7%</span></div>
+    </div>
+    <div class="ts-card">
+      <div class="ts-name" style="color:var(--col2);">딥다이브 (ep.8)</div>
+      <div class="ts-row"><span class="ts-lbl">자연유입</span><div class="ts-bg"><div class="ts-fill" style="width:9%;background:var(--col2);"></div></div><span class="ts-n">4,857</span></div>
+      <div class="ts-row"><span class="ts-lbl">광고</span><div class="ts-bg"><div class="ts-fill" style="width:100%;background:#FCA5A5;"></div></div><span class="ts-n" style="color:var(--dn);">49,905</span></div>
+      <div class="ts-row"><span class="ts-lbl">자연유입%</span><div class="ts-bg"><div class="ts-fill" style="width:9%;background:rgba(13,148,136,.5);"></div></div><span class="ts-n" style="color:var(--dn);">8.9%</span></div>
+    </div>
+  </div>
+  <p style="margin-top:10px;font-size:12px;color:var(--ink4);">※ 이번 주 3편 모두 광고 의존도 높음. 위클리 24% / H&N 8% / 딥다이브 9% — 지난주(23%/8%/3%) 대비 딥다이브는 소폭 개선됐으나 여전히 광고 의존 구조. 세부 소스는 YT Studio 확인 필요.</p>
+</div>
+
+<!-- ⑦ 누적 트렌드 -->
+<div class="sec" id="s7">
+  <div class="sec-hd"><span class="sec-num">⑦</span><span class="sec-title">채널 누적 트렌드 (주차별)</span><span class="sec-sub">2026년 S6 시즌 기준</span></div>
+  <div class="tbl-wrap">
+  <table class="trend-tbl">
+    <thead><tr><th>주차</th><th>기간</th><th>총 조회수</th><th>자연유입 평균%</th><th>평균 시청시간</th><th>구독 증감</th><th>발행 편수</th><th>메모</th></tr></thead>
+    <tbody>
+      <tr><td>W14</td><td>3.31–4.6</td><td>896,246</td><td style="color:var(--ink3);">27.7%</td><td>8.4분</td><td>+286</td><td>3</td><td>행운·루머·이탈리아 발행</td></tr>
+      <tr><td>W15</td><td>4.7–4.13</td><td>1,073,695</td><td>29.1%</td><td>8.1분</td><td>+244</td><td>4</td><td>리더십·야구·H&N아카데미·DD세이버</td></tr>
+      <tr><td>W16</td><td>4.14–4.20</td><td>1,158,614</td><td>31.2%</td><td>8.9분</td><td>+378</td><td>4</td><td>본능·헤일메리·H&N헤일메리·DD KPOP</td></tr>
+      <tr><td>W17</td><td>4.21–4.27</td><td>944,318</td><td>28.5%</td><td>7.6분</td><td>+145</td><td>4</td><td>부동산·DD데이미언·H&N건물주·데이미언</td></tr>
+      <tr><td>W18</td><td>4.28–5.4</td><td>1,186,680</td><td>33.2%</td><td>9.5분</td><td>+361</td><td>4</td><td>죽음·신분·H&N체이스인피니티·DD붉은사막</td></tr>
+      <tr><td>W19</td><td>5.5–5.11</td><td>1,067,240</td><td>31.5%</td><td>8.8분</td><td>+224</td><td>4</td><td>호기심·실패·H&N골드랜드·아르테미스</td></tr>
+      <tr><td>W20</td><td>5.12–5.18</td><td>1,124,442</td><td>34.8%</td><td>9.8분</td><td>+517</td><td>4</td><td>럭셔리·마이클잭슨·H&N마이클·악프입2</td></tr>
+      <tr><td>W21</td><td>5.19–5.25</td><td>837,628</td><td>29.6%</td><td>9.2분</td><td>+188</td><td>4</td><td>디저트·초능력·H&N원더풀스·만달로리안</td></tr>
+      <tr><td>W22–23</td><td>5.26–6.6</td><td>1,396,224</td><td style="color:var(--up);font-weight:600;">33.8%</td><td style="color:var(--up);font-weight:600;">9.0분</td><td style="color:var(--up);font-weight:600;">+2,743</td><td>2+2</td><td>다이어트·DD군체·H&N백룸·프랑스</td></tr>
+      <tr><td>W24</td><td>6.7–6.13</td><td>1,544,874</td><td class="up-t">32.1%</td><td>9.0분</td><td class="up-t">+2,661</td><td>2</td><td>스필버그·H&N아웃사이더즈</td></tr>
+      <tr><td>W25</td><td>6.14–6.20</td><td>305,120</td><td style="color:var(--ink3);">—</td><td style="color:var(--ink3);">—</td><td style="color:#FCD34D;">+4,724</td><td>2</td><td>H&N디스클로저데이 7D(101,983)·위클리뮤지컬1 7D(203,137)</td></tr>
+      <tr><td>W26</td><td>6.22–6.28</td><td>1,198,099</td><td class="dn-t">13.0%</td><td class="dn-t">4.1분</td><td class="up-t">+5,003</td><td>3</td><td>위클리뮤지컬2·H&N토이스토리5·DD뉴뮤지엄 — 3편 7D 확정, 자연유입 급락 반영</td></tr>
+      <tr class="cur-wk"><td>W27</td><td>6.29–7.5</td><td>976,158</td><td style="color:var(--ink3);">집계중</td><td style="color:var(--ink3);">집계중</td><td class="up-t">+8,612</td><td>3</td><td>H&N더베어5·DD장송의프리렌·위클리시선</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div style="margin-top:8px;font-size:12px;color:var(--ink4);">※ W26 자연유입 평균%·평균 시청시간은 지난주 "집계중"이었던 3편(뮤지컬2·토이스토리5·뉴뮤지엄)의 7D 확정치로 갱신 — 13.0%/4.1분은 직전 10주 평균(약 31%/9분) 대비 큰 폭 하락. W27 총 조회수·구독증감은 YouTube Studio 기준(본편 발행 콘텐츠 기준).</div>
+</div>
+
+<!-- ⑧ 다음 주 -->
+<div class="sec" id="s8">
+  <div class="sec-hd"><span class="sec-num">⑧</span><span class="sec-title">다음 주 발행 예정</span><span class="sec-sub">2026.7.6 – 7.12</span></div>
+  <table class="nxt-tbl">
+    <thead><tr><th>IP</th><th>예정 제목 / 주제</th><th>발행 예정일</th><th>비고</th></tr></thead>
+    <tbody>
+      <tr><td><span class="ip-tag t-hn">HOT & NEW</span></td><td><strong>ep.18 — 모아나</strong></td><td>7/6 (월) 예정</td><td>더베어5 7D 확정 후 소재 강도 비교 예정</td></tr>
+      <tr><td><span class="ip-tag t-dd">딥다이브</span></td><td><strong>ep.9 — 단다단</strong></td><td>7/8 (수) 예정</td><td>장송의프리렌 7D 확정 후 애니메이션 소재 연속 성과 확인</td></tr>
+      <tr><td><span class="ip-tag t-wk">위클리 S6</span></td><td><strong>ep.23 — 귀신</strong></td><td>7/10 (금) 예정</td><td>시선 7D 확정 후 반영, 뮤지컬 2부작 이후 소재 전환 효과 관찰</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ⑨ 지표 기준선 -->
+<div class="sec" id="s9">
+  <div class="sec-hd"><span class="sec-num">⑨</span><span class="sec-title">지표 기준선 (IP별 판정 기준)</span><span class="sec-sub">각 IP 시즌 내 분포 기반 · 1D 발행 시점 기준</span></div>
+  <div style="font-size:12px;color:var(--ink3);margin-bottom:10px;">※ 프로그램별 콘텐츠 구조(시청시간·자연유입 구조)가 다르므로 IP별로 분리 적용하며, 7D/28D 표의 색상 표기에도 동일 기준선을 참고용으로 적용합니다.</div>
+  <table class="crit-tbl">
+    <thead><tr><th>IP</th><th>지표</th><th>● 우수 (A 이상)</th><th>▲ 보통 (B)</th><th>▼ 주의 (C)</th></tr></thead>
+    <tbody>
+      <tr>
+        <td rowspan="3" style="font-weight:600;color:var(--col1);vertical-align:middle;">위클리 S6<br><span style="font-size:11px;font-weight:400;color:var(--ink3);">1D 기준</span></td>
+        <td>자연유입% (1D)</td><td class="c-good">40% 이상</td><td class="c-mid">36–40%</td><td class="c-bad">36% 미만</td>
+      </tr>
+      <tr>
+        <td>평균조회율 (1D)</td><td class="c-good">23% 이상</td><td class="c-mid">19–23%</td><td class="c-bad">19% 미만</td>
+      </tr>
+      <tr>
+        <td>시청시간 (1D)</td><td class="c-good">11분 이상</td><td class="c-mid">9–11분</td><td class="c-bad">9분 미만</td>
+      </tr>
+      <tr style="border-top:2px solid var(--border);">
+        <td rowspan="3" style="font-weight:600;color:var(--col3);vertical-align:middle;">HOT & NEW<br><span style="font-size:11px;font-weight:400;color:var(--ink3);">1D 기준</span></td>
+        <td>자연유입% (1D)</td><td class="c-good">21% 이상</td><td class="c-mid">12–21%</td><td class="c-bad">12% 미만</td>
+      </tr>
+      <tr>
+        <td>평균조회율 (1D)</td><td class="c-good">31% 이상</td><td class="c-mid">15–31%</td><td class="c-bad">15% 미만</td>
+      </tr>
+      <tr>
+        <td>시청시간 (1D)</td><td class="c-good">4.4분 이상</td><td class="c-mid">2.9–4.4분</td><td class="c-bad">2.9분 미만</td>
+      </tr>
+      <tr style="border-top:2px solid var(--border);">
+        <td rowspan="3" style="font-weight:600;color:var(--col2);vertical-align:middle;">딥다이브<br><span style="font-size:11px;font-weight:400;color:var(--ink3);">1D 기준</span></td>
+        <td>자연유입% (1D)</td><td class="c-good">34% 이상</td><td class="c-mid">21–34%</td><td class="c-bad">21% 미만</td>
+      </tr>
+      <tr>
+        <td>평균조회율 (1D)</td><td class="c-good">21% 이상</td><td class="c-mid">13–21%</td><td class="c-bad">13% 미만</td>
+      </tr>
+      <tr>
+        <td>시청시간 (1D)</td><td class="c-good">8분 이상</td><td class="c-mid">5–8분</td><td class="c-bad">5분 미만</td>
+      </tr>
+    </tbody>
+  </table>
+  <div style="margin-top:8px;font-size:12px;color:var(--ink4);">※ 기준선 = IP별 시즌 내 상위 25%(A) / 중앙값 ±기준(B) / 하위 25%(C) 분포 기반 · 편수 누적에 따라 주기적 업데이트</div>
+</div>
+
+<div class="ftr">
+  <span>LIFEPLUS YouTube · 위클리 리포트 W27 · 2026.06.29–07.05</span>
+  <span>데이터: 지표관리_0705.xlsx → 본편(26년) 시트 · 기준 발행 후 7D 누적</span>
+</div>
+
+</div><!-- /main -->
+
+<button id="theme-btn" class="theme-btn" title="다크 모드">🌙</button>
+
+<script>
+/* ── ACTIVE NAV ── */
+const sections=document.querySelectorAll('.sec[id]');
+const navItems=document.querySelectorAll('.nav-item');
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      navItems.forEach(n=>n.classList.remove('active'));
+      const target=document.querySelector(`.nav-item[href="#${e.target.id}"]`);
+      if(target)target.classList.add('active');
+    }
+  });
+},{threshold:0.3});
+sections.forEach(s=>observer.observe(s));
+
+/* ── CHARTS ── */
+// 라플위클리 S6: ep.1~22 (ep.22는 1D 기준, 나머지 7D)
+const eps=['ep.1','ep.2','ep.3','ep.4','ep.5','ep.6','ep.7','ep.8','ep.9','ep.10','ep.11','ep.12','ep.13','ep.14','ep.15','ep.16','ep.17','ep.18','ep.19','ep.20','ep.21','ep.22'];
+const names=['행운','루머','이탈리아','리더십','야구','본능','헤일메리','부동산','죽음','신분','호기심','실패','럭셔리','디저트','마이클잭슨','초능력','다이어트','프랑스','스필버그','뮤지컬1','뮤지컬2','시선'];
+// ep.21 뮤지컬2: 7D 확정 18.8% (이전 1D 23.2%에서 업데이트)
+// ep.22 시선: 1D 24.1%
+const org=[28.0,31.3,26.9,22.9,17.3,32.6,45.2,26.8,35.3,28.0,32.3,30.2,36.3,32.4,46.6,32.3,34.9,34.8,29.5,34.5,18.8,24.1];
+const awt=[7.6,8.2,7.3,6.5,6.8,8.9,9.9,7.9,10.6,8.4,9.4,7.2,10.5,8.4,10.6,9.0,10.2,10.5,8.0,6.84,5.48,6.76];
+
+const _dk=document.documentElement.classList.contains('dark');
+const TC=_dk?'rgba(255,255,255,.45)':'rgba(0,0,0,.4)';
+const GC=_dk?'rgba(255,255,255,.07)':'rgba(0,0,0,.05)';
+
+Chart.defaults.font.family="Inter,sans-serif";
+Chart.defaults.font.size=10;
+
+// ep.22는 1D 데이터이므로 색상 다르게 표시
+const orgColors=org.map((v,i)=>i===21?'rgba(185,28,28,.5)':v>=35?'#047857':v>=30?'#4F46E5':'#B91C1C');
+const titleCb=items=>{const i=items[0].dataIndex;return `${eps[i]}  ${names[i]}${i===21?' (1D)':' (7D)'}`;};
+
+new Chart(document.getElementById('c_org'),{
+  type:'line',
+  data:{labels:eps,datasets:[
+    {data:org,borderColor:'#4F46E5',backgroundColor:'rgba(79,70,229,.1)',fill:true,tension:.3,pointRadius:3,pointBorderWidth:0,pointBackgroundColor:orgColors,borderWidth:1.5},
+    {data:Array(22).fill(31.5),borderColor:'rgba(79,70,229,.3)',borderDash:[4,3],pointRadius:0,borderWidth:1}
+  ]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{title:titleCb}}},scales:{x:{ticks:{color:TC,maxRotation:50,font:{size:9}},grid:{display:false}},y:{min:0,max:55,ticks:{color:TC,callback:v=>v+'%'},grid:{color:GC}}}}
+});
+
+new Chart(document.getElementById('c_awt'),{
+  type:'bar',
+  data:{labels:eps,datasets:[{data:awt,backgroundColor:awt.map((v,i)=>i===21?'rgba(185,28,28,.4)':v>=10?'#047857':v>=7?'rgba(79,70,229,.75)':'rgba(185,28,28,.5)'),borderRadius:2}]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{title:titleCb}}},scales:{x:{ticks:{color:TC,maxRotation:50,font:{size:9}},grid:{display:false}},y:{min:0,max:13,ticks:{color:TC,callback:v=>v+'분'},grid:{color:GC}}}}
+});
+
+// 딥다이브: ep.1~8 (ep.8은 1D)
+const ddeps=['ep.1','ep.2','ep.3','ep.4','ep.5','ep.6','ep.7','ep.8'];
+const ddnames=['세이버매트릭스','K-POP','데이미언허스트','붉은사막·AAA','아르테미스2호','군체','뉴뮤지엄','장송의프리렌'];
+const ddOrg=[12.5,18.3,15.7,26.8,11.0,41.0,2.7,8.9];
+new Chart(document.getElementById('c_dd'),{
+  type:'line',
+  data:{labels:ddeps,datasets:[{data:ddOrg,borderColor:'#0D9488',backgroundColor:'rgba(13,148,136,.12)',fill:true,tension:.3,pointRadius:4,pointBackgroundColor:ddOrg.map((v,i)=>i===7?'#B91C1C':i===5?'#047857':i===6?'#B91C1C':'#0D9488'),borderWidth:2}]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{title:i=>`${ddeps[i[0].dataIndex]}  ${ddnames[i[0].dataIndex]}${i[0].dataIndex===7?' (1D)':' (7D)'}`}}},scales:{x:{ticks:{color:TC},grid:{display:false}},y:{min:0,max:55,ticks:{color:TC,callback:v=>v+'%'},grid:{color:GC}}}}
+});
+
+new Chart(document.getElementById('c_prog'),{
+  type:'bar',
+  data:{labels:['라플위클리','딥다이브','HOT & NEW'],datasets:[{data:[9.8,4.7,2.8],backgroundColor:['#4F46E5','#0D9488','#D97706'],borderRadius:4}]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:i=>`자연유입 평균: ${i.raw}만`}}},scales:{x:{ticks:{color:TC},grid:{display:false}},y:{ticks:{color:TC,callback:v=>v+'만'},grid:{color:GC}}}}
+});
+
+/* ── THEME TOGGLE ── */
+(function(){
+  var btn=document.getElementById('theme-btn');
+  if(!btn)return;
+  var upd=function(){var d=document.documentElement.classList.contains('dark');btn.textContent=d?'☀':'🌙';btn.title=d?'라이트 모드':'다크 모드';};
+  upd();
+  btn.addEventListener('click',function(){
+    document.documentElement.classList.toggle('dark');
+    localStorage.setItem('lp-theme',document.documentElement.classList.contains('dark')?'dark':'light');
+    upd();
+  });
+})();
+</script>
+</body>
+</html>
