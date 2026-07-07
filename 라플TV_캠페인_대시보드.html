@@ -821,10 +821,10 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
     <div class="sect-lbl">구독 전환 캠페인 · 7월 성과</div>
     <div class="kpi-grid" style="grid-template-columns:repeat(5,1fr);">
       <div class="kpi t"><div class="kv">2,904<span class="ku">건</span></div><div class="kl">7월 구독 전환</div><div class="ks">CVR 27.4% · 단가 1,369원</div></div>
-      <div class="kpi a"><div class="kv">1,221<span class="ku">원</span></div><div class="kl">구독단가 (CPSub)</div><div class="ks">목표 대비 효율적</div></div>
+      <div class="kpi a"><div class="kv">1,369<span class="ku">원</span></div><div class="kl">구독단가 (CPSub)</div><div class="ks">목표 대비 효율적</div></div>
       <div class="kpi a"><div class="kv">398<span class="ku">만원</span></div><div class="kl">7월 광고비</div><div class="ks">예산 2,500만 · 16% 소진</div></div>
-      <div class="kpi t"><div class="kv">0.55<span class="ku">%</span></div><div class="kl">CTR</div><div class="ks">26,955 클릭</div></div>
-      <div class="kpi t"><div class="kv">31.5<span class="ku">%</span></div><div class="kl">평균 전환율 (CVR)</div><div class="ks">클릭 대비 구독 전환</div></div>
+      <div class="kpi t"><div class="kv">0.56<span class="ku">%</span></div><div class="kl">CTR</div><div class="ks">10,593 클릭</div></div>
+      <div class="kpi t"><div class="kv">27.4<span class="ku">%</span></div><div class="kl">평균 전환율 (CVR)</div><div class="ks">클릭 대비 구독 전환</div></div>
     </div>
   </section>
 
@@ -839,19 +839,19 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
         <div class="funnel" style="margin-top:4px;">
           <div class="funnel-step" style="border-left:3px solid var(--dim);">
             <div><div class="funnel-lbl">노출수 (Impressions)</div></div>
-            <div style="text-align:right;"><div class="funnel-val">4,873,013</div></div>
+            <div style="text-align:right;"><div class="funnel-val">1,899,111</div></div>
           </div>
           <div class="funnel-step" style="border-left:3px solid #FF9B5E;">
-            <div><div class="funnel-lbl">조회수 (Views)</div><div style="font-family:var(--fn);font-size:11px;color:var(--faint);">노출 대비 1.22%</div></div>
-            <div style="text-align:right;"><div class="funnel-val">59,326</div></div>
+            <div><div class="funnel-lbl">조회수 (Views)</div><div style="font-family:var(--fn);font-size:11px;color:var(--faint);">노출 대비 1.17%</div></div>
+            <div style="text-align:right;"><div class="funnel-val">22,252</div></div>
           </div>
           <div class="funnel-step" style="border-left:3px solid var(--accent);">
-            <div><div class="funnel-lbl">클릭수 (Clicks)</div><div style="font-family:var(--fn);font-size:11px;color:var(--faint);">노출 대비 CTR 0.55%</div></div>
-            <div style="text-align:right;"><div class="funnel-val">26,955</div></div>
+            <div><div class="funnel-lbl">클릭수 (Clicks)</div><div style="font-family:var(--fn);font-size:11px;color:var(--faint);">노출 대비 CTR 0.56%</div></div>
+            <div style="text-align:right;"><div class="funnel-val">10,593</div></div>
           </div>
           <div class="funnel-step" style="border-left:3px solid var(--teal);">
-            <div><div class="funnel-lbl">구독 전환 (Conversions)</div><div style="font-family:var(--fn);font-size:11px;color:var(--teal);">클릭 대비 CVR 31.5%</div></div>
-            <div style="text-align:right;"><div class="funnel-val" style="color:var(--teal)">8,481</div><div class="funnel-rate">단가 1,221원</div></div>
+            <div><div class="funnel-lbl">구독 전환 (Conversions)</div><div style="font-family:var(--fn);font-size:11px;color:var(--teal);">클릭 대비 CVR 27.4%</div></div>
+            <div style="text-align:right;"><div class="funnel-val" style="color:var(--teal)">2,904</div><div class="funnel-rate">단가 1,369원</div></div>
           </div>
         </div>
       </div>
@@ -1451,7 +1451,7 @@ function drawOverviewCharts(){
   try{
     var ctx=setup('cv1',170); if(!ctx)return;
     var W=ctx._w,H=ctx._h;
-    var data=[{lbl:'7/1',sub:'월',v:539},{lbl:'7/2',sub:'화',v:583},{lbl:'7/3',sub:'수',v:562},{lbl:'7/4',sub:'목',v:581},{lbl:'7/5',sub:'금',v:639}];
+    var data=[{lbl:'7/1',sub:'수',v:539},{lbl:'7/2',sub:'목',v:583},{lbl:'7/3',sub:'금',v:562},{lbl:'7/4',sub:'토',v:581},{lbl:'7/5',sub:'일',v:639}];
     var pad={t:18,r:42,b:36,l:30};
     var cW=W-pad.l-pad.r,cH=H-pad.t-pad.b;
     // 스케일을 실제 데이터 최대값 기준으로 매번 계산 (고정값이면 달마다 수치 범위가 바뀔 때 막대가
@@ -1941,7 +1941,7 @@ function drawClickCharts(){try{
 
 /* === PAGE 4: Conv charts + daily cards === */
 function drawConvCharts(){try{
-  /* 일별 전환수 바 차트 (6/1~6/4 전체) */
+  /* 일별 전환수 바 차트 (6/1~7/5 전체) */
   (function(){
     var ctx=setup('convDaily',220); if(!ctx)return;
     var W=ctx._w,H=ctx._h;
@@ -1956,12 +1956,16 @@ function drawConvCharts(){try{
       {d:'6/22',v:285,rate:25},{d:'6/23',v:301,rate:25},
       {d:'6/24',v:301,rate:25},{d:'6/25',v:321,rate:29},
       {d:'6/26',v:324,rate:30},{d:'6/27',v:363,rate:34},{d:'6/28',v:342,rate:31},{d:'6/29',v:308,rate:28},
-      {d:'6/30',v:556,rate:31}
+      {d:'6/30',v:556,rate:31},
+      {d:'7/1',v:539,rate:25.4},{d:'7/2',v:583,rate:27.5},{d:'7/3',v:562,rate:27.1},{d:'7/4',v:581,rate:28.1},{d:'7/5',v:639,rate:28.9}
     ];
-    var maxV=600;
+    var dataMax=Math.max.apply(null,CD.map(function(d){return d.v;}));
+    var step=dataMax>3000?500:(dataMax>800?200:100);
+    var maxV=Math.ceil((dataMax*1.15)/step)*step;
     var pad={t:18,r:52,b:26,l:32};
     var cW=W-pad.l-pad.r, cH=H-pad.t-pad.b;
-    [100,200,300,400].forEach(function(v){
+    var ticks=[]; for(var t=step;t<=maxV;t+=step){ticks.push(t);}
+    ticks.forEach(function(v){
       var y=pad.t+cH-(v/maxV)*cH;
       ctx.strokeStyle=C.border; ctx.lineWidth=1;
       ctx.beginPath(); ctx.moveTo(pad.l,y); ctx.lineTo(pad.l+cW,y); ctx.stroke();
