@@ -692,40 +692,40 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
             <td><div class="cn">시즌6_20화_뮤지컬1</div><div class="csub">라플위클리 S6</div></td>
             <td><span style="font-size:10px;color:var(--prog-weekly);font-weight:700;">위클리</span></td>
             <td style="font-family:var(--fn);font-size:12px;">7/2 ~ 현재</td>
-            <td>191,599원</td><td>52,825</td><td>356</td><td>4,756</td>
-            <td style="color:var(--teal);font-weight:700;">9.00%</td><td>40원</td><td>538원</td>
+            <td>217,872원</td><td>64,826</td><td>460</td><td>5,425</td>
+            <td style="color:var(--teal);font-weight:700;">8.37%</td><td>40원</td><td>474원</td>
             <td><span class="pill good">활성</span></td>
           </tr>
           <tr>
             <td><div class="cn">시즌6_21화_뮤지컬2</div><div class="csub">라플위클리 S6</div></td>
             <td><span style="font-size:10px;color:var(--prog-weekly);font-weight:700;">위클리</span></td>
             <td style="font-family:var(--fn);font-size:12px;">7/2 ~ 현재</td>
-            <td>169,232원</td><td>201,028</td><td>247</td><td>3,490</td>
-            <td>1.74%</td><td>48원</td><td>685원</td>
+            <td>188,641원</td><td>229,702</td><td>288</td><td>3,872</td>
+            <td>1.69%</td><td>49원</td><td>655원</td>
             <td><span class="pill good">활성</span></td>
           </tr>
           <tr>
             <td><div class="cn">핫앤뉴_17화_더베어</div><div class="csub">HOT&amp;NEW</div></td>
             <td><span style="font-size:10px;color:var(--prog-hot);font-weight:700;">H&amp;N</span></td>
             <td style="font-family:var(--fn);font-size:12px;">7/2 ~ 현재</td>
-            <td>195,427원</td><td>123,549</td><td>506</td><td>5,145</td>
-            <td>4.16%</td><td>38원</td><td>386원</td>
+            <td>242,833원</td><td>160,457</td><td>662</td><td>6,536</td>
+            <td>4.07%</td><td>37원</td><td>367원</td>
             <td><span class="pill good">활성</span></td>
           </tr>
           <tr>
             <td><div class="cn">딥다이브_7화_뉴뮤지엄</div><div class="csub">딥다이브</div></td>
             <td><span style="font-size:10px;color:var(--prog-deep);font-weight:700;">딥다이브</span></td>
             <td style="font-family:var(--fn);font-size:12px;">7/2 ~ 현재</td>
-            <td>110,976원</td><td>69,045</td><td>317</td><td>2,853</td>
-            <td>4.13%</td><td>39원</td><td>350원</td>
+            <td>143,633원</td><td>83,056</td><td>382</td><td>3,789</td>
+            <td>4.56%</td><td>38원</td><td>376원</td>
             <td><span class="pill good">활성</span></td>
           </tr>
           <tr>
             <td><div class="cn">딥다이브_8화_장송의프리렌</div><div class="csub">딥다이브</div></td>
             <td><span style="font-size:10px;color:var(--prog-deep);font-weight:700;">딥다이브</span></td>
             <td style="font-family:var(--fn);font-size:12px;">7/2 ~ 현재</td>
-            <td>178,309원</td><td>80,140</td><td>223</td><td>5,107</td>
-            <td style="color:var(--teal);font-weight:700;">6.37%</td><td>35원</td><td>800원</td>
+            <td>288,973원</td><td>172,414</td><td>430</td><td>8,152</td>
+            <td style="color:var(--teal);font-weight:700;">4.73%</td><td>35원</td><td>672원</td>
             <td><span class="pill good">활성</span></td>
           </tr>
           <tr>
@@ -741,7 +741,7 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
             <td><span style="font-size:10px;color:var(--prog-weekly);font-weight:700;">위클리</span></td>
             <td style="font-family:var(--fn);font-size:12px;">6/9 ~ 7/2</td>
             <td>294,479원</td><td>378,541</td><td>286</td><td>5,986</td>
-            <td>1.58%</td><td>49원</td><td>1030원</td>
+            <td>1.58%</td><td>49원</td><td>1,030원</td>
             <td><span class="pill warn">중단</span></td>
           </tr>
           <tr>
@@ -1654,11 +1654,11 @@ function drawClickCharts(){try{
   (function(){
     var ctx=setup('clickProg',180); if(!ctx)return;
     var W=ctx._w,H=ctx._h;
-    var data=[{lbl:'7/1',sub:'수',v:539},{lbl:'7/2',sub:'목',v:583},{lbl:'7/3',sub:'금',v:562},{lbl:'7/4',sub:'토',v:581},{lbl:'7/5',sub:'일',v:639},{lbl:'7/6',sub:'월',v:568}];
+    var data=[{lbl:'라플위클리',sub:'72만원',v:15601,c:C.weekly},{lbl:'HOT&NEW',sub:'172만원',v:38465,c:C.hot},{lbl:'딥다이브',sub:'43만원',v:11941,c:C.deep}];
     var pad={t:18,r:12,b:38,l:42};
     var cW=W-pad.l-pad.r,cH=H-pad.t-pad.b;
-    var maxV=35000;
-    [10000,20000,30000].forEach(function(v){
+    var maxV=45000;
+    [10000,20000,30000,40000].forEach(function(v){
       var y=pad.t+cH-(v/maxV)*cH;
       ctx.strokeStyle=C.border; ctx.lineWidth=1;
       ctx.beginPath(); ctx.moveTo(pad.l,y); ctx.lineTo(pad.l+cW,y); ctx.stroke();
@@ -1977,9 +1977,9 @@ function drawClickCharts(){try{
         h+='<button class="'+cls+'" data-date="6/'+d2+'">'+d2+'</button>';
       }
       h+='<span style="font-size:11px;color:var(--faint);align-self:center;letter-spacing:1px;margin:0 2px 0 10px;">7월</span>';
-      for(var d3=1;d3<=5;d3++){
+      for(var d3=1;d3<=6;d3++){
         var dow3=['일','월','화','수','목','금','토'][new Date(2026,6,d3).getDay()];
-        var cls3='date-btn'+(dow3==='일'||dow3==='토'?' wk':'')+(d3===5?' on':'')+(d3===2?' ev':'');
+        var cls3='date-btn'+(dow3==='일'||dow3==='토'?' wk':'')+(d3===6?' on':'')+(d3===2?' ev':'');
         h+='<button class="'+cls3+'" data-date="7/'+d3+'">'+d3+'</button>';
       }
       bc.innerHTML=h;
@@ -2003,7 +2003,7 @@ function drawConvCharts(){try{
     var ctx=setup('convDaily',220); if(!ctx)return;
     var W=ctx._w,H=ctx._h;
     var CD=[
-      {d:'7/1',v:539,rate:25.4},{d:'7/2',v:583,rate:27.5},{d:'7/3',v:562,rate:27.1},{d:'7/4',v:581,rate:28.1},{d:'7/5',v:639,rate:28.9}
+      {d:'7/1',v:539,rate:25.4},{d:'7/2',v:583,rate:27.5},{d:'7/3',v:562,rate:27.1},{d:'7/4',v:581,rate:28.1},{d:'7/5',v:639,rate:28.9},{d:'7/6',v:568,rate:26.8}
     ];
     var dataMax=Math.max.apply(null,CD.map(function(d){return d.v;}));
     var step=dataMax>3000?500:(dataMax>800?200:100);
@@ -2216,9 +2216,9 @@ function drawConvCharts(){try{
         h+='<button class="'+cls+'" data-cdate="6/'+d2+'">'+d2+'</button>';
       }
       h+='<span style="font-size:11px;color:var(--faint);align-self:center;letter-spacing:1px;margin:0 2px 0 10px;">7월</span>';
-      for(var d3=1;d3<=5;d3++){
+      for(var d3=1;d3<=6;d3++){
         var isWk3=['일','토'].indexOf(DOW[new Date(2026,6,d3).getDay()])>=0;
-        var cls3='date-btn'+(isWk3?' wk':'')+(d3===5?' on ev':'');
+        var cls3='date-btn'+(isWk3?' wk':'')+(d3===6?' on':'')+(d3===5?' ev':'');
         h+='<button class="'+cls3+'" data-cdate="7/'+d3+'">'+d3+'</button>';
       }
       bc.innerHTML=h;
@@ -2241,7 +2241,7 @@ function drawRetargetCharts(){try{
     var ctx=setup('retargetDaily',200); if(!ctx)return;
     var W=ctx._w,H=ctx._h;
     var raw=[
-      {d:'7/1',v:0,ctr:0},{d:'7/2',v:0,ctr:0},{d:'7/3',v:0,ctr:0},{d:'7/4',v:0,ctr:0},{d:'7/5',v:0,ctr:0},{d:'7/6',v:568,rate:27}
+      {d:'7/1',v:0,ctr:0},{d:'7/2',v:0,ctr:0},{d:'7/3',v:0,ctr:0},{d:'7/4',v:0,ctr:0},{d:'7/5',v:0,ctr:0},{d:'7/6',v:0,ctr:0}
     ];
     var maxV=100;
     var pad={t:20,r:12,b:30,l:42};
@@ -2479,9 +2479,9 @@ function drawRetargetCharts(){try{
         h+='<button class="'+cls+'" data-rdate="6/'+d2+'">'+d2+'</button>';
       }
       h+='<span style="font-size:11px;color:var(--faint);align-self:center;letter-spacing:1px;margin:0 2px 0 10px;">7월</span>';
-      for(var d3=1;d3<=5;d3++){
+      for(var d3=1;d3<=6;d3++){
         var isWk3=['일','토'].indexOf(DOW[new Date(2026,6,d3).getDay()])>=0;
-        var cls3='date-btn'+(isWk3?' wk':'')+(d3===5?' on':'');
+        var cls3='date-btn'+(isWk3?' wk':'')+(d3===6?' on':'');
         h+='<button class="'+cls3+'" data-rdate="7/'+d3+'">'+d3+'</button>';
       }
       bc.innerHTML=h;
