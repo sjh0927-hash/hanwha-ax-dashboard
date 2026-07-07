@@ -529,8 +529,8 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
   <section class="sect" style="margin-top:14px;">
     <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
       <div style="display:flex;gap:6px;">
-        <button class="tog-btn" id="vfmt-longform" data-vfmt="롱폼">롱폼 (9개)</button>
-        <button class="tog-btn" id="vfmt-shorts" data-vfmt="쇼츠">쇼츠 (18개)</button>
+        <button class="tog-btn" id="vfmt-longform" data-vfmt="롱폼">롱폼 (12개)</button>
+        <button class="tog-btn" id="vfmt-shorts" data-vfmt="쇼츠">쇼츠 (20개)</button>
       </div>
       <div style="display:flex;gap:6px;">
         <span style="font-size:11px;color:var(--faint);align-self:center;letter-spacing:1px;">프로그램</span>
@@ -1238,31 +1238,36 @@ function regHits(id,arr){HITS[id]=arr;}
 
 /* ── 조회캠페인 CREATIVE DATA ── */
 var CREATIVES = [
-  {fmt:'롱폼',prog:'라플위클리',ep:'18화',title:'프랑스',      ctr:0.97,vtr:63.1,cpv:29,views:103067,imp:163272,clicks:1591,spend:2999756},
-  {fmt:'롱폼',prog:'라플위클리',ep:'19화',title:'스필버그',    ctr:0.53,vtr:59.9,cpv:34,views:148599,imp:248133,clicks:1311,spend:4999431},
-  {fmt:'롱폼',prog:'라플위클리',ep:'20화',title:'뮤지컬',      ctr:0.54,vtr:53.1,cpv:23,views:133071,imp:250580,clicks:1345,spend:2998082},
+  {fmt:'롱폼',prog:'라플위클리',ep:'22화',title:'시선',        ctr:0.54,vtr:49.7,cpv:27,views:111864,imp:225043,clicks:1224,spend:2998779},
   {fmt:'롱폼',prog:'라플위클리',ep:'21화',title:'뮤지컬2',      ctr:0.42,vtr:42.3,cpv:25,views:117933,imp:278770, clicks:1163,spend:2997167},
-  {fmt:'롱폼',prog:'HOT&NEW',   ep:'13화',title:'백룸',        ctr:0.47,vtr:60.5,cpv:26,views:76472, imp:126363,clicks:596, spend:1999844},
-  {fmt:'롱폼',prog:'HOT&NEW',   ep:'14화',title:'아웃사이더즈',ctr:0.65,vtr:59.4,cpv:28,views:72125, imp:121443,clicks:794, spend:2000272},
-  {fmt:'롱폼',prog:'HOT&NEW',   ep:'15화',title:'디스클로저',  ctr:0.49,vtr:61.1,cpv:25,views:68805, imp:112610,clicks:554, spend:1701875},
+  {fmt:'롱폼',prog:'라플위클리',ep:'20화',title:'뮤지컬',      ctr:0.54,vtr:53.1,cpv:23,views:133071,imp:250580,clicks:1345,spend:2998082},
+  {fmt:'롱폼',prog:'라플위클리',ep:'19화',title:'스필버그',    ctr:0.53,vtr:59.9,cpv:34,views:148599,imp:248133,clicks:1311,spend:4999431},
+  {fmt:'롱폼',prog:'라플위클리',ep:'18화',title:'프랑스',      ctr:0.97,vtr:63.1,cpv:29,views:103067,imp:163272,clicks:1591,spend:2999756},
+  {fmt:'롱폼',prog:'HOT&NEW',   ep:'17화',title:'더베어',      ctr:0.43,vtr:46.4,cpv:23,views:87319, imp:188058, clicks:801, spend:2000113},
   {fmt:'롱폼',prog:'HOT&NEW',   ep:'16화',title:'토이스토리',  ctr:1.03,vtr:3.8, cpv:37, views:119480,imp:3184124,clicks:32862,spend:4389835},
+  {fmt:'롱폼',prog:'HOT&NEW',   ep:'15화',title:'디스클로저',  ctr:0.49,vtr:61.1,cpv:25,views:68805, imp:112610,clicks:554, spend:1701875},
+  {fmt:'롱폼',prog:'HOT&NEW',   ep:'14화',title:'아웃사이더즈',ctr:0.65,vtr:59.4,cpv:28,views:72125, imp:121443,clicks:794, spend:2000272},
+  {fmt:'롱폼',prog:'HOT&NEW',   ep:'13화',title:'백룸',        ctr:0.47,vtr:60.5,cpv:26,views:76472, imp:126363,clicks:596, spend:1999844},
+  {fmt:'롱폼',prog:'딥다이브',  ep:'8화', title:'장송의프리렌', ctr:0.57,vtr:52.6,cpv:27, views:110725,imp:210600, clicks:1201, spend:2999569},
   {fmt:'롱폼',prog:'딥다이브',  ep:'7화', title:'뉴뮤지엄',   ctr:0.51,vtr:55.8,cpv:27, views:111629,imp:199935, clicks:1027, spend:2999468},
-  {fmt:'쇼츠',prog:'라플위클리',ep:'18화',title:'프랑스 선공개', ctr:0.37,vtr:55.1,cpv:12,views:27452,imp:49848, clicks:183, spend:329731},
-  {fmt:'쇼츠',prog:'라플위클리',ep:'18화',title:'프랑스 본편',   ctr:0.19,vtr:69.5,cpv:8, views:39648,imp:57090, clicks:106, spend:329864},
-  {fmt:'쇼츠',prog:'라플위클리',ep:'19화',title:'스필버그 선공개',ctr:0.51,vtr:24.3,cpv:15,views:21916,imp:90283, clicks:461,spend:329718},
-  {fmt:'쇼츠',prog:'라플위클리',ep:'19화',title:'스필버그 본편',  ctr:0.30,vtr:25.2,cpv:15,views:21441,imp:85242, clicks:255,spend:330045},
-  {fmt:'쇼츠',prog:'라플위클리',ep:'20화',title:'뮤지컬 선공개',  ctr:0.29,vtr:21.9,cpv:15,views:21794,imp:99758, clicks:288,spend:329863},
-  {fmt:'쇼츠',prog:'라플위클리',ep:'20화',title:'뮤지컬 본편',    ctr:0.23,vtr:30.4,cpv:13,views:24740,imp:81383, clicks:187,spend:329955},
   {fmt:'쇼츠',prog:'라플위클리',ep:'21화',title:'뮤지컬2 선공개', ctr:0.26,vtr:34.4,cpv:13,views:24871,imp:72299, clicks:188,spend:330092},
   {fmt:'쇼츠',prog:'라플위클리',ep:'21화',title:'뮤지컬2 본편',   ctr:0.24,vtr:28.9,cpv:13,views:25231,imp:87170, clicks:210,spend:330108},
-  {fmt:'쇼츠',prog:'HOT&NEW',   ep:'13화',title:'백룸 쇼츠1',    ctr:0.26,vtr:23.8,cpv:16,views:20443,imp:85885, clicks:222,spend:329873},
-  {fmt:'쇼츠',prog:'HOT&NEW',   ep:'13화',title:'백룸 쇼츠2',    ctr:0.22,vtr:24.7,cpv:16,views:20341,imp:82424, clicks:183,spend:328911},
-  {fmt:'쇼츠',prog:'HOT&NEW',   ep:'14화',title:'아웃사이더즈 1',ctr:0.30,vtr:44.2,cpv:12,views:26727,imp:60451, clicks:181,spend:329999},
-  {fmt:'쇼츠',prog:'HOT&NEW',   ep:'14화',title:'아웃사이더즈 2',ctr:0.31,vtr:45.6,cpv:13,views:26084,imp:57176, clicks:180,spend:330045},
-  {fmt:'쇼츠',prog:'HOT&NEW',   ep:'15화',title:'디스클로저 1',  ctr:0.23,vtr:27.1,cpv:14,views:16466,imp:60703, clicks:139,spend:228954},
-  {fmt:'쇼츠',prog:'HOT&NEW',   ep:'15화',title:'디스클로저 2',  ctr:0.29,vtr:26.7,cpv:14,views:15920,imp:59678, clicks:171,spend:230492},
+  {fmt:'쇼츠',prog:'라플위클리',ep:'20화',title:'뮤지컬 선공개',  ctr:0.29,vtr:21.9,cpv:15,views:21794,imp:99758, clicks:288,spend:329863},
+  {fmt:'쇼츠',prog:'라플위클리',ep:'20화',title:'뮤지컬 본편',    ctr:0.23,vtr:30.4,cpv:13,views:24740,imp:81383, clicks:187,spend:329955},
+  {fmt:'쇼츠',prog:'라플위클리',ep:'19화',title:'스필버그 선공개',ctr:0.51,vtr:24.3,cpv:15,views:21916,imp:90283, clicks:461,spend:329718},
+  {fmt:'쇼츠',prog:'라플위클리',ep:'19화',title:'스필버그 본편',  ctr:0.30,vtr:25.2,cpv:15,views:21441,imp:85242, clicks:255,spend:330045},
+  {fmt:'쇼츠',prog:'라플위클리',ep:'18화',title:'프랑스 선공개', ctr:0.37,vtr:55.1,cpv:12,views:27452,imp:49848, clicks:183, spend:329731},
+  {fmt:'쇼츠',prog:'라플위클리',ep:'18화',title:'프랑스 본편',   ctr:0.19,vtr:69.5,cpv:8, views:39648,imp:57090, clicks:106, spend:329864},
+  {fmt:'쇼츠',prog:'HOT&NEW',   ep:'17화',title:'더베어 쇼츠1', ctr:0.14,vtr:68.4,cpv:9, views:34906,imp:51062, clicks:74, spend:330051},
+  {fmt:'쇼츠',prog:'HOT&NEW',   ep:'17화',title:'더베어 쇼츠2', ctr:0.23,vtr:27.2,cpv:15,views:21419,imp:78879, clicks:184,spend:330009},
   {fmt:'쇼츠',prog:'HOT&NEW',   ep:'16화',title:'토이스토리 쇼츠1',ctr:0.24,vtr:37.1,cpv:12,views:27803,imp:74845, clicks:183,spend:330020},
   {fmt:'쇼츠',prog:'HOT&NEW',   ep:'16화',title:'토이스토리 쇼츠2',ctr:0.24,vtr:30.3,cpv:15,views:13187,imp:43540, clicks:104,spend:194816},
+  {fmt:'쇼츠',prog:'HOT&NEW',   ep:'15화',title:'디스클로저 1',  ctr:0.23,vtr:27.1,cpv:14,views:16466,imp:60703, clicks:139,spend:228954},
+  {fmt:'쇼츠',prog:'HOT&NEW',   ep:'15화',title:'디스클로저 2',  ctr:0.29,vtr:26.7,cpv:14,views:15920,imp:59678, clicks:171,spend:230492},
+  {fmt:'쇼츠',prog:'HOT&NEW',   ep:'14화',title:'아웃사이더즈 1',ctr:0.30,vtr:44.2,cpv:12,views:26727,imp:60451, clicks:181,spend:329999},
+  {fmt:'쇼츠',prog:'HOT&NEW',   ep:'14화',title:'아웃사이더즈 2',ctr:0.31,vtr:45.6,cpv:13,views:26084,imp:57176, clicks:180,spend:330045},
+  {fmt:'쇼츠',prog:'HOT&NEW',   ep:'13화',title:'백룸 쇼츠1',    ctr:0.26,vtr:23.8,cpv:16,views:20443,imp:85885, clicks:222,spend:329873},
+  {fmt:'쇼츠',prog:'HOT&NEW',   ep:'13화',title:'백룸 쇼츠2',    ctr:0.22,vtr:24.7,cpv:16,views:20341,imp:82424, clicks:183,spend:328911},
   {fmt:'쇼츠',prog:'딥다이브',  ep:'7화 선공개',   title:'뉴뮤지엄',ctr:0.21,vtr:20.8,cpv:19,views:17538,imp:84257, clicks:173, spend:330013},
   {fmt:'쇼츠',prog:'딥다이브',  ep:'7화 하이라이트',title:'뉴뮤지엄',ctr:0.18,vtr:38.6,cpv:12,views:27656,imp:71748, clicks:129, spend:329892}
 ];
