@@ -912,7 +912,7 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
     <div style="display:flex;gap:20px;flex-wrap:wrap;padding:10px 16px;background:rgba(0,201,167,.08);border-radius:6px;border:1px solid rgba(0,201,167,.2);margin-bottom:12px;align-items:center;">
       <div style="font-size:11px;font-weight:700;color:var(--teal);letter-spacing:.08em;">롱폼 합계 (디맨드젠 전환)</div>
       <div style="display:flex;gap:16px;flex-wrap:wrap;">
-        <div><span style="font-size:11px;color:var(--dim);">7월 광고비 </span><span style="font-size:14px;font-weight:700;font-family:var(--fn);color:var(--text);">4,771,099원</span></div>
+        <div><span style="font-size:11px;color:var(--dim);">7월 광고비 </span><span style="font-size:14px;font-weight:700;font-family:var(--fn);color:var(--text);">4,799,651원</span></div>
         <div><span style="font-size:11px;color:var(--dim);">구독 전환 </span><span style="font-size:14px;font-weight:700;font-family:var(--fn);color:var(--teal);">3,472건</span></div>
         <div><span style="font-size:11px;color:var(--dim);">구독단가 </span><span style="font-size:14px;font-weight:700;font-family:var(--fn);color:var(--text);">1,374원</span></div>
         <div><span style="font-size:11px;color:var(--dim);">CTR </span><span style="font-size:14px;font-weight:700;font-family:var(--fn);color:var(--text);">0.56%</span></div>
@@ -950,6 +950,22 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
             <td><span class="pill good">활성</span></td>
           </tr>
           <tr>
+            <td><div class="cn">시즌6_20화_뮤지컬1</div><div class="csub">구독 전환 소재</div></td>
+            <td><span style="font-size:10px;color:var(--prog-weekly);font-weight:700;">위클리</span></td>
+            <td style="font-family:var(--fn);font-size:12px;">7/9 ~ 현재</td>
+            <td>154</td><td>57</td>
+            <td>0.36%</td><td>155원</td><td>23,901원</td>
+            <td><span class="pill good">활성</span></td>
+          </tr>
+          <tr>
+            <td><div class="cn">시즌6_22화_시선</div><div class="csub">구독 전환 소재</div></td>
+            <td><span style="font-size:10px;color:var(--prog-weekly);font-weight:700;">위클리</span></td>
+            <td style="font-family:var(--fn);font-size:12px;">7/9 ~ 현재</td>
+            <td>24</td><td>11</td>
+            <td>0.34%</td><td>194원</td><td>4,651원</td>
+            <td><span class="pill good">활성</span></td>
+          </tr>
+          <tr>
             <td><div class="cn">시즌5_13화_토이스토리</div><div class="csub">OFF 캠페인</div></td>
             <td><span style="font-size:10px;color:var(--prog-weekly);font-weight:700;">위클리</span></td>
             <td style="font-family:var(--fn);font-size:12px;">6/9 ~ 7/6</td>
@@ -975,7 +991,7 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
           </tr>
         </tbody>
       </table>
-      <div style="font-size:11px;color:var(--faint);margin-top:8px;padding-top:8px;border-top:1px solid var(--border);">※ 소재별 지표는 디맨드젠_전환캠페인 실측 기준 (7/9 기준) · 토이스토리는 7/6 이후 데이터 없음(장송의프리렌으로 교체 종료), 마이클잭슨·야구는 OFF 캠페인 집행 실적 포함</div>
+      <div style="font-size:11px;color:var(--faint);margin-top:8px;padding-top:8px;border-top:1px solid var(--border);">※ 소재별 지표는 디맨드젠_전환캠페인 실측 기준 (7/9 기준) · 뮤지컬1·시선은 7/9부 신규 투입 · 토이스토리는 7/6 이후 데이터 없음(장송의프리렌으로 교체 종료), 마이클잭슨·야구는 OFF 캠페인 집행 실적 포함</div>
     </div>
   </section>
 
@@ -2135,6 +2151,12 @@ function drawConvCharts(){try{
         '6/13':[170,24,'0.10',75,12742],'6/14':[128,23,'0.11',59,7599],
         '6/15':[104,20,'0.16',60,6290],'6/16':[75,8,'0.07',75,5613],
         '6/17':[85,12,'0.08',61,5207],'6/18':[47,17,'0.35',108,5059]
+      }},
+      '뮤지컬1':{prog:'weekly',ep:'시즌6 20화',d:{
+        '7/9':[154,57,'0.36',155,23901]
+      }},
+      '시선':{prog:'weekly',ep:'시즌6 22화',d:{
+        '7/9':[24,11,'0.34',194,4651]
       }}
     };
     var DOW=['일','월','화','수','목','금','토'];
