@@ -16,11 +16,20 @@ const SEASON_COLOR = {
 
 let pending = [];
 try {
-  pending = JSON.parse(fs.readFileSync(path.join(DIR, 'weekly_cumulative_pending.json'), 'utf8'));
+  pending = JSON.parse(fs.readFileSync(path.join(DIR, 'weekly_cumulative_pending.json'), 'utf8').replace(/^﻿/, ''));
 } catch (e) { /* 없으면 무시 */ }
 
-// VR 데이터가 있는지 여부(2-6화부터 5-14까지 전부 0 — 데이터 결측)
+// VR 데이터가 있는지 여부 — 1일차·7일차 모두 시즌5에서 결측(0)이라 플래그 하나를 두 탭에서 공유.
 results.forEach(r => { r.vr_missing = !(r.vr_7d && r.vr_7d > 0); });
+
+function esc(s) { return String(s).replace(/'/g, "\\'"); }
+
+// 등급 컷은 절대 점수가 아니라 위클리 내부 4분위 상대평가(calc_ltv.js에서 산정) — 표시용으로 실제 컷 값만 역산.
+function gradeMinOf(v2Field, gradeField, grade) {
+  return Math.min(...results.filter(r => r[gradeField] === grade).map(r => r[v2Field]));
+}
+const gradeCut = { S: gradeMinOf('v2', 'grade', 'S'), A: gradeMinOf('v2', 'grade', 'A'), 'B+': gradeMinOf('v2', 'grade', 'B+'), B: gradeMinOf('v2', 'grade', 'B') };
+const gradeCut1d = { S: gradeMinOf('v2_1d', 'grade_1d', 'S'), A: gradeMinOf('v2_1d', 'grade_1d', 'A'), 'B+': gradeMinOf('v2_1d', 'grade_1d', 'B+'), B: gradeMinOf('v2_1d', 'grade_1d', 'B') };
 
 const chronological = [...results].sort((a, b) => {
   const sa = SEASONS.indexOf(a.season), sb = SEASONS.indexOf(b.season);
@@ -28,45 +37,93 @@ const chronological = [...results].sort((a, b) => {
   return String(a.num).localeCompare(String(b.num), undefined, { numeric: true });
 });
 
-const bySeasonStats = SEASONS.map(s => {
-  const arr = results.filter(r => r.season === s);
-  const avg = arr.reduce((a, r) => a + r.v2, 0) / arr.length;
-  const grades = { S: 0, A: 0, B: 0, C: 0 };
-  arr.forEach(r => grades[r.grade]++);
-  const vrMissingCount = arr.filter(r => r.vr_missing).length;
-  return { season: s, count: arr.length, avg: +avg.toFixed(3), grades, vrMissingCount };
-});
+function computeBySeasonStats(v2Field, gradeField) {
+  return SEASONS.map(s => {
+    const arr = results.filter(r => r.season === s);
+    const avg = arr.reduce((a, r) => a + r[v2Field], 0) / arr.length;
+    const grades = { S: 0, A: 0, 'B+': 0, B: 0, C: 0 };
+    arr.forEach(r => grades[r[gradeField]]++);
+    const vrMissingCount = arr.filter(r => r.vr_missing).length;
+    return { season: s, count: arr.length, avg: +avg.toFixed(3), grades, vrMissingCount };
+  });
+}
+const bySeasonStats = computeBySeasonStats('v2', 'grade');
+const bySeasonStats1d = computeBySeasonStats('v2_1d', 'grade_1d');
 
+function computeSummary(v2Field, gradeField, statsArr) {
+  const channelAvg = results.reduce((a, r) => a + r[v2Field], 0) / results.length;
+  const gradeCounts = { S: 0, A: 0, 'B+': 0, B: 0, C: 0 };
+  results.forEach(r => gradeCounts[r[gradeField]]++);
+  const bestSeason = [...statsArr].sort((a, b) => b.avg - a.avg)[0];
+  const worstSeason = [...statsArr].sort((a, b) => a.avg - b.avg)[0];
+  return { channelAvg, gradeCounts, bestSeason, worstSeason };
+}
 const totalCount = results.length;
-const channelAvg = results.reduce((a, r) => a + r.v2, 0) / totalCount;
-const gradeCounts = { S: 0, A: 0, B: 0, C: 0 };
-results.forEach(r => gradeCounts[r.grade]++);
-const bestSeason = [...bySeasonStats].sort((a, b) => b.avg - a.avg)[0];
-const worstSeason = [...bySeasonStats].sort((a, b) => a.avg - b.avg)[0];
+const sum7d = computeSummary('v2', 'grade', bySeasonStats);
+const sum1d = computeSummary('v2_1d', 'grade_1d', bySeasonStats1d);
+const { channelAvg, gradeCounts, bestSeason, worstSeason } = sum7d;
+const { channelAvg: channelAvg1d, gradeCounts: gradeCounts1d, bestSeason: bestSeason1d, worstSeason: worstSeason1d } = sum1d;
 const vrMissingTotal = results.filter(r => r.vr_missing).length;
 
-function esc(s) { return String(s).replace(/'/g, "\\'"); }
+// 장기 성장 지수(28일차 조회수 ÷ 7일차 조회수) — 28일차 전용 점수공식 대신, 시간이 지나도
+// 계속 발견되는 콘텐츠만 가볍게 짚어주는 보조 배지.
+const growthPendingCount = results.filter(r => r.growth28_pending).length;
+const topGrowth = [...results].filter(r => !r.growth28_pending).sort((a, b) => b.growth_28d - a.growth_28d).slice(0, 5);
 
-const dataArrJs = chronological.map(r => (
-  `{season:'${esc(r.season)}',num:'${esc(r.num)}',title:'${esc(r.title)}',pub:'${r.pub_date || ''}',` +
-  `v2:${r.v2},grade:'${r.grade}',natPct:${(r.nat_pct_7d * 100).toFixed(1)},natAbs:${Math.round(r.nat_abs_7d)},` +
-  `vr:${(r.vr_7d * 100).toFixed(1)},vrMissing:${r.vr_missing},ctr:${(r.ctr_7d * 100).toFixed(2)},` +
-  `sub:${Math.round(r.sub_7d)},views:${Math.round(r.views_7d)},eng:${Math.round(r.eng_7d)}}`
-)).join(',\n  ');
+function buildDataArr(sortedArr, suf, v2Field, gradeField) {
+  return sortedArr.map(r => (
+    `{season:'${esc(r.season)}',num:'${esc(r.num)}',title:'${esc(r.title)}',pub:'${r.pub_date || ''}',` +
+    `v2:${r[v2Field]},grade:'${r[gradeField]}',natPct:${(r['nat_pct_' + suf] * 100).toFixed(1)},natAbs:${Math.round(r['nat_abs_' + suf])},` +
+    `vr:${(r['vr_' + suf] * 100).toFixed(1)},vrMissing:${r.vr_missing},ctr:${(r['ctr_' + suf] * 100).toFixed(2)},` +
+    `sub:${Math.round(r['sub_' + suf])},views:${Math.round(r['views_' + suf])},eng:${Math.round(r['eng_' + suf])}}`
+  )).join(',\n  ');
+}
+function buildRankedArr(suf, v2Field, gradeField) {
+  return [...results].sort((a, b) => b[v2Field] - a[v2Field]).map(r => (
+    `{season:'${esc(r.season)}',num:'${esc(r.num)}',title:'${esc(r.title)}',pub:'${r.pub_date || ''}',` +
+    `v2:${r[v2Field]},grade:'${r[gradeField]}',natPct:${(r['nat_pct_' + suf] * 100).toFixed(1)},natAbs:${Math.round(r['nat_abs_' + suf])},` +
+    `vr:${(r['vr_' + suf] * 100).toFixed(1)},vrMissing:${r.vr_missing},ctr:${(r['ctr_' + suf] * 100).toFixed(2)},sub:${Math.round(r['sub_' + suf])},` +
+    `growth28:${r.growth28_pending ? 'null' : r.growth_28d}}`
+  )).join(',\n  ');
+}
+const dataArrJs = buildDataArr(chronological, '7d', 'v2', 'grade');
+const rankedArrJs = buildRankedArr('7d', 'v2', 'grade');
+const dataArrJs1d = buildDataArr(chronological, '1d', 'v2_1d', 'grade_1d');
+const rankedArrJs1d = buildRankedArr('1d', 'v2_1d', 'grade_1d');
 
-const rankedArrJs = [...results].sort((a, b) => b.v2 - a.v2).map(r => (
-  `{season:'${esc(r.season)}',num:'${esc(r.num)}',title:'${esc(r.title)}',pub:'${r.pub_date || ''}',` +
-  `v2:${r.v2},grade:'${r.grade}',natPct:${(r.nat_pct_7d * 100).toFixed(1)},natAbs:${Math.round(r.nat_abs_7d)},` +
-  `vr:${(r.vr_7d * 100).toFixed(1)},vrMissing:${r.vr_missing},ctr:${(r.ctr_7d * 100).toFixed(2)},sub:${Math.round(r.sub_7d)}}`
-)).join(',\n  ');
-
+function seasonAgg(statsArr) {
+  return {
+    avgs: statsArr.map(s => s.avg).join(','),
+    S: statsArr.map(s => s.grades.S).join(','),
+    A: statsArr.map(s => s.grades.A).join(','),
+    Bp: statsArr.map(s => s.grades['B+']).join(','),
+    B: statsArr.map(s => s.grades.B).join(','),
+    C: statsArr.map(s => s.grades.C).join(','),
+  };
+}
 const seasonLabels = bySeasonStats.map(s => `'${s.season.replace('위클리 ', '')}'`).join(',');
-const seasonAvgs = bySeasonStats.map(s => s.avg).join(',');
 const seasonColors = SEASONS.map(s => `'${SEASON_COLOR[s]}'`).join(',');
-const seasonS = bySeasonStats.map(s => s.grades.S).join(',');
-const seasonA = bySeasonStats.map(s => s.grades.A).join(',');
-const seasonB = bySeasonStats.map(s => s.grades.B).join(',');
-const seasonC = bySeasonStats.map(s => s.grades.C).join(',');
+const agg7d = seasonAgg(bySeasonStats);
+const agg1d = seasonAgg(bySeasonStats1d);
+
+// 1일차 순위와 7일차 순위가 얼마나 다른지 — "초기반응이 실제 성과를 얼마나 잘 예측했나" 확인용
+const byRank7d = [...results].sort((a, b) => b.v2 - a.v2);
+const byRank1d = [...results].sort((a, b) => b.v2_1d - a.v2_1d);
+const rank7dOf = new Map(byRank7d.map((r, i) => [r, i + 1]));
+const rank1dOf = new Map(byRank1d.map((r, i) => [r, i + 1]));
+// delta 양수: 1일차엔 순위가 낮았는데(숫자 큼) 7일차엔 좋아짐(숫자 작아짐) = 슬로우 스타터
+// delta 음수: 1일차엔 순위가 높았는데(숫자 작음) 7일차엔 밀림(숫자 커짐) = 반짝 스타터
+const rankCompare = results.map(r => ({ r, rank7d: rank7dOf.get(r), rank1d: rank1dOf.get(r), delta: rank1dOf.get(r) - rank7dOf.get(r) }));
+const slowStarters = [...rankCompare].sort((a, b) => b.delta - a.delta).slice(0, 5);
+const flashStarters = [...rankCompare].sort((a, b) => a.delta - b.delta).slice(0, 5);
+const top10_7dKeys = new Set(byRank7d.slice(0, 10).map(r => r.season + r.num));
+const top10Overlap = byRank1d.slice(0, 10).filter(r => top10_7dKeys.has(r.season + r.num)).length;
+
+function moverRow(m) {
+  const arrow = m.delta > 0 ? '▲' : '▼';
+  const color = m.delta > 0 ? 'var(--c-teal)' : 'var(--c-red)';
+  return `<li><b>${m.r.season.replace('위클리 ', '')} ${m.r.num} ${m.r.title}</b> — 1일차 ${m.rank1d}위 → 7일차 ${m.rank7d}위 <span style="color:${color};font-weight:700">${arrow} ${Math.abs(m.delta)}</span></li>`;
+}
 
 const html = `<!DOCTYPE html>
 <html lang="ko">
@@ -115,6 +172,10 @@ body{font-family:'SF Pro Display','Apple SD Gothic Neo','Malgun Gothic',system-u
 .meta-chip::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--c-purple);opacity:.7}
 .warn-banner{background:linear-gradient(135deg,rgba(245,166,35,.1) 0%,rgba(240,84,84,.06) 100%);border:1px solid rgba(245,166,35,.3);border-radius:var(--r-lg);padding:18px 22px;margin-bottom:28px;font-size:14px;line-height:1.7;color:var(--c-sub)}
 .warn-banner b{color:var(--c-amber)}
+.nav-tabs{display:flex;gap:2px;background:var(--c-card);border:1px solid var(--c-border);border-radius:var(--r-sm);padding:3px;margin-bottom:24px;width:fit-content}
+.nav-tab{font-size:14px;font-weight:500;padding:7px 16px;border-radius:5px;border:none;background:transparent;color:var(--c-muted);cursor:pointer;transition:all .15s;white-space:nowrap}
+.nav-tab.on{background:rgba(159,143,247,.15);color:var(--c-purple);font-weight:600}
+.panel{display:none}.panel.show{display:block}
 .kpi-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:32px}
 .kpi-card{background:var(--c-card);border:1px solid var(--c-border);border-radius:var(--r-md);padding:18px 20px;position:relative;overflow:hidden}
 .kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
@@ -158,7 +219,8 @@ body{font-family:'SF Pro Display','Apple SD Gothic Neo','Malgun Gothic',system-u
 .gpill{font-size:12px;font-weight:700;padding:2px 8px;border-radius:20px;letter-spacing:.05em}
 .gs{background:var(--c-purple-bg);color:var(--c-purple)}
 .ga{background:var(--c-teal-bg);color:var(--c-teal)}
-.gb{background:var(--c-amber-bg);color:var(--c-amber)}
+.gbp{background:var(--c-amber-bg);color:var(--c-amber)}
+.gb{background:var(--c-blue-bg);color:var(--c-blue)}
 .gc{background:rgba(110,109,122,.15);color:var(--c-muted)}
 .season-tag{font-size:12px;font-weight:500;padding:2px 7px;border-radius:5px;white-space:nowrap}
 .vr-flag{font-size:11px;color:var(--c-amber);opacity:.85}
@@ -173,9 +235,11 @@ body{font-family:'SF Pro Display','Apple SD Gothic Neo','Malgun Gothic',system-u
 .bench-tbl td{padding:9px 10px;border-bottom:1px solid var(--c-border);text-align:center;color:var(--c-sub)}
 .bench-tbl td.l{text-align:left;font-weight:500;color:var(--c-text)}
 .bench-tbl tr:last-child td{border-bottom:none}
+.key-list{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:9px;font-size:13px;color:var(--c-sub);line-height:1.6}
+.key-list b{color:var(--c-text)}
 .theme-btn{position:fixed;bottom:20px;right:20px;z-index:9999;width:38px;height:38px;border-radius:50%;border:1px solid var(--c-border);background:var(--c-surface);cursor:pointer;font-size:20px;line-height:1;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 12px rgba(0,0,0,.4);transition:border-color .15s,background .15s,box-shadow .15s;color:var(--c-muted);}
 .theme-btn:hover{border-color:var(--c-purple);color:var(--c-text);}
-html.light{--c-bg:#F5F6FA;--c-surface:#FFFFFF;--c-card:#FFFFFF;--c-border:rgba(0,0,0,0.09);--c-border2:rgba(0,0,0,0.15);--c-text:#1A1B26;--c-muted:#6E6D7A;--c-sub:#888898;--c-purple-bg:rgba(159,143,247,0.15);--c-teal-bg:rgba(61,214,140,0.12);--c-amber-bg:rgba(245,166,35,0.12);--c-red-bg:rgba(240,84,84,0.12);}
+html.light{--c-bg:#F5F6FA;--c-surface:#FFFFFF;--c-card:#FFFFFF;--c-border:rgba(0,0,0,0.09);--c-border2:rgba(0,0,0,0.15);--c-text:#1A1B26;--c-muted:#6E6D7A;--c-sub:#888898;--c-purple-bg:rgba(159,143,247,0.15);--c-teal-bg:rgba(61,214,140,0.12);--c-amber-bg:rgba(245,166,35,0.12);--c-red-bg:rgba(240,84,84,0.12);--c-blue-bg:rgba(96,165,250,0.15);}
 html.light .card{box-shadow:0 1px 4px rgba(0,0,0,.07);}
 html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
 </style>
@@ -186,22 +250,39 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
 <header class="page-header">
   <p class="header-eyebrow">라플위클리 · 누적 시즌 분석 (별도 프로젝트)</p>
   <h1 class="header-title">라플위클리 누적 LTV Score</h1>
-  <p class="header-sub">시즌1~6(진행중) 전편에 라플TV Score 공식(위클리 벤치마크)을 동일 적용</p>
+  <p class="header-sub">시즌1~6(진행중) 전편에 라플TV Score 공식을 7일차(공식 집계) · 1일차(초기반응) 두 기준으로 적용</p>
   <div class="header-meta">
     <span class="meta-chip">총 ${totalCount}편 · 시즌1~6</span>
     <span class="meta-chip">발행 ${chronological[0].pub_date} ~ ${chronological[chronological.length - 1].pub_date}</span>
-    <span class="meta-chip">채널 평균 LTV ${channelAvg.toFixed(2)}</span>
+    <span class="meta-chip">채널 평균 LTV(7일차) ${channelAvg.toFixed(2)}</span>
     ${pending.length ? `<span class="meta-chip">7D 집계대기 ${pending.length}편</span>` : ''}
   </div>
 </header>
 
-<div class="warn-banner">
-  <b>⚠ 데이터 결측 안내 — VR(조회율) 지표</b><br>
-  <b>시즌3~5 ${vrMissingTotal}편(전체의 ${Math.round(vrMissingTotal/totalCount*100)}%)</b>은 원본 엑셀에 평균 조회율(VR) 값이 0으로 비어 있습니다(시즌1·2·6은 정상 반영 완료).
-  VR은 LTV Score에서 25% 비중을 차지하고 10% 미만이면 페널티(-0.025)까지 걸리는 항목이라, 이 구간의 점수는 실제보다 낮게 나올 수 있습니다 — 실제로 시즌2는 VR 보완 후 평균이 0.51→0.68로 뛰어 최고 시즌이 됐습니다.
-  VR 데이터가 마저 채워지면 이 리포트는 재계산되어야 정확해집니다(표에 <span class="vr-flag">VR 결측</span> 표시로 구분).
-  ${pending.length ? `<br>※ ${pending.map(p => `${p.season.replace('위클리 ','')} ${p.num} ${p.title}`).join(', ')}은(는) 발행 후 7일 데이터가 아직 안 쌓여 이번 집계에서 제외했습니다.` : ''}
+${vrMissingTotal > 0 ? `<div class="warn-banner">
+  <b>⚠ 데이터 결측 안내</b><br>
+  <b>${vrMissingTotal}편(전체의 ${Math.round(vrMissingTotal/totalCount*100)}%)</b>은 원본 엑셀에 <b>조회율(VR)·참여도(좋아요+공유+댓글)·트래픽소스(알고리즘/검색 유입)</b> 3개 지표가 전부 0으로 비어 있습니다. 1일차 탭에서도 같은 편이 동일하게 결측입니다.
+  이 3개 항목이 LTV Score 가중치의 최대 48%(조회율 25% + 참여도 15% + 알고리즘·검색 보너스 최대 8%)를 차지하기 때문에, 결측 편의 점수는 실제 성적보다 상당히 낮게 나왔을 가능성이 큽니다 — 실제로 시즌2·3·4·5는 이 지표들이 보완된 뒤 평균이 크게 뛰었습니다(시즌2 0.51→0.68).
+  지표가 마저 채워지면 이 리포트는 재계산되어야 정확해집니다(표에 <span class="vr-flag">VR 결측</span> 표시로 구분).
+</div>` : ''}
+${pending.length ? `<div class="warn-banner">※ ${pending.map(p => `${p.season.replace('위클리 ','')} ${p.num} ${p.title}`).join(', ')}은(는) 발행 후 7일 데이터가 아직 안 쌓여 이번 집계에서 제외했습니다.</div>` : ''}
+
+<div class="section">
+  <div class="card">
+    <p class="card-title">장기 성장 지수 — 시간이 지나도 계속 발견되는 콘텐츠</p>
+    <p class="card-sub">28일차 조회수 ÷ 7일차 조회수 · 1.0배면 7일차 이후 추가 성장이 없었다는 뜻(전체 평균은 약 1.2배) · LTV Score와는 별개 지표라 7일차/1일차 탭 공통입니다${growthPendingCount ? ` · 발행 후 28일이 아직 안 지난 ${growthPendingCount}편은 집계대기` : ''}</p>
+    <ul class="key-list">
+      ${topGrowth.map(r => `<li><b>${r.season.replace('위클리 ', '')} ${r.num} ${r.title}</b> — 7일차 대비 28일차 조회수 <span style="color:var(--c-teal);font-weight:700">×${r.growth_28d.toFixed(2)}</span></li>`).join('\n      ')}
+    </ul>
+  </div>
 </div>
+
+<div class="nav-tabs">
+  <button class="nav-tab on" onclick="sw('7d',this)">7일차 기준</button>
+  <button class="nav-tab" onclick="sw('1d',this)">1일차 기준</button>
+</div>
+
+<div class="panel show" id="panel-7d">
 
 <div class="kpi-strip">
   <div class="kpi-card purple">
@@ -222,7 +303,7 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
   <div class="kpi-card red">
     <p class="kpi-label">최저 평균 시즌</p>
     <p class="kpi-val red">${worstSeason.season.replace('위클리 ', '')}</p>
-    <span class="kpi-badge">평균 ${worstSeason.avg.toFixed(2)} · VR결측 ${bySeasonStats.find(s=>s.season===worstSeason.season).vrMissingCount}편</span>
+    <span class="kpi-badge">평균 ${worstSeason.avg.toFixed(2)}${bySeasonStats.find(s=>s.season===worstSeason.season).vrMissingCount ? ` · VR결측 ${bySeasonStats.find(s=>s.season===worstSeason.season).vrMissingCount}편` : ''}</span>
   </div>
 </div>
 
@@ -255,13 +336,13 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
     <p class="section-desc">LTV Score 내림차순 · VR 결측 구간은 참고용으로 표시</p>
   </div>
   <div class="filter-tabs">
-    <button class="ftab on" onclick="filterSeason('all',this)">전체 ${totalCount}편</button>
-    <button class="ftab" onclick="filterSeason('위클리 시즌1',this)">시즌1</button>
-    <button class="ftab" onclick="filterSeason('위클리 시즌2',this)">시즌2</button>
-    <button class="ftab" onclick="filterSeason('위클리 시즌3',this)">시즌3</button>
-    <button class="ftab" onclick="filterSeason('위클리 시즌4',this)">시즌4</button>
-    <button class="ftab" onclick="filterSeason('위클리 시즌5',this)">시즌5</button>
-    <button class="ftab" onclick="filterSeason('위클리 시즌6',this)">시즌6</button>
+    <button class="ftab on" onclick="filterSeason('7d','all',this)">전체 ${totalCount}편</button>
+    <button class="ftab" onclick="filterSeason('7d','위클리 시즌1',this)">시즌1</button>
+    <button class="ftab" onclick="filterSeason('7d','위클리 시즌2',this)">시즌2</button>
+    <button class="ftab" onclick="filterSeason('7d','위클리 시즌3',this)">시즌3</button>
+    <button class="ftab" onclick="filterSeason('7d','위클리 시즌4',this)">시즌4</button>
+    <button class="ftab" onclick="filterSeason('7d','위클리 시즌5',this)">시즌5</button>
+    <button class="ftab" onclick="filterSeason('7d','위클리 시즌6',this)">시즌6</button>
   </div>
   <div class="card" style="padding:0">
     <div class="tbl-scroll">
@@ -269,9 +350,9 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
         <thead><tr>
           <th>#</th><th>에피소드</th><th>시즌</th><th>발행일</th>
           <th class="r">LTV Score</th><th>등급</th>
-          <th class="r">자연유입율</th><th class="r">자연유입(회)</th><th class="r">조회율(VR)</th><th class="r">CTR</th><th class="r">구독자</th>
+          <th class="r">자연유입율</th><th class="r">자연유입(회)</th><th class="r">조회율(VR)</th><th class="r">CTR</th><th class="r">구독자</th><th class="r">장기성장(28d/7d)</th>
         </tr></thead>
-        <tbody id="rankBody"></tbody>
+        <tbody id="rankBody_7d"></tbody>
       </table>
     </div>
   </div>
@@ -300,10 +381,141 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
     </div>
     <p class="formula-note">
       라플TV Score(HOT&amp;NEW·딥다이브 포함 최신 리포트)와 동일한 위클리(w) 벤치마크를 그대로 적용: 자연유입비중 31.7%·자연유입 100,196회·조회율 18.4%·CTR 3.64%·참여도 2,500건·구독자 180명 (기대값의 2배가 만점 기준) &nbsp;|&nbsp;
-      등급: S≥0.70, A 0.50~0.70, B 0.35~0.50, C&lt;0.35
+      등급은 채널 전체 벤치마크가 아니라 <b>위클리 ${totalCount}편 내 백분위 상대평가</b>: S 상위 10%(≥${gradeCut.S.toFixed(3)}) · A 다음 25%(≥${gradeCut.A.toFixed(3)}) · B+ 다음 30%(≥${gradeCut['B+'].toFixed(3)}) · B 다음 25%(≥${gradeCut.B.toFixed(3)}) · C 하위 10%(&lt;${gradeCut.B.toFixed(3)})
     </p>
   </div>
 </div>
+
+</div><!-- /panel-7d -->
+
+<div class="panel" id="panel-1d">
+
+<div class="kpi-strip">
+  <div class="kpi-card purple">
+    <p class="kpi-label">전체 평균 LTV(1일차)</p>
+    <p class="kpi-val purple">${channelAvg1d.toFixed(2)}</p>
+    <span class="kpi-badge">시즌1~6, ${totalCount}편</span>
+  </div>
+  <div class="kpi-card teal">
+    <p class="kpi-label">S / A 등급(1일차)</p>
+    <p class="kpi-val teal">${gradeCounts1d.S + gradeCounts1d.A}편</p>
+    <span class="kpi-badge">S ${gradeCounts1d.S} · A ${gradeCounts1d.A}</span>
+  </div>
+  <div class="kpi-card amber">
+    <p class="kpi-label">7일차 TOP10과 겹침</p>
+    <p class="kpi-val amber">${top10Overlap}/10</p>
+    <span class="kpi-badge">1일차만 봤을 때 예측 정확도</span>
+  </div>
+  <div class="kpi-card red">
+    <p class="kpi-label">최저 평균 시즌(1일차)</p>
+    <p class="kpi-val red">${worstSeason1d.season.replace('위클리 ', '')}</p>
+    <span class="kpi-badge">평균 ${worstSeason1d.avg.toFixed(2)}</span>
+  </div>
+</div>
+
+<div class="section">
+  <div class="card">
+    <p class="card-title">1일차 성적이 7일차와 얼마나 달랐나</p>
+    <p class="card-sub">전체 ${totalCount}편 중 1일차 TOP10과 7일차 TOP10이 겹치는 편수: <b style="color:var(--c-text)">${top10Overlap}/10</b> — 초반 반응만으로는 최종 순위를 절반도 못 맞춘다는 뜻입니다.</p>
+  </div>
+</div>
+
+<div class="grid-2 section">
+  <div class="card">
+    <p class="card-title">초반엔 저평가, 나중에 뜬 편 (슬로우 스타터)</p>
+    <p class="card-sub">1일차 순위 → 7일차 순위 상승폭이 가장 큰 5편</p>
+    <ul class="key-list">
+      ${slowStarters.map(moverRow).join('\n      ')}
+    </ul>
+  </div>
+  <div class="card">
+    <p class="card-title">초반엔 반짝, 오래 못 간 편 (플래시 스타터)</p>
+    <p class="card-sub">1일차 순위 → 7일차 순위 하락폭이 가장 큰 5편</p>
+    <ul class="key-list">
+      ${flashStarters.map(moverRow).join('\n      ')}
+    </ul>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-header">
+    <p class="section-title">시즌별 평균 LTV 추이(1일차)</p>
+    <p class="section-desc">시즌1→6, 막대 위 숫자 = 해당 시즌 평균 LTV Score(1일차)</p>
+  </div>
+  <div class="card">
+    <div class="chart-box" style="height:240px"><canvas id="c_season_avg_1d"></canvas></div>
+  </div>
+</div>
+
+<div class="grid-2 section">
+  <div class="card">
+    <p class="card-title">시즌별 등급 분포(1일차)</p>
+    <p class="card-sub">스택 바 · S/A/B/C</p>
+    <div class="chart-box" style="height:220px"><canvas id="c_season_grade_1d"></canvas></div>
+  </div>
+  <div class="card">
+    <p class="card-title">전체 ${totalCount}편 LTV Score 분포(1일차)</p>
+    <p class="card-sub">발행 순 · 색상 = 시즌</p>
+    <div class="chart-box" style="height:220px"><canvas id="c_all_dist_1d"></canvas></div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-header">
+    <p class="section-title">전체 순위표(1일차)</p>
+    <p class="section-desc">LTV Score(1일차) 내림차순 · VR 결측 구간은 참고용으로 표시</p>
+  </div>
+  <div class="filter-tabs">
+    <button class="ftab on" onclick="filterSeason('1d','all',this)">전체 ${totalCount}편</button>
+    <button class="ftab" onclick="filterSeason('1d','위클리 시즌1',this)">시즌1</button>
+    <button class="ftab" onclick="filterSeason('1d','위클리 시즌2',this)">시즌2</button>
+    <button class="ftab" onclick="filterSeason('1d','위클리 시즌3',this)">시즌3</button>
+    <button class="ftab" onclick="filterSeason('1d','위클리 시즌4',this)">시즌4</button>
+    <button class="ftab" onclick="filterSeason('1d','위클리 시즌5',this)">시즌5</button>
+    <button class="ftab" onclick="filterSeason('1d','위클리 시즌6',this)">시즌6</button>
+  </div>
+  <div class="card" style="padding:0">
+    <div class="tbl-scroll">
+      <table class="ep-tbl">
+        <thead><tr>
+          <th>#</th><th>에피소드</th><th>시즌</th><th>발행일</th>
+          <th class="r">LTV Score(1일차)</th><th>등급</th>
+          <th class="r">자연유입율</th><th class="r">자연유입(회)</th><th class="r">조회율(VR)</th><th class="r">CTR</th><th class="r">구독자</th><th class="r">장기성장(28d/7d)</th>
+        </tr></thead>
+        <tbody id="rankBody_1d"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="formula-box">
+    <div class="formula-line">
+      <span class="v">LTV Score(1일차)</span> = <span class="v">N</span><sub>자연유입</sub>×<span class="w">0.229</span>
+       + <span class="v">N</span><sub>조회율</sub>×<span class="w">0.191</span>
+       + <span class="v">N</span><sub>CTR</sub>×<span class="w">0.153</span>
+       + <span class="v">N</span><sub>참여도</sub>×<span class="w">0.115</span>
+       + <span class="v">N</span><sub>구독자</sub>×<span class="w">0.076</span>
+       + <span class="v">N</span><sub>시청시간</sub>×<span class="w">0.236</span>
+    </div>
+    <div class="formula-line">
+      &nbsp;&nbsp;<span class="plus">+ 롱테일 보너스 +0.05</span>
+      <span class="cmt">&nbsp;&nbsp;(자연유입 비중 ≥ 54.1%, 1일차 위클리 자체 평균)</span>
+    </div>
+    <div class="formula-line">
+      &nbsp;&nbsp;<span class="minus">− 복합 패널티 (조회율&lt;14.6% · 구독↓&lt;0 · CTR&lt;2.27% 각 −0.025)</span>
+      <span class="cmt">&nbsp;&nbsp;최대 −0.05</span>
+    </div>
+    <p class="formula-note">
+      <b>평균시청시간을 6번째 항목으로 추가했습니다</b> — 위클리 66편에서 "1일차 지표가 최종(7일차) 점수를 얼마나 잘 예측하는지" 확인해보니 참여도(r=0.79)에 이어 평균시청시간(r=0.61, 기존 공식엔 없던 지표)이 자연유입·조회율보다도 예측력이 높았습니다. 반면 CTR은 1일차엔 대부분 구독자 피드 노출이라 편차가 거의 없어(r=0.09) 원래 비중만큼의 변별력을 보여주지 못했지만, 이번엔 시청시간의 몫(예측력 비례 23.6%)만 새로 반영하고 나머지 5개 항목은 <b>7일차와 동일한 상대비율(30:25:20:15:10)을 유지</b>한 채 축소했습니다 — CTR·참여도 비중 자체를 조정하는 건 별도 논의 사항입니다. &nbsp;|&nbsp;
+      <b>알고리즘/검색 보너스는 1일차에 적용하지 않습니다</b> — 원본 엑셀의 트래픽소스(추천·검색 유입) 데이터가 7일차 기준으로만 존재해서 1일차 원본값 자체가 없습니다. &nbsp;|&nbsp;
+      7일차 벤치마크(채널 전체 검증 기준)를 그대로 쓰면 1일차엔 자연유입비중·조회율·CTR이 구조적으로 훨씬 높게 나와(예: 자연유입비중 1일차 평균 54.1% vs 7일차 벤치마크 31.7%) 거의 전 편이 만점 처리되므로, <b>위클리 자체 66편(VR·참여도 결측 없는 시즌1,2,3,4,6)의 1일차 평균으로 벤치마크를 별도 도출</b>했습니다: 자연유입비중 54.1%·자연유입 44,929회·조회율 29.3%·CTR 4.54%·참여도 1,477건·구독자 165명·평균시청시간 14.71분. &nbsp;|&nbsp;
+      등급도 이 리포트 내 1일차 점수의 <b>백분위 상대평가</b>: S 상위 10%(≥${gradeCut1d.S.toFixed(3)}) · A 다음 25%(≥${gradeCut1d.A.toFixed(3)}) · B+ 다음 30%(≥${gradeCut1d['B+'].toFixed(3)}) · B 다음 25%(≥${gradeCut1d.B.toFixed(3)}) · C 하위 10%(&lt;${gradeCut1d.B.toFixed(3)})
+    </p>
+  </div>
+</div>
+
+</div><!-- /panel-1d -->
 
 </div><!-- /shell -->
 
@@ -311,62 +523,87 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
 
 <script>
 const GRID='rgba(255,255,255,0.06)', TICK={font:{size:10},color:'#6E6D7A'};
-const BC={S:'#9F8FF7',A:'#3DD68C',B:'#F5A623',C:'#6E6D7A'};
+const BC={S:'#9F8FF7',A:'#3DD68C','B+':'#F5A623',B:'#60A5FA',C:'#6E6D7A'};
 const SEASON_COLOR={'위클리 시즌1':'#60A5FA','위클리 시즌2':'#9F8FF7','위클리 시즌3':'#F472B6','위클리 시즌4':'#F5A623','위클리 시즌5':'#34D399','위클리 시즌6':'#22D3EE'};
 const SEASON_NAME={'위클리 시즌1':'S1','위클리 시즌2':'S2','위클리 시즌3':'S3','위클리 시즌4':'S4','위클리 시즌5':'S5','위클리 시즌6':'S6'};
 
-const DATA=[
+const DATA={ '7d':[
   ${dataArrJs}
-];
-const RANKED=[
+], '1d':[
+  ${dataArrJs1d}
+] };
+const RANKED={ '7d':[
   ${rankedArrJs}
-];
+], '1d':[
+  ${rankedArrJs1d}
+] };
 
 Chart.defaults.color='#6E6D7A';
+const charts={};
 
-// 시즌별 평균 LTV
-new Chart(document.getElementById('c_season_avg'),{type:'bar',
-  data:{labels:[${seasonLabels}],
-    datasets:[{data:[${seasonAvgs}],backgroundColor:[${seasonColors}],borderRadius:6,barPercentage:.55}]},
-  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},
-    tooltip:{callbacks:{label:c=>'평균 LTV '+c.parsed.y.toFixed(3)}}},
-    scales:{x:{grid:{display:false},ticks:TICK},
-            y:{grid:{color:GRID},ticks:{...TICK,callback:v=>v.toFixed(1)},min:0,max:.8}}}});
+function sw(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('show'));
+  document.getElementById('panel-'+id).classList.add('show');
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('on'));
+  btn.classList.add('on');
+  Object.values(charts).forEach(c=>{ if(c) c.resize(); });
+}
 
-// 시즌별 등급분포
-new Chart(document.getElementById('c_season_grade'),{type:'bar',
-  data:{labels:[${seasonLabels}],
-    datasets:[
-      {label:'S',data:[${seasonS}],backgroundColor:'rgba(159,143,247,.8)',stack:'g',borderRadius:3},
-      {label:'A',data:[${seasonA}],backgroundColor:'rgba(61,214,140,.8)',stack:'g',borderRadius:3},
-      {label:'B',data:[${seasonB}],backgroundColor:'rgba(245,166,35,.7)',stack:'g',borderRadius:3},
-      {label:'C',data:[${seasonC}],backgroundColor:'rgba(110,109,122,.4)',stack:'g',borderRadius:3},
+function seasonAvgChart(id, labels, data, colors){
+  return new Chart(document.getElementById(id),{type:'bar',
+    data:{labels,datasets:[{data,backgroundColor:colors,borderRadius:6,barPercentage:.55}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},
+      tooltip:{callbacks:{label:c=>'평균 LTV '+c.parsed.y.toFixed(3)}}},
+      scales:{x:{grid:{display:false},ticks:TICK},
+              y:{grid:{color:GRID},ticks:{...TICK,callback:v=>v.toFixed(1)},min:0,max:.8}}}});
+}
+function seasonGradeChart(id, labels, S,A,Bp,B,C){
+  return new Chart(document.getElementById(id),{type:'bar',
+    data:{labels,datasets:[
+      {label:'S',data:S,backgroundColor:'rgba(159,143,247,.8)',stack:'g',borderRadius:3},
+      {label:'A',data:A,backgroundColor:'rgba(61,214,140,.8)',stack:'g',borderRadius:3},
+      {label:'B+',data:Bp,backgroundColor:'rgba(245,166,35,.7)',stack:'g',borderRadius:3},
+      {label:'B',data:B,backgroundColor:'rgba(96,165,250,.7)',stack:'g',borderRadius:3},
+      {label:'C',data:C,backgroundColor:'rgba(110,109,122,.4)',stack:'g',borderRadius:3},
     ]},
-  options:{responsive:true,maintainAspectRatio:false,
-    plugins:{legend:{labels:{font:{size:10},boxWidth:10,color:'#9997A8'}}},
-    scales:{x:{stacked:true,grid:{display:false},ticks:TICK},y:{stacked:true,grid:{color:GRID},ticks:TICK}}}});
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{labels:{font:{size:10},boxWidth:10,color:'#9997A8'}}},
+      scales:{x:{stacked:true,grid:{display:false},ticks:TICK},y:{stacked:true,grid:{color:GRID},ticks:TICK}}}});
+}
+function allDistChart(id, tab){
+  const d = DATA[tab];
+  return new Chart(document.getElementById(id),{type:'bar',
+    data:{labels:d.map(x=>SEASON_NAME[x.season]+' '+x.num),
+      datasets:[{data:d.map(x=>x.v2),
+        backgroundColor:d.map(x=>SEASON_COLOR[x.season]+'BB'),
+        borderColor:d.map(x=>SEASON_COLOR[x.season]),borderWidth:.5,borderRadius:3}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},
+      tooltip:{callbacks:{title:c=>d[c[0].dataIndex].title,label:c=>'LTV '+c.parsed.y.toFixed(3)+(d[c[0].dataIndex].vrMissing?' (VR 결측)':'')}}},
+      scales:{x:{grid:{display:false},ticks:{...TICK,maxRotation:60,font:{size:8},autoSkip:true,maxTicksLimit:20}},
+              y:{grid:{color:GRID},ticks:{...TICK,callback:v=>v.toFixed(1)},min:0,max:1}}}});
+}
 
-// 전체 분포 (발행순)
-new Chart(document.getElementById('c_all_dist'),{type:'bar',
-  data:{labels:DATA.map(d=>SEASON_NAME[d.season]+' '+d.num),
-    datasets:[{data:DATA.map(d=>d.v2),
-      backgroundColor:DATA.map(d=>SEASON_COLOR[d.season]+'BB'),
-      borderColor:DATA.map(d=>SEASON_COLOR[d.season]),borderWidth:.5,borderRadius:3}]},
-  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},
-    tooltip:{callbacks:{title:c=>DATA[c[0].dataIndex].title,label:c=>'LTV '+c.parsed.y.toFixed(3)+(DATA[c[0].dataIndex].vrMissing?' (VR 결측)':'')}}},
-    scales:{x:{grid:{display:false},ticks:{...TICK,maxRotation:60,font:{size:8},autoSkip:true,maxTicksLimit:20}},
-            y:{grid:{color:GRID},ticks:{...TICK,callback:v=>v.toFixed(1)},min:0,max:1}}}});
+charts.seasonAvg7d = seasonAvgChart('c_season_avg', [${seasonLabels}], [${agg7d.avgs}], [${seasonColors}]);
+charts.seasonGrade7d = seasonGradeChart('c_season_grade', [${seasonLabels}], [${agg7d.S}],[${agg7d.A}],[${agg7d.Bp}],[${agg7d.B}],[${agg7d.C}]);
+charts.allDist7d = allDistChart('c_all_dist', '7d');
+
+charts.seasonAvg1d = seasonAvgChart('c_season_avg_1d', [${seasonLabels}], [${agg1d.avgs}], [${seasonColors}]);
+charts.seasonGrade1d = seasonGradeChart('c_season_grade_1d', [${seasonLabels}], [${agg1d.S}],[${agg1d.A}],[${agg1d.Bp}],[${agg1d.B}],[${agg1d.C}]);
+charts.allDist1d = allDistChart('c_all_dist_1d', '1d');
 
 /* 순위 테이블 */
-let curSeason='all';
-function filterSeason(s,btn){
-  curSeason=s; document.querySelectorAll('.ftab').forEach(t=>t.classList.remove('on')); btn.classList.add('on'); renderRank();
+const curSeason = { '7d':'all', '1d':'all' };
+function filterSeason(tab,s,btn){
+  curSeason[tab]=s;
+  btn.parentElement.querySelectorAll('.ftab').forEach(t=>t.classList.remove('on'));
+  btn.classList.add('on');
+  renderRank(tab);
 }
-function renderRank(){
-  const list=curSeason==='all'?RANKED:RANKED.filter(d=>d.season===curSeason);
-  const tbody=document.getElementById('rankBody'); tbody.innerHTML='';
+function renderRank(tab){
+  const list=curSeason[tab]==='all'?RANKED[tab]:RANKED[tab].filter(d=>d.season===curSeason[tab]);
+  const tbody=document.getElementById('rankBody_'+tab); tbody.innerHTML='';
   list.forEach((d,i)=>{
-    const gc=d.grade==='S'?'gs':d.grade==='A'?'ga':d.grade==='B'?'gb':'gc';
+    const gc=d.grade==='S'?'gs':d.grade==='A'?'ga':d.grade==='B+'?'gbp':d.grade==='B'?'gb':'gc';
     const tr=document.createElement('tr');
     tr.innerHTML=\`
       <td><span class="ep-num">\${i+1}</span></td>
@@ -379,11 +616,13 @@ function renderRank(){
       <td class="tr">\${d.natAbs.toLocaleString()}</td>
       <td class="tr">\${d.vrMissing?'<span class="vr-flag">결측</span>':d.vr+'%'}</td>
       <td class="tr">\${d.ctr}%</td>
-      <td class="tr">\${d.sub>0?'+':''}\${d.sub}</td>\`;
+      <td class="tr">\${d.sub>0?'+':''}\${d.sub}</td>
+      <td class="tr">\${d.growth28==null?'<span class="vr-flag">집계대기</span>':'×'+d.growth28.toFixed(2)}</td>\`;
     tbody.appendChild(tr);
   });
 }
-renderRank();
+renderRank('7d');
+renderRank('1d');
 </script>
 </body>
 </html>
