@@ -429,9 +429,9 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
         </div>
         <div style="margin-top:16px;padding-top:12px;border-top:1px solid var(--border);">
           <div class="ct" style="margin-bottom:8px;">소재별 CPV (현재 운영 소재, 전환캠페인 7월 기준)</div>
-          <div class="mbar-row"><div class="mbar-lbl">군체</div><div class="mbar-track"><div class="mbar-fill" style="width:89%;background:linear-gradient(90deg,var(--prog-weekly),rgba(75,142,255,.4));"><span class="mbar-num">166원</span></div></div></div>
-          <div class="mbar-row"><div class="mbar-lbl">스필버그</div><div class="mbar-track"><div class="mbar-fill" style="width:0%;background:linear-gradient(90deg,var(--prog-hot),rgba(255,59,92,.4));"><span class="mbar-num">0원</span></div></div></div>
-          <div class="mbar-row"><div class="mbar-lbl">토이스토리</div><div class="mbar-track"><div class="mbar-fill" style="width:45%;background:linear-gradient(90deg,var(--prog-deep),rgba(34,197,94,.4));"><span class="mbar-num">75원</span></div></div></div>
+          <div class="mbar-row"><div class="mbar-lbl">군체</div><div class="mbar-track"><div class="mbar-fill" style="width:89%;background:linear-gradient(90deg,var(--prog-weekly),rgba(75,142,255,.4));"><span class="mbar-num">165원</span></div></div></div>
+          <div class="mbar-row"><div class="mbar-lbl">스필버그</div><div class="mbar-track"><div class="mbar-fill" style="width:100%;background:linear-gradient(90deg,var(--prog-hot),rgba(255,59,92,.4));"><span class="mbar-num">186원</span></div></div></div>
+          <div class="mbar-row"><div class="mbar-lbl">토이스토리</div><div class="mbar-track"><div class="mbar-fill" style="width:0%;background:linear-gradient(90deg,var(--prog-deep),rgba(34,197,94,.4));"><span class="mbar-num">0원</span></div></div></div>
         </div>
       </div>
     </div>
@@ -1716,7 +1716,7 @@ function drawClickCharts(){try{
 
   /* 소재별 CTR 비교 */
   (function(){
-    var CDATA=[{lbl:'뮤지컬1 (20화)',prog:'위클리',ctr:7.11,active:true},{lbl:'스필버그 (19화)',prog:'위클리',ctr:4.33,active:false},{lbl:'뉴뮤지엄 (딥7화)',prog:'딥다이브',ctr:3.86,active:true},{lbl:'시선 (22화)',prog:'위클리',ctr:2.89,active:true},{lbl:'더베어 (17화)',prog:'H&N',ctr:2.55,active:true},{lbl:'장송의프리렌 (딥8화)',prog:'딥다이브',ctr:2.08,active:true},{lbl:'토이스토리 (16화)',prog:'H&N',ctr:1.77,active:false},{lbl:'토이스토리 (13화)',prog:'위클리',ctr:1.58,active:false}];
+    var CDATA=[{lbl:'뮤지컬1 (20화)',prog:'위클리',ctr:7.11,active:true},{lbl:'스필버그 (19화)',prog:'위클리',ctr:4.33,active:false},{lbl:'뉴뮤지엄 (딥7화)',prog:'딥다이브',ctr:3.86,active:true},{lbl:'시선 (22화)',prog:'위클리',ctr:2.89,active:true},{lbl:'더베어 (17화)',prog:'H&N',ctr:2.55,active:true},{lbl:'장송의프리렌 (딥8화)',prog:'딥다이브',ctr:2.08,active:true},{lbl:'토이스토리 (16화)',prog:'H&N',ctr:1.77,active:false},{lbl:'토이스토리 (13화)',prog:'위클리',ctr:1.58,active:false},{lbl:'뮤지컬2 (21화)',prog:'위클리',ctr:1.4,active:false}];
     var bH=16; var gap=3; var lpad=110; var rpad=48;
     var totalH=CDATA.length*(bH+gap)+16;
     var ctx=setup('clickCTR',totalH); if(!ctx)return;
@@ -1750,7 +1750,7 @@ function drawClickCharts(){try{
 
   /* 소재별 클릭수 비교 */
   (function(){
-    var CCLICKS=[{lbl:'스필버그 (19화)',v:318,c:'#2D6FE8'},{lbl:'토이스토리 (13화)',v:5986,c:'#8BBEFF'},{lbl:'토이스토리 (16화)',v:44718,c:C.hot},{lbl:'뮤지컬1 (20화)',v:6381,c:C.weekly},{lbl:'더베어 (17화)',v:8053,c:'#FF5830'},{lbl:'뉴뮤지엄 (딥7화)',v:4787,c:'#5EE89A'},{lbl:'장송의프리렌 (딥8화)',v:17078,c:C.deep},{lbl:'시선 (22화)',v:2273,c:'#FFB020'}];
+    var CCLICKS=[{lbl:'스필버그 (19화)',v:318,c:'#2D6FE8'},{lbl:'토이스토리 (13화)',v:5986,c:'#8BBEFF'},{lbl:'토이스토리 (16화)',v:44718,c:C.hot},{lbl:'뮤지컬1 (20화)',v:6381,c:C.weekly},{lbl:'뮤지컬2 (21화)',v:5954,c:'#2060D0'},{lbl:'더베어 (17화)',v:8053,c:'#FF5830'},{lbl:'뉴뮤지엄 (딥7화)',v:4787,c:'#5EE89A'},{lbl:'장송의프리렌 (딥8화)',v:17078,c:C.deep},{lbl:'시선 (22화)',v:2273,c:'#FFB020'}];
     CCLICKS.sort(function(a,b){return b.v-a.v;});
     var bH=16; var gap=3; var lpad=110; var rpad=52;
     var totalH=CCLICKS.length*(bH+gap)+16;
@@ -1815,10 +1815,10 @@ function drawClickCharts(){try{
   }
 
   /* 광고비 도넛 — 7월 기준 (소재별 실측, 디맨드젠_클릭최대화 시트 2.소재별데이터) */
-  drawDonut('clickDonutCost',[{lbl:'토이스토리 (16화·H&N)',v:1851186,c:C.hot},{lbl:'장송의프리렌 (딥8화)',v:730769,c:C.deep},{lbl:'더베어 (17화·H&N)',v:328986,c:'#FF5830'},{lbl:'토이스토리 (13화·위클리)',v:294479,c:'#8BBEFF'},{lbl:'뮤지컬1 (20화·위클리)',v:259729,c:C.weekly},{lbl:'뉴뮤지엄 (딥7화)',v:189878,c:'#5EE89A'},{lbl:'시선 (22화·위클리)',v:104376,c:'#FFB020'},{lbl:'스필버그 (19화·위클리)',v:14446,c:'#2D6FE8'}],'7월 총 광고비',function(v){return Math.round(v/10000)+'만원';});
+  drawDonut('clickDonutCost',[{lbl:'토이스토리 (16화·H&N)',v:1851186,c:C.hot},{lbl:'장송의프리렌 (딥8화)',v:730769,c:C.deep},{lbl:'더베어 (17화·H&N)',v:328986,c:'#FF5830'},{lbl:'뮤지컬2 (21화·위클리)',v:301026,c:'#2060D0'},{lbl:'토이스토리 (13화·위클리)',v:294479,c:'#8BBEFF'},{lbl:'뮤지컬1 (20화·위클리)',v:259729,c:C.weekly},{lbl:'뉴뮤지엄 (딥7화)',v:189878,c:'#5EE89A'},{lbl:'시선 (22화·위클리)',v:104376,c:'#FFB020'},{lbl:'스필버그 (19화·위클리)',v:14446,c:'#2D6FE8'}],'7월 총 광고비',function(v){return Math.round(v/10000)+'만원';});
 
   /* 클릭수 도넛 — 7월 기준 (소재별 실측) */
-  drawDonut('clickDonutClicks',[{lbl:'토이스토리 (16화·H&N)',v:44718,c:C.hot},{lbl:'장송의프리렌 (딥8화)',v:17078,c:C.deep},{lbl:'더베어 (17화·H&N)',v:8053,c:'#FF5830'},{lbl:'뮤지컬1 (20화·위클리)',v:6381,c:C.weekly},{lbl:'토이스토리 (13화·위클리)',v:5986,c:'#8BBEFF'},{lbl:'뉴뮤지엄 (딥7화)',v:4787,c:'#5EE89A'},{lbl:'시선 (22화·위클리)',v:2273,c:'#FFB020'},{lbl:'스필버그 (19화·위클리)',v:318,c:'#2D6FE8'}],'7월 총 클릭수',function(v){return (v/10000).toFixed(1)+'만';});
+  drawDonut('clickDonutClicks',[{lbl:'토이스토리 (16화·H&N)',v:44718,c:C.hot},{lbl:'장송의프리렌 (딥8화)',v:17078,c:C.deep},{lbl:'더베어 (17화·H&N)',v:8053,c:'#FF5830'},{lbl:'뮤지컬1 (20화·위클리)',v:6381,c:C.weekly},{lbl:'토이스토리 (13화·위클리)',v:5986,c:'#8BBEFF'},{lbl:'뮤지컬2 (21화·위클리)',v:5954,c:'#2060D0'},{lbl:'뉴뮤지엄 (딥7화)',v:4787,c:'#5EE89A'},{lbl:'시선 (22화·위클리)',v:2273,c:'#FFB020'},{lbl:'스필버그 (19화·위클리)',v:318,c:'#2D6FE8'}],'7월 총 클릭수',function(v){return (v/10000).toFixed(1)+'만';});
 
   /* ── 일자별 운영 소재 (6월 1일~22일, 일별 추정 데이터) ── */
   (function(){
@@ -2116,7 +2116,7 @@ function drawConvCharts(){try{
         '6/25':[1784,940,'0.64',206,368131],
         '6/26':[1729,886,'0.63',203,351670],
         '6/27':[1674,864,'0.57',208,348329],
-        '6/28':[1787,951,'0.58',204,364428],'6/29':[1804,941,'0.62',208,374556],'6/30':[2523,1323,'0.58',223,563392],'7/1':[3397,1757,'0.65',191,649712],'7/2':[3418,1741,'0.62',189,645225],'7/3':[3358,1673,'0.62',190,637838],'7/4':[3341,1593,'0.56',182,608769],'7/5':[3483,1772,'0.57',178,619586],'7/6':[3366,1659,'0.64',185,621735],'7/7':[2945,1432,'0.59',185,545200],'7/8':[2922,1436,'0.6',185,539448]
+        '6/28':[1787,951,'0.58',204,364428],'6/29':[1804,941,'0.62',208,374556],'6/30':[2523,1323,'0.58',223,563392],'7/1':[3397,1757,'0.65',191,649712],'7/2':[3418,1741,'0.62',189,645225],'7/3':[3358,1673,'0.62',190,637838],'7/4':[3341,1593,'0.56',182,608769],'7/5':[3483,1772,'0.57',178,619586],'7/6':[3366,1659,'0.64',185,621735],'7/7':[2945,1432,'0.59',185,545200],'7/8':[2922,1436,'0.6',185,539448],'7/9':[2837,1468,'0.63',188,534127]
       }},
       '마이클잭슨':{prog:'weekly',ep:'시즌6 15화 (OFF)',d:{
         '6/1':[1293,596,'0.65',183,236118],'6/2':[1189,499,'0.64',175,208563],
@@ -2312,7 +2312,7 @@ function drawRetargetCharts(){try{
       '6/26':{views:26257,ctr:'2.96',cpv:13,cost:333164},
       '6/27':{views:30570,ctr:'3.79',cpv:11,cost:333116},
       '6/28':{views:34716,ctr:'4.03',cpv:10,cost:333252},'6/29':{views:32171,ctr:'3.49',cpv:10,cost:333422},'6/30':{views:32441,ctr:'3.91',cpv:10,cost:327482},
-      '7/1':{views:0,ctr:'0',cpv:0,cost:0},'7/2':{views:0,ctr:'0',cpv:0,cost:0},'7/3':{views:0,ctr:'0',cpv:0,cost:0},'7/4':{views:0,ctr:'0',cpv:0,cost:0},'7/5':{views:0,ctr:'0',cpv:0,cost:0},'7/6':{views:0,ctr:'0',cpv:0,cost:0},'7/7':{views:0,ctr:'0',cpv:0,cost:0},'7/8':{views:0,ctr:'0',cpv:0,cost:0}
+      '7/1':{views:0,ctr:'0',cpv:0,cost:0},'7/2':{views:0,ctr:'0',cpv:0,cost:0},'7/3':{views:0,ctr:'0',cpv:0,cost:0},'7/4':{views:0,ctr:'0',cpv:0,cost:0},'7/5':{views:0,ctr:'0',cpv:0,cost:0},'7/6':{views:0,ctr:'0',cpv:0,cost:0},'7/7':{views:0,ctr:'0',cpv:0,cost:0},'7/8':{views:0,ctr:'0',cpv:0,cost:0},'7/9':{views:0,ctr:'0',cpv:0,cost:0}
     };
     /* 소재별 일별: [조회수, 클릭수, CTR(조회율%), CPV원, 일광고비원] — Sheet6 실측 */
     var RC={
