@@ -429,9 +429,11 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
         </div>
         <div style="margin-top:16px;padding-top:12px;border-top:1px solid var(--border);">
           <div class="ct" style="margin-bottom:8px;">소재별 CPV (현재 운영 소재, 전환캠페인 7월 기준)</div>
-          <div class="mbar-row"><div class="mbar-lbl">군체</div><div class="mbar-track"><div class="mbar-fill" style="width:88%;background:linear-gradient(90deg,var(--prog-weekly),rgba(75,142,255,.4));"><span class="mbar-num">161원</span></div></div></div>
-          <div class="mbar-row"><div class="mbar-lbl">스필버그</div><div class="mbar-track"><div class="mbar-fill" style="width:100%;background:linear-gradient(90deg,var(--prog-hot),rgba(255,59,92,.4));"><span class="mbar-num">184원</span></div></div></div>
-          <div class="mbar-row"><div class="mbar-lbl">토이스토리</div><div class="mbar-track"><div class="mbar-fill" style="width:0%;background:linear-gradient(90deg,var(--prog-deep),rgba(34,197,94,.4));"><span class="mbar-num">0원</span></div></div></div>
+          <div class="mbar-row"><div class="mbar-lbl">스필버그</div><div class="mbar-track"><div class="mbar-fill" style="width:100%;background:linear-gradient(90deg,var(--prog-weekly),rgba(75,142,255,.4));"><span class="mbar-num">184원</span></div></div></div>
+          <div class="mbar-row"><div class="mbar-lbl">뮤지컬1</div><div class="mbar-track"><div class="mbar-fill" style="width:90%;background:linear-gradient(90deg,var(--prog-weekly),rgba(75,142,255,.4));"><span class="mbar-num">165원</span></div></div></div>
+          <div class="mbar-row"><div class="mbar-lbl">군체</div><div class="mbar-track"><div class="mbar-fill" style="width:88%;background:linear-gradient(90deg,var(--prog-deep),rgba(34,197,94,.4));"><span class="mbar-num">161원</span></div></div></div>
+          <div class="mbar-row"><div class="mbar-lbl">시선</div><div class="mbar-track"><div class="mbar-fill" style="width:85%;background:linear-gradient(90deg,var(--prog-weekly),rgba(75,142,255,.4));"><span class="mbar-num">156원</span></div></div></div>
+          <div class="mbar-row"><div class="mbar-lbl">장송의프리렌</div><div class="mbar-track"><div class="mbar-fill" style="width:85%;background:linear-gradient(90deg,var(--prog-deep),rgba(34,197,94,.4));"><span class="mbar-num">156원</span></div></div></div>
         </div>
       </div>
     </div>
@@ -529,7 +531,7 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
   <section class="sect" style="margin-top:14px;">
     <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
       <div style="display:flex;gap:6px;">
-        <button class="tog-btn" id="vfmt-longform" data-vfmt="롱폼">롱폼 (13개)</button>
+        <button class="tog-btn" id="vfmt-longform" data-vfmt="롱폼">롱폼 (14개)</button>
         <button class="tog-btn" id="vfmt-shorts" data-vfmt="쇼츠">쇼츠 (20개)</button>
       </div>
       <div style="display:flex;gap:6px;">
@@ -1318,6 +1320,7 @@ function regHits(id,arr){HITS[id]=arr;}
 
 /* ── 조회캠페인 CREATIVE DATA ── */
 var CREATIVES = [
+  {fmt:'롱폼',prog:'라플위클리',ep:'23화',title:'귀신',        ctr:0.43,vtr:46.6,cpv:24,views:125772,imp:270037,clicks:1152,spend:2999500},
   {fmt:'롱폼',prog:'라플위클리',ep:'22화',title:'시선',        ctr:0.54,vtr:49.7,cpv:27,views:111864,imp:225043,clicks:1224,spend:2998779},
   {fmt:'롱폼',prog:'라플위클리',ep:'21화',title:'뮤지컬2',      ctr:0.42,vtr:42.3,cpv:25,views:117933,imp:278770, clicks:1163,spend:2997167},
   {fmt:'롱폼',prog:'라플위클리',ep:'20화',title:'뮤지컬',      ctr:0.54,vtr:53.1,cpv:23,views:133071,imp:250580,clicks:1345,spend:2998082},
