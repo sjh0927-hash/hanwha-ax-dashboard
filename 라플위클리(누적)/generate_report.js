@@ -68,13 +68,16 @@ const vrMissingTotal = results.filter(r => r.vr_missing).length;
 // 장기 성장 지수(28일차 조회수 ÷ 7일차 조회수) — 28일차 전용 점수공식 대신, 시간이 지나도
 // 계속 발견되는 콘텐츠만 가볍게 짚어주는 보조 배지.
 const growthPendingCount = results.filter(r => r.growth28_pending).length;
-const topGrowth = [...results].filter(r => !r.growth28_pending).sort((a, b) => b.growth_28d - a.growth_28d).slice(0, 5);
+const growthDone = results.filter(r => !r.growth28_pending);
+const topGrowth = [...growthDone].sort((a, b) => b.growth_28d - a.growth_28d).slice(0, 5);
+const avgGrowth28 = growthDone.reduce((s, r) => s + r.growth_28d, 0) / growthDone.length;
+const minGrowth28 = Math.min(...growthDone.map(r => r.growth_28d));
 
 function buildDataArr(sortedArr, suf, v2Field, gradeField) {
   return sortedArr.map(r => (
     `{season:'${esc(r.season)}',num:'${esc(r.num)}',title:'${esc(r.title)}',pub:'${r.pub_date || ''}',` +
     `v2:${r[v2Field]},grade:'${r[gradeField]}',natPct:${(r['nat_pct_' + suf] * 100).toFixed(1)},natAbs:${Math.round(r['nat_abs_' + suf])},` +
-    `vr:${(r['vr_' + suf] * 100).toFixed(1)},vrMissing:${r.vr_missing},ctr:${(r['ctr_' + suf] * 100).toFixed(2)},` +
+    `vr:${(r['vr_' + suf] * 100).toFixed(1)},vrMissing:${r.vr_missing},ctr:${(r['ctr_' + suf] * 100).toFixed(1)},` +
     `sub:${Math.round(r['sub_' + suf])},views:${Math.round(r['views_' + suf])},eng:${Math.round(r['eng_' + suf])}}`
   )).join(',\n  ');
 }
@@ -82,7 +85,7 @@ function buildRankedArr(suf, v2Field, gradeField) {
   return [...results].sort((a, b) => b[v2Field] - a[v2Field]).map(r => (
     `{season:'${esc(r.season)}',num:'${esc(r.num)}',title:'${esc(r.title)}',pub:'${r.pub_date || ''}',` +
     `v2:${r[v2Field]},grade:'${r[gradeField]}',natPct:${(r['nat_pct_' + suf] * 100).toFixed(1)},natAbs:${Math.round(r['nat_abs_' + suf])},` +
-    `vr:${(r['vr_' + suf] * 100).toFixed(1)},vrMissing:${r.vr_missing},ctr:${(r['ctr_' + suf] * 100).toFixed(2)},sub:${Math.round(r['sub_' + suf])},` +
+    `vr:${(r['vr_' + suf] * 100).toFixed(1)},vrMissing:${r.vr_missing},ctr:${(r['ctr_' + suf] * 100).toFixed(1)},sub:${Math.round(r['sub_' + suf])},` +
     `growth28:${r.growth28_pending ? 'null' : r.growth_28d}}`
   )).join(',\n  ');
 }
@@ -261,21 +264,11 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
 
 ${vrMissingTotal > 0 ? `<div class="warn-banner">
   <b>⚠ 데이터 결측 안내</b><br>
-  <b>${vrMissingTotal}편(전체의 ${Math.round(vrMissingTotal/totalCount*100)}%)</b>은 원본 엑셀에 <b>조회율(VR)·참여도(좋아요+공유+댓글)·트래픽소스(알고리즘/검색 유입)</b> 3개 지표가 전부 0으로 비어 있습니다. 1일차 탭에서도 같은 편이 동일하게 결측입니다.
-  이 3개 항목이 LTV Score 가중치의 최대 48%(조회율 25% + 참여도 15% + 알고리즘·검색 보너스 최대 8%)를 차지하기 때문에, 결측 편의 점수는 실제 성적보다 상당히 낮게 나왔을 가능성이 큽니다 — 실제로 시즌2·3·4·5는 이 지표들이 보완된 뒤 평균이 크게 뛰었습니다(시즌2 0.51→0.68).
+  <b>${vrMissingTotal}편(전체의 ${(vrMissingTotal/totalCount*100).toFixed(1)}%)</b>은 원본 엑셀에 <b>조회율(VR)·참여도(좋아요+공유+댓글)·트래픽소스(알고리즘/검색 유입)</b> 3개 지표가 전부 0으로 비어 있습니다. 1일차 탭에서도 같은 편이 동일하게 결측입니다.
+  이 3개 항목이 LTV Score 가중치의 최대 48.0%(조회율 25.0% + 참여도 15.0% + 알고리즘·검색 보너스 최대 8.0%)를 차지하기 때문에, 결측 편의 점수는 실제 성적보다 상당히 낮게 나왔을 가능성이 큽니다 — 실제로 시즌2·3·4·5는 이 지표들이 보완된 뒤 평균이 크게 뛰었습니다(시즌2 0.51→0.68).
   지표가 마저 채워지면 이 리포트는 재계산되어야 정확해집니다(표에 <span class="vr-flag">VR 결측</span> 표시로 구분).
 </div>` : ''}
 ${pending.length ? `<div class="warn-banner">※ ${pending.map(p => `${p.season.replace('위클리 ','')} ${p.num} ${p.title}`).join(', ')}은(는) 발행 후 7일 데이터가 아직 안 쌓여 이번 집계에서 제외했습니다.</div>` : ''}
-
-<div class="section">
-  <div class="card">
-    <p class="card-title">장기 성장 지수 — 시간이 지나도 계속 발견되는 콘텐츠</p>
-    <p class="card-sub">28일차 조회수 ÷ 7일차 조회수 · 1.0배면 7일차 이후 추가 성장이 없었다는 뜻(전체 평균은 약 1.2배) · LTV Score와는 별개 지표라 7일차/1일차 탭 공통입니다${growthPendingCount ? ` · 발행 후 28일이 아직 안 지난 ${growthPendingCount}편은 집계대기` : ''}</p>
-    <ul class="key-list">
-      ${topGrowth.map(r => `<li><b>${r.season.replace('위클리 ', '')} ${r.num} ${r.title}</b> — 7일차 대비 28일차 조회수 <span style="color:var(--c-teal);font-weight:700">×${r.growth_28d.toFixed(2)}</span></li>`).join('\n      ')}
-    </ul>
-  </div>
-</div>
 
 <div class="nav-tabs">
   <button class="nav-tab on" onclick="sw('7d',this)">7일차 기준</button>
@@ -320,7 +313,7 @@ ${pending.length ? `<div class="warn-banner">※ ${pending.map(p => `${p.season.
 <div class="grid-2 section">
   <div class="card">
     <p class="card-title">시즌별 등급 분포</p>
-    <p class="card-sub">스택 바 · S/A/B/C</p>
+    <p class="card-sub">스택 바 · S/A/B+/B/C</p>
     <div class="chart-box" style="height:220px"><canvas id="c_season_grade"></canvas></div>
   </div>
   <div class="card">
@@ -369,19 +362,19 @@ ${pending.length ? `<div class="warn-banner">※ ${pending.map(p => `${p.season.
     </div>
     <div class="formula-line">
       &nbsp;&nbsp;<span class="plus">+ 롱테일 보너스 +0.05</span>
-      <span class="cmt">&nbsp;&nbsp;(자연유입 비중 ≥ 30%)</span>
+      <span class="cmt">&nbsp;&nbsp;(자연유입 비중 ≥ 30.0%)</span>
     </div>
     <div class="formula-line">
       &nbsp;&nbsp;<span class="plus">+ 알고리즘/검색 보너스</span>
       <span class="cmt">&nbsp;&nbsp;추천동영상·탐색기능 / 검색 유입 비중 기반, 최대 +0.08</span>
     </div>
     <div class="formula-line">
-      &nbsp;&nbsp;<span class="minus">− 복합 패널티 (조회율&lt;10% · 구독↓&lt;0 · CTR&lt;2% 각 −0.025)</span>
+      &nbsp;&nbsp;<span class="minus">− 복합 패널티 (조회율&lt;10.0% · 구독↓&lt;0 · CTR&lt;2.0% 각 −0.025)</span>
       <span class="cmt">&nbsp;&nbsp;최대 −0.05</span>
     </div>
     <p class="formula-note">
-      라플TV Score(HOT&amp;NEW·딥다이브 포함 최신 리포트)와 동일한 위클리(w) 벤치마크를 그대로 적용: 자연유입비중 31.7%·자연유입 100,196회·조회율 18.4%·CTR 3.64%·참여도 2,500건·구독자 180명 (기대값의 2배가 만점 기준) &nbsp;|&nbsp;
-      등급은 채널 전체 벤치마크가 아니라 <b>위클리 ${totalCount}편 내 백분위 상대평가</b>: S 상위 10%(≥${gradeCut.S.toFixed(3)}) · A 다음 25%(≥${gradeCut.A.toFixed(3)}) · B+ 다음 30%(≥${gradeCut['B+'].toFixed(3)}) · B 다음 25%(≥${gradeCut.B.toFixed(3)}) · C 하위 10%(&lt;${gradeCut.B.toFixed(3)})
+      라플TV Score(HOT&amp;NEW·딥다이브 포함 최신 리포트)와 동일한 위클리(w) 벤치마크를 그대로 적용: 자연유입비중 31.7%·자연유입 100,196회·조회율 18.4%·CTR 3.6%·참여도 2,500건·구독자 180명 (기대값의 2배가 만점 기준) &nbsp;|&nbsp;
+      등급은 채널 전체 벤치마크가 아니라 <b>위클리 ${totalCount}편 내 백분위 상대평가</b>: S 상위 10.0%(≥${gradeCut.S.toFixed(3)}) · A 다음 25.0%(≥${gradeCut.A.toFixed(3)}) · B+ 다음 30.0%(≥${gradeCut['B+'].toFixed(3)}) · B 다음 25.0%(≥${gradeCut.B.toFixed(3)}) · C 하위 10.0%(&lt;${gradeCut.B.toFixed(3)})
     </p>
   </div>
 </div>
@@ -450,7 +443,7 @@ ${pending.length ? `<div class="warn-banner">※ ${pending.map(p => `${p.season.
 <div class="grid-2 section">
   <div class="card">
     <p class="card-title">시즌별 등급 분포(1일차)</p>
-    <p class="card-sub">스택 바 · S/A/B/C</p>
+    <p class="card-sub">스택 바 · S/A/B+/B/C</p>
     <div class="chart-box" style="height:220px"><canvas id="c_season_grade_1d"></canvas></div>
   </div>
   <div class="card">
@@ -503,19 +496,36 @@ ${pending.length ? `<div class="warn-banner">※ ${pending.map(p => `${p.season.
       <span class="cmt">&nbsp;&nbsp;(자연유입 비중 ≥ 54.1%, 1일차 위클리 자체 평균)</span>
     </div>
     <div class="formula-line">
-      &nbsp;&nbsp;<span class="minus">− 복합 패널티 (조회율&lt;14.6% · 구독↓&lt;0 · CTR&lt;2.27% 각 −0.025)</span>
+      &nbsp;&nbsp;<span class="minus">− 복합 패널티 (조회율&lt;14.6% · 구독↓&lt;0 · CTR&lt;2.3% 각 −0.025)</span>
       <span class="cmt">&nbsp;&nbsp;최대 −0.05</span>
     </div>
     <p class="formula-note">
       <b>평균시청시간을 6번째 항목으로 추가했습니다</b> — 위클리 66편에서 "1일차 지표가 최종(7일차) 점수를 얼마나 잘 예측하는지" 확인해보니 참여도(r=0.79)에 이어 평균시청시간(r=0.61, 기존 공식엔 없던 지표)이 자연유입·조회율보다도 예측력이 높았습니다. 반면 CTR은 1일차엔 대부분 구독자 피드 노출이라 편차가 거의 없어(r=0.09) 원래 비중만큼의 변별력을 보여주지 못했지만, 이번엔 시청시간의 몫(예측력 비례 23.6%)만 새로 반영하고 나머지 5개 항목은 <b>7일차와 동일한 상대비율(30:25:20:15:10)을 유지</b>한 채 축소했습니다 — CTR·참여도 비중 자체를 조정하는 건 별도 논의 사항입니다. &nbsp;|&nbsp;
       <b>알고리즘/검색 보너스는 1일차에 적용하지 않습니다</b> — 원본 엑셀의 트래픽소스(추천·검색 유입) 데이터가 7일차 기준으로만 존재해서 1일차 원본값 자체가 없습니다. &nbsp;|&nbsp;
-      7일차 벤치마크(채널 전체 검증 기준)를 그대로 쓰면 1일차엔 자연유입비중·조회율·CTR이 구조적으로 훨씬 높게 나와(예: 자연유입비중 1일차 평균 54.1% vs 7일차 벤치마크 31.7%) 거의 전 편이 만점 처리되므로, <b>위클리 자체 66편(VR·참여도 결측 없는 시즌1,2,3,4,6)의 1일차 평균으로 벤치마크를 별도 도출</b>했습니다: 자연유입비중 54.1%·자연유입 44,929회·조회율 29.3%·CTR 4.54%·참여도 1,477건·구독자 165명·평균시청시간 14.71분. &nbsp;|&nbsp;
-      등급도 이 리포트 내 1일차 점수의 <b>백분위 상대평가</b>: S 상위 10%(≥${gradeCut1d.S.toFixed(3)}) · A 다음 25%(≥${gradeCut1d.A.toFixed(3)}) · B+ 다음 30%(≥${gradeCut1d['B+'].toFixed(3)}) · B 다음 25%(≥${gradeCut1d.B.toFixed(3)}) · C 하위 10%(&lt;${gradeCut1d.B.toFixed(3)})
+      7일차 벤치마크(채널 전체 검증 기준)를 그대로 쓰면 1일차엔 자연유입비중·조회율·CTR이 구조적으로 훨씬 높게 나와(예: 자연유입비중 1일차 평균 54.1% vs 7일차 벤치마크 31.7%) 거의 전 편이 만점 처리되므로, <b>위클리 자체 66편(VR·참여도 결측 없는 시즌1,2,3,4,6)의 1일차 평균으로 벤치마크를 별도 도출</b>했습니다: 자연유입비중 54.1%·자연유입 44,929회·조회율 29.3%·CTR 4.5%·참여도 1,477건·구독자 165명·평균시청시간 14.71분. &nbsp;|&nbsp;
+      등급도 이 리포트 내 1일차 점수의 <b>백분위 상대평가</b>: S 상위 10.0%(≥${gradeCut1d.S.toFixed(3)}) · A 다음 25.0%(≥${gradeCut1d.A.toFixed(3)}) · B+ 다음 30.0%(≥${gradeCut1d['B+'].toFixed(3)}) · B 다음 25.0%(≥${gradeCut1d.B.toFixed(3)}) · C 하위 10.0%(&lt;${gradeCut1d.B.toFixed(3)})
     </p>
   </div>
 </div>
 
 </div><!-- /panel-1d -->
+
+<div class="section">
+  <div class="card">
+    <p class="card-title">장기 성장 지수 — 시간이 지나도 계속 발견되는 콘텐츠</p>
+    <p class="card-sub">발행 후 28일 누적 조회수 ÷ 발행 후 7일 누적 조회수 · LTV Score와는 완전히 별개인 보조 지표라 7일차/1일차 탭 공통으로 동일하게 표시됩니다</p>
+    <p style="font-size:13px;color:var(--c-sub);line-height:1.85;margin-bottom:14px">
+      <b style="color:var(--c-text)">무엇을 보는 지표인가</b> — 같은 편의 조회수를 발행 후 7일 시점과 28일 시점, 두 번의 스냅샷으로 나눈 값입니다. 28일차 누적치는 7일차 누적치를 항상 포함하므로 이 지수는 정의상 <b style="color:var(--c-text)">항상 1.0배 이상</b>입니다. <b style="color:var(--c-text)">1.0배에 가까울수록</b> "발행 초반 버즈가 소진된 뒤로는 거의 추가로 안 봤다"는 뜻이고, <b style="color:var(--c-text)">배수가 높을수록</b> 발행 시점이 한참 지난 뒤에도 유튜브 알고리즘 추천·검색을 통해 꾸준히 새로 발견되고 있다는 뜻입니다 — 이른바 "롱테일"·"에버그린" 콘텐츠 신호입니다.<br><br>
+      <b style="color:var(--c-text)">산출 방법</b> — 원본 엑셀의 views_7d·views_28d 컬럼(발행일 기준 경과일 스냅샷이라 편마다 실제 캘린더 날짜는 다름)을 <span class="cmt" style="font-family:'SF Mono','Fira Code',monospace">views_28d ÷ views_7d</span>로 그대로 나눈 원배율입니다. LTV Score처럼 벤치마크 대비 정규화(N)하거나 가중치를 곱하는 과정이 없고, "얼마나 더 늘었나"를 있는 그대로 보여주는 게 목적이라 별도 등급·백분위 구간도 적용하지 않았습니다.<br><br>
+      <b style="color:var(--c-text)">집계대기 처리</b> — 발행일로부터 28일이 아직 지나지 않은 편은 views_28d가 0(또는 결측)으로 들어와 있어 계산 자체가 불가능합니다. 이런 편은 "집계대기"로 별도 표시하고 아래 평균·순위 계산에서는 제외합니다(현재 ${growthPendingCount}편).<br><br>
+      <b style="color:var(--c-text)">LTV Score 공식에는 반영하지 않는 이유</b> — 최근 발행 편일수록 아직 28일이 안 지나 결측일 확률이 높은 지표라, 정식 점수 공식에 그대로 넣으면 신작이 구조적으로 불리해집니다. 그래서 점수·등급과는 완전히 분리해 참고용 배지로만 별도 운영합니다.<br><br>
+      <b style="color:var(--c-text)">현재 분포</b> — 집계 완료 ${growthDone.length}편(전체 ${totalCount}편 중 집계대기 ${growthPendingCount}편 제외) 기준 평균 <b style="color:var(--c-text)">×${avgGrowth28.toFixed(2)}</b>, 최저 ×${minGrowth28.toFixed(2)}(거의 추가 성장 없음)부터 최고 ×${topGrowth[0].growth_28d.toFixed(2)}(TOP1, 아래 목록 참고)까지 분포합니다.
+    </p>
+    <ul class="key-list">
+      ${topGrowth.map(r => `<li><b>${r.season.replace('위클리 ', '')} ${r.num} ${r.title}</b> — 7일차 대비 28일차 조회수 <span style="color:var(--c-teal);font-weight:700">×${r.growth_28d.toFixed(2)}</span></li>`).join('\n      ')}
+    </ul>
+  </div>
+</div>
 
 </div><!-- /shell -->
 
@@ -616,7 +626,7 @@ function renderRank(tab){
       <td class="tr">\${d.natAbs.toLocaleString()}</td>
       <td class="tr">\${d.vrMissing?'<span class="vr-flag">결측</span>':d.vr+'%'}</td>
       <td class="tr">\${d.ctr}%</td>
-      <td class="tr">\${d.sub>0?'+':''}\${d.sub}</td>
+      <td class="tr">\${d.sub>0?'+':''}\${d.sub.toLocaleString()}</td>
       <td class="tr">\${d.growth28==null?'<span class="vr-flag">집계대기</span>':'×'+d.growth28.toFixed(2)}</td>\`;
     tbody.appendChild(tr);
   });
