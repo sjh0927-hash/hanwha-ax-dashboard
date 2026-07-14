@@ -22,6 +22,19 @@ try {
 // VR 데이터가 있는지 여부 — 1일차·7일차 모두 시즌5에서 결측(0)이라 플래그 하나를 두 탭에서 공유.
 results.forEach(r => { r.vr_missing = !(r.vr_7d && r.vr_7d > 0); });
 
+// 카테고리 교차분석 — 회차 제목(title) 기준으로 category_mapping.json(수동 태깅)과 조인.
+const categoryMap = JSON.parse(fs.readFileSync(path.join(DIR, 'category_mapping.json'), 'utf8'));
+const CATEGORIES = categoryMap.categories;
+const CATEGORY_COLOR = {
+  '영화·인물': '#60A5FA',
+  '장르·트로프': '#9F8FF7',
+  '인생·감정': '#F472B6',
+  '사회·문화': '#F5A623',
+  '일상·취향': '#3DD68C',
+  '관계·가족': '#22D3EE',
+};
+results.forEach(r => { r.category = categoryMap.mapping[r.title] || '미분류'; });
+
 function esc(s) { return String(s).replace(/'/g, "\\'"); }
 
 // 등급 컷은 절대 점수가 아니라 위클리 내부 4분위 상대평가(calc_ltv.js에서 산정) — 표시용으로 실제 컷 값만 역산.
@@ -72,6 +85,62 @@ const growthDone = results.filter(r => !r.growth28_pending);
 const topGrowth = [...growthDone].sort((a, b) => b.growth_28d - a.growth_28d).slice(0, 5);
 const avgGrowth28 = growthDone.reduce((s, r) => s + r.growth_28d, 0) / growthDone.length;
 const minGrowth28 = Math.min(...growthDone.map(r => r.growth_28d));
+
+// 카테고리별 교차분석 — 평균 LTV(7d/1d), 등급분포, 장기성장지수 평균, 시즌별 구성비.
+function computeByCategoryStats(v2Field, gradeField) {
+  return CATEGORIES.map(cat => {
+    const arr = results.filter(r => r.category === cat);
+    const avg = arr.reduce((a, r) => a + r[v2Field], 0) / arr.length;
+    const grades = { S: 0, A: 0, 'B+': 0, B: 0, C: 0 };
+    arr.forEach(r => grades[r[gradeField]]++);
+    return { category: cat, count: arr.length, avg: +avg.toFixed(3), grades };
+  });
+}
+const byCatStats7d = computeByCategoryStats('v2', 'grade');
+const byCatStats1d = computeByCategoryStats('v2_1d', 'grade_1d');
+
+const byCatGrowth = CATEGORIES.map(cat => {
+  const arr = growthDone.filter(r => r.category === cat);
+  const avg = arr.length ? arr.reduce((a, r) => a + r.growth_28d, 0) / arr.length : null;
+  return { category: cat, count: arr.length, avg: avg === null ? null : +avg.toFixed(3) };
+});
+
+const topEpByCat7d = CATEGORIES.map(cat => {
+  const arr = results.filter(r => r.category === cat);
+  return { category: cat, top: [...arr].sort((a, b) => b.v2 - a.v2)[0] };
+});
+
+const bestCat7d = [...byCatStats7d].sort((a, b) => b.avg - a.avg)[0];
+const worstCat7d = [...byCatStats7d].sort((a, b) => a.avg - b.avg)[0];
+const bestCatGrowth = [...byCatGrowth].filter(c => c.avg !== null).sort((a, b) => b.avg - a.avg)[0];
+
+const seasonCatMatrix = SEASONS.map(s => {
+  const arr = results.filter(r => r.season === s);
+  const counts = {};
+  CATEGORIES.forEach(c => { counts[c] = arr.filter(r => r.category === c).length; });
+  return { season: s, counts, total: arr.length };
+});
+
+const catLabels = CATEGORIES.map(c => `'${c}'`).join(',');
+const catColors = CATEGORIES.map(c => `'${CATEGORY_COLOR[c]}'`).join(',');
+const catAvg7dJs = byCatStats7d.map(c => c.avg).join(',');
+const catAvg1dJs = byCatStats1d.map(c => c.avg).join(',');
+const catGrowthJs = byCatGrowth.map(c => c.avg === null ? 'null' : c.avg).join(',');
+function catGradeAgg(statsArr) {
+  return {
+    S: statsArr.map(c => c.grades.S).join(','),
+    A: statsArr.map(c => c.grades.A).join(','),
+    Bp: statsArr.map(c => c.grades['B+']).join(','),
+    B: statsArr.map(c => c.grades.B).join(','),
+    C: statsArr.map(c => c.grades.C).join(','),
+  };
+}
+const catGrade7d = catGradeAgg(byCatStats7d);
+const catGrade1d = catGradeAgg(byCatStats1d);
+const seasonCatLabels = seasonCatMatrix.map(s => `'${s.season.replace('위클리 ', '')}'`).join(',');
+const seasonCatDatasetsJs = CATEGORIES.map(cat => (
+  `{label:'${cat}',data:[${seasonCatMatrix.map(s => (s.counts[cat] / s.total * 100).toFixed(1)).join(',')}],backgroundColor:'${CATEGORY_COLOR[cat]}CC'}`
+)).join(',\n  ');
 
 function buildDataArr(sortedArr, suf, v2Field, gradeField) {
   return sortedArr.map(r => (
@@ -273,6 +342,7 @@ ${pending.length ? `<div class="warn-banner">※ ${pending.map(p => `${p.season.
 <div class="nav-tabs">
   <button class="nav-tab on" onclick="sw('7d',this)">7일차 기준</button>
   <button class="nav-tab" onclick="sw('1d',this)">1일차 기준</button>
+  <button class="nav-tab" onclick="sw('cat',this)">카테고리 분석</button>
 </div>
 
 <div class="panel show" id="panel-7d">
@@ -510,6 +580,107 @@ ${pending.length ? `<div class="warn-banner">※ ${pending.map(p => `${p.season.
 
 </div><!-- /panel-1d -->
 
+<div class="panel" id="panel-cat">
+
+<div class="kpi-strip">
+  <div class="kpi-card purple">
+    <p class="kpi-label">카테고리 구성</p>
+    <p class="kpi-val purple">${CATEGORIES.length}개</p>
+    <span class="kpi-badge">전체 ${totalCount}편 태깅</span>
+  </div>
+  <div class="kpi-card teal">
+    <p class="kpi-label">최고 평균 카테고리(7일차)</p>
+    <p class="kpi-val teal">${bestCat7d.category}</p>
+    <span class="kpi-badge">평균 ${bestCat7d.avg.toFixed(2)} · ${bestCat7d.count}편</span>
+  </div>
+  <div class="kpi-card red">
+    <p class="kpi-label">최저 평균 카테고리(7일차)</p>
+    <p class="kpi-val red">${worstCat7d.category}</p>
+    <span class="kpi-badge">평균 ${worstCat7d.avg.toFixed(2)} · ${worstCat7d.count}편</span>
+  </div>
+  <div class="kpi-card amber">
+    <p class="kpi-label">가장 롱테일한 카테고리</p>
+    <p class="kpi-val amber">${bestCatGrowth.category}</p>
+    <span class="kpi-badge">장기성장지수 평균 ×${bestCatGrowth.avg.toFixed(2)}</span>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-header">
+    <p class="section-title">카테고리별 평균 LTV Score</p>
+    <p class="section-desc">7일차·1일차 비교 · 회차 제목을 category_mapping.json 6개 카테고리로 수동 태깅해 조인</p>
+  </div>
+  <div class="card">
+    <div class="chart-box" style="height:260px"><canvas id="c_cat_avg"></canvas></div>
+  </div>
+</div>
+
+<div class="grid-2 section">
+  <div class="card">
+    <p class="card-title">카테고리별 등급 분포(7일차)</p>
+    <p class="card-sub">스택 바 · S/A/B+/B/C</p>
+    <div class="chart-box" style="height:220px"><canvas id="c_cat_grade_7d"></canvas></div>
+  </div>
+  <div class="card">
+    <p class="card-title">카테고리별 등급 분포(1일차)</p>
+    <p class="card-sub">스택 바 · S/A/B+/B/C</p>
+    <div class="chart-box" style="height:220px"><canvas id="c_cat_grade_1d"></canvas></div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-header">
+    <p class="section-title">카테고리별 장기성장지수(28d/7d) 평균</p>
+    <p class="section-desc">집계대기 편 제외 · 배수가 높을수록 발행 초반 이후에도 꾸준히 새로 발견되는 카테고리</p>
+  </div>
+  <div class="card">
+    <div class="chart-box" style="height:220px"><canvas id="c_cat_growth"></canvas></div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-header">
+    <p class="section-title">시즌별 카테고리 구성 변화</p>
+    <p class="section-desc">100% 스택 바 · 시즌이 지나면서 어떤 카테고리 비중이 늘고 줄었는지</p>
+  </div>
+  <div class="card">
+    <div class="chart-box" style="height:260px"><canvas id="c_season_cat"></canvas></div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-header">
+    <p class="section-title">카테고리별 요약</p>
+    <p class="section-desc">편수 · 평균 LTV(7일차/1일차) · 평균 장기성장지수 · 해당 카테고리 최고 성과 회차(7일차 기준)</p>
+  </div>
+  <div class="card" style="padding:0">
+    <div class="tbl-scroll">
+      <table class="bench-tbl">
+        <thead><tr>
+          <th class="l">카테고리</th><th>편수</th><th>평균 LTV(7일차)</th><th>평균 LTV(1일차)</th><th>평균 장기성장지수</th><th class="l">최고 성과 회차(7일차)</th>
+        </tr></thead>
+        <tbody>
+          ${byCatStats7d.map((c, i) => {
+            const c1d = byCatStats1d[i];
+            const g = byCatGrowth[i];
+            const top = topEpByCat7d[i].top;
+            return `<tr>
+              <td class="l"><span class="season-tag" style="background:${CATEGORY_COLOR[c.category]}22;color:${CATEGORY_COLOR[c.category]}">${c.category}</span></td>
+              <td>${c.count}편</td>
+              <td>${c.avg.toFixed(3)}</td>
+              <td>${c1d.avg.toFixed(3)}</td>
+              <td>${g.avg === null ? '-' : '×' + g.avg.toFixed(2)}</td>
+              <td class="l">${top.season.replace('위클리 ', '')} ${top.num} ${top.title} <span class="ep-num">(${top.v2.toFixed(3)})</span></td>
+            </tr>`;
+          }).join('\n          ')}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+</div><!-- /panel-cat -->
+
 <div class="section">
   <div class="card">
     <p class="card-title">장기 성장 지수 — 시간이 지나도 계속 발견되는 콘텐츠</p>
@@ -600,6 +771,57 @@ charts.allDist7d = allDistChart('c_all_dist', '7d');
 charts.seasonAvg1d = seasonAvgChart('c_season_avg_1d', [${seasonLabels}], [${agg1d.avgs}], [${seasonColors}]);
 charts.seasonGrade1d = seasonGradeChart('c_season_grade_1d', [${seasonLabels}], [${agg1d.S}],[${agg1d.A}],[${agg1d.Bp}],[${agg1d.B}],[${agg1d.C}]);
 charts.allDist1d = allDistChart('c_all_dist_1d', '1d');
+
+function catAvgChart(id, labels, avg7d, avg1d, colors){
+  return new Chart(document.getElementById(id),{type:'bar',
+    data:{labels,datasets:[
+      {label:'7일차',data:avg7d,backgroundColor:colors.map(c=>c+'CC'),borderRadius:6},
+      {label:'1일차',data:avg1d,backgroundColor:colors.map(c=>c+'55'),borderRadius:6},
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{labels:{font:{size:10},boxWidth:10,color:'#9997A8'}},
+        tooltip:{callbacks:{label:c=>c.dataset.label+' 평균 LTV '+c.parsed.y.toFixed(3)}}},
+      scales:{x:{grid:{display:false},ticks:{...TICK,font:{size:10}}},
+              y:{grid:{color:GRID},ticks:{...TICK,callback:v=>v.toFixed(1)},min:0}}}});
+}
+function catGradeChart(id, labels, S,A,Bp,B,C){
+  return new Chart(document.getElementById(id),{type:'bar',
+    data:{labels,datasets:[
+      {label:'S',data:S,backgroundColor:'rgba(159,143,247,.8)',stack:'g',borderRadius:3},
+      {label:'A',data:A,backgroundColor:'rgba(61,214,140,.8)',stack:'g',borderRadius:3},
+      {label:'B+',data:Bp,backgroundColor:'rgba(245,166,35,.7)',stack:'g',borderRadius:3},
+      {label:'B',data:B,backgroundColor:'rgba(96,165,250,.7)',stack:'g',borderRadius:3},
+      {label:'C',data:C,backgroundColor:'rgba(110,109,122,.4)',stack:'g',borderRadius:3},
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{labels:{font:{size:10},boxWidth:10,color:'#9997A8'}}},
+      scales:{x:{stacked:true,grid:{display:false},ticks:{...TICK,font:{size:9}}},y:{stacked:true,grid:{color:GRID},ticks:TICK}}}});
+}
+function catGrowthChart(id, labels, data, colors){
+  return new Chart(document.getElementById(id),{type:'bar',
+    data:{labels,datasets:[{data,backgroundColor:colors.map(c=>c+'BB'),borderRadius:6,barPercentage:.55}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},
+      tooltip:{callbacks:{label:c=>c.parsed.y==null?'집계대기':'평균 ×'+c.parsed.y.toFixed(2)}}},
+      scales:{x:{grid:{display:false},ticks:{...TICK,font:{size:10}}},
+              y:{grid:{color:GRID},ticks:{...TICK,callback:v=>'×'+v.toFixed(1)},min:1}}}});
+}
+function seasonCatChart(id, labels, datasets){
+  return new Chart(document.getElementById(id),{type:'bar',
+    data:{labels,datasets},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{labels:{font:{size:10},boxWidth:10,color:'#9997A8'}},
+        tooltip:{callbacks:{label:c=>c.dataset.label+' '+c.parsed.y.toFixed(1)+'%'}}},
+      scales:{x:{stacked:true,grid:{display:false},ticks:TICK},
+              y:{stacked:true,grid:{color:GRID},ticks:{...TICK,callback:v=>v+'%'},min:0,max:100}}}});
+}
+
+charts.catAvg = catAvgChart('c_cat_avg', [${catLabels}], [${catAvg7dJs}], [${catAvg1dJs}], [${catColors}]);
+charts.catGrade7d = catGradeChart('c_cat_grade_7d', [${catLabels}], [${catGrade7d.S}],[${catGrade7d.A}],[${catGrade7d.Bp}],[${catGrade7d.B}],[${catGrade7d.C}]);
+charts.catGrade1d = catGradeChart('c_cat_grade_1d', [${catLabels}], [${catGrade1d.S}],[${catGrade1d.A}],[${catGrade1d.Bp}],[${catGrade1d.B}],[${catGrade1d.C}]);
+charts.catGrowth = catGrowthChart('c_cat_growth', [${catLabels}], [${catGrowthJs}], [${catColors}]);
+charts.seasonCat = seasonCatChart('c_season_cat', [${seasonCatLabels}], [
+  ${seasonCatDatasetsJs}
+]);
 
 /* 순위 테이블 */
 const curSeason = { '7d':'all', '1d':'all' };
