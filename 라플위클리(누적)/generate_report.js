@@ -141,6 +141,19 @@ const seasonCatLabels = seasonCatMatrix.map(s => `'${s.season.replace('위클리
 const seasonCatDatasetsJs = CATEGORIES.map(cat => (
   `{label:'${cat}',data:[${seasonCatMatrix.map(s => (s.counts[cat] / s.total * 100).toFixed(1)).join(',')}],backgroundColor:'${CATEGORY_COLOR[cat]}CC'}`
 )).join(',\n  ');
+const categoryColorJs = CATEGORIES.map(c => `'${c}':'${CATEGORY_COLOR[c]}'`).join(',');
+
+// 카테고리별 편성 목록 — 카테고리 → 시즌/회차 순 정렬(어떤 편이 어느 카테고리에 편성됐는지 표용).
+const catListSorted = [...results].sort((a, b) => {
+  const ca = CATEGORIES.indexOf(a.category), cb = CATEGORIES.indexOf(b.category);
+  if (ca !== cb) return ca - cb;
+  const sa = SEASONS.indexOf(a.season), sb = SEASONS.indexOf(b.season);
+  if (sa !== sb) return sa - sb;
+  return String(a.num).localeCompare(String(b.num), undefined, { numeric: true });
+});
+const catListArrJs = catListSorted.map(r => (
+  `{category:'${esc(r.category)}',season:'${esc(r.season)}',num:'${esc(r.num)}',title:'${esc(r.title)}',pub:'${r.pub_date || ''}',v2:${r.v2},grade:'${r.grade}'}`
+)).join(',\n  ');
 
 function buildDataArr(sortedArr, suf, v2Field, gradeField) {
   return sortedArr.map(r => (
@@ -679,9 +692,31 @@ ${pending.length ? `<div class="warn-banner">※ ${pending.map(p => `${p.season.
   </div>
 </div>
 
+<div class="section">
+  <div class="section-header">
+    <p class="section-title">카테고리별 편성 목록</p>
+    <p class="section-desc">각 카테고리에 어떤 회차가 편성됐는지 · 카테고리 → 발행 순 정렬</p>
+  </div>
+  <div class="filter-tabs">
+    <button class="ftab on" onclick="filterCategory('all',this)">전체 ${totalCount}편</button>
+    ${CATEGORIES.map(c => `<button class="ftab" onclick="filterCategory('${c}',this)">${c}</button>`).join('\n    ')}
+  </div>
+  <div class="card" style="padding:0">
+    <div class="tbl-scroll">
+      <table class="ep-tbl">
+        <thead><tr>
+          <th>#</th><th>카테고리</th><th>에피소드</th><th>시즌</th><th>발행일</th>
+          <th class="r">LTV(7일차)</th><th>등급</th>
+        </tr></thead>
+        <tbody id="catListBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
 </div><!-- /panel-cat -->
 
-<div class="section">
+<div class="section" id="growthGlobalSection">
   <div class="card">
     <p class="card-title">장기 성장 지수 — 시간이 지나도 계속 발견되는 콘텐츠</p>
     <p class="card-sub">발행 후 28일 누적 조회수 ÷ 발행 후 7일 누적 조회수 · LTV Score와는 완전히 별개인 보조 지표라 7일차/1일차 탭 공통으로 동일하게 표시됩니다</p>
@@ -718,6 +753,10 @@ const RANKED={ '7d':[
 ], '1d':[
   ${rankedArrJs1d}
 ] };
+const CATEGORY_COLOR={${categoryColorJs}};
+const CATLIST=[
+  ${catListArrJs}
+];
 
 Chart.defaults.color='#6E6D7A';
 const charts={};
@@ -727,6 +766,7 @@ function sw(id,btn){
   document.getElementById('panel-'+id).classList.add('show');
   document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('on'));
   btn.classList.add('on');
+  document.getElementById('growthGlobalSection').style.display = id==='cat' ? 'none' : '';
   Object.values(charts).forEach(c=>{ if(c) c.resize(); });
 }
 
@@ -855,6 +895,33 @@ function renderRank(tab){
 }
 renderRank('7d');
 renderRank('1d');
+
+/* 카테고리별 편성 목록 */
+let curCatFilter = 'all';
+function filterCategory(c,btn){
+  curCatFilter=c;
+  btn.parentElement.querySelectorAll('.ftab').forEach(t=>t.classList.remove('on'));
+  btn.classList.add('on');
+  renderCatList();
+}
+function renderCatList(){
+  const list = curCatFilter==='all' ? CATLIST : CATLIST.filter(d=>d.category===curCatFilter);
+  const tbody=document.getElementById('catListBody'); tbody.innerHTML='';
+  list.forEach((d,i)=>{
+    const gc=d.grade==='S'?'gs':d.grade==='A'?'ga':d.grade==='B+'?'gbp':d.grade==='B'?'gb':'gc';
+    const tr=document.createElement('tr');
+    tr.innerHTML=\`
+      <td><span class="ep-num">\${i+1}</span></td>
+      <td><span class="season-tag" style="background:\${CATEGORY_COLOR[d.category]}22;color:\${CATEGORY_COLOR[d.category]}">\${d.category}</span></td>
+      <td><span class="ep-name">\${d.title}</span> <span class="ep-num">\${d.num}</span></td>
+      <td><span class="season-tag" style="background:\${SEASON_COLOR[d.season]}22;color:\${SEASON_COLOR[d.season]}">\${SEASON_NAME[d.season]}</span></td>
+      <td class="ep-num">\${d.pub}</td>
+      <td class="tr" style="font-weight:600;color:\${BC[d.grade]}">\${d.v2.toFixed(3)}</td>
+      <td><span class="gpill \${gc}">\${d.grade}</span></td>\`;
+    tbody.appendChild(tr);
+  });
+}
+renderCatList();
 </script>
 </body>
 </html>
