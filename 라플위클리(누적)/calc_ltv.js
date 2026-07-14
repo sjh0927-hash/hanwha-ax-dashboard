@@ -28,10 +28,15 @@ function N(v, bench) {
 
 // suf: '7d' | '1d'. hasTrafficBonus: 알고리즘/검색 유입 보너스는 7일차 트래픽소스 컬럼만
 // 존재해서(1일차 원본 데이터 자체가 없음) 1일차 계산에서는 뺀다.
+// 자연유입율(nat_pct)은 이 채널 트래픽소스 구조상 nat_pct_7d + ads_pct_7d = 1(항등식)이라,
+// 사실상 "이 편에 광고를 얼마나 썼는지"의 거울상이다 — 콘텐츠 품질 신호가 아니라 미디어 예산
+// 배분을 반영한다(실측: 80편 상관계수 -1.000). 반면 자연유입 절대값(nat_abs)은 광고 조회수와
+// 거의 무관해서(상관계수 0.055) 광고 집행과 독립적인 순수 도달 신호에 가깝다. 그래서 유입율:
+// 절대값 비중을 5:5에서 1:9로 낮춰 광고비 왜곡 영향을 줄인다(사용자 시뮬레이션 검증 후 결정).
 function calcScore(ep, suf, bench, weights, hasTrafficBonus) {
   const nNatPct = N(ep['nat_pct_' + suf], bench.nat_pct);
   const nNatAbs = N(ep['nat_abs_' + suf], bench.nat_abs);
-  const nNat = (nNatPct + nNatAbs) / 2;
+  const nNat = nNatPct * 0.1 + nNatAbs * 0.9;
   const nVr = N(ep['vr_' + suf], bench.vr);
   const nCtr = N(ep['ctr_' + suf], bench.ctr);
   const nEng = N(ep['eng_' + suf], bench.eng);
