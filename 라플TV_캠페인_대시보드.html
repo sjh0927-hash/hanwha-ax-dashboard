@@ -2001,7 +2001,7 @@ function drawClickCharts(){try{
       h+='<span style="font-size:11px;color:var(--faint);align-self:center;letter-spacing:1px;margin:0 2px 0 10px;">7월</span>';
       for(var d3=1;d3<=14;d3++){
         var dow3=['일','월','화','수','목','금','토'][new Date(2026,6,d3).getDay()];
-        var cls3='date-btn'+(dow3==='일'||dow3==='토'?' wk':'')+(d3===12?' on':'')+(d3===2?' ev':'');
+        var cls3='date-btn'+(dow3==='일'||dow3==='토'?' wk':'')+(d3===14?' on':'')+(d3===2?' ev':'');
         h+='<button class="'+cls3+'" data-date="7/'+d3+'">'+d3+'</button>';
       }
       bc.innerHTML=h;
@@ -2249,7 +2249,7 @@ function drawConvCharts(){try{
       h+='<span style="font-size:11px;color:var(--faint);align-self:center;letter-spacing:1px;margin:0 2px 0 10px;">7월</span>';
       for(var d3=1;d3<=14;d3++){
         var isWk3=['일','토'].indexOf(DOW[new Date(2026,6,d3).getDay()])>=0;
-        var cls3='date-btn'+(isWk3?' wk':'')+(d3===12?' on':'')+(d3===5?' ev':'');
+        var cls3='date-btn'+(isWk3?' wk':'')+(d3===14?' on':'')+(d3===5?' ev':'');
         h+='<button class="'+cls3+'" data-cdate="7/'+d3+'">'+d3+'</button>';
       }
       bc.innerHTML=h;
@@ -2272,7 +2272,7 @@ function drawRetargetCharts(){try{
     var ctx=setup('retargetDaily',200); if(!ctx)return;
     var W=ctx._w,H=ctx._h;
     var raw=[
-      {d:'7/1',v:0,ctr:0},{d:'7/2',v:0,ctr:0},{d:'7/3',v:0,ctr:0},{d:'7/4',v:0,ctr:0},{d:'7/5',v:0,ctr:0},{d:'7/6',v:0,ctr:0},{d:'7/7',v:0,ctr:0},{d:'7/8',v:0,ctr:0},{d:'7/9',v:0,ctr:0},{d:'7/10',v:0,ctr:0},{d:'7/11',v:0,ctr:0},{d:'7/12',v:0,ctr:0}
+      {d:'7/1',v:0,ctr:0},{d:'7/2',v:0,ctr:0},{d:'7/3',v:0,ctr:0},{d:'7/4',v:0,ctr:0},{d:'7/5',v:0,ctr:0},{d:'7/6',v:0,ctr:0},{d:'7/7',v:0,ctr:0},{d:'7/8',v:0,ctr:0},{d:'7/9',v:0,ctr:0},{d:'7/10',v:0,ctr:0},{d:'7/11',v:0,ctr:0},{d:'7/12',v:0,ctr:0},{d:'7/13',v:0,ctr:0},{d:'7/14',v:0,ctr:0}
     ];
     var maxV=100;
     var pad={t:20,r:12,b:30,l:42};
@@ -2345,7 +2345,7 @@ function drawRetargetCharts(){try{
       '6/26':{views:26257,ctr:'2.96',cpv:13,cost:333164},
       '6/27':{views:30570,ctr:'3.79',cpv:11,cost:333116},
       '6/28':{views:34716,ctr:'4.03',cpv:10,cost:333252},'6/29':{views:32171,ctr:'3.49',cpv:10,cost:333422},'6/30':{views:32441,ctr:'3.91',cpv:10,cost:327482},
-      '7/1':{views:0,ctr:'0',cpv:0,cost:0},'7/2':{views:0,ctr:'0',cpv:0,cost:0},'7/3':{views:0,ctr:'0',cpv:0,cost:0},'7/4':{views:0,ctr:'0',cpv:0,cost:0},'7/5':{views:0,ctr:'0',cpv:0,cost:0},'7/6':{views:0,ctr:'0',cpv:0,cost:0},'7/7':{views:0,ctr:'0',cpv:0,cost:0},'7/8':{views:0,ctr:'0',cpv:0,cost:0},'7/9':{views:0,ctr:'0',cpv:0,cost:0},'7/10':{views:0,ctr:'0',cpv:0,cost:0},'7/11':{views:0,ctr:'0',cpv:0,cost:0},'7/12':{views:0,ctr:'0',cpv:0,cost:0}
+      '7/1':{views:0,ctr:'0',cpv:0,cost:0},'7/2':{views:0,ctr:'0',cpv:0,cost:0},'7/3':{views:0,ctr:'0',cpv:0,cost:0},'7/4':{views:0,ctr:'0',cpv:0,cost:0},'7/5':{views:0,ctr:'0',cpv:0,cost:0},'7/6':{views:0,ctr:'0',cpv:0,cost:0},'7/7':{views:0,ctr:'0',cpv:0,cost:0},'7/8':{views:0,ctr:'0',cpv:0,cost:0},'7/9':{views:0,ctr:'0',cpv:0,cost:0},'7/10':{views:0,ctr:'0',cpv:0,cost:0},'7/11':{views:0,ctr:'0',cpv:0,cost:0},'7/12':{views:0,ctr:'0',cpv:0,cost:0},'7/13':{views:0,ctr:'0',cpv:0,cost:0},'7/14':{views:0,ctr:'0',cpv:0,cost:0}
     };
     /* 소재별 일별: [조회수, 클릭수, CTR(조회율%), CPV원, 일광고비원] — Sheet6 실측 */
     var RC={
@@ -2512,7 +2512,7 @@ function drawRetargetCharts(){try{
       h+='<span style="font-size:11px;color:var(--faint);align-self:center;letter-spacing:1px;margin:0 2px 0 10px;">7월</span>';
       for(var d3=1;d3<=14;d3++){
         var isWk3=['일','토'].indexOf(DOW[new Date(2026,6,d3).getDay()])>=0;
-        var cls3='date-btn'+(isWk3?' wk':'')+(d3===12?' on':'');
+        var cls3='date-btn'+(isWk3?' wk':'')+(d3===14?' on':'');
         h+='<button class="'+cls3+'" data-rdate="7/'+d3+'">'+d3+'</button>';
       }
       bc.innerHTML=h;
