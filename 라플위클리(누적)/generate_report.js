@@ -143,13 +143,14 @@ const seasonCatDatasetsJs = CATEGORIES.map(cat => (
 )).join(',\n  ');
 const categoryColorJs = CATEGORIES.map(c => `'${c}':'${CATEGORY_COLOR[c]}'`).join(',');
 
-// 카테고리별 편성 목록 — 카테고리 → 시즌/회차 순 정렬(어떤 편이 어느 카테고리에 편성됐는지 표용).
+// 카테고리별 편성 목록 — 카테고리 → 등급(S~C) → 동점시 v2 내림차순 정렬(카테고리 내 성과 순위 확인용).
+const GRADE_RANK = { S: 0, A: 1, 'B+': 2, B: 3, C: 4 };
 const catListSorted = [...results].sort((a, b) => {
   const ca = CATEGORIES.indexOf(a.category), cb = CATEGORIES.indexOf(b.category);
   if (ca !== cb) return ca - cb;
-  const sa = SEASONS.indexOf(a.season), sb = SEASONS.indexOf(b.season);
-  if (sa !== sb) return sa - sb;
-  return String(a.num).localeCompare(String(b.num), undefined, { numeric: true });
+  const ga = GRADE_RANK[a.grade], gb = GRADE_RANK[b.grade];
+  if (ga !== gb) return ga - gb;
+  return b.v2 - a.v2;
 });
 const catListArrJs = catListSorted.map(r => (
   `{category:'${esc(r.category)}',season:'${esc(r.season)}',num:'${esc(r.num)}',title:'${esc(r.title)}',pub:'${r.pub_date || ''}',v2:${r.v2},grade:'${r.grade}'}`
@@ -922,6 +923,15 @@ function renderCatList(){
   });
 }
 renderCatList();
+
+// 통합리포트 셸에서 ?tab=cat 등으로 딥링크할 때 해당 탭을 바로 열어줌
+(function(){
+  const tab = new URLSearchParams(location.search).get('tab');
+  if (tab === 'cat' || tab === '1d') {
+    const btn = document.querySelector(\`.nav-tab[onclick*="'\${tab}'"]\`);
+    if (btn) sw(tab, btn);
+  }
+})();
 </script>
 </body>
 </html>
