@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>라플위클리 시즌1~6 상세 분석</title>
+<script>(function(){var t=localStorage.getItem('lp-theme');if(t==='light')document.documentElement.classList.add('light');})();</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+:root {
+  --c-bg:#0E0F14; --c-surface:#15161D; --c-card:#1C1D27;
+  --c-border:rgba(255,255,255,0.07); --c-border2:rgba(255,255,255,0.12);
+  --c-text:#F0EEF8; --c-muted:#6E6D7A; --c-sub:#9997A8;
+  --c-purple:#9F8FF7; --c-purple-bg:#2A2445;
+  --c-teal:#3DD68C; --c-teal-bg:#132B20;
+  --c-amber:#F5A623; --c-amber-bg:#2C1F08;
+  --c-red:#F05454; --c-red-bg:#2C1010;
+  --r-sm:8px; --r-md:12px; --r-lg:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--c-bg)}
+body{font-family:'SF Pro Display','Apple SD Gothic Neo','Malgun Gothic',system-ui,sans-serif;background:var(--c-bg);color:var(--c-text);min-height:100vh;font-size:16px;line-height:1.5}
+.shell{max-width:1140px;margin:0 auto;padding:0 24px 80px}
+.page-header{padding:48px 0 32px;border-bottom:1px solid var(--c-border);margin-bottom:32px}
+.header-eyebrow{font-size:13px;font-weight:500;letter-spacing:.12em;color:var(--c-purple);text-transform:uppercase;margin-bottom:10px}
+.header-title{font-size:34px;font-weight:600;color:var(--c-text);letter-spacing:-.5px;margin-bottom:6px}
+.header-sub{font-size:16px;color:var(--c-sub)}
+.header-meta{display:flex;gap:20px;margin-top:20px;flex-wrap:wrap}
+.meta-chip{font-size:14px;color:var(--c-muted);display:flex;align-items:center;gap:5px}
+.meta-chip::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--c-purple);opacity:.7}
+.nav-tabs{display:flex;gap:2px;background:var(--c-card);border:1px solid var(--c-border);border-radius:var(--r-sm);padding:3px;margin-bottom:24px;width:fit-content;flex-wrap:wrap}
+.nav-tab{font-size:14px;font-weight:500;padding:6px 14px;border-radius:5px;border:none;background:transparent;color:var(--c-muted);cursor:pointer;transition:all .15s;white-space:nowrap}
+.nav-tab.on{background:rgba(159,143,247,.15);color:var(--c-purple);font-weight:600}
+.panel{display:none}.panel.show{display:block}
+.kpi-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:32px}
+.kpi-card{background:var(--c-card);border:1px solid var(--c-border);border-radius:var(--r-md);padding:18px 20px;position:relative;overflow:hidden}
+.kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.kpi-card.purple::before{background:var(--c-purple)}
+.kpi-card.teal::before{background:var(--c-teal)}
+.kpi-card.amber::before{background:var(--c-amber)}
+.kpi-label{font-size:13px;color:var(--c-muted);letter-spacing:.04em;margin-bottom:8px;font-weight:500}
+.kpi-val{font-size:26px;font-weight:600;letter-spacing:-.5px;line-height:1}
+.kpi-val.purple{color:var(--c-purple)}
+.kpi-val.teal{color:var(--c-teal)}
+.kpi-val.amber{color:var(--c-amber)}
+.kpi-badge{display:inline-block;font-size:12px;font-weight:500;padding:2px 7px;border-radius:20px;margin-top:7px;background:rgba(255,255,255,.07);color:var(--c-muted)}
+.section{margin-bottom:36px}
+.section-header{display:flex;align-items:baseline;gap:10px;margin-bottom:16px}
+.section-title{font-size:17px;font-weight:600;color:var(--c-text)}
+.section-desc{font-size:14px;color:var(--c-muted)}
+.card{background:var(--c-card);border:1px solid var(--c-border);border-radius:var(--r-lg);padding:20px 22px;margin-bottom:14px}
+.card-title{font-size:15px;font-weight:600;color:var(--c-text);margin-bottom:3px}
+.card-sub{font-size:13px;color:var(--c-muted);margin-bottom:14px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.chart-box{position:relative}
+.tbl-scroll{overflow-x:auto}
+.ep-tbl{width:100%;border-collapse:collapse}
+.ep-tbl th{font-size:11px;font-weight:500;letter-spacing:.05em;color:var(--c-muted);text-align:right;padding:8px 10px;border-bottom:1px solid var(--c-border);text-transform:uppercase;white-space:nowrap}
+.ep-tbl th.l{text-align:left}
+.ep-tbl td{padding:9px 10px;border-bottom:1px solid var(--c-border);vertical-align:middle;font-size:13px;text-align:right;color:var(--c-sub)}
+.ep-tbl td.l{text-align:left;color:var(--c-text);font-weight:500}
+.ep-tbl tr:last-child td{border-bottom:none}
+.ep-tbl tr:hover td{background:rgba(255,255,255,.02)}
+.gpill{font-size:11px;font-weight:700;padding:2px 7px;border-radius:20px;letter-spacing:.05em}
+.gs{background:var(--c-purple-bg);color:var(--c-purple)}
+.ga{background:var(--c-teal-bg);color:var(--c-teal)}
+.gbp{background:var(--c-amber-bg);color:var(--c-amber)}
+.gb{background:rgba(96,165,250,.15);color:#60A5FA}
+.gc{background:rgba(110,109,122,.15);color:var(--c-muted)}
+.insight-text{font-size:13px;color:var(--c-sub);line-height:1.6}
+.driver-tbl{width:100%;border-collapse:collapse;font-size:13px}
+.driver-tbl th{font-size:11px;font-weight:500;color:var(--c-muted);padding:8px 10px;border-bottom:1px solid var(--c-border);text-align:right}
+.driver-tbl th.l{text-align:left}
+.driver-tbl td{padding:9px 10px;border-bottom:1px solid var(--c-border);text-align:right;color:var(--c-sub)}
+.driver-tbl td.l{text-align:left;font-weight:500;color:var(--c-text)}
+.driver-tbl tr:last-child td{border-bottom:none}
+.spot-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.spot-card{border-radius:var(--r-md);padding:14px 16px;border:1px solid var(--c-border)}
+.spot-top{background:linear-gradient(135deg,rgba(159,143,247,.1),rgba(61,214,140,.04))}
+.spot-bottom{background:linear-gradient(135deg,rgba(240,84,84,.08),rgba(0,0,0,0))}
+.spot-rank{font-size:11px;color:var(--c-muted);font-weight:700;margin-bottom:4px}
+.spot-title{font-size:15px;font-weight:600;margin-bottom:4px}
+.spot-num{font-size:12px;color:var(--c-muted);font-weight:400}
+.spot-v2{font-size:20px;font-weight:700;color:var(--c-purple);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.spot-metrics{display:flex;flex-direction:column;gap:3px;font-size:12px;color:var(--c-sub)}
+.key-list{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:10px;font-size:14px;color:var(--c-sub);line-height:1.65}
+.key-list b{color:var(--c-text)}
+.filter-tabs{display:flex;gap:6px;flex-wrap:wrap}
+.ftab{font-size:13px;font-weight:500;padding:5px 12px;border-radius:20px;border:1px solid var(--c-border);background:transparent;color:var(--c-muted);cursor:pointer;transition:all .15s}
+.ftab.on{background:rgba(159,143,247,.12);color:var(--c-purple);border-color:rgba(159,143,247,.3)}
+.bw-title{font-size:12px;font-weight:600;color:var(--c-muted);letter-spacing:.04em;margin-bottom:8px}
+.theme-btn{position:fixed;bottom:20px;right:20px;z-index:9999;width:38px;height:38px;border-radius:50%;border:1px solid var(--c-border);background:var(--c-surface);cursor:pointer;font-size:20px;line-height:1;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 12px rgba(0,0,0,.4);color:var(--c-muted);}
+.theme-btn:hover{border-color:var(--c-purple);color:var(--c-text);}
+html.light{--c-bg:#F5F6FA;--c-surface:#FFFFFF;--c-card:#FFFFFF;--c-border:rgba(0,0,0,0.09);--c-border2:rgba(0,0,0,0.15);--c-text:#1A1B26;--c-muted:#6E6D7A;--c-sub:#888898;--c-purple-bg:rgba(159,143,247,0.15);--c-teal-bg:rgba(61,214,140,0.12);--c-amber-bg:rgba(245,166,35,0.12);--c-red-bg:rgba(240,84,84,0.12);}
+html.light .card{box-shadow:0 1px 4px rgba(0,0,0,.07);}
+html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
+</style>
+</head>
+<body>
+<div class="shell">
+
+<header class="page-header">
+  <p class="header-eyebrow">라플위클리 · 시즌1~6 상세 분석 (시즌6 진행 중, 결측 없는 편 전체)</p>
+  <h1 class="header-title">시즌1~6 딥다이브 — 무엇이 성적을 갈랐나</h1>
+  <p class="header-sub">VR·참여도·트래픽소스까지 전부 유효한 80편으로 성과 드라이버를 역산 (시즌6 6-22 시선은 발행 후 7일 미경과로 집계대기 제외)</p>
+  <div class="header-meta">
+    <span class="meta-chip">총 80편 (시즌1 10 · 시즌2 9 · 시즌3 12 · 시즌4 14 · 시즌5 14 · 시즌6 21)</span>
+    <span class="meta-chip">등급분포 S8 A20 B+24 B20 C8</span>
+    <span class="meta-chip">채널 평균 LTV 0.646</span>
+  </div>
+</header>
+
+<div class="nav-tabs">
+  <button class="nav-tab on" onclick="sw('all',this)">통합 (80편)</button>
+  <button class="nav-tab" onclick="sw('s1',this)">시즌1 (10편)</button>
+  <button class="nav-tab" onclick="sw('s2',this)">시즌2 (9편)</button>
+  <button class="nav-tab" onclick="sw('s3',this)">시즌3 (12편)</button>
+  <button class="nav-tab" onclick="sw('s4',this)">시즌4 (14편)</button>
+  <button class="nav-tab" onclick="sw('s5',this)">시즌5 (14편)</button>
+  <button class="nav-tab" onclick="sw('s6',this)">시즌6 (21편)</button>
+</div>
+
+<div class="panel show" id="panel-all">
+
+<div class="kpi-strip">
+  <div class="kpi-card purple">
+    <p class="kpi-label">전체 평균 LTV</p>
+    <p class="kpi-val purple">0.646</p>
+    <span class="kpi-badge">80편 · 4개 시즌</span>
+  </div>
+  <div class="kpi-card teal">
+    <p class="kpi-label">최고 시즌</p>
+    <p class="kpi-val teal">시즌3</p>
+    <span class="kpi-badge">평균 0.750</span>
+  </div>
+  <div class="kpi-card amber">
+    <p class="kpi-label">점수와 가장 밀접하게 움직인 지표</p>
+    <p class="kpi-val amber">참여도</p>
+    <span class="kpi-badge">매우 강하게 연결됨</span>
+  </div>
+  <div class="kpi-card">
+    <p class="kpi-label">최고 / 최저 편</p>
+    <p class="kpi-val" style="font-size:16px">이사랑통역되나요 / 뮤지컬2</p>
+    <span class="kpi-badge">0.966 / 0.397</span>
+  </div>
+</div>
+
+<div class="section">
+  <div class="card">
+    <p class="card-title">시즌별 평균 LTV 비교</p>
+    <p class="card-sub">시즌1~6 전체 완전 데이터 기준 · 최저 시즌6(0.562) ~ 최고 시즌3(0.750)</p>
+    <div class="chart-box" style="height:180px"><canvas id="c_season_avg"></canvas></div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="card">
+    <p class="card-title">핵심 인사이트</p>
+    <p class="card-sub">시즌1~6 80편을 놓고 무엇이 점수를 갈랐는지 살펴본 결과</p>
+    <ol class="key-list">
+      <li><b>참여도</b>과 <b>자연유입 절대수</b>이 점수와 가장 밀접하게 움직였습니다(매우 강함·매우 강함 수준, r=0.82·0.81). 결국 "얼마나 많이 봤나"보다 "어떻게, 어디서 도달했는가"가 점수를 갈랐습니다.</li>
+      <li><b>조회수</b> 자체는 점수와 거의 무관했습니다(거의 관련 없음, r=0.17). 순위가 높은 편이라고 조회수가 특별히 많은 것도 아니었어요 — 중요한 건 조회수의 크기가 아니라 유입 경로였습니다.</li>
+      <li><b>참여도</b>이 구독자 증감과 가장 밀접하게 연결됐습니다(r=0.67). 점수 자체보다 "진짜 팬으로 이어지는가"를 보고 싶다면 이 지표를 보는 게 맞습니다.</li>
+      <li><b>CTR·조회율(VR)</b>은 LTV Score 계산식에서 45%를 차지하는 핵심 항목이지만, 80편 사이의 실제 편차가 가장 작아서(변동계수 CTR 17% · VR 23% — 다른 지표는 대부분 35% 이상) 편끼리를 가르는 데는 거의 기여하지 못했습니다.</li>
+    </ol>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-header">
+    <p class="section-title">TOP 3 vs BOTTOM 3</p>
+    <p class="section-desc">최고/최저 편의 실제 지표 차이로 위 인사이트를 직접 확인</p>
+  </div>
+  <div class="spot-grid">
+    <div class="spot-card spot-top">
+    <div class="spot-rank">#1</div>
+    <div class="spot-title">이사랑통역되나요 <span class="spot-num">S5 5-14</span></div>
+    <div class="spot-v2">0.966 <span class="gpill gs">S</span></div>
+    <div class="spot-metrics">
+      <span>알고리즘 37.4%</span>
+      <span>자연유입 46.0%</span>
+      <span>참여도 6,671건</span>
+      <span>CTR 5.70%</span>
+    </div>
+  </div>
+    <div class="spot-card spot-top">
+    <div class="spot-rank">#2</div>
+    <div class="spot-title">중독 <span class="spot-num">S3 3-3</span></div>
+    <div class="spot-v2">0.931 <span class="gpill gs">S</span></div>
+    <div class="spot-metrics">
+      <span>알고리즘 53.9%</span>
+      <span>자연유입 62.8%</span>
+      <span>참여도 3,823건</span>
+      <span>CTR 3.90%</span>
+    </div>
+  </div>
+    <div class="spot-card spot-top">
+    <div class="spot-rank">#3</div>
+    <div class="spot-title">질투 <span class="spot-num">S1 1-10</span></div>
+    <div class="spot-v2">0.913 <span class="gpill gs">S</span></div>
+    <div class="spot-metrics">
+      <span>알고리즘 45.2%</span>
+      <span>자연유입 50.9%</span>
+      <span>참여도 6,167건</span>
+      <span>CTR 3.90%</span>
+    </div>
+  </div>
+  </div>
+  <div class="spot-grid" style="margin-top:10px">
+    <div class="spot-card spot-bottom">
+    <div class="spot-rank">#78</div>
+    <div class="spot-title">아바타2 <span class="spot-num">S5 5-11</span></div>
+    <div class="spot-v2">0.312 <span class="gpill gc">C</span></div>
+    <div class="spot-metrics">
+      <span>알고리즘 8.3%</span>
+      <span>자연유입 10.8%</span>
+      <span>참여도 1,227건</span>
+      <span>CTR 2.90%</span>
+    </div>
+  </div>
+    <div class="spot-card spot-bottom">
+    <div class="spot-rank">#79</div>
+    <div class="spot-title">야구 <span class="spot-num">S6 6-5</span></div>
+    <div class="spot-v2">0.329 <span class="gpill gc">C</span></div>
+    <div class="spot-metrics">
+      <span>알고리즘 13.8%</span>
+      <span>자연유입 17.3%</span>
+      <span>참여도 1,077건</span>
+      <span>CTR 3.00%</span>
+    </div>
+  </div>
+    <div class="spot-card spot-bottom">
+    <div class="spot-rank">#80</div>
+    <div class="spot-title">뮤지컬2 <span class="spot-num">S6 6-21</span></div>
+    <div class="spot-v2">0.397 <span class="gpill gc">C</span></div>
+    <div class="spot-metrics">
+      <span>알고리즘 15.6%</span>
+      <span>자연유입 18.7%</span>
+      <span>참여도 1,361건</span>
+      <span>CTR 3.50%</span>
+    </div>
+  </div>
+  </div>
+</div>
+
+<div class="grid-2 section">
+  <div class="card">
+    <p class="card-title">참여도이 높을수록 점수도 높다</p>
+    <p class="card-sub">점이 오른쪽 위로 갈수록(참여도↑, 점수↑) 뚜렷한 우상향 패턴(r=0.82)</p>
+    <div class="chart-box" style="height:220px"><canvas id="c_scatter_top"></canvas></div>
+  </div>
+  <div class="card">
+    <p class="card-title">CTR은 높다고 점수가 높은 게 아니다</p>
+    <p class="card-sub">점들이 특별한 방향 없이 흩어져 있음(r=0.04, 비교용)</p>
+    <div class="chart-box" style="height:220px"><canvas id="c_scatter_ctr"></canvas></div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-header">
+    <p class="section-title">지표별로 점수/구독자와 얼마나 관련 있었나</p>
+    <p class="section-desc">막대가 길고 진할수록 그 지표가 점수(또는 구독자 증가)와 강하게 같이 움직였다는 뜻 · 점수와 관련 깊은 순</p>
+  </div>
+  <div class="card" style="padding:0">
+    <div class="tbl-scroll">
+      <table class="driver-tbl">
+        <thead><tr>
+          <th class="l">지표</th><th class="l">LTV 점수와의 관련성</th><th class="l">구독자 증가와의 관련성</th><th class="l">편마다 차이</th>
+        </tr></thead>
+        <tbody>
+          <tr>
+            <td class="l">참여도</td>
+            <td class="l"><div style="display:flex;align-items:center;gap:8px"><div style="width:70px;height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden"><div style="width:82%;height:100%;background:var(--c-purple)"></div></div><span style="font-size:12px;color:var(--c-purple)">매우 강함</span></div></td>
+            <td class="l"><div style="display:flex;align-items:center;gap:8px"><div style="width:70px;height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden"><div style="width:67%;height:100%;background:var(--c-teal)"></div></div><span style="font-size:12px;color:var(--c-teal)">강함</span></div></td>
+            <td class="l" style="color:var(--c-muted);font-size:12px">편마다 차이가 큼</td>
+          </tr>
+          <tr>
+            <td class="l">자연유입 절대수</td>
+            <td class="l"><div style="display:flex;align-items:center;gap:8px"><div style="width:70px;height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden"><div style="width:81%;height:100%;background:var(--c-purple)"></div></div><span style="font-size:12px;color:var(--c-purple)">매우 강함</span></div></td>
+            <td class="l"><div style="display:flex;align-items:center;gap:8px"><div style="width:70px;height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden"><div style="width:49%;height:100%;background:var(--c-amber)"></div></div><span style="font-size:12px;color:var(--c-amber)">보통</span></div></td>
+            <td class="l" style="color:var(--c-muted);font-size:12px">편마다 차이가 큼</td>
+          </tr>
+          <tr>
+            <td class="l">노출수</td>
+            <td class="l"><div style="display:flex;align-items:center;gap:8px"><div style="width:70px;height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden"><div style="width:75%;height:100%;background:var(--c-purple)"></div></div><span style="font-size:12px;color:var(--c-purple)">매우 강함</span></div></td>
+            <td class="l"><div style="display:flex;align-items:center;gap:8px"><div style="width:70px;height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden"><div style="width:44%;height:100%;background:var(--c-amber)"></div></div><span style="font-size:12px;color:var(--c-amber)">보통</span></div></td>
+            <td class="l" style="color:var(--c-muted);font-size:12px">편마다 차이가 큼</td>
+          </tr>
+          <tr>
+            <td class="l">알고리즘 유입비중</td>
+            <td class="l"><div style="display:flex;align-items:center;gap:8px"><div style="width:70px;height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden"><div style="width:73%;height:100%;background:var(--c-purple)"></div></div><span style="font-size:12px;color:var(--c-purple)">매우 강함</span></div></td>
+            <td class="l"><div style="display:flex;align-items:center;gap:8px"><div style="width:70px;height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden"><div style="width:35%;height:100%;background:var(--c-amber)"></div></div><span style="font-size:12px;color:var(--c-amber)">보통</span></div></td>
+            <td class="l" style="color:var(--c-muted);font-size:12px">편마다 차이가 큼</td>
+          </tr>
+          <tr>
+            <td class="l">자연유입 비중</td>
+            <td class="l"><div style="display:flex;align-items:center;gap:8px"><div style="width:70px;height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden"><div style="width:72%;height:100%;background:var(--c-purple)"></div></div><span style="font-size:12px;color:var(--c-purple)">매우 강함</span></div></td>
+            <td class="l"><div style="display:flex;align-items:center;gap:8px"><div style="width:70px;height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden"><div style="width:31%;height:100%;background:var(--c-amber)"></div></div><span style="font-size:12px;color:var(--c-amber)">보통</span></div></td>
+            <td class="l" style="color:var(--c-muted);font-size:12px">편마다 차이가 큼</td>
+          </tr>
+          <tr>
+            <td class="l">검색유입 비중</td>
+            <td class="l"><div style="display:flex;align-items:center;gap:8px"><div style="width:70px;height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden"><div style="width:57%;height:100%;background:var(--c-teal)"></div></div><span style="font-size:12px;color:var(--c-teal)">강함</span></div></td>
+            <td class="l"><div style="display:flex;align-items:center;gap:8px"><div style="width:70px;height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden"><div style="width:12%;height:100%;background:var(--c-muted)"></div></div><span style="font-size:12px;color:var(--c-muted)">관련 없음</span></div></td>
+            <td class="l" style="color:var(--c-muted);font-size:12px">편마다 차이가 큼</td>
+          </tr>
+          <tr>
+            <td class="l">평균시청시간</td>
+            <td class="l"><div style="display:flex;align-items:center;gap:8px"><div style="width:70px;height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden"><div style="width:52%;height:100%;background:var(--c-teal)"></div></div><span style="font-size:12px;color:var(--c-teal)">강함</span></div></td>
+            <td class="l"><div style="display:flex;align-items:center;gap:8px"><div style="width:70px;height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden"><div style="width:28%;height:100%;background:var(--c-muted)"></div></div><span style="font-size:12px;color:var(--c-muted)">관련 없음</span></div></td>
+            <td class="l" style="color:var(--c-muted);font-size:12px">편마다 차이가 큼</td>
+          </tr>
+          <tr>
+            <td class="l">조회율(VR)</td>
+            <td class="l"><div style="display:flex;align-items:center;gap:8px"><div style="width:70px;height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden"><div style="width:44%;height:100%;background:var(--c-amber)"></div></div><span style="font-size:12px;color:var(--c-amber)">보통</span></div></td>
+            <td class="l"><div style="display:flex;align-items:center;gap:8px"><div style="width:70px;height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden"><div style="width:19%;height:100%;background:var(--c-muted)"></div></div><span style="font-size:12px;color:var(--c-muted)">관련 없음</span></div></td>
+            <td class="l" style="color:var(--c-muted);font-size:12px">편마다 약간 차이남</td>
+          </tr>
+          <tr>
+            <td class="l">조회수</td>
+            <td class="l"><div style="display:flex;align-items:center;gap:8px"><div style="width:70px;height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden"><div style="width:17%;height:100%;background:var(--c-muted)"></div></div><span style="font-size:12px;color:var(--c-muted)">관련 없음</span></div></td>
+            <td class="l"><div style="display:flex;align-items:center;gap:8px"><div style="width:70px;height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden"><div style="width:19%;height:100%;background:var(--c-muted)"></div></div><span style="font-size:12px;color:var(--c-muted)">관련 없음</span></div></td>
+            <td class="l" style="color:var(--c-muted);font-size:12px">편마다 차이가 큼</td>
+          </tr>
+          <tr>
+            <td class="l">CTR</td>
+            <td class="l"><div style="display:flex;align-items:center;gap:8px"><div style="width:70px;height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden"><div style="width:4%;height:100%;background:var(--c-muted)"></div></div><span style="font-size:12px;color:var(--c-muted)">관련 없음</span></div></td>
+            <td class="l"><div style="display:flex;align-items:center;gap:8px"><div style="width:70px;height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden"><div style="width:0%;height:100%;background:var(--c-muted)"></div></div><span style="font-size:12px;color:var(--c-muted)">관련 없음</span></div></td>
+            <td class="l" style="color:var(--c-muted);font-size:12px">편마다 약간 차이남</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-header">
+    <p class="section-title">전체 80편 순위표</p>
+    <p class="section-desc">LTV Score 내림차순 · 시즌1~6 전체 완전 데이터</p>
+  </div>
+  <div class="card" style="padding:0">
+    <div class="tbl-scroll">
+      <table class="ep-tbl">
+        <thead><tr>
+          <th class="l">#</th><th class="l">에피소드</th><th>시즌</th>
+          <th>LTV</th><th>등급</th><th>자연유입율</th><th>자연유입(회)</th>
+          <th>알고리즘</th><th>CTR</th><th>VR</th><th>구독자</th><th>참여도</th><th>시청(분)</th>
+        </tr></thead>
+        <tbody id="rankBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+</div><!-- /panel-all -->
+
+<div class="panel" id="panel-s1">
+  <div class="kpi-strip" style="grid-template-columns:repeat(3,1fr)">
+    <div class="kpi-card purple">
+      <p class="kpi-label">시즌1 평균 LTV</p>
+      <p class="kpi-val purple">0.641</p>
+      <span class="kpi-badge">10편 · S1 A2 B+3 B4 C0</span>
+    </div>
+    <div class="kpi-card teal">
+      <p class="kpi-label">신규 시청자 비중</p>
+      <p class="kpi-val teal">55.8%</p>
+      <span class="kpi-badge">재방문 44.2%</span>
+    </div>
+    <div class="kpi-card amber">
+      <p class="kpi-label">가장 큰 유입 경로</p>
+      <p class="kpi-val amber" style="font-size:18px">광고</p>
+      <span class="kpi-badge">73.7%</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="card">
+      <p class="card-title">시즌1 특징</p>
+      <ul class="key-list">
+        <li>이 시즌 평균 LTV Score는 <b>0.641</b>이고, 가장 잘한 편은 <b>질투</b>(0.913), 가장 아쉬웠던 편은 <b>미식</b>(0.526)였습니다.</li>
+        <li>신규 시청자 비중이 <b>55.8%</b>로, 다른 시즌(32.7%)보다 높았습니다 — 새로운 시청자를 더 많이 끌어왔다는 뜻입니다.</li>
+        <li>광고를 통해 유입된 비중이 <b>73.7%</b>로, 다른 시즌(62.4%)보다 높아 광고 의존도가 더 컸습니다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="grid-2 section">
+    <div class="card">
+      <p class="card-title">어디서 봤을까 — 유입 경로 구성</p>
+      <p class="card-sub">7일 기준 평균 비중</p>
+      <div class="chart-box" style="height:210px"><canvas id="c_s1_traffic"></canvas></div>
+    </div>
+    <div class="card">
+      <p class="card-title">처음 보는 사람 vs 이미 알던 사람</p>
+      <p class="card-sub">신규 시청자 vs 재방문 시청자 비중</p>
+      <div class="chart-box" style="height:210px"><canvas id="c_s1_viewer"></canvas></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="card">
+      <p class="card-title">회차가 진행되며 점수는 어떻게 변했나</p>
+      <p class="card-sub">발행 순서대로 · 시즌1 내부 흐름</p>
+      <div class="chart-box" style="height:200px"><canvas id="c_s1_trend"></canvas></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <p class="section-title">지표별 베스트 · 워스트 TOP3</p>
+      <p class="section-desc">지표와 기간을 골라보세요 (1일 = 발행 다음날 초기 반응, 7일 = 공식 집계 기준, 28일 = 장기 추이)</p>
+    </div>
+    <div class="card">
+      <div class="filter-tabs" id="metricTabs_s1" style="margin-bottom:8px">
+        <button class="ftab on" data-m="views">조회수</button>
+        <button class="ftab" data-m="nat">자연유입율</button>
+        <button class="ftab" data-m="ctr">CTR</button>
+        <button class="ftab" data-m="sub">구독자증감</button>
+        <button class="ftab" data-m="vr">조회율(VR)</button>
+        <button class="ftab" data-m="eng">참여도</button>
+      </div>
+      <div class="filter-tabs" id="periodTabs_s1">
+        <button class="ftab" data-p="1">1일</button>
+        <button class="ftab on" data-p="7">7일</button>
+        <button class="ftab" data-p="28">28일</button>
+      </div>
+      <div id="bestWorst_s1" style="margin-top:14px"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <p class="section-title">시즌1 전체 10편 순위</p>
+    </div>
+    <div class="card" style="padding:0">
+      <div class="tbl-scroll">
+        <table class="ep-tbl">
+          <thead><tr>
+            <th class="l">#</th><th class="l">에피소드</th>
+            <th>LTV</th><th>등급</th><th>자연유입율</th><th>알고리즘</th><th>CTR</th><th>VR</th><th>구독자</th><th>참여도</th><th>신규시청자</th>
+          </tr></thead>
+          <tbody id="rankBody_s1"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="panel" id="panel-s2">
+  <div class="kpi-strip" style="grid-template-columns:repeat(3,1fr)">
+    <div class="kpi-card purple">
+      <p class="kpi-label">시즌2 평균 LTV</p>
+      <p class="kpi-val purple">0.670</p>
+      <span class="kpi-badge">9편 · S0 A4 B+4 B1 C0</span>
+    </div>
+    <div class="kpi-card teal">
+      <p class="kpi-label">신규 시청자 비중</p>
+      <p class="kpi-val teal">49.6%</p>
+      <span class="kpi-badge">재방문 50.4%</span>
+    </div>
+    <div class="kpi-card amber">
+      <p class="kpi-label">가장 큰 유입 경로</p>
+      <p class="kpi-val amber" style="font-size:18px">광고</p>
+      <span class="kpi-badge">64.9%</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="card">
+      <p class="card-title">시즌2 특징</p>
+      <ul class="key-list">
+        <li>이 시즌 평균 LTV Score는 <b>0.670</b>이고, 가장 잘한 편은 <b>중세시대</b>(0.748), 가장 아쉬웠던 편은 <b>스파이</b>(0.542)였습니다.</li>
+        <li>신규 시청자 비중이 <b>49.6%</b>로, 다른 시즌(33.9%)보다 높았습니다 — 새로운 시청자를 더 많이 끌어왔다는 뜻입니다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="grid-2 section">
+    <div class="card">
+      <p class="card-title">어디서 봤을까 — 유입 경로 구성</p>
+      <p class="card-sub">7일 기준 평균 비중</p>
+      <div class="chart-box" style="height:210px"><canvas id="c_s2_traffic"></canvas></div>
+    </div>
+    <div class="card">
+      <p class="card-title">처음 보는 사람 vs 이미 알던 사람</p>
+      <p class="card-sub">신규 시청자 vs 재방문 시청자 비중</p>
+      <div class="chart-box" style="height:210px"><canvas id="c_s2_viewer"></canvas></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="card">
+      <p class="card-title">회차가 진행되며 점수는 어떻게 변했나</p>
+      <p class="card-sub">발행 순서대로 · 시즌2 내부 흐름</p>
+      <div class="chart-box" style="height:200px"><canvas id="c_s2_trend"></canvas></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <p class="section-title">지표별 베스트 · 워스트 TOP3</p>
+      <p class="section-desc">지표와 기간을 골라보세요 (1일 = 발행 다음날 초기 반응, 7일 = 공식 집계 기준, 28일 = 장기 추이)</p>
+    </div>
+    <div class="card">
+      <div class="filter-tabs" id="metricTabs_s2" style="margin-bottom:8px">
+        <button class="ftab on" data-m="views">조회수</button>
+        <button class="ftab" data-m="nat">자연유입율</button>
+        <button class="ftab" data-m="ctr">CTR</button>
+        <button class="ftab" data-m="sub">구독자증감</button>
+        <button class="ftab" data-m="vr">조회율(VR)</button>
+        <button class="ftab" data-m="eng">참여도</button>
+      </div>
+      <div class="filter-tabs" id="periodTabs_s2">
+        <button class="ftab" data-p="1">1일</button>
+        <button class="ftab on" data-p="7">7일</button>
+        <button class="ftab" data-p="28">28일</button>
+      </div>
+      <div id="bestWorst_s2" style="margin-top:14px"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <p class="section-title">시즌2 전체 9편 순위</p>
+    </div>
+    <div class="card" style="padding:0">
+      <div class="tbl-scroll">
+        <table class="ep-tbl">
+          <thead><tr>
+            <th class="l">#</th><th class="l">에피소드</th>
+            <th>LTV</th><th>등급</th><th>자연유입율</th><th>알고리즘</th><th>CTR</th><th>VR</th><th>구독자</th><th>참여도</th><th>신규시청자</th>
+          </tr></thead>
+          <tbody id="rankBody_s2"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="panel" id="panel-s3">
+  <div class="kpi-strip" style="grid-template-columns:repeat(3,1fr)">
+    <div class="kpi-card purple">
+      <p class="kpi-label">시즌3 평균 LTV</p>
+      <p class="kpi-val purple">0.750</p>
+      <span class="kpi-badge">12편 · S2 A7 B+2 B1 C0</span>
+    </div>
+    <div class="kpi-card teal">
+      <p class="kpi-label">신규 시청자 비중</p>
+      <p class="kpi-val teal">41.4%</p>
+      <span class="kpi-badge">재방문 58.6%</span>
+    </div>
+    <div class="kpi-card amber">
+      <p class="kpi-label">가장 큰 유입 경로</p>
+      <p class="kpi-val amber" style="font-size:18px">광고</p>
+      <span class="kpi-badge">60.3%</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="card">
+      <p class="card-title">시즌3 특징</p>
+      <ul class="key-list">
+        <li>이 시즌 평균 LTV Score는 <b>0.750</b>이고, 가장 잘한 편은 <b>중독</b>(0.931), 가장 아쉬웠던 편은 <b>엄마</b>(0.588)였습니다.</li>
+        <li>신규 시청자 비중이 <b>41.4%</b>로, 다른 시즌(34.9%)보다 높았습니다 — 새로운 시청자를 더 많이 끌어왔다는 뜻입니다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="grid-2 section">
+    <div class="card">
+      <p class="card-title">어디서 봤을까 — 유입 경로 구성</p>
+      <p class="card-sub">7일 기준 평균 비중</p>
+      <div class="chart-box" style="height:210px"><canvas id="c_s3_traffic"></canvas></div>
+    </div>
+    <div class="card">
+      <p class="card-title">처음 보는 사람 vs 이미 알던 사람</p>
+      <p class="card-sub">신규 시청자 vs 재방문 시청자 비중</p>
+      <div class="chart-box" style="height:210px"><canvas id="c_s3_viewer"></canvas></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="card">
+      <p class="card-title">회차가 진행되며 점수는 어떻게 변했나</p>
+      <p class="card-sub">발행 순서대로 · 시즌3 내부 흐름</p>
+      <div class="chart-box" style="height:200px"><canvas id="c_s3_trend"></canvas></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <p class="section-title">지표별 베스트 · 워스트 TOP3</p>
+      <p class="section-desc">지표와 기간을 골라보세요 (1일 = 발행 다음날 초기 반응, 7일 = 공식 집계 기준, 28일 = 장기 추이)</p>
+    </div>
+    <div class="card">
+      <div class="filter-tabs" id="metricTabs_s3" style="margin-bottom:8px">
+        <button class="ftab on" data-m="views">조회수</button>
+        <button class="ftab" data-m="nat">자연유입율</button>
+        <button class="ftab" data-m="ctr">CTR</button>
+        <button class="ftab" data-m="sub">구독자증감</button>
+        <button class="ftab" data-m="vr">조회율(VR)</button>
+        <button class="ftab" data-m="eng">참여도</button>
+      </div>
+      <div class="filter-tabs" id="periodTabs_s3">
+        <button class="ftab" data-p="1">1일</button>
+        <button class="ftab on" data-p="7">7일</button>
+        <button class="ftab" data-p="28">28일</button>
+      </div>
+      <div id="bestWorst_s3" style="margin-top:14px"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <p class="section-title">시즌3 전체 12편 순위</p>
+    </div>
+    <div class="card" style="padding:0">
+      <div class="tbl-scroll">
+        <table class="ep-tbl">
+          <thead><tr>
+            <th class="l">#</th><th class="l">에피소드</th>
+            <th>LTV</th><th>등급</th><th>자연유입율</th><th>알고리즘</th><th>CTR</th><th>VR</th><th>구독자</th><th>참여도</th><th>신규시청자</th>
+          </tr></thead>
+          <tbody id="rankBody_s3"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="panel" id="panel-s4">
+  <div class="kpi-strip" style="grid-template-columns:repeat(3,1fr)">
+    <div class="kpi-card purple">
+      <p class="kpi-label">시즌4 평균 LTV</p>
+      <p class="kpi-val purple">0.687</p>
+      <span class="kpi-badge">14편 · S2 A3 B+7 B2 C0</span>
+    </div>
+    <div class="kpi-card teal">
+      <p class="kpi-label">신규 시청자 비중</p>
+      <p class="kpi-val teal">26.1%</p>
+      <span class="kpi-badge">재방문 73.9%</span>
+    </div>
+    <div class="kpi-card amber">
+      <p class="kpi-label">가장 큰 유입 경로</p>
+      <p class="kpi-val amber" style="font-size:18px">광고</p>
+      <span class="kpi-badge">48.3%</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="card">
+      <p class="card-title">시즌4 특징</p>
+      <ul class="key-list">
+        <li>이 시즌 평균 LTV Score는 <b>0.687</b>이고, 가장 잘한 편은 <b>에일리언</b>(0.882), 가장 아쉬웠던 편은 <b>제임스 카메론</b>(0.531)였습니다.</li>
+        <li>신규 시청자 비중이 <b>26.1%</b>로, 다른 시즌(38.1%)보다 낮았습니다 — 상대적으로 기존 시청자 위주로 봤다는 뜻입니다.</li>
+        <li>광고를 통해 유입된 비중이 <b>48.3%</b>로, 다른 시즌(67.1%)보다 낮아 광고 없이도 더 잘 퍼졌습니다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="grid-2 section">
+    <div class="card">
+      <p class="card-title">어디서 봤을까 — 유입 경로 구성</p>
+      <p class="card-sub">7일 기준 평균 비중</p>
+      <div class="chart-box" style="height:210px"><canvas id="c_s4_traffic"></canvas></div>
+    </div>
+    <div class="card">
+      <p class="card-title">처음 보는 사람 vs 이미 알던 사람</p>
+      <p class="card-sub">신규 시청자 vs 재방문 시청자 비중</p>
+      <div class="chart-box" style="height:210px"><canvas id="c_s4_viewer"></canvas></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="card">
+      <p class="card-title">회차가 진행되며 점수는 어떻게 변했나</p>
+      <p class="card-sub">발행 순서대로 · 시즌4 내부 흐름</p>
+      <div class="chart-box" style="height:200px"><canvas id="c_s4_trend"></canvas></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <p class="section-title">지표별 베스트 · 워스트 TOP3</p>
+      <p class="section-desc">지표와 기간을 골라보세요 (1일 = 발행 다음날 초기 반응, 7일 = 공식 집계 기준, 28일 = 장기 추이)</p>
+    </div>
+    <div class="card">
+      <div class="filter-tabs" id="metricTabs_s4" style="margin-bottom:8px">
+        <button class="ftab on" data-m="views">조회수</button>
+        <button class="ftab" data-m="nat">자연유입율</button>
+        <button class="ftab" data-m="ctr">CTR</button>
+        <button class="ftab" data-m="sub">구독자증감</button>
+        <button class="ftab" data-m="vr">조회율(VR)</button>
+        <button class="ftab" data-m="eng">참여도</button>
+      </div>
+      <div class="filter-tabs" id="periodTabs_s4">
+        <button class="ftab" data-p="1">1일</button>
+        <button class="ftab on" data-p="7">7일</button>
+        <button class="ftab" data-p="28">28일</button>
+      </div>
+      <div id="bestWorst_s4" style="margin-top:14px"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <p class="section-title">시즌4 전체 14편 순위</p>
+    </div>
+    <div class="card" style="padding:0">
+      <div class="tbl-scroll">
+        <table class="ep-tbl">
+          <thead><tr>
+            <th class="l">#</th><th class="l">에피소드</th>
+            <th>LTV</th><th>등급</th><th>자연유입율</th><th>알고리즘</th><th>CTR</th><th>VR</th><th>구독자</th><th>참여도</th><th>신규시청자</th>
+          </tr></thead>
+          <tbody id="rankBody_s4"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="panel" id="panel-s5">
+  <div class="kpi-strip" style="grid-template-columns:repeat(3,1fr)">
+    <div class="kpi-card purple">
+      <p class="kpi-label">시즌5 평균 LTV</p>
+      <p class="kpi-val purple">0.630</p>
+      <span class="kpi-badge">14편 · S1 A3 B+5 B3 C2</span>
+    </div>
+    <div class="kpi-card teal">
+      <p class="kpi-label">신규 시청자 비중</p>
+      <p class="kpi-val teal">25.5%</p>
+      <span class="kpi-badge">재방문 74.5%</span>
+    </div>
+    <div class="kpi-card amber">
+      <p class="kpi-label">가장 큰 유입 경로</p>
+      <p class="kpi-val amber" style="font-size:18px">광고</p>
+      <span class="kpi-badge">67.2%</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="card">
+      <p class="card-title">시즌5 특징</p>
+      <ul class="key-list">
+        <li>이 시즌 평균 LTV Score는 <b>0.630</b>이고, 가장 잘한 편은 <b>이사랑통역되나요</b>(0.966), 가장 아쉬웠던 편은 <b>아바타2</b>(0.312)였습니다.</li>
+        <li>신규 시청자 비중이 <b>25.5%</b>로, 다른 시즌(38.2%)보다 낮았습니다 — 상대적으로 기존 시청자 위주로 봤다는 뜻입니다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="grid-2 section">
+    <div class="card">
+      <p class="card-title">어디서 봤을까 — 유입 경로 구성</p>
+      <p class="card-sub">7일 기준 평균 비중</p>
+      <div class="chart-box" style="height:210px"><canvas id="c_s5_traffic"></canvas></div>
+    </div>
+    <div class="card">
+      <p class="card-title">처음 보는 사람 vs 이미 알던 사람</p>
+      <p class="card-sub">신규 시청자 vs 재방문 시청자 비중</p>
+      <div class="chart-box" style="height:210px"><canvas id="c_s5_viewer"></canvas></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="card">
+      <p class="card-title">회차가 진행되며 점수는 어떻게 변했나</p>
+      <p class="card-sub">발행 순서대로 · 시즌5 내부 흐름</p>
+      <div class="chart-box" style="height:200px"><canvas id="c_s5_trend"></canvas></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <p class="section-title">지표별 베스트 · 워스트 TOP3</p>
+      <p class="section-desc">지표와 기간을 골라보세요 (1일 = 발행 다음날 초기 반응, 7일 = 공식 집계 기준, 28일 = 장기 추이)</p>
+    </div>
+    <div class="card">
+      <div class="filter-tabs" id="metricTabs_s5" style="margin-bottom:8px">
+        <button class="ftab on" data-m="views">조회수</button>
+        <button class="ftab" data-m="nat">자연유입율</button>
+        <button class="ftab" data-m="ctr">CTR</button>
+        <button class="ftab" data-m="sub">구독자증감</button>
+        <button class="ftab" data-m="vr">조회율(VR)</button>
+        <button class="ftab" data-m="eng">참여도</button>
+      </div>
+      <div class="filter-tabs" id="periodTabs_s5">
+        <button class="ftab" data-p="1">1일</button>
+        <button class="ftab on" data-p="7">7일</button>
+        <button class="ftab" data-p="28">28일</button>
+      </div>
+      <div id="bestWorst_s5" style="margin-top:14px"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <p class="section-title">시즌5 전체 14편 순위</p>
+    </div>
+    <div class="card" style="padding:0">
+      <div class="tbl-scroll">
+        <table class="ep-tbl">
+          <thead><tr>
+            <th class="l">#</th><th class="l">에피소드</th>
+            <th>LTV</th><th>등급</th><th>자연유입율</th><th>알고리즘</th><th>CTR</th><th>VR</th><th>구독자</th><th>참여도</th><th>신규시청자</th>
+          </tr></thead>
+          <tbody id="rankBody_s5"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="panel" id="panel-s6">
+  <div class="kpi-strip" style="grid-template-columns:repeat(3,1fr)">
+    <div class="kpi-card purple">
+      <p class="kpi-label">시즌6 평균 LTV</p>
+      <p class="kpi-val purple">0.562</p>
+      <span class="kpi-badge">21편 · S2 A1 B+3 B9 C6</span>
+    </div>
+    <div class="kpi-card teal">
+      <p class="kpi-label">신규 시청자 비중</p>
+      <p class="kpi-val teal">19.8%</p>
+      <span class="kpi-badge">재방문 80.2%</span>
+    </div>
+    <div class="kpi-card amber">
+      <p class="kpi-label">가장 큰 유입 경로</p>
+      <p class="kpi-val amber" style="font-size:18px">광고</p>
+      <span class="kpi-badge">68.7%</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="card">
+      <p class="card-title">시즌6 특징</p>
+      <ul class="key-list">
+        <li>이 시즌 평균 LTV Score는 <b>0.562</b>이고, 가장 잘한 편은 <b>프로젝트 헤일메리</b>(0.891), 가장 아쉬웠던 편은 <b>야구</b>(0.329)였습니다.</li>
+        <li>신규 시청자 비중이 <b>19.8%</b>로, 다른 시즌(40.0%)보다 낮았습니다 — 상대적으로 기존 시청자 위주로 봤다는 뜻입니다.</li>
+        <li>광고를 통해 유입된 비중이 <b>68.7%</b>로, 다른 시즌(62.1%)보다 높아 광고 의존도가 더 컸습니다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="grid-2 section">
+    <div class="card">
+      <p class="card-title">어디서 봤을까 — 유입 경로 구성</p>
+      <p class="card-sub">7일 기준 평균 비중</p>
+      <div class="chart-box" style="height:210px"><canvas id="c_s6_traffic"></canvas></div>
+    </div>
+    <div class="card">
+      <p class="card-title">처음 보는 사람 vs 이미 알던 사람</p>
+      <p class="card-sub">신규 시청자 vs 재방문 시청자 비중</p>
+      <div class="chart-box" style="height:210px"><canvas id="c_s6_viewer"></canvas></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="card">
+      <p class="card-title">회차가 진행되며 점수는 어떻게 변했나</p>
+      <p class="card-sub">발행 순서대로 · 시즌6 내부 흐름</p>
+      <div class="chart-box" style="height:200px"><canvas id="c_s6_trend"></canvas></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <p class="section-title">지표별 베스트 · 워스트 TOP3</p>
+      <p class="section-desc">지표와 기간을 골라보세요 (1일 = 발행 다음날 초기 반응, 7일 = 공식 집계 기준, 28일 = 장기 추이)</p>
+    </div>
+    <div class="card">
+      <div class="filter-tabs" id="metricTabs_s6" style="margin-bottom:8px">
+        <button class="ftab on" data-m="views">조회수</button>
+        <button class="ftab" data-m="nat">자연유입율</button>
+        <button class="ftab" data-m="ctr">CTR</button>
+        <button class="ftab" data-m="sub">구독자증감</button>
+        <button class="ftab" data-m="vr">조회율(VR)</button>
+        <button class="ftab" data-m="eng">참여도</button>
+      </div>
+      <div class="filter-tabs" id="periodTabs_s6">
+        <button class="ftab" data-p="1">1일</button>
+        <button class="ftab on" data-p="7">7일</button>
+        <button class="ftab" data-p="28">28일</button>
+      </div>
+      <div id="bestWorst_s6" style="margin-top:14px"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <p class="section-title">시즌6 전체 21편 순위</p>
+    </div>
+    <div class="card" style="padding:0">
+      <div class="tbl-scroll">
+        <table class="ep-tbl">
+          <thead><tr>
+            <th class="l">#</th><th class="l">에피소드</th>
+            <th>LTV</th><th>등급</th><th>자연유입율</th><th>알고리즘</th><th>CTR</th><th>VR</th><th>구독자</th><th>참여도</th><th>신규시청자</th>
+          </tr></thead>
+          <tbody id="rankBody_s6"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /shell -->
+
+<button id="theme-btn" class="theme-btn" onclick="(function(){var h=document.documentElement;var isLight=h.classList.toggle('light');localStorage.setItem('lp-theme',isLight?'light':'dark');document.getElementById('theme-btn').textContent=isLight?'🌙':'☀';})()">☀</button>
+
+<script>
+function sw(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('show'));
+  document.getElementById('panel-'+id).classList.add('show');
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('on'));
+  btn.classList.add('on');
+}
+
+const GRID='rgba(255,255,255,0.06)', TICK={font:{size:10},color:'#6E6D7A'};
+const BC={S:'#9F8FF7',A:'#3DD68C','B+':'#F5A623',B:'#60A5FA',C:'#6E6D7A'};
+const GC={S:'gs',A:'ga','B+':'gbp',B:'gb',C:'gc'};
+
+const RANKED=[
+  {num:'5-14',title:'이사랑통역되나요',season:'S5',v2:0.966,grade:'S',natPct:46.0,natAbs:275688,algoPct:37.4,ctr:5.70,vr:20.5,sub:591,eng:6671,watch:4.0},
+  {num:'3-3',title:'중독',season:'S3',v2:0.931,grade:'S',natPct:62.8,natAbs:197725,algoPct:53.9,ctr:3.90,vr:28.9,sub:1093,eng:3823,watch:13.5},
+  {num:'1-10',title:'질투',season:'S1',v2:0.913,grade:'S',natPct:50.9,natAbs:192692,algoPct:45.2,ctr:3.90,vr:24.4,sub:2526,eng:6167,watch:12.8},
+  {num:'6-7',title:'프로젝트 헤일메리',season:'S6',v2:0.891,grade:'S',natPct:45.2,natAbs:219055,algoPct:34.5,ctr:3.80,vr:17.0,sub:740,eng:6071,watch:9.9},
+  {num:'4-13',title:'에일리언',season:'S4',v2:0.882,grade:'S',natPct:58.5,natAbs:216827,algoPct:51.5,ctr:2.40,vr:24.5,sub:780,eng:4757,watch:16.1},
+  {num:'4-11',title:'습관',season:'S4',v2:0.881,grade:'S',natPct:69.7,natAbs:154310,algoPct:59.6,ctr:3.50,vr:27.6,sub:1469,eng:4793,watch:15.3},
+  {num:'3-9',title:'거짓말',season:'S3',v2:0.865,grade:'S',natPct:49.1,natAbs:157296,algoPct:41.2,ctr:4.00,vr:28.7,sub:402,eng:3823,watch:15.5},
+  {num:'6-15',title:'마이클 잭슨',season:'S6',v2:0.849,grade:'S',natPct:46.6,natAbs:200210,algoPct:39.5,ctr:2.70,vr:18.9,sub:393,eng:4693,watch:10.6},
+  {num:'3-2',title:'오컬트',season:'S3',v2:0.835,grade:'A',natPct:47.8,natAbs:138488,algoPct:40.8,ctr:3.40,vr:31.0,sub:762,eng:3690,watch:14.1},
+  {num:'3-1',title:'친구',season:'S3',v2:0.813,grade:'A',natPct:45.6,natAbs:126751,algoPct:38.5,ctr:3.50,vr:26.6,sub:985,eng:4471,watch:14.3},
+  {num:'5-3',title:'사이코패스',season:'S5',v2:0.792,grade:'A',natPct:51.8,natAbs:146930,algoPct:44.9,ctr:2.90,vr:27.7,sub:372,eng:3127,watch:11.2},
+  {num:'3-12',title:'외계생명체',season:'S3',v2:0.791,grade:'A',natPct:35.3,natAbs:132906,algoPct:28.5,ctr:3.20,vr:29.6,sub:561,eng:3246,watch:14.7},
+  {num:'4-10',title:'우울',season:'S4',v2:0.783,grade:'A',natPct:62.6,natAbs:114251,algoPct:54.9,ctr:3.60,vr:28.1,sub:372,eng:3040,watch:16.9},
+  {num:'4-7',title:'금기',season:'S4',v2:0.75,grade:'A',natPct:54.5,natAbs:102834,algoPct:45.3,ctr:3.90,vr:33.1,sub:244,eng:2426,watch:18.6},
+  {num:'5-5',title:'외국어',season:'S5',v2:0.75,grade:'A',natPct:50.3,natAbs:123946,algoPct:43.5,ctr:3.10,vr:26.6,sub:338,eng:2995,watch:10.7},
+  {num:'2-5',title:'중세시대',season:'S2',v2:0.748,grade:'A',natPct:47.6,natAbs:110301,algoPct:38.1,ctr:3.10,vr:30.9,sub:480,eng:2426,watch:13.3},
+  {num:'5-4',title:'시간여행',season:'S5',v2:0.747,grade:'A',natPct:53.6,natAbs:131704,algoPct:44.2,ctr:2.80,vr:27.0,sub:295,eng:2799,watch:12.6},
+  {num:'3-4',title:'자유와억압',season:'S3',v2:0.745,grade:'A',natPct:37.8,natAbs:99513,algoPct:30.4,ctr:3.90,vr:31.4,sub:292,eng:2605,watch:13.7},
+  {num:'2-4',title:'코미디',season:'S2',v2:0.743,grade:'A',natPct:43.2,natAbs:113991,algoPct:36.9,ctr:3.80,vr:25.7,sub:454,eng:2732,watch:13.3},
+  {num:'3-7',title:'기적',season:'S3',v2:0.732,grade:'A',natPct:33.9,natAbs:91060,algoPct:26.6,ctr:4.60,vr:25.7,sub:344,eng:2758,watch:14.3},
+  {num:'3-5',title:'공주와왕자',season:'S3',v2:0.728,grade:'A',natPct:43.6,natAbs:103759,algoPct:36.7,ctr:3.40,vr:29.3,sub:288,eng:2867,watch:14.1},
+  {num:'2-8',title:'SF',season:'S2',v2:0.727,grade:'A',natPct:36.8,natAbs:102401,algoPct:30.7,ctr:2.90,vr:28.7,sub:587,eng:2895,watch:15.1},
+  {num:'1-7',title:'멸종',season:'S1',v2:0.725,grade:'A',natPct:47.7,natAbs:86514,algoPct:41.9,ctr:3.80,vr:32.8,sub:564,eng:1731,watch:15.3},
+  {num:'6-9',title:'죽음',season:'S6',v2:0.723,grade:'A',natPct:35.3,natAbs:140003,algoPct:28.9,ctr:3.70,vr:20.7,sub:260,eng:3118,watch:10.6},
+  {num:'2-9',title:'크리스마스',season:'S2',v2:0.722,grade:'A',natPct:34.9,natAbs:89876,algoPct:28.0,ctr:3.90,vr:28.8,sub:277,eng:3037,watch:14.3},
+  {num:'1-8',title:'빌런',season:'S1',v2:0.7,grade:'A',natPct:38.1,natAbs:93327,algoPct:33.1,ctr:2.70,vr:29.5,sub:722,eng:2544,watch:15.2},
+  {num:'3-6',title:'예언',season:'S3',v2:0.692,grade:'A',natPct:32.9,natAbs:107807,algoPct:27.3,ctr:4.00,vr:28.2,sub:192,eng:2320,watch:12.7},
+  {num:'4-12',title:'잠',season:'S4',v2:0.692,grade:'A',natPct:67.7,natAbs:101990,algoPct:55.4,ctr:3.10,vr:29.2,sub:151,eng:2541,watch:17.2},
+  {num:'4-1',title:'흑역사',season:'S4',v2:0.687,grade:'B+',natPct:36.6,natAbs:76709,algoPct:27.5,ctr:3.60,vr:32.6,sub:204,eng:2567,watch:13.7},
+  {num:'2-6',title:'추리',season:'S2',v2:0.684,grade:'B+',natPct:40.8,natAbs:103803,algoPct:32.6,ctr:3.40,vr:29.0,sub:173,eng:2537,watch:13.4},
+  {num:'3-11',title:'변신',season:'S3',v2:0.682,grade:'B+',natPct:32.6,natAbs:85330,algoPct:26.5,ctr:4.60,vr:30.7,sub:172,eng:2060,watch:14.3},
+  {num:'4-8',title:'디지털게임',season:'S4',v2:0.681,grade:'B+',natPct:75.1,natAbs:96751,algoPct:63.7,ctr:3.00,vr:32.1,sub:144,eng:2176,watch:16.7},
+  {num:'4-6',title:'천재',season:'S4',v2:0.675,grade:'B+',natPct:51.9,natAbs:84151,algoPct:42.6,ctr:3.50,vr:35.9,sub:84,eng:1919,watch:17.6},
+  {num:'2-1',title:'첫사랑',season:'S2',v2:0.662,grade:'B+',natPct:27.7,natAbs:76203,algoPct:23.9,ctr:3.40,vr:27.4,sub:610,eng:3567,watch:13.5},
+  {num:'5-1',title:'돈',season:'S5',v2:0.66,grade:'B+',natPct:34.6,natAbs:85091,algoPct:27.5,ctr:3.40,vr:29.8,sub:179,eng:2475,watch:11.8},
+  {num:'4-2',title:'복수',season:'S4',v2:0.655,grade:'B+',natPct:43.0,natAbs:78696,algoPct:34.5,ctr:3.40,vr:34.8,sub:114,eng:1860,watch:15.8},
+  {num:'4-9',title:'연민과증오',season:'S4',v2:0.654,grade:'B+',natPct:55.8,natAbs:87087,algoPct:45.2,ctr:3.50,vr:29.9,sub:110,eng:2132,watch:17.9},
+  {num:'5-2',title:'짝사랑',season:'S5',v2:0.652,grade:'B+',natPct:33.1,natAbs:107267,algoPct:27.6,ctr:3.50,vr:23.9,sub:207,eng:2259,watch:9.5},
+  {num:'6-1',title:'행운',season:'S6',v2:0.649,grade:'B+',natPct:28.0,natAbs:99686,algoPct:22.7,ctr:3.90,vr:20.9,sub:382,eng:3111,watch:7.6},
+  {num:'1-6',title:'판타지',season:'S1',v2:0.642,grade:'B+',natPct:22.2,natAbs:83813,algoPct:18.9,ctr:3.50,vr:29.4,sub:845,eng:2298,watch:13.9},
+  {num:'5-10',title:'아바타1',season:'S5',v2:0.636,grade:'B+',natPct:26.8,natAbs:119666,algoPct:20.1,ctr:3.90,vr:11.4,sub:391,eng:3842,watch:5.7},
+  {num:'6-11',title:'호기심',season:'S6',v2:0.632,grade:'B+',natPct:32.3,natAbs:115668,algoPct:27.3,ctr:3.90,vr:19.0,sub:148,eng:2572,watch:9.4},
+  {num:'1-9',title:'실수',season:'S1',v2:0.615,grade:'B+',natPct:28.2,natAbs:79422,algoPct:24.0,ctr:3.00,vr:27.7,sub:795,eng:2288,watch:14.2},
+  {num:'5-6',title:'술',season:'S5',v2:0.611,grade:'B+',natPct:20.4,natAbs:106485,algoPct:16.9,ctr:3.70,vr:29.3,sub:145,eng:2088,watch:6.2},
+  {num:'2-3',title:'천국과지옥',season:'S2',v2:0.61,grade:'B+',natPct:27.6,natAbs:88756,algoPct:22.5,ctr:3.30,vr:23.5,sub:349,eng:2344,watch:13.5},
+  {num:'5-8',title:'직장인',season:'S5',v2:0.609,grade:'B+',natPct:34.4,natAbs:100350,algoPct:28.8,ctr:3.70,vr:23.9,sub:96,eng:1939,watch:8.6},
+  {num:'1-5',title:'올드머니',season:'S1',v2:0.605,grade:'B+',natPct:26.2,natAbs:46891,algoPct:21.9,ctr:4.90,vr:28.2,sub:670,eng:1498,watch:12.6},
+  {num:'2-7',title:'무술',season:'S2',v2:0.596,grade:'B+',natPct:35.0,natAbs:77102,algoPct:29.5,ctr:2.90,vr:25.6,sub:221,eng:1774,watch:13.2},
+  {num:'3-8',title:'선생님',season:'S3',v2:0.595,grade:'B+',natPct:26.2,natAbs:73674,algoPct:21.1,ctr:4.70,vr:29.3,sub:132,eng:2067,watch:12.3},
+  {num:'4-4',title:'정치와권력',season:'S4',v2:0.594,grade:'B+',natPct:37.9,natAbs:65759,algoPct:30.2,ctr:4.20,vr:26.4,sub:97,eng:1852,watch:12.6},
+  {num:'4-3',title:'고양이',season:'S4',v2:0.59,grade:'B+',natPct:38.0,natAbs:71234,algoPct:31.4,ctr:3.90,vr:24.5,sub:106,eng:2093,watch:11.7},
+  {num:'6-2',title:'루머',season:'S6',v2:0.59,grade:'B+',natPct:31.3,natAbs:107245,algoPct:25.9,ctr:3.50,vr:16.6,sub:345,eng:2268,watch:8.2},
+  {num:'3-10',title:'엄마',season:'S3',v2:0.588,grade:'B',natPct:28.8,natAbs:78116,algoPct:23.1,ctr:4.30,vr:29.6,sub:122,eng:1910,watch:12.6},
+  {num:'6-13',title:'럭셔리',season:'S6',v2:0.579,grade:'B',natPct:36.3,natAbs:86014,algoPct:30.1,ctr:4.00,vr:22.7,sub:81,eng:1713,watch:10.5},
+  {num:'1-3',title:'노화',season:'S1',v2:0.573,grade:'B',natPct:11.9,natAbs:29158,algoPct:8.5,ctr:5.80,vr:31.2,sub:288,eng:1017,watch:14.0},
+  {num:'6-6',title:'본능',season:'S6',v2:0.568,grade:'B',natPct:32.6,natAbs:94195,algoPct:27.0,ctr:4.20,vr:16.4,sub:96,eng:2142,watch:8.9},
+  {num:'1-1',title:'꿈',season:'S1',v2:0.565,grade:'B',natPct:16.9,natAbs:43628,algoPct:12.4,ctr:3.70,vr:26.2,sub:1070,eng:2119,watch:10.6},
+  {num:'4-5',title:'좀비',season:'S4',v2:0.558,grade:'B',natPct:28.6,natAbs:78893,algoPct:23.0,ctr:3.40,vr:27.4,sub:149,eng:1975,watch:12.9},
+  {num:'5-9',title:'기억',season:'S5',v2:0.544,grade:'B',natPct:26.0,natAbs:93662,algoPct:21.6,ctr:3.20,vr:25.2,sub:96,eng:2125,watch:6.5},
+  {num:'2-2',title:'스파이',season:'S2',v2:0.542,grade:'B',natPct:22.3,natAbs:80784,algoPct:18.7,ctr:2.90,vr:24.8,sub:228,eng:1819,watch:13.8},
+  {num:'1-4',title:'여행',season:'S1',v2:0.541,grade:'B',natPct:10.8,natAbs:27158,algoPct:7.4,ctr:4.90,vr:31.3,sub:274,eng:1109,watch:12.7},
+  {num:'5-12',title:'봉준호',season:'S5',v2:0.541,grade:'B',natPct:22.3,natAbs:95501,algoPct:18.4,ctr:3.50,vr:21.7,sub:125,eng:2258,watch:7.1},
+  {num:'6-19',title:'스티븐스필버그',season:'S6',v2:0.538,grade:'B',natPct:29.5,natAbs:92815,algoPct:16.0,ctr:4.00,vr:14.9,sub:156,eng:2384,watch:8.0},
+  {num:'6-18',title:'프랑스',season:'S6',v2:0.537,grade:'B',natPct:34.8,natAbs:67858,algoPct:27.3,ctr:3.90,vr:21.7,sub:43,eng:1753,watch:10.5},
+  {num:'6-10',title:'신분',season:'S6',v2:0.536,grade:'B',natPct:28.0,natAbs:104834,algoPct:23.3,ctr:3.90,vr:19.2,sub:111,eng:1949,watch:8.4},
+  {num:'6-14',title:'디저트',season:'S6',v2:0.536,grade:'B',natPct:32.4,natAbs:77435,algoPct:27.0,ctr:3.80,vr:20.7,sub:40,eng:1779,watch:8.4},
+  {num:'5-7',title:'취미',season:'S5',v2:0.533,grade:'B',natPct:31.6,natAbs:80884,algoPct:26.1,ctr:4.10,vr:21.9,sub:103,eng:2055,watch:6.7},
+  {num:'4-14',title:'제임스 카메론',season:'S4',v2:0.531,grade:'B',natPct:43.9,natAbs:71027,algoPct:36.0,ctr:2.40,vr:22.7,sub:113,eng:1793,watch:15.5},
+  {num:'6-17',title:'다이어트',season:'S6',v2:0.531,grade:'B',natPct:34.9,natAbs:67523,algoPct:27.3,ctr:3.50,vr:22.7,sub:57,eng:1614,watch:10.2},
+  {num:'1-2',title:'미식',season:'S1',v2:0.526,grade:'B',natPct:10.6,natAbs:27644,algoPct:8.1,ctr:4.10,vr:32.5,sub:281,eng:949,watch:10.2},
+  {num:'6-12',title:'실패',season:'S6',v2:0.512,grade:'B',natPct:30.2,natAbs:93493,algoPct:25.3,ctr:3.90,vr:17.2,sub:72,eng:2367,watch:7.2},
+  {num:'6-16',title:'초능력',season:'S6',v2:0.511,grade:'B',natPct:32.3,natAbs:70641,algoPct:26.8,ctr:3.50,vr:21.6,sub:21,eng:1477,watch:9.0},
+  {num:'6-20',title:'뮤지컬1',season:'S6',v2:0.498,grade:'C',natPct:34.5,natAbs:70066,algoPct:18.3,ctr:3.40,vr:19.3,sub:59,eng:1332,watch:6.8},
+  {num:'6-3',title:'이탈리아',season:'S6',v2:0.48,grade:'C',natPct:26.9,natAbs:88681,algoPct:22.1,ctr:3.40,vr:15.6,sub:125,eng:1913,watch:7.3},
+  {num:'5-13',title:'토이스토리',season:'S5',v2:0.464,grade:'C',natPct:17.8,natAbs:75303,algoPct:14.6,ctr:3.20,vr:20.2,sub:37,eng:2133,watch:5.2},
+  {num:'6-8',title:'부동산',season:'S6',v2:0.458,grade:'C',natPct:26.8,natAbs:83115,algoPct:22.0,ctr:3.60,vr:15.3,sub:82,eng:1732,watch:7.9},
+  {num:'6-4',title:'리더쉽',season:'S6',v2:0.452,grade:'C',natPct:22.9,natAbs:77674,algoPct:18.9,ctr:3.50,vr:15.6,sub:91,eng:1797,watch:6.5},
+  {num:'6-21',title:'뮤지컬2',season:'S6',v2:0.397,grade:'C',natPct:18.7,natAbs:47456,algoPct:15.6,ctr:3.50,vr:17.8,sub:44,eng:1361,watch:5.5},
+  {num:'6-5',title:'야구',season:'S6',v2:0.329,grade:'C',natPct:17.3,natAbs:47706,algoPct:13.8,ctr:3.00,vr:12.1,sub:20,eng:1077,watch:6.8},
+  {num:'5-11',title:'아바타2',season:'S5',v2:0.312,grade:'C',natPct:10.8,natAbs:32239,algoPct:8.3,ctr:2.90,vr:12.7,sub:60,eng:1227,watch:4.4}
+];
+
+function fmtRow(r,i){
+  const gc = GC[r.grade];
+  return `<tr>
+    <td class="l">${i+1}</td>
+    <td class="l">${r.title} <span style="color:var(--c-muted);font-size:11px">${r.num}</span></td>
+    <td>${r.season}</td>
+    <td style="font-weight:700;color:${BC[r.grade]}">${r.v2.toFixed(3)}</td>
+    <td><span class="gpill ${gc}">${r.grade}</span></td>
+    <td>${r.natPct}%</td>
+    <td>${r.natAbs.toLocaleString()}</td>
+    <td>${r.algoPct}%</td>
+    <td>${r.ctr}%</td>
+    <td>${r.vr}%</td>
+    <td>${r.sub>0?'+':''}${r.sub}</td>
+    <td>${r.eng.toLocaleString()}</td>
+    <td>${r.watch}</td>
+  </tr>`;
+}
+document.getElementById('rankBody').innerHTML = RANKED.map(fmtRow).join('');
+
+Chart.defaults.color='#6E6D7A';
+
+function scatterChart(id, data, xLabel){
+  new Chart(document.getElementById(id),{type:'scatter',
+    data:{datasets:[{data:data,backgroundColor:'rgba(159,143,247,.8)',pointRadius:5}]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.raw.l+': '+c.raw.x+(xLabel.includes('%')?'%':'')+' · LTV '+c.raw.y.toFixed(3)}}},
+      scales:{x:{grid:{color:GRID},ticks:TICK,title:{display:true,text:xLabel,font:{size:10},color:'#6E6D7A'}},
+              y:{grid:{color:GRID},ticks:{...TICK,callback:v=>v.toFixed(1)},title:{display:true,text:'LTV Score',font:{size:10},color:'#6E6D7A'},min:0,max:1}}}});
+}
+scatterChart('c_scatter_top', [{x:6671,y:0.966,l:'이사랑통역되나요'},{x:3823,y:0.931,l:'중독'},{x:6167,y:0.913,l:'질투'},{x:6071,y:0.891,l:'프로젝트 헤일메리'},{x:4757,y:0.882,l:'에일리언'},{x:4793,y:0.881,l:'습관'},{x:3823,y:0.865,l:'거짓말'},{x:4693,y:0.849,l:'마이클 잭슨'},{x:3690,y:0.835,l:'오컬트'},{x:4471,y:0.813,l:'친구'},{x:3127,y:0.792,l:'사이코패스'},{x:3246,y:0.791,l:'외계생명체'},{x:3040,y:0.783,l:'우울'},{x:2426,y:0.75,l:'금기'},{x:2995,y:0.75,l:'외국어'},{x:2426,y:0.748,l:'중세시대'},{x:2799,y:0.747,l:'시간여행'},{x:2605,y:0.745,l:'자유와억압'},{x:2732,y:0.743,l:'코미디'},{x:2758,y:0.732,l:'기적'},{x:2867,y:0.728,l:'공주와왕자'},{x:2895,y:0.727,l:'SF'},{x:1731,y:0.725,l:'멸종'},{x:3118,y:0.723,l:'죽음'},{x:3037,y:0.722,l:'크리스마스'},{x:2544,y:0.7,l:'빌런'},{x:2320,y:0.692,l:'예언'},{x:2541,y:0.692,l:'잠'},{x:2567,y:0.687,l:'흑역사'},{x:2537,y:0.684,l:'추리'},{x:2060,y:0.682,l:'변신'},{x:2176,y:0.681,l:'디지털게임'},{x:1919,y:0.675,l:'천재'},{x:3567,y:0.662,l:'첫사랑'},{x:2475,y:0.66,l:'돈'},{x:1860,y:0.655,l:'복수'},{x:2132,y:0.654,l:'연민과증오'},{x:2259,y:0.652,l:'짝사랑'},{x:3111,y:0.649,l:'행운'},{x:2298,y:0.642,l:'판타지'},{x:3842,y:0.636,l:'아바타1'},{x:2572,y:0.632,l:'호기심'},{x:2288,y:0.615,l:'실수'},{x:2088,y:0.611,l:'술'},{x:2344,y:0.61,l:'천국과지옥'},{x:1939,y:0.609,l:'직장인'},{x:1498,y:0.605,l:'올드머니'},{x:1774,y:0.596,l:'무술'},{x:2067,y:0.595,l:'선생님'},{x:1852,y:0.594,l:'정치와권력'},{x:2093,y:0.59,l:'고양이'},{x:2268,y:0.59,l:'루머'},{x:1910,y:0.588,l:'엄마'},{x:1713,y:0.579,l:'럭셔리'},{x:1017,y:0.573,l:'노화'},{x:2142,y:0.568,l:'본능'},{x:2119,y:0.565,l:'꿈'},{x:1975,y:0.558,l:'좀비'},{x:2125,y:0.544,l:'기억'},{x:1819,y:0.542,l:'스파이'},{x:1109,y:0.541,l:'여행'},{x:2258,y:0.541,l:'봉준호'},{x:2384,y:0.538,l:'스티븐스필버그'},{x:1753,y:0.537,l:'프랑스'},{x:1949,y:0.536,l:'신분'},{x:1779,y:0.536,l:'디저트'},{x:2055,y:0.533,l:'취미'},{x:1793,y:0.531,l:'제임스 카메론'},{x:1614,y:0.531,l:'다이어트'},{x:949,y:0.526,l:'미식'},{x:2367,y:0.512,l:'실패'},{x:1477,y:0.511,l:'초능력'},{x:1332,y:0.498,l:'뮤지컬1'},{x:1913,y:0.48,l:'이탈리아'},{x:2133,y:0.464,l:'토이스토리'},{x:1732,y:0.458,l:'부동산'},{x:1797,y:0.452,l:'리더쉽'},{x:1361,y:0.397,l:'뮤지컬2'},{x:1077,y:0.329,l:'야구'},{x:1227,y:0.312,l:'아바타2'}], '참여도');
+scatterChart('c_scatter_ctr', [{x:5.7,y:0.966,l:'이사랑통역되나요'},{x:3.9,y:0.931,l:'중독'},{x:3.9,y:0.913,l:'질투'},{x:3.8,y:0.891,l:'프로젝트 헤일메리'},{x:2.4,y:0.882,l:'에일리언'},{x:3.5,y:0.881,l:'습관'},{x:4,y:0.865,l:'거짓말'},{x:2.7,y:0.849,l:'마이클 잭슨'},{x:3.4,y:0.835,l:'오컬트'},{x:3.5,y:0.813,l:'친구'},{x:2.9,y:0.792,l:'사이코패스'},{x:3.2,y:0.791,l:'외계생명체'},{x:3.6,y:0.783,l:'우울'},{x:3.9,y:0.75,l:'금기'},{x:3.1,y:0.75,l:'외국어'},{x:3.1,y:0.748,l:'중세시대'},{x:2.8,y:0.747,l:'시간여행'},{x:3.9,y:0.745,l:'자유와억압'},{x:3.8,y:0.743,l:'코미디'},{x:4.6,y:0.732,l:'기적'},{x:3.4,y:0.728,l:'공주와왕자'},{x:2.9,y:0.727,l:'SF'},{x:3.8,y:0.725,l:'멸종'},{x:3.7,y:0.723,l:'죽음'},{x:3.9,y:0.722,l:'크리스마스'},{x:2.7,y:0.7,l:'빌런'},{x:4,y:0.692,l:'예언'},{x:3.1,y:0.692,l:'잠'},{x:3.6,y:0.687,l:'흑역사'},{x:3.4,y:0.684,l:'추리'},{x:4.6,y:0.682,l:'변신'},{x:3,y:0.681,l:'디지털게임'},{x:3.5,y:0.675,l:'천재'},{x:3.4,y:0.662,l:'첫사랑'},{x:3.4,y:0.66,l:'돈'},{x:3.4,y:0.655,l:'복수'},{x:3.5,y:0.654,l:'연민과증오'},{x:3.5,y:0.652,l:'짝사랑'},{x:3.9,y:0.649,l:'행운'},{x:3.5,y:0.642,l:'판타지'},{x:3.9,y:0.636,l:'아바타1'},{x:3.9,y:0.632,l:'호기심'},{x:3,y:0.615,l:'실수'},{x:3.7,y:0.611,l:'술'},{x:3.3,y:0.61,l:'천국과지옥'},{x:3.7,y:0.609,l:'직장인'},{x:4.9,y:0.605,l:'올드머니'},{x:2.9,y:0.596,l:'무술'},{x:4.7,y:0.595,l:'선생님'},{x:4.2,y:0.594,l:'정치와권력'},{x:3.9,y:0.59,l:'고양이'},{x:3.5,y:0.59,l:'루머'},{x:4.3,y:0.588,l:'엄마'},{x:4,y:0.579,l:'럭셔리'},{x:5.8,y:0.573,l:'노화'},{x:4.2,y:0.568,l:'본능'},{x:3.7,y:0.565,l:'꿈'},{x:3.4,y:0.558,l:'좀비'},{x:3.2,y:0.544,l:'기억'},{x:2.9,y:0.542,l:'스파이'},{x:4.9,y:0.541,l:'여행'},{x:3.5,y:0.541,l:'봉준호'},{x:4,y:0.538,l:'스티븐스필버그'},{x:3.9,y:0.537,l:'프랑스'},{x:3.9,y:0.536,l:'신분'},{x:3.8,y:0.536,l:'디저트'},{x:4.1,y:0.533,l:'취미'},{x:2.4,y:0.531,l:'제임스 카메론'},{x:3.5,y:0.531,l:'다이어트'},{x:4.1,y:0.526,l:'미식'},{x:3.9,y:0.512,l:'실패'},{x:3.5,y:0.511,l:'초능력'},{x:3.4,y:0.498,l:'뮤지컬1'},{x:3.4,y:0.48,l:'이탈리아'},{x:3.2,y:0.464,l:'토이스토리'},{x:3.6,y:0.458,l:'부동산'},{x:3.5,y:0.452,l:'리더쉽'},{x:3.5,y:0.397,l:'뮤지컬2'},{x:3,y:0.329,l:'야구'},{x:2.9,y:0.312,l:'아바타2'}], 'CTR(%)');
+
+function donutChart(id, slices){
+  new Chart(document.getElementById(id),{type:'doughnut',
+    data:{labels:slices.map(s=>s.label),datasets:[{data:slices.map(s=>s.value),backgroundColor:slices.map(s=>s.color),borderWidth:0}]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{position:'bottom',labels:{font:{size:11},boxWidth:10,color:'#9997A8'}},
+        tooltip:{callbacks:{label:c=>c.label+': '+c.parsed+'%'}}}}});
+}
+function trendChart(id, data){
+  new Chart(document.getElementById(id),{type:'bar',
+    data:{labels:data.map(d=>d.num),datasets:[{data:data.map(d=>d.v2),backgroundColor:'rgba(159,143,247,.75)',borderRadius:4}]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{title:c=>data[c[0].dataIndex].title,label:c=>'LTV '+c.parsed.y.toFixed(3)}}},
+      scales:{x:{grid:{display:false},ticks:TICK},y:{grid:{color:GRID},ticks:{...TICK,callback:v=>v.toFixed(1)},min:0,max:1}}}});
+}
+function seasonAvgChart(id, data){
+  new Chart(document.getElementById(id),{type:'bar',
+    data:{labels:data.map(d=>d.label),datasets:[{data:data.map(d=>d.avgV2),backgroundColor:data.map(d=>d.color),borderRadius:6}]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>{const d=data[c.dataIndex];return 'LTV '+d.avgV2.toFixed(3)+' · S'+d.gradeCounts.S+' A'+d.gradeCounts.A+' B+'+d.gradeCounts['B+']+' B'+d.gradeCounts.B+' C'+d.gradeCounts.C;}}}},
+      scales:{x:{grid:{display:false},ticks:TICK},y:{grid:{color:GRID},ticks:{...TICK,callback:v=>v.toFixed(1)},min:0,max:1}}}});
+}
+function seasonRankRow(r,i){
+  const gc = GC[r.grade];
+  return `<tr>
+    <td class="l">${i+1}</td>
+    <td class="l">${r.title} <span style="color:var(--c-muted);font-size:11px">${r.num}</span></td>
+    <td style="font-weight:700;color:${BC[r.grade]}">${r.v2.toFixed(3)}</td>
+    <td><span class="gpill ${gc}">${r.grade}</span></td>
+    <td>${r.natPct}%</td>
+    <td>${r.algoPct}%</td>
+    <td>${r.ctr}%</td>
+    <td>${r.vr}%</td>
+    <td>${r.sub>0?'+':''}${r.sub}</td>
+    <td>${r.eng.toLocaleString()}</td>
+    <td>${r.newPct}%</td>
+  </tr>`;
+}
+
+// 지표별 베스트·워스트 TOP3 — 통계 없이 정렬만 해서 보여주는 단순한 로직
+const METRIC_CFG = {
+  views: { fmt: v => v.toLocaleString() + '회' },
+  nat: { fmt: v => v + '%' },
+  ctr: { fmt: v => v + '%' },
+  sub: { fmt: v => (v > 0 ? '+' : '') + v + '명' },
+  vr: { fmt: v => v + '%' },
+  eng: { fmt: v => v.toLocaleString() + '건' },
+};
+function bwCard(r, field, rank, isTop, total, fmt){
+  return '<div class="spot-card '+(isTop?'spot-top':'spot-bottom')+'">'+
+    '<div class="spot-rank">'+(isTop?'#'+rank:'#'+(total-3+rank))+'</div>'+
+    '<div class="spot-title">'+r.title+' <span class="spot-num">'+r.num+'</span></div>'+
+    '<div class="spot-v2" style="font-size:18px">'+fmt(r[field])+'</div>'+
+  '</div>';
+}
+function setupBestWorst(id, fullData){
+  let curM = 'views', curP = '7';
+  const mTabs = document.getElementById('metricTabs_'+id);
+  const pTabs = document.getElementById('periodTabs_'+id);
+  function render(){
+    const field = curM + curP;
+    const fmt = METRIC_CFG[curM].fmt;
+    const sorted = [...fullData].sort((a,b) => b[field] - a[field]);
+    const top3 = sorted.slice(0,3), bottom3 = sorted.slice(-3).reverse();
+    let html = '<p class="bw-title">베스트 3</p><div class="spot-grid">' +
+      top3.map((r,i) => bwCard(r, field, i+1, true, fullData.length, fmt)).join('') + '</div>';
+    html += '<p class="bw-title" style="margin-top:14px">워스트 3</p><div class="spot-grid">' +
+      bottom3.map((r,i) => bwCard(r, field, i+1, false, fullData.length, fmt)).join('') + '</div>';
+    document.getElementById('bestWorst_'+id).innerHTML = html;
+  }
+  mTabs.querySelectorAll('.ftab').forEach(btn => btn.addEventListener('click', function(){
+    mTabs.querySelectorAll('.ftab').forEach(b => b.classList.remove('on')); this.classList.add('on');
+    curM = this.getAttribute('data-m'); render();
+  }));
+  pTabs.querySelectorAll('.ftab').forEach(btn => btn.addEventListener('click', function(){
+    pTabs.querySelectorAll('.ftab').forEach(b => b.classList.remove('on')); this.classList.add('on');
+    curP = this.getAttribute('data-p'); render();
+  }));
+  render();
+}
+
+const SEASON_AVG=[{label:'시즌1',avgV2:0.641,color:'#60A5FA',gradeCounts:{S:1,A:2,'B+':3,B:4,C:0}},{label:'시즌2',avgV2:0.670,color:'#9F8FF7',gradeCounts:{S:0,A:4,'B+':4,B:1,C:0}},{label:'시즌3',avgV2:0.750,color:'#F472B6',gradeCounts:{S:2,A:7,'B+':2,B:1,C:0}},{label:'시즌4',avgV2:0.687,color:'#F5A623',gradeCounts:{S:2,A:3,'B+':7,B:2,C:0}},{label:'시즌5',avgV2:0.630,color:'#34D399',gradeCounts:{S:1,A:3,'B+':5,B:3,C:2}},{label:'시즌6',avgV2:0.562,color:'#22D3EE',gradeCounts:{S:2,A:1,'B+':3,B:9,C:6}}];
+seasonAvgChart('c_season_avg', SEASON_AVG);
+
+const SEASON_PAYLOAD=[
+  { id:'s1',
+    traffic:[{label:'알고리즘 추천',value:22.1,color:'#9F8FF7'},{label:'검색',value:0.9,color:'#60A5FA'},{label:'채널 순환(구독자)',value:1.1,color:'#3DD68C'},{label:'광고',value:73.7,color:'#F5A623'},{label:'기타',value:2.2,color:'#6E6D7A'}],
+    viewer:[{label:'신규 시청자',value:55.8,color:'#9F8FF7'},{label:'재방문 시청자',value:44.2,color:'#3DD68C'}],
+    chrono:[{num:'1-1',title:'꿈',v2:0.565},{num:'1-2',title:'미식',v2:0.526},{num:'1-3',title:'노화',v2:0.573},{num:'1-4',title:'여행',v2:0.541},{num:'1-5',title:'올드머니',v2:0.605},{num:'1-6',title:'판타지',v2:0.642},{num:'1-7',title:'멸종',v2:0.725},{num:'1-8',title:'빌런',v2:0.7},{num:'1-9',title:'실수',v2:0.615},{num:'1-10',title:'질투',v2:0.913}],
+    rank:[
+      {num:'1-10',title:'질투',v2:0.913,grade:'S',natPct:50.9,algoPct:45.2,ctr:3.90,vr:24.4,sub:2526,eng:6167,watch:12.8,newPct:49.2},
+  {num:'1-7',title:'멸종',v2:0.725,grade:'A',natPct:47.7,algoPct:41.9,ctr:3.80,vr:32.8,sub:564,eng:1731,watch:15.3,newPct:44.4},
+  {num:'1-8',title:'빌런',v2:0.7,grade:'A',natPct:38.1,algoPct:33.1,ctr:2.70,vr:29.5,sub:722,eng:2544,watch:15.2,newPct:39.6},
+  {num:'1-6',title:'판타지',v2:0.642,grade:'B+',natPct:22.2,algoPct:18.9,ctr:3.50,vr:29.4,sub:845,eng:2298,watch:13.9,newPct:56.3},
+  {num:'1-9',title:'실수',v2:0.615,grade:'B+',natPct:28.2,algoPct:24.0,ctr:3.00,vr:27.7,sub:795,eng:2288,watch:14.2,newPct:37.7},
+  {num:'1-5',title:'올드머니',v2:0.605,grade:'B+',natPct:26.2,algoPct:21.9,ctr:4.90,vr:28.2,sub:670,eng:1498,watch:12.6,newPct:49.6},
+  {num:'1-3',title:'노화',v2:0.573,grade:'B',natPct:11.9,algoPct:8.5,ctr:5.80,vr:31.2,sub:288,eng:1017,watch:14.0,newPct:65.2},
+  {num:'1-1',title:'꿈',v2:0.565,grade:'B',natPct:16.9,algoPct:12.4,ctr:3.70,vr:26.2,sub:1070,eng:2119,watch:10.6,newPct:89.6},
+  {num:'1-4',title:'여행',v2:0.541,grade:'B',natPct:10.8,algoPct:7.4,ctr:4.90,vr:31.3,sub:274,eng:1109,watch:12.7,newPct:58.6},
+  {num:'1-2',title:'미식',v2:0.526,grade:'B',natPct:10.6,algoPct:8.1,ctr:4.10,vr:32.5,sub:281,eng:949,watch:10.2,newPct:72.4}
+    ],
+    full:[
+      {num:'1-1',title:'꿈',views1:107193,views7:257987,views28:284016,nat1:15.8,nat7:16.9,nat28:24.5,ctr1:4.10,ctr7:3.70,ctr28:3.50,sub1:506,sub7:1070,sub28:1795,vr1:28.4,vr7:26.2,vr28:26.5,eng1:1021,eng7:2119,eng28:3825},
+  {num:'1-2',title:'미식',views1:154057,views7:261904,views28:283481,nat1:8.8,nat7:10.6,nat28:17.4,ctr1:4.80,ctr7:4.10,ctr28:4.10,sub1:120,sub7:281,sub28:495,vr1:33.1,vr7:32.5,vr28:32.8,eng1:603,eng7:949,eng28:1555},
+  {num:'1-3',title:'노화',views1:64674,views7:245946,views28:320965,nat1:17.4,nat7:11.9,nat28:32.5,ctr1:6.80,ctr7:5.80,ctr28:4.60,sub1:94,sub7:288,sub28:1361,vr1:31.6,vr7:31.2,vr28:29.4,eng1:564,eng7:1017,eng28:2625},
+  {num:'1-4',title:'여행',views1:118809,views7:251145,views28:289779,nat1:11.3,nat7:10.8,nat28:22.7,ctr1:5.70,ctr7:4.90,ctr28:4.00,sub1:108,sub7:274,sub28:757,vr1:32.5,vr7:31.3,vr28:31.9,eng1:709,eng7:1109,eng28:2104},
+  {num:'1-5',title:'올드머니',views1:106116,views7:178921,views28:255866,nat1:19.8,nat7:26.2,nat28:48.4,ctr1:5.70,ctr7:4.90,ctr28:3.30,sub1:2052,sub7:670,sub28:2336,vr1:29.2,vr7:28.2,vr28:29.5,eng1:832,eng7:1498,eng28:3146},
+  {num:'1-6',title:'판타지',views1:82142,views7:377571,views28:498309,nat1:29.2,nat7:22.2,nat28:41.0,ctr1:4.70,ctr7:3.50,ctr28:2.50,sub1:217,sub7:845,sub28:2020,vr1:33.8,vr7:29.4,vr28:29.2,eng1:1014,eng7:2298,eng28:4281},
+  {num:'1-7',title:'멸종',views1:75536,views7:181430,views28:276213,nat1:46.9,nat7:47.7,nat28:65.6,ctr1:4.40,ctr7:3.80,ctr28:3.40,sub1:216,sub7:564,sub28:1287,vr1:36.9,vr7:32.8,vr28:32.8,eng1:1015,eng7:1731,eng28:2808},
+  {num:'1-8',title:'빌런',views1:94677,views7:244756,views28:312207,nat1:39.0,nat7:38.1,nat28:51.5,ctr1:4.40,ctr7:2.70,ctr28:2.60,sub1:263,sub7:722,sub28:1246,vr1:30.5,vr7:29.5,vr28:30.6,eng1:1471,eng7:2544,eng28:3569},
+  {num:'1-9',title:'실수',views1:77017,views7:281213,views28:331422,nat1:55.6,nat7:28.2,nat28:39.1,ctr1:4.10,ctr7:3.00,ctr28:3.10,sub1:465,sub7:795,sub28:1277,vr1:31.0,vr7:27.7,vr28:28.8,eng1:1523,eng7:2288,eng28:3145},
+  {num:'1-10',title:'질투',views1:101294,views7:378635,views28:547259,nat1:54.0,nat7:50.9,nat28:66.0,ctr1:4.80,ctr7:3.90,ctr28:3.40,sub1:482,sub7:2526,sub28:5026,vr1:28.1,vr7:24.4,vr28:24.6,eng1:2395,eng7:6167,eng28:9957}
+    ] },
+  { id:'s2',
+    traffic:[{label:'알고리즘 추천',value:29,color:'#9F8FF7'},{label:'검색',value:1.5,color:'#60A5FA'},{label:'채널 순환(구독자)',value:1.7,color:'#3DD68C'},{label:'광고',value:64.9,color:'#F5A623'},{label:'기타',value:2.8,color:'#6E6D7A'}],
+    viewer:[{label:'신규 시청자',value:49.6,color:'#9F8FF7'},{label:'재방문 시청자',value:50.4,color:'#3DD68C'}],
+    chrono:[{num:'2-1',title:'첫사랑',v2:0.662},{num:'2-2',title:'스파이',v2:0.542},{num:'2-3',title:'천국과지옥',v2:0.61},{num:'2-4',title:'코미디',v2:0.743},{num:'2-5',title:'중세시대',v2:0.748},{num:'2-6',title:'추리',v2:0.684},{num:'2-7',title:'무술',v2:0.596},{num:'2-8',title:'SF',v2:0.727},{num:'2-9',title:'크리스마스',v2:0.722}],
+    rank:[
+      {num:'2-5',title:'중세시대',v2:0.748,grade:'A',natPct:47.6,algoPct:38.1,ctr:3.10,vr:30.9,sub:480,eng:2426,watch:13.3,newPct:42.3},
+  {num:'2-4',title:'코미디',v2:0.743,grade:'A',natPct:43.2,algoPct:36.9,ctr:3.80,vr:25.7,sub:454,eng:2732,watch:13.3,newPct:44.5},
+  {num:'2-8',title:'SF',v2:0.727,grade:'A',natPct:36.8,algoPct:30.7,ctr:2.90,vr:28.7,sub:587,eng:2895,watch:15.1,newPct:42.6},
+  {num:'2-9',title:'크리스마스',v2:0.722,grade:'A',natPct:34.9,algoPct:28.0,ctr:3.90,vr:28.8,sub:277,eng:3037,watch:14.3,newPct:41.4},
+  {num:'2-6',title:'추리',v2:0.684,grade:'B+',natPct:40.8,algoPct:32.6,ctr:3.40,vr:29.0,sub:173,eng:2537,watch:13.4,newPct:44.8},
+  {num:'2-1',title:'첫사랑',v2:0.662,grade:'B+',natPct:27.7,algoPct:23.9,ctr:3.40,vr:27.4,sub:610,eng:3567,watch:13.5,newPct:57.2},
+  {num:'2-3',title:'천국과지옥',v2:0.61,grade:'B+',natPct:27.6,algoPct:22.5,ctr:3.30,vr:23.5,sub:349,eng:2344,watch:13.5,newPct:55.2},
+  {num:'2-7',title:'무술',v2:0.596,grade:'B+',natPct:35.0,algoPct:29.5,ctr:2.90,vr:25.6,sub:221,eng:1774,watch:13.2,newPct:41.6},
+  {num:'2-2',title:'스파이',v2:0.542,grade:'B',natPct:22.3,algoPct:18.7,ctr:2.90,vr:24.8,sub:228,eng:1819,watch:13.8,newPct:66.2}
+    ],
+    full:[
+      {num:'2-1',title:'첫사랑',views1:62958,views7:275470,views28:320449,nat1:63.7,nat7:27.7,nat28:37.8,ctr1:4.20,ctr7:3.40,ctr28:3.40,sub1:322,sub7:610,sub28:942,vr1:32.0,vr7:27.4,vr28:28.3,eng1:2203,eng7:3567,eng28:4435},
+  {num:'2-2',title:'스파이',views1:117765,views7:362472,views28:400544,nat1:35.3,nat7:22.3,nat28:29.7,ctr1:3.40,ctr7:2.90,ctr28:2.90,sub1:101,sub7:228,sub28:364,vr1:26.5,vr7:24.8,vr28:25.9,eng1:1217,eng7:1819,eng28:2308},
+  {num:'2-3',title:'천국과지옥',views1:85110,views7:321657,views28:372595,nat1:51.4,nat7:27.6,nat28:34.0,ctr1:4.30,ctr7:3.30,ctr28:3.20,sub1:137,sub7:349,sub28:563,vr1:28.1,vr7:23.5,vr28:24.7,eng1:1472,eng7:2344,eng28:2966},
+  {num:'2-4',title:'코미디',views1:96993,views7:264101,views28:314386,nat1:58.4,nat7:43.2,nat28:52.3,ctr1:5.10,ctr7:3.80,ctr28:3.70,sub1:205,sub7:454,sub28:722,vr1:29.1,vr7:25.7,vr28:26.4,eng1:1710,eng7:2732,eng28:3283},
+  {num:'2-5',title:'중세시대',views1:70229,views7:231666,views28:274899,nat1:73.7,nat7:47.6,nat28:55.9,ctr1:3.70,ctr7:3.10,ctr28:2.90,sub1:238,sub7:480,sub28:807,vr1:34.6,vr7:30.9,vr28:31.4,eng1:1592,eng7:2426,eng28:3058},
+  {num:'2-6',title:'추리',views1:60712,views7:254121,views28:310069,nat1:77.5,nat7:40.8,nat28:51.5,ctr1:4.80,ctr7:3.40,ctr28:2.90,sub1:398,sub7:173,sub28:728,vr1:35.9,vr7:29.0,vr28:29.6,eng1:1511,eng7:2537,eng28:3508},
+  {num:'2-7',title:'무술',views1:61967,views7:220466,views28:262284,nat1:66.0,nat7:35.0,nat28:41.7,ctr1:3.60,ctr7:2.90,ctr28:2.90,sub1:117,sub7:221,sub28:346,vr1:31.9,vr7:25.6,vr28:26.4,eng1:1184,eng7:1774,eng28:2157},
+  {num:'2-8',title:'SF',views1:63061,views7:278094,views28:355115,nat1:69.4,nat7:36.8,nat28:43.7,ctr1:4.10,ctr7:2.90,ctr28:2.70,sub1:228,sub7:587,sub28:587,vr1:34.7,vr7:28.7,vr28:29.2,eng1:1667,eng7:2895,eng28:3808},
+  {num:'2-9',title:'크리스마스',views1:60820,views7:257285,views28:318257,nat1:79.6,nat7:34.9,nat28:37.0,ctr1:4.80,ctr7:3.90,ctr28:3.80,sub1:149,sub7:277,sub28:460,vr1:36.1,vr7:28.8,vr28:27.9,eng1:1897,eng7:3037,eng28:3751}
+    ] },
+  { id:'s3',
+    traffic:[{label:'알고리즘 추천',value:32.9,color:'#9F8FF7'},{label:'검색',value:1.7,color:'#60A5FA'},{label:'채널 순환(구독자)',value:2.1,color:'#3DD68C'},{label:'광고',value:60.3,color:'#F5A623'},{label:'기타',value:3.1,color:'#6E6D7A'}],
+    viewer:[{label:'신규 시청자',value:41.4,color:'#9F8FF7'},{label:'재방문 시청자',value:58.6,color:'#3DD68C'}],
+    chrono:[{num:'3-1',title:'친구',v2:0.813},{num:'3-2',title:'오컬트',v2:0.835},{num:'3-3',title:'중독',v2:0.931},{num:'3-4',title:'자유와억압',v2:0.745},{num:'3-5',title:'공주와왕자',v2:0.728},{num:'3-6',title:'예언',v2:0.692},{num:'3-7',title:'기적',v2:0.732},{num:'3-8',title:'선생님',v2:0.595},{num:'3-9',title:'거짓말',v2:0.865},{num:'3-10',title:'엄마',v2:0.588},{num:'3-11',title:'변신',v2:0.682},{num:'3-12',title:'외계생명체',v2:0.791}],
+    rank:[
+      {num:'3-3',title:'중독',v2:0.931,grade:'S',natPct:62.8,algoPct:53.9,ctr:3.90,vr:28.9,sub:1093,eng:3823,watch:13.5,newPct:39.3},
+  {num:'3-9',title:'거짓말',v2:0.865,grade:'S',natPct:49.1,algoPct:41.2,ctr:4.00,vr:28.7,sub:402,eng:3823,watch:15.5,newPct:31.9},
+  {num:'3-2',title:'오컬트',v2:0.835,grade:'A',natPct:47.8,algoPct:40.8,ctr:3.40,vr:31.0,sub:762,eng:3690,watch:14.1,newPct:44.3},
+  {num:'3-1',title:'친구',v2:0.813,grade:'A',natPct:45.6,algoPct:38.5,ctr:3.50,vr:26.6,sub:985,eng:4471,watch:14.3,newPct:42.8},
+  {num:'3-12',title:'외계생명체',v2:0.791,grade:'A',natPct:35.3,algoPct:28.5,ctr:3.20,vr:29.6,sub:561,eng:3246,watch:14.7,newPct:65.3},
+  {num:'3-4',title:'자유와억압',v2:0.745,grade:'A',natPct:37.8,algoPct:30.4,ctr:3.90,vr:31.4,sub:292,eng:2605,watch:13.7,newPct:45.5},
+  {num:'3-7',title:'기적',v2:0.732,grade:'A',natPct:33.9,algoPct:26.6,ctr:4.60,vr:25.7,sub:344,eng:2758,watch:14.3,newPct:36.6},
+  {num:'3-5',title:'공주와왕자',v2:0.728,grade:'A',natPct:43.6,algoPct:36.7,ctr:3.40,vr:29.3,sub:288,eng:2867,watch:14.1,newPct:33.7},
+  {num:'3-6',title:'예언',v2:0.692,grade:'A',natPct:32.9,algoPct:27.3,ctr:4.00,vr:28.2,sub:192,eng:2320,watch:12.7,newPct:37.9},
+  {num:'3-11',title:'변신',v2:0.682,grade:'B+',natPct:32.6,algoPct:26.5,ctr:4.60,vr:30.7,sub:172,eng:2060,watch:14.3,newPct:33.4},
+  {num:'3-8',title:'선생님',v2:0.595,grade:'B+',natPct:26.2,algoPct:21.1,ctr:4.70,vr:29.3,sub:132,eng:2067,watch:12.3,newPct:39.2},
+  {num:'3-10',title:'엄마',v2:0.588,grade:'B',natPct:28.8,algoPct:23.1,ctr:4.30,vr:29.6,sub:122,eng:1910,watch:12.6,newPct:36.5}
+    ],
+    full:[
+      {num:'3-1',title:'친구',views1:88220,views7:278174,views28:366546,nat1:55.4,nat7:45.6,nat28:58.7,ctr1:4.40,ctr7:3.50,ctr28:3.10,sub1:331,sub7:985,sub28:1851,vr1:29.5,vr7:26.6,vr28:26.9,eng1:2309,eng7:4471,eng28:6283},
+  {num:'3-2',title:'오컬트',views1:89015,views7:289768,views28:348973,nat1:61.0,nat7:47.8,nat28:56.6,ctr1:4.10,ctr7:3.40,ctr28:3.30,sub1:206,sub7:762,sub28:1125,vr1:33.5,vr7:31.0,vr28:31.8,eng1:2006,eng7:3690,eng28:4504},
+  {num:'3-3',title:'중독',views1:75928,views7:314941,views28:398778,nat1:94.7,nat7:62.8,nat28:70.6,ctr1:4.90,ctr7:3.90,ctr28:3.80,sub1:381,sub7:1093,sub28:1463,vr1:34.2,vr7:28.9,vr28:28.3,eng1:2160,eng7:3823,eng28:4574},
+  {num:'3-4',title:'자유와억압',views1:86425,views7:263188,views28:308155,nat1:60.1,nat7:37.8,nat28:46.0,ctr1:4.60,ctr7:3.90,ctr28:3.70,sub1:142,sub7:292,sub28:467,vr1:35.0,vr7:31.4,vr28:32.2,eng1:1694,eng7:2605,eng28:3235},
+  {num:'3-5',title:'공주와왕자',views1:63854,views7:238168,views28:304400,nat1:88.9,nat7:43.6,nat28:47.0,ctr1:4.40,ctr7:3.40,ctr28:3.00,sub1:134,sub7:288,sub28:428,vr1:39.5,vr7:29.3,vr28:28.6,eng1:1874,eng7:2867,eng28:3655},
+  {num:'3-6',title:'예언',views1:93850,views7:328042,views28:367293,nat1:65.5,nat7:32.9,nat28:38.4,ctr1:4.50,ctr7:4.00,ctr28:3.80,sub1:95,sub7:192,sub28:290,vr1:32.9,vr7:28.2,vr28:28.8,eng1:1664,eng7:2320,eng28:2650},
+  {num:'3-7',title:'기적',views1:70281,views7:268485,views28:305147,nat1:68.3,nat7:33.9,nat28:39.5,ctr1:5.60,ctr7:4.60,ctr28:4.40,sub1:151,sub7:344,sub28:548,vr1:30.2,vr7:25.7,vr28:26.0,eng1:1844,eng7:2758,eng28:3241},
+  {num:'3-8',title:'선생님',views1:77523,views7:281223,views28:300933,nat1:54.7,nat7:26.2,nat28:31.0,ctr1:5.90,ctr7:4.70,ctr28:4.30,sub1:79,sub7:132,sub28:172,vr1:33.3,vr7:29.3,vr28:29.9,eng1:1446,eng7:2067,eng28:2323},
+  {num:'3-9',title:'거짓말',views1:89168,views7:320246,views28:400367,nat1:78.1,nat7:49.1,nat28:49.0,ctr1:5.20,ctr7:4.00,ctr28:3.70,sub1:141,sub7:402,sub28:570,vr1:33.7,vr7:28.7,vr28:26.8,eng1:2275,eng7:3823,eng28:4389},
+  {num:'3-10',title:'엄마',views1:81123,views7:271453,views28:294829,nat1:55.9,nat7:28.8,nat28:33.7,ctr1:5.60,ctr7:4.30,ctr28:4.00,sub1:59,sub7:122,sub28:166,vr1:33.5,vr7:29.6,vr28:29.6,eng1:1323,eng7:1910,eng28:2229},
+  {num:'3-11',title:'변신',views1:70262,views7:261692,views28:290919,nat1:64.3,nat7:32.6,nat28:35.9,ctr1:5.60,ctr7:4.60,ctr28:4.30,sub1:59,sub7:172,sub28:229,vr1:35.6,vr7:30.7,vr28:30.8,eng1:1332,eng7:2060,eng28:2325},
+  {num:'3-12',title:'외계생명체',views1:143050,views7:376266,views28:549796,nat1:35.9,nat7:35.3,nat28:55.6,ctr1:4.70,ctr7:3.20,ctr28:2.40,sub1:138,sub7:561,sub28:1935,vr1:30.3,vr7:29.6,vr28:29.9,eng1:1897,eng7:3246,eng28:5080}
+    ] },
+  { id:'s4',
+    traffic:[{label:'알고리즘 추천',value:42.9,color:'#9F8FF7'},{label:'검색',value:2.2,color:'#60A5FA'},{label:'채널 순환(구독자)',value:2.7,color:'#3DD68C'},{label:'광고',value:48.3,color:'#F5A623'},{label:'기타',value:3.8,color:'#6E6D7A'}],
+    viewer:[{label:'신규 시청자',value:26.1,color:'#9F8FF7'},{label:'재방문 시청자',value:73.9,color:'#3DD68C'}],
+    chrono:[{num:'4-1',title:'흑역사',v2:0.687},{num:'4-2',title:'복수',v2:0.655},{num:'4-3',title:'고양이',v2:0.59},{num:'4-4',title:'정치와권력',v2:0.594},{num:'4-5',title:'좀비',v2:0.558},{num:'4-6',title:'천재',v2:0.675},{num:'4-7',title:'금기',v2:0.75},{num:'4-8',title:'디지털게임',v2:0.681},{num:'4-9',title:'연민과증오',v2:0.654},{num:'4-10',title:'우울',v2:0.783},{num:'4-11',title:'습관',v2:0.881},{num:'4-12',title:'잠',v2:0.692},{num:'4-13',title:'에일리언',v2:0.882},{num:'4-14',title:'제임스 카메론',v2:0.531}],
+    rank:[
+      {num:'4-13',title:'에일리언',v2:0.882,grade:'S',natPct:58.5,algoPct:51.5,ctr:2.40,vr:24.5,sub:780,eng:4757,watch:16.1,newPct:37.7},
+  {num:'4-11',title:'습관',v2:0.881,grade:'S',natPct:69.7,algoPct:59.6,ctr:3.50,vr:27.6,sub:1469,eng:4793,watch:15.3,newPct:21.4},
+  {num:'4-10',title:'우울',v2:0.783,grade:'A',natPct:62.6,algoPct:54.9,ctr:3.60,vr:28.1,sub:372,eng:3040,watch:16.9,newPct:19.0},
+  {num:'4-7',title:'금기',v2:0.75,grade:'A',natPct:54.5,algoPct:45.3,ctr:3.90,vr:33.1,sub:244,eng:2426,watch:18.6,newPct:18.8},
+  {num:'4-12',title:'잠',v2:0.692,grade:'A',natPct:67.7,algoPct:55.4,ctr:3.10,vr:29.2,sub:151,eng:2541,watch:17.2,newPct:16.1},
+  {num:'4-1',title:'흑역사',v2:0.687,grade:'B+',natPct:36.6,algoPct:27.5,ctr:3.60,vr:32.6,sub:204,eng:2567,watch:13.7,newPct:35.2},
+  {num:'4-8',title:'디지털게임',v2:0.681,grade:'B+',natPct:75.1,algoPct:63.7,ctr:3.00,vr:32.1,sub:144,eng:2176,watch:16.7,newPct:16.8},
+  {num:'4-6',title:'천재',v2:0.675,grade:'B+',natPct:51.9,algoPct:42.6,ctr:3.50,vr:35.9,sub:84,eng:1919,watch:17.6,newPct:19.8},
+  {num:'4-2',title:'복수',v2:0.655,grade:'B+',natPct:43.0,algoPct:34.5,ctr:3.40,vr:34.8,sub:114,eng:1860,watch:15.8,newPct:26.2},
+  {num:'4-9',title:'연민과증오',v2:0.654,grade:'B+',natPct:55.8,algoPct:45.2,ctr:3.50,vr:29.9,sub:110,eng:2132,watch:17.9,newPct:17.6},
+  {num:'4-4',title:'정치와권력',v2:0.594,grade:'B+',natPct:37.9,algoPct:30.2,ctr:4.20,vr:26.4,sub:97,eng:1852,watch:12.6,newPct:27.4},
+  {num:'4-3',title:'고양이',v2:0.59,grade:'B+',natPct:38.0,algoPct:31.4,ctr:3.90,vr:24.5,sub:106,eng:2093,watch:11.7,newPct:30.8},
+  {num:'4-5',title:'좀비',v2:0.558,grade:'B',natPct:28.6,algoPct:23.0,ctr:3.40,vr:27.4,sub:149,eng:1975,watch:12.9,newPct:32.4},
+  {num:'4-14',title:'제임스 카메론',v2:0.531,grade:'B',natPct:43.9,algoPct:36.0,ctr:2.40,vr:22.7,sub:113,eng:1793,watch:15.5,newPct:21.5}
+    ],
+    full:[
+      {num:'4-1',title:'흑역사',views1:53989,views7:209503,views28:243171,nat1:55.1,nat7:36.6,nat28:40.0,ctr1:5.30,ctr7:3.60,ctr28:3.60,sub1:67,sub7:204,sub28:252,vr1:31.3,vr7:32.6,vr28:32.7,eng1:1453,eng7:2567,eng28:2907},
+  {num:'4-2',title:'복수',views1:42804,views7:183091,views28:210356,nat1:89.9,nat7:43.0,nat28:48.8,ctr1:4.30,ctr7:3.40,ctr28:3.30,sub1:34,sub7:114,sub28:158,vr1:38.7,vr7:34.8,vr28:35.1,eng1:1240,eng7:1860,eng28:2121},
+  {num:'4-3',title:'고양이',views1:52128,views7:187527,views28:213545,nat1:68.1,nat7:38.0,nat28:43.0,ctr1:5.20,ctr7:3.90,ctr28:3.70,sub1:32,sub7:106,sub28:145,vr1:33.0,vr7:24.5,vr28:25.3,eng1:1211,eng7:2093,eng28:2407},
+  {num:'4-4',title:'정치와권력',views1:53184,views7:173465,views28:213055,nat1:65.0,nat7:37.9,nat28:41.7,ctr1:5.10,ctr7:4.20,ctr28:3.90,sub1:32,sub7:97,sub28:149,vr1:32.5,vr7:26.4,vr28:27.4,eng1:1129,eng7:1852,eng28:2195},
+  {num:'4-5',title:'좀비',views1:91842,views7:275678,views28:306922,nat1:48.8,nat7:28.6,nat28:33.4,ctr1:4.00,ctr7:3.40,ctr28:3.20,sub1:77,sub7:149,sub28:188,vr1:32.6,vr7:27.4,vr28:28.0,eng1:1296,eng7:1975,eng28:2372},
+  {num:'4-6',title:'천재',views1:71495,views7:162096,views28:193751,nat1:64.5,nat7:51.9,nat28:59.8,ctr1:4.60,ctr7:3.50,ctr28:3.10,sub1:40,sub7:84,sub28:154,vr1:37.3,vr7:35.9,vr28:36.1,eng1:1292,eng7:1919,eng28:2310},
+  {num:'4-7',title:'금기',views1:63839,views7:188756,views28:233783,nat1:86.6,nat7:54.5,nat28:60.6,ctr1:5.10,ctr7:3.90,ctr28:3.60,sub1:111,sub7:244,sub28:400,vr1:37.0,vr7:33.1,vr28:32.4,eng1:1667,eng7:2426,eng28:2888},
+  {num:'4-8',title:'디지털게임',views1:56670,views7:128822,views28:157852,nat1:93.9,nat7:75.1,nat28:79.7,ctr1:3.80,ctr7:3.00,ctr28:2.80,sub1:66,sub7:144,sub28:195,vr1:34.4,vr7:32.1,vr28:31.5,eng1:1476,eng7:2176,eng28:2479},
+  {num:'4-9',title:'연민과증오',views1:59802,views7:156078,views28:185940,nat1:77.6,nat7:55.8,nat28:60.8,ctr1:4.20,ctr7:3.50,ctr28:3.30,sub1:52,sub7:110,sub28:192,vr1:34.0,vr7:29.9,vr28:30.3,eng1:1425,eng7:2132,eng28:2463},
+  {num:'4-10',title:'우울',views1:81904,views7:182491,views28:243000,nat1:70.1,nat7:62.6,nat28:71.9,ctr1:4.70,ctr7:3.60,ctr28:2.90,sub1:112,sub7:372,sub28:807,vr1:30.5,vr7:28.1,vr28:28.0,eng1:1862,eng7:3040,eng28:4011},
+  {num:'4-11',title:'습관',views1:76334,views7:221483,views28:305487,nat1:70.8,nat7:69.7,nat28:78.0,ctr1:4.30,ctr7:3.50,ctr28:3.20,sub1:250,sub7:1469,sub28:2759,vr1:30.5,vr7:27.6,vr28:27.2,eng1:1918,eng7:4793,eng28:7024},
+  {num:'4-12',title:'잠',views1:54950,views7:150570,views28:193674,nat1:99.7,nat7:67.7,nat28:70.5,ctr1:3.90,ctr7:3.10,ctr28:3.00,sub1:90,sub7:151,sub28:230,vr1:35.9,vr7:29.2,vr28:28.8,eng1:1694,eng7:2541,eng28:3017},
+  {num:'4-13',title:'에일리언',views1:126865,views7:370433,views28:452332,nat1:57.2,nat7:58.5,nat28:66.0,ctr1:4.30,ctr7:2.40,ctr28:1.90,sub1:262,sub7:780,sub28:1076,vr1:26.5,vr7:24.5,vr28:25.3,eng1:2509,eng7:4757,eng28:5716},
+  {num:'4-14',title:'제임스 카메론',views1:63465,views7:161612,views28:177581,nat1:58.8,nat7:43.9,nat28:49.0,ctr1:3.10,ctr7:2.40,ctr28:2.30,sub1:59,sub7:113,sub28:148,vr1:24.3,vr7:22.7,vr28:23.6,eng1:1156,eng7:1793,eng28:1983}
+    ] },
+  { id:'s5',
+    traffic:[{label:'알고리즘 추천',value:27.1,color:'#9F8FF7'},{label:'검색',value:1.6,color:'#60A5FA'},{label:'채널 순환(구독자)',value:1.6,color:'#3DD68C'},{label:'광고',value:67.2,color:'#F5A623'},{label:'기타',value:2.5,color:'#6E6D7A'}],
+    viewer:[{label:'신규 시청자',value:25.5,color:'#9F8FF7'},{label:'재방문 시청자',value:74.5,color:'#3DD68C'}],
+    chrono:[{num:'5-1',title:'돈',v2:0.66},{num:'5-2',title:'짝사랑',v2:0.652},{num:'5-3',title:'사이코패스',v2:0.792},{num:'5-4',title:'시간여행',v2:0.747},{num:'5-5',title:'외국어',v2:0.75},{num:'5-6',title:'술',v2:0.611},{num:'5-7',title:'취미',v2:0.533},{num:'5-8',title:'직장인',v2:0.609},{num:'5-9',title:'기억',v2:0.544},{num:'5-10',title:'아바타1',v2:0.636},{num:'5-11',title:'아바타2',v2:0.312},{num:'5-12',title:'봉준호',v2:0.541},{num:'5-13',title:'토이스토리',v2:0.464},{num:'5-14',title:'이사랑통역되나요',v2:0.966}],
+    rank:[
+      {num:'5-14',title:'이사랑통역되나요',v2:0.966,grade:'S',natPct:46.0,algoPct:37.4,ctr:5.70,vr:20.5,sub:591,eng:6671,watch:4.0,newPct:51.4},
+  {num:'5-3',title:'사이코패스',v2:0.792,grade:'A',natPct:51.8,algoPct:44.9,ctr:2.90,vr:27.7,sub:372,eng:3127,watch:11.2,newPct:15.7},
+  {num:'5-5',title:'외국어',v2:0.75,grade:'A',natPct:50.3,algoPct:43.5,ctr:3.10,vr:26.6,sub:338,eng:2995,watch:10.7,newPct:18.6},
+  {num:'5-4',title:'시간여행',v2:0.747,grade:'A',natPct:53.6,algoPct:44.2,ctr:2.80,vr:27.0,sub:295,eng:2799,watch:12.6,newPct:14.4},
+  {num:'5-1',title:'돈',v2:0.66,grade:'B+',natPct:34.6,algoPct:27.5,ctr:3.40,vr:29.8,sub:179,eng:2475,watch:11.8,newPct:30.4},
+  {num:'5-2',title:'짝사랑',v2:0.652,grade:'B+',natPct:33.1,algoPct:27.6,ctr:3.50,vr:23.9,sub:207,eng:2259,watch:9.5,newPct:28.3},
+  {num:'5-10',title:'아바타1',v2:0.636,grade:'B+',natPct:26.8,algoPct:20.1,ctr:3.90,vr:11.4,sub:391,eng:3842,watch:5.7,newPct:23.2},
+  {num:'5-6',title:'술',v2:0.611,grade:'B+',natPct:20.4,algoPct:16.9,ctr:3.70,vr:29.3,sub:145,eng:2088,watch:6.2,newPct:26.8},
+  {num:'5-8',title:'직장인',v2:0.609,grade:'B+',natPct:34.4,algoPct:28.8,ctr:3.70,vr:23.9,sub:96,eng:1939,watch:8.6,newPct:18.4},
+  {num:'5-9',title:'기억',v2:0.544,grade:'B',natPct:26.0,algoPct:21.6,ctr:3.20,vr:25.2,sub:96,eng:2125,watch:6.5,newPct:19.0},
+  {num:'5-12',title:'봉준호',v2:0.541,grade:'B',natPct:22.3,algoPct:18.4,ctr:3.50,vr:21.7,sub:125,eng:2258,watch:7.1,newPct:19.4},
+  {num:'5-7',title:'취미',v2:0.533,grade:'B',natPct:31.6,algoPct:26.1,ctr:4.10,vr:21.9,sub:103,eng:2055,watch:6.7,newPct:16.3},
+  {num:'5-13',title:'토이스토리',v2:0.464,grade:'C',natPct:17.8,algoPct:14.6,ctr:3.20,vr:20.2,sub:37,eng:2133,watch:5.2,newPct:19.3},
+  {num:'5-11',title:'아바타2',v2:0.312,grade:'C',natPct:10.8,algoPct:8.3,ctr:2.90,vr:12.7,sub:60,eng:1227,watch:4.4,newPct:23.9}
+    ],
+    full:[
+      {num:'5-1',title:'돈',views1:97808,views7:246206,views28:277358,nat1:40.8,nat7:34.6,nat28:41.9,ctr1:4.40,ctr7:3.40,ctr28:3.30,sub1:81,sub7:179,sub28:251,vr1:33.5,vr7:29.8,vr28:30.4,eng1:1537,eng7:2475,eng28:2977},
+  {num:'5-2',title:'짝사랑',views1:110239,views7:323863,views28:353431,nat1:39.2,nat7:33.1,nat28:38.7,ctr1:4.20,ctr7:3.50,ctr28:3.40,sub1:41,sub7:207,sub28:249,vr1:26.1,vr7:23.9,vr28:24.8,eng1:1269,eng7:2259,eng28:2573},
+  {num:'5-3',title:'사이코패스',views1:109569,views7:283648,views28:362379,nat1:61.0,nat7:51.8,nat28:62.3,ctr1:3.80,ctr7:2.90,ctr28:2.50,sub1:151,sub7:372,sub28:724,vr1:31.2,vr7:27.7,vr28:28.8,eng1:1936,eng7:3127,eng28:4053},
+  {num:'5-4',title:'시간여행',views1:110535,views7:245897,views28:289844,nat1:60.6,nat7:53.6,nat28:60.6,ctr1:3.60,ctr7:2.80,ctr28:2.70,sub1:120,sub7:295,sub28:431,vr1:29.8,vr7:27.0,vr28:28.7,eng1:1892,eng7:2799,eng28:3305},
+  {num:'5-5',title:'외국어',views1:94037,views7:246541,views28:289961,nat1:63.0,nat7:50.3,nat28:57.7,ctr1:3.90,ctr7:3.10,ctr28:2.90,sub1:124,sub7:338,sub28:597,vr1:31.4,vr7:26.6,vr28:27.6,eng1:1691,eng7:2995,eng28:3823},
+  {num:'5-6',title:'술',views1:129343,views7:523108,views28:545933,nat1:41.0,nat7:20.4,nat28:23.7,ctr1:4.90,ctr7:3.70,ctr28:3.50,sub1:90,sub7:145,sub28:182,vr1:33.0,vr7:29.3,vr28:29.9,eng1:1410,eng7:2088,eng28:2378},
+  {num:'5-7',title:'취미',views1:103423,views7:256195,views28:275677,nat1:44.6,nat7:31.6,nat28:36.4,ctr1:4.90,ctr7:4.10,ctr28:4.00,sub1:78,sub7:103,sub28:160,vr1:22.5,vr7:21.9,vr28:22.9,eng1:1453,eng7:2055,eng28:2345},
+  {num:'5-8',title:'직장인',views1:124612,views7:291956,views28:306570,nat1:42.0,nat7:34.4,nat28:37.5,ctr1:4.90,ctr7:3.70,ctr28:3.60,sub1:44,sub7:96,sub28:121,vr1:27.5,vr7:23.9,vr28:24.5,eng1:1297,eng7:1939,eng28:2104},
+  {num:'5-9',title:'기억',views1:127636,views7:360174,views28:384145,nat1:38.3,nat7:26.0,nat28:30.6,ctr1:4.50,ctr7:3.20,ctr28:3.40,sub1:50,sub7:96,sub28:167,vr1:28.7,vr7:25.2,vr28:26.4,eng1:1419,eng7:2125,eng28:2434},
+  {num:'5-10',title:'아바타1',views1:124728,views7:446823,views28:558457,nat1:46.0,nat7:26.8,nat28:30.7,ctr1:4.30,ctr7:3.90,ctr28:4.00,sub1:164,sub7:391,sub28:609,vr1:13.9,vr7:11.4,vr28:11.8,eng1:2153,eng7:3842,eng28:4846},
+  {num:'5-11',title:'아바타2',views1:113223,views7:297361,views28:305106,nat1:17.0,nat7:10.8,nat28:13.1,ctr1:3.20,ctr7:2.90,ctr28:2.80,sub1:21,sub7:60,sub28:82,vr1:14.0,vr7:12.7,vr28:13.0,eng1:811,eng7:1227,eng28:1472},
+  {num:'5-12',title:'봉준호',views1:173131,views7:428676,views28:450838,nat1:28.4,nat7:22.3,nat28:25.7,ctr1:4.20,ctr7:3.50,ctr28:3.20,sub1:77,sub7:125,sub28:153,vr1:23.5,vr7:21.7,vr28:22.6,eng1:1475,eng7:2258,eng28:2528},
+  {num:'5-13',title:'토이스토리',views1:207549,views7:422958,views28:473374,nat1:20.1,nat7:17.8,nat28:19.7,ctr1:4.30,ctr7:3.20,ctr28:2.80,sub1:17,sub7:37,sub28:67,vr1:23.0,vr7:20.2,vr28:18.8,eng1:1325,eng7:2133,eng28:2518},
+  {num:'5-14',title:'이사랑통역되나요',views1:161547,views7:599864,views28:759724,nat1:22.2,nat7:46.0,nat28:57.3,ctr1:6.10,ctr7:5.70,ctr28:5.40,sub1:57,sub7:591,sub28:920,vr1:20.6,vr7:20.5,vr28:21.9,eng1:1552,eng7:6671,eng28:10046}
+    ] },
+  { id:'s6',
+    traffic:[{label:'알고리즘 추천',value:24.8,color:'#9F8FF7'},{label:'검색',value:1.5,color:'#60A5FA'},{label:'채널 순환(구독자)',value:1.6,color:'#3DD68C'},{label:'광고',value:68.7,color:'#F5A623'},{label:'기타',value:3.4,color:'#6E6D7A'}],
+    viewer:[{label:'신규 시청자',value:19.8,color:'#9F8FF7'},{label:'재방문 시청자',value:80.2,color:'#3DD68C'}],
+    chrono:[{num:'6-1',title:'행운',v2:0.649},{num:'6-2',title:'루머',v2:0.59},{num:'6-3',title:'이탈리아',v2:0.48},{num:'6-4',title:'리더쉽',v2:0.452},{num:'6-5',title:'야구',v2:0.329},{num:'6-6',title:'본능',v2:0.568},{num:'6-7',title:'프로젝트 헤일메리',v2:0.891},{num:'6-8',title:'부동산',v2:0.458},{num:'6-9',title:'죽음',v2:0.723},{num:'6-10',title:'신분',v2:0.536},{num:'6-11',title:'호기심',v2:0.632},{num:'6-12',title:'실패',v2:0.512},{num:'6-13',title:'럭셔리',v2:0.579},{num:'6-14',title:'디저트',v2:0.536},{num:'6-15',title:'마이클 잭슨',v2:0.849},{num:'6-16',title:'초능력',v2:0.511},{num:'6-17',title:'다이어트',v2:0.531},{num:'6-18',title:'프랑스',v2:0.537},{num:'6-19',title:'스티븐스필버그',v2:0.538},{num:'6-20',title:'뮤지컬1',v2:0.498},{num:'6-21',title:'뮤지컬2',v2:0.397}],
+    rank:[
+      {num:'6-7',title:'프로젝트 헤일메리',v2:0.891,grade:'S',natPct:45.2,algoPct:34.5,ctr:3.80,vr:17.0,sub:740,eng:6071,watch:9.9,newPct:26.9},
+  {num:'6-15',title:'마이클 잭슨',v2:0.849,grade:'S',natPct:46.6,algoPct:39.5,ctr:2.70,vr:18.9,sub:393,eng:4693,watch:10.6,newPct:23.1},
+  {num:'6-9',title:'죽음',v2:0.723,grade:'A',natPct:35.3,algoPct:28.9,ctr:3.70,vr:20.7,sub:260,eng:3118,watch:10.6,newPct:17.2},
+  {num:'6-1',title:'행운',v2:0.649,grade:'B+',natPct:28.0,algoPct:22.7,ctr:3.90,vr:20.9,sub:382,eng:3111,watch:7.6,newPct:27.0},
+  {num:'6-11',title:'호기심',v2:0.632,grade:'B+',natPct:32.3,algoPct:27.3,ctr:3.90,vr:19.0,sub:148,eng:2572,watch:9.4,newPct:15.8},
+  {num:'6-2',title:'루머',v2:0.59,grade:'B+',natPct:31.3,algoPct:25.9,ctr:3.50,vr:16.6,sub:345,eng:2268,watch:8.2,newPct:17.0},
+  {num:'6-13',title:'럭셔리',v2:0.579,grade:'B',natPct:36.3,algoPct:30.1,ctr:4.00,vr:22.7,sub:81,eng:1713,watch:10.5,newPct:18.1},
+  {num:'6-6',title:'본능',v2:0.568,grade:'B',natPct:32.6,algoPct:27.0,ctr:4.20,vr:16.4,sub:96,eng:2142,watch:8.9,newPct:17.8},
+  {num:'6-19',title:'스티븐스필버그',v2:0.538,grade:'B',natPct:29.5,algoPct:16.0,ctr:4.00,vr:14.9,sub:156,eng:2384,watch:8.0,newPct:25.5},
+  {num:'6-18',title:'프랑스',v2:0.537,grade:'B',natPct:34.8,algoPct:27.3,ctr:3.90,vr:21.7,sub:43,eng:1753,watch:10.5,newPct:15.7},
+  {num:'6-10',title:'신분',v2:0.536,grade:'B',natPct:28.0,algoPct:23.3,ctr:3.90,vr:19.2,sub:111,eng:1949,watch:8.4,newPct:14.7},
+  {num:'6-14',title:'디저트',v2:0.536,grade:'B',natPct:32.4,algoPct:27.0,ctr:3.80,vr:20.7,sub:40,eng:1779,watch:8.4,newPct:16.7},
+  {num:'6-17',title:'다이어트',v2:0.531,grade:'B',natPct:34.9,algoPct:27.3,ctr:3.50,vr:22.7,sub:57,eng:1614,watch:10.2,newPct:16.4},
+  {num:'6-12',title:'실패',v2:0.512,grade:'B',natPct:30.2,algoPct:25.3,ctr:3.90,vr:17.2,sub:72,eng:2367,watch:7.2,newPct:12.6},
+  {num:'6-16',title:'초능력',v2:0.511,grade:'B',natPct:32.3,algoPct:26.8,ctr:3.50,vr:21.6,sub:21,eng:1477,watch:9.0,newPct:15.2},
+  {num:'6-20',title:'뮤지컬1',v2:0.498,grade:'C',natPct:34.5,algoPct:18.3,ctr:3.40,vr:19.3,sub:59,eng:1332,watch:6.8,newPct:19.7},
+  {num:'6-3',title:'이탈리아',v2:0.48,grade:'C',natPct:26.9,algoPct:22.1,ctr:3.40,vr:15.6,sub:125,eng:1913,watch:7.3,newPct:19.5},
+  {num:'6-8',title:'부동산',v2:0.458,grade:'C',natPct:26.8,algoPct:22.0,ctr:3.60,vr:15.3,sub:82,eng:1732,watch:7.9,newPct:19.6},
+  {num:'6-4',title:'리더쉽',v2:0.452,grade:'C',natPct:22.9,algoPct:18.9,ctr:3.50,vr:15.6,sub:91,eng:1797,watch:6.5,newPct:22.3},
+  {num:'6-21',title:'뮤지컬2',v2:0.397,grade:'C',natPct:18.7,algoPct:15.6,ctr:3.50,vr:17.8,sub:44,eng:1361,watch:5.5,newPct:18.2},
+  {num:'6-5',title:'야구',v2:0.329,grade:'C',natPct:17.3,algoPct:13.8,ctr:3.00,vr:12.1,sub:20,eng:1077,watch:6.8,newPct:25.0}
+    ],
+    full:[
+      {num:'6-1',title:'행운',views1:85629,views7:356582,views28:407016,nat1:51.2,nat7:28.0,nat28:34.7,ctr1:3.60,ctr7:3.90,ctr28:3.70,sub1:86,sub7:382,sub28:596,vr1:26.6,vr7:20.9,vr28:22.4,eng1:1865,eng7:3111,eng28:3885},
+  {num:'6-2',title:'루머',views1:117492,views7:342601,views28:386791,nat1:52.7,nat7:31.3,nat28:37.0,ctr1:4.10,ctr7:3.50,ctr28:3.30,sub1:191,sub7:345,sub28:423,vr1:21.9,vr7:16.6,vr28:18.5,eng1:1514,eng7:2268,eng28:2652},
+  {num:'6-3',title:'이탈리아',views1:122171,views7:329615,views28:383327,nat1:37.0,nat7:26.9,nat28:27.5,ctr1:3.90,ctr7:3.40,ctr28:3.20,sub1:53,sub7:125,sub28:144,vr1:20.3,vr7:15.6,vr28:15.1,eng1:1231,eng7:1913,eng28:2244},
+  {num:'6-4',title:'리더쉽',views1:45271,views7:338522,views28:359560,nat1:100.0,nat7:22.9,nat28:27.5,ctr1:4.20,ctr7:3.50,ctr28:3.30,sub1:56,sub7:91,sub28:136,vr1:41.3,vr7:15.6,vr28:17.1,eng1:1220,eng7:1797,eng28:2097},
+  {num:'6-5',title:'야구',views1:136979,views7:275107,views28:290357,nat1:18.6,nat7:17.3,nat28:21.7,ctr1:3.60,ctr7:3.00,ctr28:2.80,sub1:4,sub7:20,sub28:54,vr1:11.4,vr7:12.1,vr28:13.0,eng1:662,eng7:1077,eng28:1310},
+  {num:'6-6',title:'본능',views1:144679,views7:288714,views28:321962,nat1:33.2,nat7:32.6,nat28:39.6,ctr1:5.30,ctr7:4.20,ctr28:3.70,sub1:41,sub7:96,sub28:181,vr1:17.9,vr7:16.4,vr28:18.3,eng1:1416,eng7:2142,eng28:2820},
+  {num:'6-7',title:'프로젝트 헤일메리',views1:178940,views7:485109,views28:793411,nat1:39.4,nat7:45.2,nat28:57.0,ctr1:4.40,ctr7:3.80,ctr28:3.50,sub1:201,sub7:740,sub28:1857,vr1:15.2,vr7:17.0,vr28:19.2,eng1:2447,eng7:6071,eng28:12186},
+  {num:'6-8',title:'부동산',views1:125253,views7:309760,views28:344096,nat1:33.2,nat7:26.8,nat28:34.1,ctr1:4.30,ctr7:3.60,ctr28:3.40,sub1:32,sub7:82,sub28:172,vr1:16.1,vr7:15.3,vr28:16.6,eng1:1083,eng7:1732,eng28:2177},
+  {num:'6-9',title:'죽음',views1:114756,views7:396845,views28:561608,nat1:56.1,nat7:35.3,nat28:50.7,ctr1:4.70,ctr7:3.70,ctr28:3.30,sub1:100,sub7:260,sub28:674,vr1:24.7,vr7:20.7,vr28:18.3,eng1:1923,eng7:3118,eng28:4905},
+  {num:'6-10',title:'신분',views1:131542,views7:374738,views28:406443,nat1:42.5,nat7:28.0,nat28:33.6,ctr1:4.40,ctr7:3.90,ctr28:3.60,sub1:59,sub7:111,sub28:144,vr1:21.9,vr7:19.2,vr28:20.6,eng1:1283,eng7:1949,eng28:2289},
+  {num:'6-11',title:'호기심',views1:111163,views7:358321,views28:406674,nat1:51.8,nat7:32.3,nat28:40.3,ctr1:4.60,ctr7:3.90,ctr28:3.50,sub1:57,sub7:148,sub28:283,vr1:23.2,vr7:19.0,vr28:20.4,eng1:1605,eng7:2572,eng28:3303},
+  {num:'6-12',title:'실패',views1:97794,views7:309680,views28:337592,nat1:47.0,nat7:30.2,nat28:36.0,ctr1:4.90,ctr7:3.90,ctr28:3.60,sub1:29,sub7:72,sub28:112,vr1:23.2,vr7:17.2,vr28:18.9,eng1:1470,eng7:2367,eng28:2838},
+  {num:'6-13',title:'럭셔리',views1:113726,views7:236748,views28:264414,nat1:35.5,nat7:36.3,nat28:43.0,ctr1:4.70,ctr7:4.00,ctr28:3.70,sub1:29,sub7:81,sub28:157,vr1:23.4,vr7:22.7,vr28:23.7,eng1:1038,eng7:1713,eng28:2038},
+  {num:'6-14',title:'디저트',views1:119697,views7:239265,views28:256432,nat1:37.1,nat7:32.4,nat28:36.9,ctr1:4.70,ctr7:3.80,ctr28:3.50,sub1:21,sub7:40,sub28:68,vr1:19.7,vr7:20.7,vr28:21.7,eng1:1279,eng7:1779,eng28:2004},
+  {num:'6-15',title:'마이클 잭슨',views1:147019,views7:429902,views28:679993,nat1:61.7,nat7:46.6,nat28:54.0,ctr1:3.50,ctr7:2.70,ctr28:2.60,sub1:156,sub7:393,sub28:838,vr1:22.6,vr7:18.9,vr28:17.7,eng1:2634,eng7:4693,eng28:7112},
+  {num:'6-16',title:'초능력',views1:90041,views7:218750,views28:231913,nat1:45.3,nat7:32.3,nat28:36.1,ctr1:4.20,ctr7:3.50,ctr28:3.40,sub1:14,sub7:21,sub28:33,vr1:22.7,vr7:21.6,vr28:22.5,eng1:1069,eng7:1477,eng28:1606},
+  {num:'6-17',title:'다이어트',views1:89709,views7:193649,views28:210688,nat1:40.0,nat7:34.9,nat28:40.1,ctr1:4.30,ctr7:3.50,ctr28:3.40,sub1:19,sub7:57,sub28:75,vr1:24.3,vr7:22.7,vr28:24.0,eng1:1061,eng7:1614,eng28:1800},
+  {num:'6-18',title:'프랑스',views1:96663,views7:194844,views28:206832,nat1:37.2,nat7:34.8,nat28:38.6,ctr1:4.70,ctr7:3.90,ctr28:3.70,sub1:27,sub7:43,sub28:84,vr1:30.3,vr7:21.7,vr28:22.2,eng1:1223,eng7:1753,eng28:2037},
+  {num:'6-19',title:'스티븐스필버그',views1:110825,views7:314156,views28:0,nat1:28.2,nat7:29.5,nat28:0.0,ctr1:4.00,ctr7:4.00,ctr28:0.00,sub1:34,sub7:156,sub28:0,vr1:15.9,vr7:14.9,vr28:0.0,eng1:1046,eng7:2384,eng28:0},
+  {num:'6-20',title:'뮤지컬1',views1:57045,views7:203137,views28:0,nat1:40.0,nat7:34.5,nat28:0.0,ctr1:4.20,ctr7:3.40,ctr28:0.00,sub1:31,sub7:59,sub28:0,vr1:29.2,vr7:19.3,vr28:0.0,eng1:784,eng7:1332,eng28:0},
+  {num:'6-21',title:'뮤지컬2',views1:111635,views7:253104,views28:0,nat1:23.2,nat7:18.7,nat28:0.0,ctr1:4.30,ctr7:3.50,ctr28:0.00,sub1:18,sub7:44,sub28:0,vr1:15.7,vr7:17.8,vr28:0.0,eng1:865,eng7:1361,eng28:0}
+    ] }
+];
+SEASON_PAYLOAD.forEach(sd => {
+  donutChart('c_'+sd.id+'_traffic', sd.traffic);
+  donutChart('c_'+sd.id+'_viewer', sd.viewer);
+  trendChart('c_'+sd.id+'_trend', sd.chrono);
+  document.getElementById('rankBody_'+sd.id).innerHTML = sd.rank.map(seasonRankRow).join('');
+  setupBestWorst(sd.id, sd.full);
+});
+</script>
+</body>
+</html>

@@ -1157,6 +1157,15 @@ function renderCatList(){
   });
 }
 renderCatList();
+
+// 통합리포트 셸에서 ?tab=cat 등으로 딥링크할 때 해당 탭을 바로 열어줌
+(function(){
+  const tab = new URLSearchParams(location.search).get('tab');
+  if (tab === 'cat' || tab === '1d') {
+    const btn = document.querySelector(`.nav-tab[onclick*="'${tab}'"]`);
+    if (btn) sw(tab, btn);
+  }
+})();
 </script>
 </body>
 </html>

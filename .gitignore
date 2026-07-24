@@ -11,3 +11,6 @@ rpt.xlsx
 # PowerShell / batch (민감한 스크립트)
 *.ps1
 *.bat
+
+# 도구 내부 상태(세션 로그·체크포인트) - 배포 대상 아님
+.omc/

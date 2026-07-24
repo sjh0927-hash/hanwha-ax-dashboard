@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>라플위클리 누적 리포트 — 통합</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+:root {
+  --c-bg:       #0E0F14;
+  --c-surface:  #15161D;
+  --c-card:     #1C1D27;
+  --c-border:   rgba(255,255,255,0.07);
+  --c-border2:  rgba(255,255,255,0.12);
+  --c-text:     #F0EEF8;
+  --c-muted:    #6E6D7A;
+  --c-sub:      #9997A8;
+  --c-purple:   #9F8FF7;
+  --c-purple-d: #7F77DD;
+  --c-purple-bg:#2A2445;
+  --c-teal:     #3DD68C;
+  --c-amber:    #F5A623;
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 16px;
+}
+html.light {
+  --c-bg:       #F5F5F8;
+  --c-surface:  #FFFFFF;
+  --c-card:     #FFFFFF;
+  --c-border:   rgba(0,0,0,0.08);
+  --c-border2:  rgba(0,0,0,0.14);
+  --c-text:     #1B1B23;
+  --c-muted:    #8B8A96;
+  --c-sub:      #55545F;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--c-bg);height:100%}
+body{font-family:'SF Pro Display','Apple SD Gothic Neo','Malgun Gothic',system-ui,sans-serif;color:var(--c-text);display:flex;flex-direction:column;min-height:100vh}
+.shell-header{padding:28px 32px 20px;border-bottom:1px solid var(--c-border)}
+.header-eyebrow{font-size:12px;font-weight:600;letter-spacing:.14em;color:var(--c-purple);text-transform:uppercase;margin-bottom:8px}
+.header-title{font-size:26px;font-weight:600;letter-spacing:-.4px;margin-bottom:4px}
+.header-sub{font-size:14px;color:var(--c-sub);margin-bottom:18px}
+.nav-tabs{display:flex;gap:2px;background:var(--c-card);border:1px solid var(--c-border);border-radius:var(--r-sm);padding:3px;width:fit-content;flex-wrap:wrap}
+.nav-tab{font-size:13px;font-weight:500;padding:8px 16px;border-radius:6px;border:none;background:transparent;color:var(--c-muted);cursor:pointer;transition:all .15s;white-space:nowrap;font-family:inherit}
+.nav-tab:hover{color:var(--c-text)}
+.nav-tab.on{background:var(--c-purple-bg,rgba(159,143,247,.16));color:var(--c-purple)}
+.theme-toggle{position:absolute;top:28px;right:32px;font-size:12px;padding:7px 14px;border-radius:var(--r-sm);border:1px solid var(--c-border2);background:var(--c-surface);color:var(--c-sub);cursor:pointer;font-family:inherit}
+.frame-wrap{flex:1;position:relative;min-height:0}
+iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none;background:var(--c-bg);display:none}
+iframe.on{display:block}
+.loading-note{position:absolute;top:16px;left:32px;font-size:12px;color:var(--c-muted);z-index:2}
+</style>
+</head>
+<body>
+
+<div class="shell-header" style="position:relative">
+  <button class="theme-toggle" onclick="toggleTheme()">🌙 다크/라이트</button>
+  <div class="header-eyebrow">LIFEPLUS WEEKLY · CUMULATIVE</div>
+  <div class="header-title">라플위클리 누적 리포트</div>
+  <div class="header-sub">시즌1~6 통합 · 자연유입 가중치 1:9 기준 · LTV Score·주제별(카테고리) 분석·시즌별 상세를 한 곳에서</div>
+  <div class="nav-tabs" id="navTabs">
+    <button class="nav-tab on" data-idx="0">누적 시즌 분석 (LTV)</button>
+    <button class="nav-tab" data-idx="1">주제별 분석</button>
+    <button class="nav-tab" data-idx="2">시즌16 상세분석</button>
+    <button class="nav-tab" data-idx="3">시즌별 지표비교</button>
+  </div>
+</div>
+
+<div class="frame-wrap">
+  <div class="loading-note" id="loadingNote"></div>
+  <iframe id="frame0" class="on" data-src="라플위클리_누적_시즌분석.html" title="누적 시즌 분석"></iframe>
+  <iframe id="frame1" data-src="라플위클리_누적_시즌분석.html?tab=cat" title="주제별 분석"></iframe>
+  <iframe id="frame2" data-src="라플위클리_시즌16_상세분석.html" title="시즌16 상세분석"></iframe>
+  <iframe id="frame3" data-src="라플위클리_시즌별_지표비교.html" title="시즌별 지표비교"></iframe>
+</div>
+
+<script>
+var frames = [0,1,2,3].map(function(i){ return document.getElementById('frame'+i); });
+var tabs = document.querySelectorAll('.nav-tab');
+
+function loadFrame(idx){
+  var f = frames[idx];
+  if (!f.getAttribute('src')) {
+    var note = document.getElementById('loadingNote');
+    note.textContent = '불러오는 중…';
+    f.addEventListener('load', function(){ note.textContent=''; }, {once:true});
+    f.setAttribute('src', f.getAttribute('data-src'));
+  }
+}
+
+function showTab(idx){
+  frames.forEach(function(f,i){ f.classList.toggle('on', i===idx); });
+  tabs.forEach(function(t,i){ t.classList.toggle('on', i===idx); });
+  loadFrame(idx);
+}
+
+tabs.forEach(function(tab, i){
+  tab.addEventListener('click', function(){ showTab(i); });
+});
+
+loadFrame(0);
+
+function toggleTheme(){
+  document.documentElement.classList.toggle('light');
+}
+</script>
+
+</body>
+</html>

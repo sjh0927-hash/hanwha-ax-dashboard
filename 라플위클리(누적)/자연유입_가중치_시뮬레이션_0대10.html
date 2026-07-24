@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>라플위클리 자연유입 가중치 시뮬레이션 — 5:5 vs 0:10</title>
+<script>(function(){var t=localStorage.getItem('lp-theme');if(t==='light')document.documentElement.classList.add('light');})();</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+:root {
+  --c-bg:       #0E0F14;
+  --c-surface:  #15161D;
+  --c-card:     #1C1D27;
+  --c-border:   rgba(255,255,255,0.07);
+  --c-border2:  rgba(255,255,255,0.12);
+  --c-text:     #F0EEF8;
+  --c-muted:    #6E6D7A;
+  --c-sub:      #9997A8;
+  --c-purple:   #9F8FF7;
+  --c-purple-bg:#2A2445;
+  --c-teal:     #3DD68C;
+  --c-teal-bg:  #132B20;
+  --c-amber:    #F5A623;
+  --c-amber-bg: #2C1F08;
+  --c-red:      #F05454;
+  --c-red-bg:   #2C1010;
+  --c-blue:     #60A5FA;
+  --c-blue-bg:  #0F1F38;
+  --r-sm: 8px; --r-md: 12px; --r-lg: 16px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--c-bg)}
+body{font-family:'SF Pro Display','Apple SD Gothic Neo','Malgun Gothic',system-ui,sans-serif;background:var(--c-bg);color:var(--c-text);min-height:100vh;font-size:16px;line-height:1.5}
+.shell{max-width:1100px;margin:0 auto;padding:0 24px 80px}
+.page-header{padding:48px 0 32px;border-bottom:1px solid var(--c-border);margin-bottom:32px}
+.header-eyebrow{font-size:13px;font-weight:500;letter-spacing:.12em;color:var(--c-purple);text-transform:uppercase;margin-bottom:10px}
+.header-title{font-size:30px;font-weight:600;color:var(--c-text);letter-spacing:-.5px;margin-bottom:6px}
+.header-sub{font-size:16px;color:var(--c-sub)}
+.warn-banner{background:linear-gradient(135deg,rgba(245,166,35,.1) 0%,rgba(240,84,84,.06) 100%);border:1px solid rgba(245,166,35,.3);border-radius:var(--r-lg);padding:18px 22px;margin-bottom:28px;font-size:14px;line-height:1.7;color:var(--c-sub)}
+.warn-banner b{color:var(--c-amber)}
+.kpi-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:32px}
+.kpi-card{background:var(--c-card);border:1px solid var(--c-border);border-radius:var(--r-md);padding:18px 20px;position:relative;overflow:hidden}
+.kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.kpi-card.purple::before{background:var(--c-purple)}
+.kpi-card.teal::before{background:var(--c-teal)}
+.kpi-card.amber::before{background:var(--c-amber)}
+.kpi-card.red::before{background:var(--c-red)}
+.kpi-label{font-size:13px;color:var(--c-muted);letter-spacing:.04em;margin-bottom:8px;font-weight:500}
+.kpi-val{font-size:26px;font-weight:600;letter-spacing:-.5px;line-height:1}
+.kpi-val.purple{color:var(--c-purple)} .kpi-val.teal{color:var(--c-teal)} .kpi-val.amber{color:var(--c-amber)} .kpi-val.red{color:var(--c-red)}
+.kpi-badge{display:inline-block;font-size:12px;font-weight:500;padding:2px 7px;border-radius:20px;margin-top:7px;background:rgba(255,255,255,.07);color:var(--c-muted)}
+.section{margin-bottom:36px}
+.section-header{display:flex;align-items:baseline;gap:10px;margin-bottom:16px}
+.section-title{font-size:17px;font-weight:600;color:var(--c-text)}
+.section-desc{font-size:14px;color:var(--c-muted)}
+.card{background:var(--c-card);border:1px solid var(--c-border);border-radius:var(--r-lg);padding:20px 22px;margin-bottom:14px}
+.card-title{font-size:15px;font-weight:600;color:var(--c-text);margin-bottom:3px}
+.card-sub{font-size:13px;color:var(--c-muted);margin-bottom:14px}
+.chart-box{position:relative}
+.filter-tabs{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
+.ftab{font-size:13px;font-weight:500;padding:5px 12px;border-radius:20px;border:1px solid var(--c-border);background:transparent;color:var(--c-muted);cursor:pointer;transition:all .15s}
+.ftab.on{background:rgba(159,143,247,.12);color:var(--c-purple);border-color:rgba(159,143,247,.3)}
+.tbl-scroll{overflow-x:auto}
+.ep-tbl{width:100%;border-collapse:collapse}
+.ep-tbl th{font-size:12px;font-weight:500;letter-spacing:.06em;color:var(--c-muted);text-align:left;padding:8px 10px;border-bottom:1px solid var(--c-border);text-transform:uppercase;white-space:nowrap}
+.ep-tbl th.r{text-align:right}
+.ep-tbl td{padding:9px 10px;border-bottom:1px solid var(--c-border);vertical-align:middle;font-size:14px}
+.ep-tbl tr:last-child td{border-bottom:none}
+.ep-tbl tr:hover td{background:rgba(255,255,255,.02)}
+.ep-tbl tr.changed td{background:rgba(245,166,35,.05)}
+.ep-name{font-weight:500;color:var(--c-text)}
+.ep-num{color:var(--c-muted);font-size:13px}
+.tr{text-align:right;color:var(--c-sub);font-size:13px}
+.gpill{font-size:12px;font-weight:700;padding:2px 8px;border-radius:20px;letter-spacing:.05em}
+.gs{background:var(--c-purple-bg);color:var(--c-purple)}
+.ga{background:var(--c-teal-bg);color:var(--c-teal)}
+.gbp{background:var(--c-amber-bg);color:var(--c-amber)}
+.gb{background:var(--c-blue-bg);color:var(--c-blue)}
+.gc{background:rgba(110,109,122,.15);color:var(--c-muted)}
+.season-tag{font-size:12px;font-weight:500;padding:2px 7px;border-radius:5px;white-space:nowrap}
+.theme-btn{position:fixed;bottom:20px;right:20px;z-index:9999;width:38px;height:38px;border-radius:50%;border:1px solid var(--c-border);background:var(--c-surface);cursor:pointer;font-size:20px;line-height:1;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 12px rgba(0,0,0,.4);transition:border-color .15s,background .15s,box-shadow .15s;color:var(--c-muted);}
+.theme-btn:hover{border-color:var(--c-purple);color:var(--c-text);}
+html.light{--c-bg:#F5F6FA;--c-surface:#FFFFFF;--c-card:#FFFFFF;--c-border:rgba(0,0,0,0.09);--c-border2:rgba(0,0,0,0.15);--c-text:#1A1B26;--c-muted:#6E6D7A;--c-sub:#888898;--c-purple-bg:rgba(159,143,247,0.15);--c-teal-bg:rgba(61,214,140,0.12);--c-amber-bg:rgba(245,166,35,0.12);--c-red-bg:rgba(240,84,84,0.12);--c-blue-bg:rgba(96,165,250,0.15);}
+html.light .card{box-shadow:0 1px 4px rgba(0,0,0,.07);}
+html.light .ep-tbl tr.changed td{background:rgba(245,166,35,.08);}
+html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
+</style>
+</head>
+<body>
+<div class="shell">
+
+<header class="page-header">
+  <p class="header-eyebrow">라플위클리 누적 · 시뮬레이션 (별도 페이지, 실제 리포트에 미반영)</p>
+  <h1 class="header-title">자연유입 가중치 시뮬레이션 — 유입율:절대값 5:5 → 0:10</h1>
+  <p class="header-sub">LTV Score(7일차) 공식의 N자연유입 산출 방식만 바꿔봤을 때 등급·순위가 얼마나 달라지는지 확인 (80편 전체)</p>
+</header>
+
+<div class="warn-banner">
+  <b>⚠ 시뮬레이션 전용 페이지입니다</b><br>
+  실제 <b>calc_ltv.js</b>는 여전히 유입율:절대값 = 5:5(단순평균) 공식을 사용 중이며, 이 페이지의 결과는 <b>weekly_cumulative_scored.json에 반영되지 않았습니다</b>. 공식 자체를 바꿀지 결정하기 전 참고용 비교표입니다.
+</div>
+
+<div class="kpi-strip">
+  <div class="kpi-card purple">
+    <p class="kpi-label">등급이 바뀐 편</p>
+    <p class="kpi-val purple">14편</p>
+    <span class="kpi-badge">전체 80편 중</span>
+  </div>
+  <div class="kpi-card teal">
+    <p class="kpi-label">TOP10 겹침</p>
+    <p class="kpi-val teal">9/10</p>
+    <span class="kpi-badge">기존 vs 시뮬</span>
+  </div>
+  <div class="kpi-card amber">
+    <p class="kpi-label">평균 점수 변화(|Δ|)</p>
+    <p class="kpi-val amber">0.0205</p>
+    <span class="kpi-badge">편당 평균</span>
+  </div>
+  <div class="kpi-card red">
+    <p class="kpi-label">최대 순위 이동폭</p>
+    <p class="kpi-val red">13위</p>
+    <span class="kpi-badge">80편 중 순위 기준</span>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-header">
+    <p class="section-title">순위 이동폭 TOP15</p>
+    <p class="section-desc">▲ 0:10에서 순위 상승(절대유입 규모가 컸던 편) · ▼ 순위 하락(유입율은 높았지만 절대유입이 작았던 편)</p>
+  </div>
+  <div class="card">
+    <div class="chart-box" style="height:360px"><canvas id="c_movers"></canvas></div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-header">
+    <p class="section-title">전체 순위 변동표</p>
+    <p class="section-desc">기존순위(5:5) 기준 정렬 · 등급이 바뀐 14편은 강조 표시</p>
+  </div>
+  <div class="filter-tabs">
+    <button class="ftab on" onclick="filterRows('all',this)">전체 80편</button>
+    <button class="ftab" onclick="filterRows('changed',this)">등급 변경만(14편)</button>
+    <button class="ftab" onclick="filterRows('moved',this)">순위 이동 ±3위 이상</button>
+  </div>
+  <div class="card" style="padding:0">
+    <div class="tbl-scroll">
+      <table class="ep-tbl">
+        <thead><tr>
+          <th>기존순위</th><th>이동</th><th>시뮬순위</th><th>에피소드</th><th>시즌</th>
+          <th class="r">기존점수</th><th class="r">시뮬점수</th><th class="r">Δ점수</th>
+          <th>기존등급</th><th>시뮬등급</th><th class="r">유입율</th><th class="r">유입(절대)</th>
+        </tr></thead>
+        <tbody id="rankBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+</div><!-- /shell -->
+
+<button id="theme-btn" class="theme-btn" onclick="(function(){var h=document.documentElement;var isLight=h.classList.toggle('light');localStorage.setItem('lp-theme',isLight?'light':'dark');document.getElementById('theme-btn').textContent=isLight?'🌙':'☀';})()">☀</button>
+
+<script>
+const GRID='rgba(255,255,255,0.06)', TICK={font:{size:10},color:'#6E6D7A'};
+const SEASON_COLOR={'위클리 시즌1':'#60A5FA','위클리 시즌2':'#9F8FF7','위클리 시즌3':'#F472B6','위클리 시즌4':'#F5A623','위클리 시즌5':'#34D399','위클리 시즌6':'#22D3EE'};
+const SEASON_NAME={'위클리 시즌1':'S1','위클리 시즌2':'S2','위클리 시즌3':'S3','위클리 시즌4':'S4','위클리 시즌5':'S5','위클리 시즌6':'S6'};
+
+const ROWS=[
+  {rb:1,rs:1,delta:0,season:'위클리 시즌5',num:'5-14',title:'이사랑통역되나요',v2Base:0.933,v2Sim:0.974,deltaScore:0.041,gradeBase:'S',gradeSim:'S',gradeChanged:false,natPct:46.0,natAbs:275688},
+  {rb:2,rs:2,delta:0,season:'위클리 시즌3',num:'3-3',title:'중독',v2Base:0.932,v2Sim:0.931,deltaScore:-0.001,gradeBase:'S',gradeSim:'S',gradeChanged:false,natPct:62.8,natAbs:197725},
+  {rb:3,rs:6,delta:-3,season:'위클리 시즌4',num:'4-11',title:'습관',v2Base:0.909,v2Sim:0.874,deltaScore:-0.035,gradeBase:'S',gradeSim:'S',gradeChanged:false,natPct:69.7,natAbs:154310},
+  {rb:4,rs:3,delta:1,season:'위클리 시즌1',num:'1-10',title:'질투',v2Base:0.894,v2Sim:0.918,deltaScore:0.024,gradeBase:'S',gradeSim:'S',gradeChanged:false,natPct:50.9,natAbs:192692},
+  {rb:5,rs:5,delta:0,season:'위클리 시즌4',num:'4-13',title:'에일리언',v2Base:0.873,v2Sim:0.884,deltaScore:0.011,gradeBase:'S',gradeSim:'S',gradeChanged:false,natPct:58.5,natAbs:216827},
+  {rb:6,rs:7,delta:-1,season:'위클리 시즌3',num:'3-9',title:'거짓말',v2Base:0.864,v2Sim:0.865,deltaScore:0.001,gradeBase:'S',gradeSim:'S',gradeChanged:false,natPct:49.1,natAbs:157296},
+  {rb:7,rs:4,delta:3,season:'위클리 시즌6',num:'6-7',title:'프로젝트 헤일메리',v2Base:0.857,v2Sim:0.9,deltaScore:0.043,gradeBase:'S',gradeSim:'S',gradeChanged:false,natPct:45.2,natAbs:219055},
+  {rb:8,rs:9,delta:-1,season:'위클리 시즌3',num:'3-2',title:'오컬트',v2Base:0.843,v2Sim:0.833,deltaScore:-0.01,gradeBase:'S',gradeSim:'A',gradeChanged:true,natPct:47.8,natAbs:138488},
+  {rb:9,rs:13,delta:-4,season:'위클리 시즌4',num:'4-10',title:'우울',v2Base:0.833,v2Sim:0.77,deltaScore:-0.063,gradeBase:'A',gradeSim:'A',gradeChanged:false,natPct:62.6,natAbs:114251},
+  {rb:10,rs:10,delta:0,season:'위클리 시즌3',num:'3-1',title:'친구',v2Base:0.824,v2Sim:0.811,deltaScore:-0.013,gradeBase:'A',gradeSim:'A',gradeChanged:false,natPct:45.6,natAbs:126751},
+  {rb:11,rs:8,delta:3,season:'위클리 시즌6',num:'6-15',title:'마이클 잭슨',v2Base:0.818,v2Sim:0.857,deltaScore:0.039,gradeBase:'A',gradeSim:'S',gradeChanged:true,natPct:46.6,natAbs:200210},
+  {rb:12,rs:12,delta:0,season:'위클리 시즌5',num:'5-3',title:'사이코패스',v2Base:0.802,v2Sim:0.79,deltaScore:-0.012,gradeBase:'A',gradeSim:'A',gradeChanged:false,natPct:51.8,natAbs:146930},
+  {rb:13,rs:18,delta:-5,season:'위클리 시즌4',num:'4-7',title:'금기',v2Base:0.792,v2Sim:0.74,deltaScore:-0.052,gradeBase:'A',gradeSim:'A',gradeChanged:false,natPct:54.5,natAbs:102834},
+  {rb:14,rs:11,delta:3,season:'위클리 시즌3',num:'3-12',title:'외계생명체',v2Base:0.779,v2Sim:0.794,deltaScore:0.015,gradeBase:'A',gradeSim:'A',gradeChanged:false,natPct:35.3,natAbs:132906},
+  {rb:15,rs:15,delta:0,season:'위클리 시즌2',num:'2-5',title:'중세시대',v2Base:0.772,v2Sim:0.742,deltaScore:-0.03,gradeBase:'A',gradeSim:'A',gradeChanged:false,natPct:47.6,natAbs:110301},
+  {rb:16,rs:14,delta:2,season:'위클리 시즌5',num:'5-5',title:'외국어',v2Base:0.771,v2Sim:0.744,deltaScore:-0.027,gradeBase:'A',gradeSim:'A',gradeChanged:false,natPct:50.3,natAbs:123946},
+  {rb:17,rs:17,delta:0,season:'위클리 시즌5',num:'5-4',title:'시간여행',v2Base:0.769,v2Sim:0.741,deltaScore:-0.028,gradeBase:'A',gradeSim:'A',gradeChanged:false,natPct:53.6,natAbs:131704},
+  {rb:18,rs:25,delta:-7,season:'위클리 시즌1',num:'1-7',title:'멸종',v2Base:0.764,v2Sim:0.716,deltaScore:-0.048,gradeBase:'A',gradeSim:'A',gradeChanged:false,natPct:47.7,natAbs:86514},
+  {rb:19,rs:19,delta:0,season:'위클리 시즌2',num:'2-4',title:'코미디',v2Base:0.757,v2Sim:0.74,deltaScore:-0.017,gradeBase:'A',gradeSim:'A',gradeChanged:false,natPct:43.2,natAbs:113991},
+  {rb:20,rs:16,delta:4,season:'위클리 시즌3',num:'3-4',title:'자유와억압',v2Base:0.757,v2Sim:0.742,deltaScore:-0.015,gradeBase:'A',gradeSim:'A',gradeChanged:false,natPct:37.8,natAbs:99513},
+  {rb:21,rs:31,delta:-10,season:'위클리 시즌4',num:'4-12',title:'잠',v2Base:0.751,v2Sim:0.678,deltaScore:-0.073,gradeBase:'A',gradeSim:'B+',gradeChanged:true,natPct:67.7,natAbs:101990},
+  {rb:22,rs:23,delta:-1,season:'위클리 시즌3',num:'3-5',title:'공주와왕자',v2Base:0.748,v2Sim:0.723,deltaScore:-0.025,gradeBase:'A',gradeSim:'A',gradeChanged:false,natPct:43.6,natAbs:103759},
+  {rb:23,rs:32,delta:-9,season:'위클리 시즌4',num:'4-8',title:'디지털게임',v2Base:0.743,v2Sim:0.666,deltaScore:-0.077,gradeBase:'A',gradeSim:'B+',gradeChanged:true,natPct:75.1,natAbs:96751},
+  {rb:24,rs:20,delta:4,season:'위클리 시즌3',num:'3-7',title:'기적',v2Base:0.742,v2Sim:0.73,deltaScore:-0.012,gradeBase:'A',gradeSim:'A',gradeChanged:false,natPct:33.9,natAbs:91060},
+  {rb:25,rs:22,delta:3,season:'위클리 시즌2',num:'2-8',title:'SF',v2Base:0.735,v2Sim:0.725,deltaScore:-0.01,gradeBase:'A',gradeSim:'A',gradeChanged:false,natPct:36.8,natAbs:102401},
+  {rb:26,rs:24,delta:2,season:'위클리 시즌2',num:'2-9',title:'크리스마스',v2Base:0.734,v2Sim:0.719,deltaScore:-0.015,gradeBase:'A',gradeSim:'A',gradeChanged:false,natPct:34.9,natAbs:89876},
+  {rb:27,rs:33,delta:-6,season:'위클리 시즌4',num:'4-6',title:'천재',v2Base:0.722,v2Sim:0.663,deltaScore:-0.059,gradeBase:'A',gradeSim:'B+',gradeChanged:true,natPct:51.9,natAbs:84151},
+  {rb:28,rs:26,delta:2,season:'위클리 시즌1',num:'1-8',title:'빌런',v2Base:0.716,v2Sim:0.696,deltaScore:-0.02,gradeBase:'A',gradeSim:'A',gradeChanged:false,natPct:38.1,natAbs:93327},
+  {rb:29,rs:28,delta:1,season:'위클리 시즌4',num:'4-1',title:'흑역사',v2Base:0.711,v2Sim:0.681,deltaScore:-0.03,gradeBase:'B+',gradeSim:'A',gradeChanged:true,natPct:36.6,natAbs:76709},
+  {rb:30,rs:40,delta:-10,season:'위클리 시즌4',num:'4-9',title:'연민과증오',v2Base:0.707,v2Sim:0.641,deltaScore:-0.066,gradeBase:'B+',gradeSim:'B+',gradeChanged:false,natPct:55.8,natAbs:87087},
+  {rb:31,rs:21,delta:10,season:'위클리 시즌6',num:'6-9',title:'죽음',v2Base:0.706,v2Sim:0.727,deltaScore:0.021,gradeBase:'B+',gradeSim:'A',gradeChanged:true,natPct:35.3,natAbs:140003},
+  {rb:32,rs:29,delta:3,season:'위클리 시즌2',num:'2-6',title:'추리',v2Base:0.699,v2Sim:0.68,deltaScore:-0.019,gradeBase:'B+',gradeSim:'B+',gradeChanged:false,natPct:40.8,natAbs:103803},
+  {rb:33,rs:30,delta:3,season:'위클리 시즌3',num:'3-11',title:'변신',v2Base:0.693,v2Sim:0.68,deltaScore:-0.013,gradeBase:'B+',gradeSim:'B+',gradeChanged:false,natPct:32.6,natAbs:85330},
+  {rb:34,rs:27,delta:7,season:'위클리 시즌3',num:'3-6',title:'예언',v2Base:0.689,v2Sim:0.692,deltaScore:0.003,gradeBase:'B+',gradeSim:'A',gradeChanged:true,natPct:32.9,natAbs:107807},
+  {rb:35,rs:38,delta:-3,season:'위클리 시즌4',num:'4-2',title:'복수',v2Base:0.689,v2Sim:0.646,deltaScore:-0.043,gradeBase:'B+',gradeSim:'B+',gradeChanged:false,natPct:43.0,natAbs:78696},
+  {rb:36,rs:35,delta:1,season:'위클리 시즌5',num:'5-1',title:'돈',v2Base:0.675,v2Sim:0.657,deltaScore:-0.018,gradeBase:'B+',gradeSim:'B+',gradeChanged:false,natPct:34.6,natAbs:85091},
+  {rb:37,rs:34,delta:3,season:'위클리 시즌2',num:'2-1',title:'첫사랑',v2Base:0.669,v2Sim:0.66,deltaScore:-0.009,gradeBase:'B+',gradeSim:'B+',gradeChanged:false,natPct:27.7,natAbs:76203},
+  {rb:38,rs:36,delta:2,season:'위클리 시즌5',num:'5-2',title:'짝사랑',v2Base:0.651,v2Sim:0.653,deltaScore:0.002,gradeBase:'B+',gradeSim:'B+',gradeChanged:false,natPct:33.1,natAbs:107267},
+  {rb:39,rs:37,delta:2,season:'위클리 시즌6',num:'6-1',title:'행운',v2Base:0.642,v2Sim:0.65,deltaScore:0.008,gradeBase:'B+',gradeSim:'B+',gradeChanged:false,natPct:28.0,natAbs:99686},
+  {rb:40,rs:39,delta:1,season:'위클리 시즌1',num:'1-6',title:'판타지',v2Base:0.633,v2Sim:0.644,deltaScore:0.011,gradeBase:'B+',gradeSim:'B+',gradeChanged:false,natPct:22.2,natAbs:83813},
+  {rb:41,rs:51,delta:-10,season:'위클리 시즌4',num:'4-4',title:'정치와권력',v2Base:0.627,v2Sim:0.586,deltaScore:-0.041,gradeBase:'B+',gradeSim:'B+',gradeChanged:false,natPct:37.9,natAbs:65759},
+  {rb:42,rs:47,delta:-5,season:'위클리 시즌1',num:'1-5',title:'올드머니',v2Base:0.626,v2Sim:0.599,deltaScore:-0.027,gradeBase:'B+',gradeSim:'B+',gradeChanged:false,natPct:26.2,natAbs:46891},
+  {rb:43,rs:42,delta:1,season:'위클리 시즌6',num:'6-11',title:'호기심',v2Base:0.624,v2Sim:0.634,deltaScore:0.01,gradeBase:'B+',gradeSim:'B+',gradeChanged:false,natPct:32.3,natAbs:115668},
+  {rb:44,rs:44,delta:0,season:'위클리 시즌1',num:'1-9',title:'실수',v2Base:0.621,v2Sim:0.613,deltaScore:-0.008,gradeBase:'B+',gradeSim:'B+',gradeChanged:false,natPct:28.2,natAbs:79422},
+  {rb:45,rs:53,delta:-8,season:'위클리 시즌4',num:'4-3',title:'고양이',v2Base:0.619,v2Sim:0.583,deltaScore:-0.036,gradeBase:'B+',gradeSim:'B',gradeChanged:true,natPct:38.0,natAbs:71234},
+  {rb:46,rs:50,delta:-4,season:'위클리 시즌2',num:'2-7',title:'무술',v2Base:0.616,v2Sim:0.59,deltaScore:-0.026,gradeBase:'B+',gradeSim:'B+',gradeChanged:false,natPct:35.0,natAbs:77102},
+  {rb:47,rs:41,delta:6,season:'위클리 시즌5',num:'5-10',title:'아바타1',v2Base:0.615,v2Sim:0.641,deltaScore:0.026,gradeBase:'B+',gradeSim:'B+',gradeChanged:false,natPct:26.8,natAbs:119666},
+  {rb:48,rs:46,delta:2,season:'위클리 시즌5',num:'5-8',title:'직장인',v2Base:0.614,v2Sim:0.608,deltaScore:-0.006,gradeBase:'B+',gradeSim:'B+',gradeChanged:false,natPct:34.4,natAbs:100350},
+  {rb:49,rs:45,delta:4,season:'위클리 시즌2',num:'2-3',title:'천국과지옥',v2Base:0.609,v2Sim:0.61,deltaScore:0.001,gradeBase:'B+',gradeSim:'B+',gradeChanged:false,natPct:27.6,natAbs:88756},
+  {rb:50,rs:48,delta:2,season:'위클리 시즌3',num:'3-8',title:'선생님',v2Base:0.601,v2Sim:0.594,deltaScore:-0.007,gradeBase:'B+',gradeSim:'B+',gradeChanged:false,natPct:26.2,natAbs:73674},
+  {rb:51,rs:54,delta:-3,season:'위클리 시즌6',num:'6-13',title:'럭셔리',v2Base:0.596,v2Sim:0.574,deltaScore:-0.022,gradeBase:'B+',gradeSim:'B',gradeChanged:true,natPct:36.3,natAbs:86014},
+  {rb:52,rs:52,delta:0,season:'위클리 시즌3',num:'3-10',title:'엄마',v2Base:0.595,v2Sim:0.586,deltaScore:-0.009,gradeBase:'B+',gradeSim:'B+',gradeChanged:false,natPct:28.8,natAbs:78116},
+  {rb:53,rs:43,delta:10,season:'위클리 시즌5',num:'5-6',title:'술',v2Base:0.586,v2Sim:0.617,deltaScore:0.031,gradeBase:'B',gradeSim:'B+',gradeChanged:true,natPct:20.4,natAbs:106485},
+  {rb:54,rs:49,delta:5,season:'위클리 시즌6',num:'6-2',title:'루머',v2Base:0.585,v2Sim:0.591,deltaScore:0.006,gradeBase:'B',gradeSim:'B+',gradeChanged:true,natPct:31.3,natAbs:107245},
+  {rb:55,rs:55,delta:0,season:'위클리 시즌1',num:'1-3',title:'노화',v2Base:0.578,v2Sim:0.572,deltaScore:-0.006,gradeBase:'B',gradeSim:'B',gradeChanged:false,natPct:11.9,natAbs:29158},
+  {rb:56,rs:56,delta:0,season:'위클리 시즌6',num:'6-6',title:'본능',v2Base:0.573,v2Sim:0.566,deltaScore:-0.007,gradeBase:'B',gradeSim:'B',gradeChanged:false,natPct:32.6,natAbs:94195},
+  {rb:57,rs:70,delta:-13,season:'위클리 시즌4',num:'4-14',title:'제임스 카메론',v2Base:0.572,v2Sim:0.521,deltaScore:-0.051,gradeBase:'B',gradeSim:'B',gradeChanged:false,natPct:43.9,natAbs:71027},
+  {rb:58,rs:57,delta:1,season:'위클리 시즌1',num:'1-1',title:'꿈',v2Base:0.571,v2Sim:0.564,deltaScore:-0.007,gradeBase:'B',gradeSim:'B',gradeChanged:false,natPct:16.9,natAbs:43628},
+  {rb:59,rs:58,delta:1,season:'위클리 시즌4',num:'4-5',title:'좀비',v2Base:0.565,v2Sim:0.556,deltaScore:-0.009,gradeBase:'B',gradeSim:'B',gradeChanged:false,natPct:28.6,natAbs:78893},
+  {rb:60,rs:66,delta:-6,season:'위클리 시즌6',num:'6-18',title:'프랑스',v2Base:0.563,v2Sim:0.531,deltaScore:-0.032,gradeBase:'B',gradeSim:'B',gradeChanged:false,natPct:34.8,natAbs:67858},
+  {rb:61,rs:68,delta:-7,season:'위클리 시즌6',num:'6-17',title:'다이어트',v2Base:0.557,v2Sim:0.525,deltaScore:-0.032,gradeBase:'B',gradeSim:'B',gradeChanged:false,natPct:34.9,natAbs:67523},
+  {rb:62,rs:65,delta:-3,season:'위클리 시즌6',num:'6-14',title:'디저트',v2Base:0.551,v2Sim:0.532,deltaScore:-0.019,gradeBase:'B',gradeSim:'B',gradeChanged:false,natPct:32.4,natAbs:77435},
+  {rb:63,rs:62,delta:1,season:'위클리 시즌1',num:'1-4',title:'여행',v2Base:0.545,v2Sim:0.54,deltaScore:-0.005,gradeBase:'B',gradeSim:'B',gradeChanged:false,natPct:10.8,natAbs:27158},
+  {rb:64,rs:67,delta:-3,season:'위클리 시즌5',num:'5-7',title:'취미',v2Base:0.544,v2Sim:0.53,deltaScore:-0.014,gradeBase:'B',gradeSim:'B',gradeChanged:false,natPct:31.6,natAbs:80884},
+  {rb:65,rs:64,delta:1,season:'위클리 시즌6',num:'6-19',title:'스티븐스필버그',v2Base:0.539,v2Sim:0.538,deltaScore:-0.001,gradeBase:'B',gradeSim:'B',gradeChanged:false,natPct:29.5,natAbs:92815},
+  {rb:66,rs:59,delta:7,season:'위클리 시즌5',num:'5-9',title:'기억',v2Base:0.537,v2Sim:0.546,deltaScore:0.009,gradeBase:'B',gradeSim:'B',gradeChanged:false,natPct:26.0,natAbs:93662},
+  {rb:67,rs:61,delta:6,season:'위클리 시즌2',num:'2-2',title:'스파이',v2Base:0.535,v2Sim:0.543,deltaScore:0.008,gradeBase:'B',gradeSim:'B',gradeChanged:false,natPct:22.3,natAbs:80784},
+  {rb:68,rs:69,delta:-1,season:'위클리 시즌1',num:'1-2',title:'미식',v2Base:0.53,v2Sim:0.525,deltaScore:-0.005,gradeBase:'B',gradeSim:'B',gradeChanged:false,natPct:10.6,natAbs:27644},
+  {rb:69,rs:72,delta:-3,season:'위클리 시즌6',num:'6-16',title:'초능력',v2Base:0.53,v2Sim:0.506,deltaScore:-0.024,gradeBase:'B',gradeSim:'B',gradeChanged:false,natPct:32.3,natAbs:70641},
+  {rb:70,rs:63,delta:7,season:'위클리 시즌6',num:'6-10',title:'신분',v2Base:0.527,v2Sim:0.539,deltaScore:0.012,gradeBase:'B',gradeSim:'B',gradeChanged:false,natPct:28.0,natAbs:104834},
+  {rb:71,rs:60,delta:11,season:'위클리 시즌5',num:'5-12',title:'봉준호',v2Base:0.526,v2Sim:0.545,deltaScore:0.019,gradeBase:'B',gradeSim:'B',gradeChanged:false,natPct:22.3,natAbs:95501},
+  {rb:72,rs:73,delta:-1,season:'위클리 시즌6',num:'6-20',title:'뮤지컬1',v2Base:0.521,v2Sim:0.492,deltaScore:-0.029,gradeBase:'B',gradeSim:'C',gradeChanged:true,natPct:34.5,natAbs:70066},
+  {rb:73,rs:71,delta:2,season:'위클리 시즌6',num:'6-12',title:'실패',v2Base:0.513,v2Sim:0.512,deltaScore:-0.001,gradeBase:'C',gradeSim:'B',gradeChanged:true,natPct:30.2,natAbs:93493},
+  {rb:74,rs:74,delta:0,season:'위클리 시즌6',num:'6-3',title:'이탈리아',v2Base:0.478,v2Sim:0.481,deltaScore:0.003,gradeBase:'C',gradeSim:'C',gradeChanged:false,natPct:26.9,natAbs:88681},
+  {rb:75,rs:76,delta:-1,season:'위클리 시즌6',num:'6-8',title:'부동산',v2Base:0.459,v2Sim:0.458,deltaScore:-0.001,gradeBase:'C',gradeSim:'C',gradeChanged:false,natPct:26.8,natAbs:83115},
+  {rb:76,rs:75,delta:1,season:'위클리 시즌5',num:'5-13',title:'토이스토리',v2Base:0.453,v2Sim:0.467,deltaScore:0.014,gradeBase:'C',gradeSim:'C',gradeChanged:false,natPct:17.8,natAbs:75303},
+  {rb:77,rs:77,delta:0,season:'위클리 시즌6',num:'6-4',title:'리더쉽',v2Base:0.449,v2Sim:0.453,deltaScore:0.004,gradeBase:'C',gradeSim:'C',gradeChanged:false,natPct:22.9,natAbs:77674},
+  {rb:78,rs:78,delta:0,season:'위클리 시즌6',num:'6-21',title:'뮤지컬2',v2Base:0.404,v2Sim:0.395,deltaScore:-0.009,gradeBase:'C',gradeSim:'C',gradeChanged:false,natPct:18.7,natAbs:47456},
+  {rb:79,rs:79,delta:0,season:'위클리 시즌6',num:'6-5',title:'야구',v2Base:0.334,v2Sim:0.328,deltaScore:-0.006,gradeBase:'C',gradeSim:'C',gradeChanged:false,natPct:17.3,natAbs:47706},
+  {rb:80,rs:80,delta:0,season:'위클리 시즌5',num:'5-11',title:'아바타2',v2Base:0.314,v2Sim:0.312,deltaScore:-0.002,gradeBase:'C',gradeSim:'C',gradeChanged:false,natPct:10.8,natAbs:32239}
+];
+
+Chart.defaults.color='#6E6D7A';
+new Chart(document.getElementById('c_movers'),{type:'bar',
+  data:{labels:['시즌4 4-14','시즌5 5-12','시즌4 4-12','시즌4 4-9','시즌6 6-9','시즌4 4-4','시즌5 5-6','시즌4 4-8','시즌4 4-3','시즌1 1-7','시즌3 3-6','시즌6 6-17','시즌5 5-9','시즌6 6-10','시즌4 4-6'],datasets:[{data:[-13,11,-10,-10,10,-10,10,-9,-8,-7,7,-7,7,7,-6],backgroundColor:['#F05454','#3DD68C','#F05454','#F05454','#3DD68C','#F05454','#3DD68C','#F05454','#F05454','#F05454','#3DD68C','#F05454','#3DD68C','#3DD68C','#F05454'],borderRadius:4,barPercentage:.7}]},
+  options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},
+    tooltip:{callbacks:{label:c=>(c.parsed.x>0?'▲ 상승 ':'▼ 하락 ')+Math.abs(c.parsed.x)+'위'}}},
+    scales:{x:{grid:{color:GRID},ticks:TICK,title:{display:true,text:'순위 이동폭(양수=상승)',color:'#6E6D7A',font:{size:11}}},
+            y:{grid:{display:false},ticks:{...TICK,font:{size:11}}}}}});
+
+let curFilter='all';
+function filterRows(f,btn){
+  curFilter=f;
+  btn.parentElement.querySelectorAll('.ftab').forEach(t=>t.classList.remove('on'));
+  btn.classList.add('on');
+  renderRows();
+}
+function renderRows(){
+  let list=ROWS;
+  if(curFilter==='changed') list=ROWS.filter(r=>r.gradeChanged);
+  if(curFilter==='moved') list=ROWS.filter(r=>Math.abs(r.delta)>=3);
+  const tbody=document.getElementById('rankBody'); tbody.innerHTML='';
+  list.forEach(d=>{
+    const gc=g=>g==='S'?'gs':g==='A'?'ga':g==='B+'?'gbp':g==='B'?'gb':'gc';
+    const arrow=d.delta>0?'▲':d.delta<0?'▼':'—';
+    const color=d.delta>0?'var(--c-teal)':d.delta<0?'var(--c-red)':'var(--c-muted)';
+    const tr=document.createElement('tr');
+    if(d.gradeChanged) tr.className='changed';
+    tr.innerHTML=`
+      <td class="ep-num">${d.rb}위</td>
+      <td style="color:${color};font-weight:700">${arrow} ${Math.abs(d.delta)}</td>
+      <td class="ep-num">${d.rs}위</td>
+      <td><span class="ep-name">${d.title}</span> <span class="ep-num">${d.num}</span></td>
+      <td><span class="season-tag" style="background:${SEASON_COLOR[d.season]}22;color:${SEASON_COLOR[d.season]}">${SEASON_NAME[d.season]}</span></td>
+      <td class="tr">${d.v2Base.toFixed(3)}</td>
+      <td class="tr">${d.v2Sim.toFixed(3)}</td>
+      <td class="tr" style="color:${d.deltaScore>0?'var(--c-teal)':d.deltaScore<0?'var(--c-red)':'var(--c-muted)'};font-weight:600">${d.deltaScore>0?'+':''}${d.deltaScore.toFixed(3)}</td>
+      <td><span class="gpill ${gc(d.gradeBase)}">${d.gradeBase}</span></td>
+      <td><span class="gpill ${gc(d.gradeSim)}">${d.gradeSim}</span></td>
+      <td class="tr">${d.natPct}%</td>
+      <td class="tr">${d.natAbs.toLocaleString()}</td>`;
+    tbody.appendChild(tr);
+  });
+}
+renderRows();
+</script>
+</body>
+</html>
