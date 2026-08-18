@@ -43,6 +43,8 @@ function gradeMinOf(v2Field, gradeField, grade) {
 }
 const gradeCut = { S: gradeMinOf('v2', 'grade', 'S'), A: gradeMinOf('v2', 'grade', 'A'), 'B+': gradeMinOf('v2', 'grade', 'B+'), B: gradeMinOf('v2', 'grade', 'B') };
 const gradeCut1d = { S: gradeMinOf('v2_1d', 'grade_1d', 'S'), A: gradeMinOf('v2_1d', 'grade_1d', 'A'), 'B+': gradeMinOf('v2_1d', 'grade_1d', 'B+'), B: gradeMinOf('v2_1d', 'grade_1d', 'B') };
+// gradeMinOf는 grade 문자열 일치로 필터링하므로 grade_28d가 null인(28일차 미도달) 편은 자동 제외됨.
+const gradeCut28d = { S: gradeMinOf('v2_28d', 'grade_28d', 'S'), A: gradeMinOf('v2_28d', 'grade_28d', 'A'), 'B+': gradeMinOf('v2_28d', 'grade_28d', 'B+'), B: gradeMinOf('v2_28d', 'grade_28d', 'B') };
 
 const chronological = [...results].sort((a, b) => {
   const sa = SEASONS.indexOf(a.season), sb = SEASONS.indexOf(b.season);
@@ -52,30 +54,37 @@ const chronological = [...results].sort((a, b) => {
 
 function computeBySeasonStats(v2Field, gradeField) {
   return SEASONS.map(s => {
-    const arr = results.filter(r => r.season === s);
-    const avg = arr.reduce((a, r) => a + r[v2Field], 0) / arr.length;
+    const seasonArr = results.filter(r => r.season === s);
+    const arr = seasonArr.filter(r => r[v2Field] != null);
+    const avg = arr.length ? arr.reduce((a, r) => a + r[v2Field], 0) / arr.length : null;
     const grades = { S: 0, A: 0, 'B+': 0, B: 0, C: 0 };
     arr.forEach(r => grades[r[gradeField]]++);
     const vrMissingCount = arr.filter(r => r.vr_missing).length;
-    return { season: s, count: arr.length, avg: +avg.toFixed(3), grades, vrMissingCount };
+    return { season: s, count: arr.length, avg: avg === null ? null : +avg.toFixed(3), grades, vrMissingCount, pendingCount: seasonArr.length - arr.length };
   });
 }
 const bySeasonStats = computeBySeasonStats('v2', 'grade');
 const bySeasonStats1d = computeBySeasonStats('v2_1d', 'grade_1d');
+const bySeasonStats28d = computeBySeasonStats('v2_28d', 'grade_28d');
 
 function computeSummary(v2Field, gradeField, statsArr) {
-  const channelAvg = results.reduce((a, r) => a + r[v2Field], 0) / results.length;
+  const valid = results.filter(r => r[v2Field] != null);
+  const channelAvg = valid.reduce((a, r) => a + r[v2Field], 0) / valid.length;
   const gradeCounts = { S: 0, A: 0, 'B+': 0, B: 0, C: 0 };
-  results.forEach(r => gradeCounts[r[gradeField]]++);
-  const bestSeason = [...statsArr].sort((a, b) => b.avg - a.avg)[0];
-  const worstSeason = [...statsArr].sort((a, b) => a.avg - b.avg)[0];
-  return { channelAvg, gradeCounts, bestSeason, worstSeason };
+  valid.forEach(r => gradeCounts[r[gradeField]]++);
+  const validStats = statsArr.filter(s => s.avg != null);
+  const bestSeason = [...validStats].sort((a, b) => b.avg - a.avg)[0];
+  const worstSeason = [...validStats].sort((a, b) => a.avg - b.avg)[0];
+  return { channelAvg, gradeCounts, bestSeason, worstSeason, validCount: valid.length };
 }
 const totalCount = results.length;
 const sum7d = computeSummary('v2', 'grade', bySeasonStats);
 const sum1d = computeSummary('v2_1d', 'grade_1d', bySeasonStats1d);
+const sum28d = computeSummary('v2_28d', 'grade_28d', bySeasonStats28d);
 const { channelAvg, gradeCounts, bestSeason, worstSeason } = sum7d;
 const { channelAvg: channelAvg1d, gradeCounts: gradeCounts1d, bestSeason: bestSeason1d, worstSeason: worstSeason1d } = sum1d;
+const { channelAvg: channelAvg28d, gradeCounts: gradeCounts28d, bestSeason: bestSeason28d, worstSeason: worstSeason28d, validCount: totalCount28 } = sum28d;
+const pending28List = results.filter(r => r.v2_28d == null);
 const vrMissingTotal = results.filter(r => r.vr_missing).length;
 
 // 장기 성장 지수(28일차 조회수 ÷ 7일차 조회수) — 28일차 전용 점수공식 대신, 시간이 지나도
@@ -164,8 +173,8 @@ function buildDataArr(sortedArr, suf, v2Field, gradeField) {
     `sub:${Math.round(r['sub_' + suf])},views:${Math.round(r['views_' + suf])},eng:${Math.round(r['eng_' + suf])}}`
   )).join(',\n  ');
 }
-function buildRankedArr(suf, v2Field, gradeField) {
-  return [...results].sort((a, b) => b[v2Field] - a[v2Field]).map(r => (
+function buildRankedArr(srcArr, suf, v2Field, gradeField) {
+  return [...srcArr].sort((a, b) => b[v2Field] - a[v2Field]).map(r => (
     `{season:'${esc(r.season)}',num:'${esc(r.num)}',title:'${esc(r.title)}',pub:'${r.pub_date || ''}',` +
     `v2:${r[v2Field]},grade:'${r[gradeField]}',natPct:${(r['nat_pct_' + suf] * 100).toFixed(1)},natAbs:${Math.round(r['nat_abs_' + suf])},` +
     `vr:${(r['vr_' + suf] * 100).toFixed(1)},vrMissing:${r.vr_missing},ctr:${(r['ctr_' + suf] * 100).toFixed(1)},sub:${Math.round(r['sub_' + suf])},` +
@@ -173,13 +182,17 @@ function buildRankedArr(suf, v2Field, gradeField) {
   )).join(',\n  ');
 }
 const dataArrJs = buildDataArr(chronological, '7d', 'v2', 'grade');
-const rankedArrJs = buildRankedArr('7d', 'v2', 'grade');
+const rankedArrJs = buildRankedArr(results, '7d', 'v2', 'grade');
 const dataArrJs1d = buildDataArr(chronological, '1d', 'v2_1d', 'grade_1d');
-const rankedArrJs1d = buildRankedArr('1d', 'v2_1d', 'grade_1d');
+const rankedArrJs1d = buildRankedArr(results, '1d', 'v2_1d', 'grade_1d');
+// 28일차는 미도달편(v2_28d===null)을 배열 자체에서 제외 — 상단 안내 배너로만 별도 고지.
+const chronological28 = chronological.filter(r => r.v2_28d != null);
+const dataArrJs28d = buildDataArr(chronological28, '28d', 'v2_28d', 'grade_28d');
+const rankedArrJs28d = buildRankedArr(chronological28, '28d', 'v2_28d', 'grade_28d');
 
 function seasonAgg(statsArr) {
   return {
-    avgs: statsArr.map(s => s.avg).join(','),
+    avgs: statsArr.map(s => s.avg == null ? 0 : s.avg).join(','),
     S: statsArr.map(s => s.grades.S).join(','),
     A: statsArr.map(s => s.grades.A).join(','),
     Bp: statsArr.map(s => s.grades['B+']).join(','),
@@ -191,6 +204,7 @@ const seasonLabels = bySeasonStats.map(s => `'${s.season.replace('위클리 ', '
 const seasonColors = SEASONS.map(s => `'${SEASON_COLOR[s]}'`).join(',');
 const agg7d = seasonAgg(bySeasonStats);
 const agg1d = seasonAgg(bySeasonStats1d);
+const agg28d = seasonAgg(bySeasonStats28d);
 
 // 1일차 순위와 7일차 순위가 얼마나 다른지 — "초기반응이 실제 성과를 얼마나 잘 예측했나" 확인용
 const byRank7d = [...results].sort((a, b) => b.v2 - a.v2);
@@ -336,11 +350,12 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
 <header class="page-header">
   <p class="header-eyebrow">라플위클리 · 누적 시즌 분석 (별도 프로젝트)</p>
   <h1 class="header-title">라플위클리 누적 LTV Score</h1>
-  <p class="header-sub">시즌1~6(진행중) 전편에 라플TV Score 공식을 7일차(공식 집계) · 1일차(초기반응) 두 기준으로 적용</p>
+  <p class="header-sub">시즌1~6(진행중) 전편에 라플TV Score 공식을 7일차(공식 집계) · 1일차(초기반응) · 28일차(장기성과) 세 기준으로 적용</p>
   <div class="header-meta">
     <span class="meta-chip">총 ${totalCount}편 · 시즌1~6</span>
     <span class="meta-chip">발행 ${chronological[0].pub_date} ~ ${chronological[chronological.length - 1].pub_date}</span>
     <span class="meta-chip">채널 평균 LTV(7일차) ${channelAvg.toFixed(2)}</span>
+    <span class="meta-chip">채널 평균 LTV(28일차) ${channelAvg28d.toFixed(2)}</span>
     ${pending.length ? `<span class="meta-chip">7D 집계대기 ${pending.length}편</span>` : ''}
   </div>
 </header>
@@ -356,6 +371,7 @@ ${pending.length ? `<div class="warn-banner">※ ${pending.map(p => `${p.season.
 <div class="nav-tabs">
   <button class="nav-tab on" onclick="sw('7d',this)">7일차 기준</button>
   <button class="nav-tab" onclick="sw('1d',this)">1일차 기준</button>
+  <button class="nav-tab" onclick="sw('28d',this)">28일차 기준</button>
   <button class="nav-tab" onclick="sw('cat',this)">카테고리 분석</button>
 </div>
 
@@ -594,6 +610,113 @@ ${pending.length ? `<div class="warn-banner">※ ${pending.map(p => `${p.season.
 
 </div><!-- /panel-1d -->
 
+<div class="panel" id="panel-28d">
+
+${pending28List.length ? `<div class="warn-banner">※ ${pending28List.map(r => `${r.season.replace('위클리 ', '')} ${r.num} ${r.title}`).join(', ')}은(는) 발행 후 28일 데이터가 아직 안 쌓여 이번 집계에서 제외했습니다(${pending28List.length}편, 다음 갱신 때 28일이 지나면 자동 포함).</div>` : ''}
+
+<div class="kpi-strip">
+  <div class="kpi-card purple">
+    <p class="kpi-label">전체 평균 LTV(28일차)</p>
+    <p class="kpi-val purple">${channelAvg28d.toFixed(2)}</p>
+    <span class="kpi-badge">28일차 도달 ${totalCount28}편</span>
+  </div>
+  <div class="kpi-card teal">
+    <p class="kpi-label">S / A 등급(28일차)</p>
+    <p class="kpi-val teal">${gradeCounts28d.S + gradeCounts28d.A}편</p>
+    <span class="kpi-badge">S ${gradeCounts28d.S} · A ${gradeCounts28d.A}</span>
+  </div>
+  <div class="kpi-card amber">
+    <p class="kpi-label">최고 평균 시즌(28일차)</p>
+    <p class="kpi-val amber">${bestSeason28d.season.replace('위클리 ', '')}</p>
+    <span class="kpi-badge">평균 ${bestSeason28d.avg.toFixed(2)}</span>
+  </div>
+  <div class="kpi-card red">
+    <p class="kpi-label">최저 평균 시즌(28일차)</p>
+    <p class="kpi-val red">${worstSeason28d.season.replace('위클리 ', '')}</p>
+    <span class="kpi-badge">평균 ${worstSeason28d.avg.toFixed(2)}</span>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-header">
+    <p class="section-title">시즌별 평균 LTV 추이(28일차)</p>
+    <p class="section-desc">시즌1→6, 막대 위 숫자 = 해당 시즌 평균 LTV Score(28일차) · 28일차 미도달편 제외</p>
+  </div>
+  <div class="card">
+    <div class="chart-box" style="height:240px"><canvas id="c_season_avg_28d"></canvas></div>
+  </div>
+</div>
+
+<div class="grid-2 section">
+  <div class="card">
+    <p class="card-title">시즌별 등급 분포(28일차)</p>
+    <p class="card-sub">스택 바 · S/A/B+/B/C</p>
+    <div class="chart-box" style="height:220px"><canvas id="c_season_grade_28d"></canvas></div>
+  </div>
+  <div class="card">
+    <p class="card-title">전체 ${totalCount28}편 LTV Score 분포(28일차)</p>
+    <p class="card-sub">발행 순 · 색상 = 시즌</p>
+    <div class="chart-box" style="height:220px"><canvas id="c_all_dist_28d"></canvas></div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-header">
+    <p class="section-title">전체 순위표(28일차)</p>
+    <p class="section-desc">LTV Score(28일차) 내림차순 · 28일차 미도달 ${pending28List.length}편 제외</p>
+  </div>
+  <div class="filter-tabs">
+    <button class="ftab on" onclick="filterSeason('28d','all',this)">전체 ${totalCount28}편</button>
+    <button class="ftab" onclick="filterSeason('28d','위클리 시즌1',this)">시즌1</button>
+    <button class="ftab" onclick="filterSeason('28d','위클리 시즌2',this)">시즌2</button>
+    <button class="ftab" onclick="filterSeason('28d','위클리 시즌3',this)">시즌3</button>
+    <button class="ftab" onclick="filterSeason('28d','위클리 시즌4',this)">시즌4</button>
+    <button class="ftab" onclick="filterSeason('28d','위클리 시즌5',this)">시즌5</button>
+    <button class="ftab" onclick="filterSeason('28d','위클리 시즌6',this)">시즌6</button>
+  </div>
+  <div class="card" style="padding:0">
+    <div class="tbl-scroll">
+      <table class="ep-tbl">
+        <thead><tr>
+          <th>#</th><th>에피소드</th><th>시즌</th><th>발행일</th>
+          <th class="r">LTV Score(28일차)</th><th>등급</th>
+          <th class="r">자연유입율</th><th class="r">자연유입(회)</th><th class="r">조회율(VR)</th><th class="r">CTR</th><th class="r">구독자</th><th class="r">장기성장(28d/7d)</th>
+        </tr></thead>
+        <tbody id="rankBody_28d"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="formula-box">
+    <div class="formula-line">
+      <span class="v">LTV Score(28일차)</span> = <span class="v">N</span><sub>자연유입</sub>×<span class="w">0.30</span>
+       + <span class="v">N</span><sub>조회율</sub>×<span class="w">0.25</span>
+       + <span class="v">N</span><sub>CTR</sub>×<span class="w">0.20</span>
+       + <span class="v">N</span><sub>참여도</sub>×<span class="w">0.15</span>
+       + <span class="v">N</span><sub>구독자</sub>×<span class="w">0.10</span>
+    </div>
+    <div class="formula-line">
+      &nbsp;&nbsp;<span class="plus">+ 롱테일 보너스 +0.05</span>
+      <span class="cmt">&nbsp;&nbsp;(자연유입 비중 ≥ 42.9%, 28일차 위클리 자체 평균)</span>
+    </div>
+    <div class="formula-line">
+      &nbsp;&nbsp;<span class="minus">− 복합 패널티 (조회율&lt;12.6% · 구독↓&lt;0 · CTR&lt;1.7% 각 −0.025)</span>
+      <span class="cmt">&nbsp;&nbsp;최대 −0.05</span>
+    </div>
+    <p class="formula-note">
+      <b>가중치는 7일차와 동일한 상대비율(30:25:20:15:10)을 그대로 유지</b>합니다 — 1일차 재조정 근거(CTR이 구독자 피드 노출 편중으로 변별력을 잃음, r=0.09)가 28일차엔 해당하지 않습니다. &nbsp;|&nbsp;
+      <b>알고리즘/검색 보너스는 28일차에도 적용하지 않습니다</b> — 트래픽소스 원본 데이터가 7일차 스냅샷에만 존재해 1일차와 동일한 이유입니다. &nbsp;|&nbsp;
+      7일차 벤치마크를 그대로 쓰면 시간이 지나며 계속 누적되는 구조상 거의 전 편이 만점 처리되므로(예: 자연유입비중 28일차 평균 42.9% vs 7일차 벤치마크 31.7%, 나머지 지표도 전부 7일차보다 높음), <b>28일차 도달 ${totalCount28}편(결측 없음)의 평균으로 벤치마크를 별도 도출</b>했습니다: 자연유입비중 42.9%·자연유입 146,658회·조회율 25.3%·CTR 3.4%·참여도 3,306건·구독자 612명·시청시간 11.8분. &nbsp;|&nbsp;
+      등급도 이 리포트 내 28일차 점수의 <b>백분위 상대평가(28일차 도달편 ${totalCount28}편 기준)</b>: S 상위 10.0%(≥${gradeCut28d.S.toFixed(3)}) · A 다음 25.0%(≥${gradeCut28d.A.toFixed(3)}) · B+ 다음 30.0%(≥${gradeCut28d['B+'].toFixed(3)}) · B 다음 25.0%(≥${gradeCut28d.B.toFixed(3)}) · C 하위 10.0%(&lt;${gradeCut28d.B.toFixed(3)}) &nbsp;|&nbsp;
+      28일차 미도달 ${pending28List.length}편(최근 발행분)은 이번 집계에서 제외되며, 다음 갱신 때 28일이 지나면 자동으로 포함됩니다.
+    </p>
+  </div>
+</div>
+
+</div><!-- /panel-28d -->
+
 <div class="panel" id="panel-cat">
 
 <div class="kpi-strip">
@@ -748,11 +871,15 @@ const DATA={ '7d':[
   ${dataArrJs}
 ], '1d':[
   ${dataArrJs1d}
+], '28d':[
+  ${dataArrJs28d}
 ] };
 const RANKED={ '7d':[
   ${rankedArrJs}
 ], '1d':[
   ${rankedArrJs1d}
+], '28d':[
+  ${rankedArrJs28d}
 ] };
 const CATEGORY_COLOR={${categoryColorJs}};
 const CATLIST=[
@@ -767,7 +894,7 @@ function sw(id,btn){
   document.getElementById('panel-'+id).classList.add('show');
   document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('on'));
   btn.classList.add('on');
-  document.getElementById('growthGlobalSection').style.display = id==='cat' ? 'none' : '';
+  document.getElementById('growthGlobalSection').style.display = (id==='cat'||id==='28d') ? 'none' : '';
   Object.values(charts).forEach(c=>{ if(c) c.resize(); });
 }
 
@@ -812,6 +939,10 @@ charts.allDist7d = allDistChart('c_all_dist', '7d');
 charts.seasonAvg1d = seasonAvgChart('c_season_avg_1d', [${seasonLabels}], [${agg1d.avgs}], [${seasonColors}]);
 charts.seasonGrade1d = seasonGradeChart('c_season_grade_1d', [${seasonLabels}], [${agg1d.S}],[${agg1d.A}],[${agg1d.Bp}],[${agg1d.B}],[${agg1d.C}]);
 charts.allDist1d = allDistChart('c_all_dist_1d', '1d');
+
+charts.seasonAvg28d = seasonAvgChart('c_season_avg_28d', [${seasonLabels}], [${agg28d.avgs}], [${seasonColors}]);
+charts.seasonGrade28d = seasonGradeChart('c_season_grade_28d', [${seasonLabels}], [${agg28d.S}],[${agg28d.A}],[${agg28d.Bp}],[${agg28d.B}],[${agg28d.C}]);
+charts.allDist28d = allDistChart('c_all_dist_28d', '28d');
 
 function catAvgChart(id, labels, avg7d, avg1d, colors){
   return new Chart(document.getElementById(id),{type:'bar',
@@ -865,7 +996,7 @@ charts.seasonCat = seasonCatChart('c_season_cat', [${seasonCatLabels}], [
 ]);
 
 /* 순위 테이블 */
-const curSeason = { '7d':'all', '1d':'all' };
+const curSeason = { '7d':'all', '1d':'all', '28d':'all' };
 function filterSeason(tab,s,btn){
   curSeason[tab]=s;
   btn.parentElement.querySelectorAll('.ftab').forEach(t=>t.classList.remove('on'));
@@ -896,6 +1027,7 @@ function renderRank(tab){
 }
 renderRank('7d');
 renderRank('1d');
+renderRank('28d');
 
 /* 카테고리별 편성 목록 */
 let curCatFilter = 'all';
@@ -927,7 +1059,7 @@ renderCatList();
 // 통합리포트 셸에서 ?tab=cat 등으로 딥링크할 때 해당 탭을 바로 열어줌
 (function(){
   const tab = new URLSearchParams(location.search).get('tab');
-  if (tab === 'cat' || tab === '1d') {
+  if (tab === 'cat' || tab === '1d' || tab === '28d') {
     const btn = document.querySelector(\`.nav-tab[onclick*="'\${tab}'"]\`);
     if (btn) sw(tab, btn);
   }

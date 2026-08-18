@@ -21,6 +21,15 @@ const BENCH_1D = { nat_pct: 0.541, nat_abs: 44929, vr: 0.293, ctr: 0.0454, eng: 
 // CTR·참여도의 상대적 비중 자체를 바꾸는 문제는 별도 논의 사항이라 이번엔 건드리지 않았다.
 const WEIGHTS_1D = { nat: 0.229, vr: 0.191, ctr: 0.153, eng: 0.115, sub: 0.076, watch: 0.236 };
 
+// 28일차 벤치마크 — 28일차 도달편(현재 83/86편, 결측 없음)의 28일차 평균값으로 직접 도출.
+// 7일차 벤치마크를 그대로 쓰면 시간이 지나며 계속 누적되는 구조상 거의 전 편이 만점 처리돼
+// 변별력이 사라진다(예: 자연유입비중 28일차 평균 42.9% vs 7일차 벤치마크 31.7%, 나머지
+// 지표도 전부 7일차보다 높게 나옴) — 1일차와 같은 이유로 28일차도 전용 벤치마크가 필요.
+const BENCH_28D = { nat_pct: 0.4288, nat_abs: 146658, vr: 0.2527, ctr: 0.0338, eng: 3306, sub: 612, watch_min: 11.79 };
+// 28일차 가중치는 7일차와 동일한 상대비율(30:25:20:15:10) 유지 — 1일차의 재조정 근거
+// (CTR이 구독자피드 노출 편중으로 변별력 상실, r=0.09)는 28일차엔 해당하지 않아 그대로 둠.
+const WEIGHTS_28D = { nat: 0.30, vr: 0.25, ctr: 0.20, eng: 0.15, sub: 0.10 };
+
 function N(v, bench) {
   if (v == null || isNaN(v)) return 0;
   return Math.min(1, Math.max(0, v / (bench * 2)));
@@ -73,6 +82,9 @@ function calcScore(ep, suf, bench, weights, hasTrafficBonus) {
 }
 function calcLTV(ep) { return calcScore(ep, '7d', BENCH_W, WEIGHTS_7D, true); }
 function calcLTV1d(ep) { return calcScore(ep, '1d', BENCH_1D, WEIGHTS_1D, false); }
+// hasTrafficBonus=false — 알고리즘/검색 유입 트래픽소스 원본 데이터가 7일차 스냅샷에만
+// 존재해서 1일차와 마찬가지로 28일차도 원본값 자체가 없음.
+function calcLTV28d(ep) { return calcScore(ep, '28d', BENCH_28D, WEIGHTS_28D, false); }
 
 // 등급은 절대 점수가 아니라 위클리 전체 편수 내 백분위(상대평가) 기준.
 // 채널 전체 벤치마크 대비로는 위클리가 구조적으로 잘 나와 S/A에 쏠리기 때문에,
@@ -99,21 +111,40 @@ function calcGrowth28(ep) {
   return { growth_28d, growth28_pending: pending };
 }
 
-const scored = raw.map(ep => ({ ...ep, ...calcLTV(ep), ...renameKeys(calcLTV1d(ep), '_1d'), ...calcGrowth28(ep) }));
-const cut7d = percentileCut(scored.map(r => r.v2));
-const cut1d = percentileCut(scored.map(r => r.v2_1d));
-
 function renameKeys(obj, suffix) {
   const out = {};
   Object.keys(obj).forEach(k => { out[k + suffix] = obj[k]; });
   return out;
 }
+// 28일차 필드는 발행 후 28일이 안 지난 편(growth28_pending)은 원본값 자체가 0/결측이라
+// 점수를 내면 의미가 없음 — null로 비워두고 percentileCut·리포트에서 별도 "집계대기" 처리.
+const NULL_28D = { v2_28d: null, nNat_28d: null, nVr_28d: null, nCtr_28d: null, nEng_28d: null, nSub_28d: null, nWatch_28d: null, b_org_28d: null, b_algo_28d: null, b_srch_28d: null, pen_28d: null };
 
-const results = scored.map(r => ({ ...r, grade: gradeFromCut(r.v2, cut7d), grade_1d: gradeFromCut(r.v2_1d, cut1d) }));
+const scored = raw.map(ep => {
+  const growth = calcGrowth28(ep);
+  return {
+    ...ep,
+    ...calcLTV(ep),
+    ...renameKeys(calcLTV1d(ep), '_1d'),
+    ...(growth.growth28_pending ? NULL_28D : renameKeys(calcLTV28d(ep), '_28d')),
+    ...growth,
+  };
+});
+const cut7d = percentileCut(scored.map(r => r.v2));
+const cut1d = percentileCut(scored.map(r => r.v2_1d));
+const cut28d = percentileCut(scored.filter(r => r.v2_28d != null).map(r => r.v2_28d));
+
+const results = scored.map(r => ({
+  ...r,
+  grade: gradeFromCut(r.v2, cut7d),
+  grade_1d: gradeFromCut(r.v2_1d, cut1d),
+  grade_28d: r.v2_28d != null ? gradeFromCut(r.v2_28d, cut28d) : null,
+}));
 
 results.sort((a, b) => b.v2 - a.v2);
 console.log('등급 기준 7일차(위클리 백분위):', `S≥${cut7d.p90.toFixed(3)}`, `A≥${cut7d.p65.toFixed(3)}`, `B+≥${cut7d.p35.toFixed(3)}`, `B≥${cut7d.p10.toFixed(3)}`, `C<${cut7d.p10.toFixed(3)}`);
 console.log('등급 기준 1일차(위클리 백분위):', `S≥${cut1d.p90.toFixed(3)}`, `A≥${cut1d.p65.toFixed(3)}`, `B+≥${cut1d.p35.toFixed(3)}`, `B≥${cut1d.p10.toFixed(3)}`, `C<${cut1d.p10.toFixed(3)}`);
+console.log('등급 기준 28일차(28일차 도달편 백분위):', `S≥${cut28d.p90.toFixed(3)}`, `A≥${cut28d.p65.toFixed(3)}`, `B+≥${cut28d.p35.toFixed(3)}`, `B≥${cut28d.p10.toFixed(3)}`, `C<${cut28d.p10.toFixed(3)}`);
 
 // 검증 출력
 const counts = { S: 0, A: 0, 'B+': 0, B: 0, C: 0 };
@@ -121,6 +152,12 @@ results.forEach(r => counts[r.grade]++);
 console.log('총편수:', results.length, '7일차 등급분포:', counts);
 console.log('채널평균 LTV(7일차):', (results.reduce((s, r) => s + r.v2, 0) / results.length).toFixed(4));
 console.log('채널평균 LTV(1일차):', (results.reduce((s, r) => s + r.v2_1d, 0) / results.length).toFixed(4));
+
+const results28 = results.filter(r => r.v2_28d != null);
+const counts28 = { S: 0, A: 0, 'B+': 0, B: 0, C: 0 };
+results28.forEach(r => counts28[r.grade_28d]++);
+console.log(`28일차 도달: ${results28.length}편 (집계대기 ${results.length - results28.length}편) 등급분포:`, counts28);
+console.log('채널평균 LTV(28일차):', (results28.reduce((s, r) => s + r.v2_28d, 0) / results28.length).toFixed(4));
 
 // 1일차 순위와 7일차 순위가 얼마나 다른지 — "초기반응이 실제 성과를 얼마나 잘 예측했나" 확인용
 const byV2_7d = [...results].sort((a, b) => b.v2 - a.v2);
@@ -144,9 +181,11 @@ Object.keys(bySeason).sort().forEach(s => {
   const arr = bySeason[s];
   const avg = arr.reduce((sum, r) => sum + r.v2, 0) / arr.length;
   const avg1d = arr.reduce((sum, r) => sum + r.v2_1d, 0) / arr.length;
+  const arr28 = arr.filter(r => r.v2_28d != null);
+  const avg28 = arr28.length ? arr28.reduce((sum, r) => sum + r.v2_28d, 0) / arr28.length : null;
   const g = { S: 0, A: 0, 'B+': 0, B: 0, C: 0 };
   arr.forEach(r => g[r.grade]++);
-  console.log(`${s}: ${arr.length}편, 평균(7d) ${avg.toFixed(3)} / 평균(1d) ${avg1d.toFixed(3)}, S${g.S} A${g.A} B+${g['B+']} B${g.B} C${g.C}`);
+  console.log(`${s}: ${arr.length}편, 평균(7d) ${avg.toFixed(3)} / 평균(1d) ${avg1d.toFixed(3)} / 평균(28d) ${avg28===null?'집계대기':avg28.toFixed(3)+' ('+arr28.length+'편)'}, S${g.S} A${g.A} B+${g['B+']} B${g.B} C${g.C}`);
 });
 
 fs.writeFileSync(__dirname + '/weekly_cumulative_scored.json', JSON.stringify(results, null, 2), 'utf8');

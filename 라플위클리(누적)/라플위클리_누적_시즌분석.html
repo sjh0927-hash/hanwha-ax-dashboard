@@ -123,21 +123,23 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
 <header class="page-header">
   <p class="header-eyebrow">라플위클리 · 누적 시즌 분석 (별도 프로젝트)</p>
   <h1 class="header-title">라플위클리 누적 LTV Score</h1>
-  <p class="header-sub">시즌1~6(진행중) 전편에 라플TV Score 공식을 7일차(공식 집계) · 1일차(초기반응) 두 기준으로 적용</p>
+  <p class="header-sub">시즌1~6(진행중) 전편에 라플TV Score 공식을 7일차(공식 집계) · 1일차(초기반응) · 28일차(장기성과) 세 기준으로 적용</p>
   <div class="header-meta">
-    <span class="meta-chip">총 80편 · 시즌1~6</span>
-    <span class="meta-chip">발행 2024-07-19 ~ 2026-06-26</span>
-    <span class="meta-chip">채널 평균 LTV(7일차) 0.65</span>
-    <span class="meta-chip">7D 집계대기 1편</span>
+    <span class="meta-chip">총 86편 · 시즌1~6</span>
+    <span class="meta-chip">발행 2024-07-19 ~ 2026-08-07</span>
+    <span class="meta-chip">채널 평균 LTV(7일차) 0.64</span>
+    <span class="meta-chip">채널 평균 LTV(28일차) 0.50</span>
+    
   </div>
 </header>
 
 
-<div class="warn-banner">※ 시즌6 6-22 시선은(는) 발행 후 7일 데이터가 아직 안 쌓여 이번 집계에서 제외했습니다.</div>
+
 
 <div class="nav-tabs">
   <button class="nav-tab on" onclick="sw('7d',this)">7일차 기준</button>
   <button class="nav-tab" onclick="sw('1d',this)">1일차 기준</button>
+  <button class="nav-tab" onclick="sw('28d',this)">28일차 기준</button>
   <button class="nav-tab" onclick="sw('cat',this)">카테고리 분석</button>
 </div>
 
@@ -146,13 +148,13 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
 <div class="kpi-strip">
   <div class="kpi-card purple">
     <p class="kpi-label">전체 평균 LTV</p>
-    <p class="kpi-val purple">0.65</p>
-    <span class="kpi-badge">시즌1~6, 80편</span>
+    <p class="kpi-val purple">0.64</p>
+    <span class="kpi-badge">시즌1~6, 86편</span>
   </div>
   <div class="kpi-card teal">
     <p class="kpi-label">S / A 등급</p>
-    <p class="kpi-val teal">28편</p>
-    <span class="kpi-badge">S 8 · A 20</span>
+    <p class="kpi-val teal">31편</p>
+    <span class="kpi-badge">S 9 · A 22</span>
   </div>
   <div class="kpi-card amber">
     <p class="kpi-label">최고 평균 시즌</p>
@@ -162,7 +164,7 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
   <div class="kpi-card red">
     <p class="kpi-label">최저 평균 시즌</p>
     <p class="kpi-val red">시즌6</p>
-    <span class="kpi-badge">평균 0.56</span>
+    <span class="kpi-badge">평균 0.57</span>
   </div>
 </div>
 
@@ -183,7 +185,7 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
     <div class="chart-box" style="height:220px"><canvas id="c_season_grade"></canvas></div>
   </div>
   <div class="card">
-    <p class="card-title">전체 80편 LTV Score 분포</p>
+    <p class="card-title">전체 86편 LTV Score 분포</p>
     <p class="card-sub">발행 순 · 색상 = 시즌 · 점선 = 등급 경계</p>
     <div class="chart-box" style="height:220px"><canvas id="c_all_dist"></canvas></div>
   </div>
@@ -195,7 +197,7 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
     <p class="section-desc">LTV Score 내림차순 · VR 결측 구간은 참고용으로 표시</p>
   </div>
   <div class="filter-tabs">
-    <button class="ftab on" onclick="filterSeason('7d','all',this)">전체 80편</button>
+    <button class="ftab on" onclick="filterSeason('7d','all',this)">전체 86편</button>
     <button class="ftab" onclick="filterSeason('7d','위클리 시즌1',this)">시즌1</button>
     <button class="ftab" onclick="filterSeason('7d','위클리 시즌2',this)">시즌2</button>
     <button class="ftab" onclick="filterSeason('7d','위클리 시즌3',this)">시즌3</button>
@@ -240,7 +242,7 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
     </div>
     <p class="formula-note">
       라플TV Score(HOT&amp;NEW·딥다이브 포함 최신 리포트)와 동일한 위클리(w) 벤치마크를 그대로 적용: 자연유입비중 31.7%·자연유입 100,196회·조회율 18.4%·CTR 3.6%·참여도 2,500건·구독자 180명 (기대값의 2배가 만점 기준) &nbsp;|&nbsp;
-      등급은 채널 전체 벤치마크가 아니라 <b>위클리 80편 내 백분위 상대평가</b>: S 상위 10.0%(≥0.849) · A 다음 25.0%(≥0.692) · B+ 다음 30.0%(≥0.590) · B 다음 25.0%(≥0.511) · C 하위 10.0%(&lt;0.511)
+      등급은 채널 전체 벤치마크가 아니라 <b>위클리 86편 내 백분위 상대평가</b>: S 상위 10.0%(≥0.849) · A 다음 25.0%(≥0.689) · B+ 다음 30.0%(≥0.588) · B 다음 25.0%(≥0.458) · C 하위 10.0%(&lt;0.458)
     </p>
   </div>
 </div>
@@ -253,12 +255,12 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
   <div class="kpi-card purple">
     <p class="kpi-label">전체 평균 LTV(1일차)</p>
     <p class="kpi-val purple">0.50</p>
-    <span class="kpi-badge">시즌1~6, 80편</span>
+    <span class="kpi-badge">시즌1~6, 86편</span>
   </div>
   <div class="kpi-card teal">
     <p class="kpi-label">S / A 등급(1일차)</p>
-    <p class="kpi-val teal">28편</p>
-    <span class="kpi-badge">S 9 · A 19</span>
+    <p class="kpi-val teal">32편</p>
+    <span class="kpi-badge">S 10 · A 22</span>
   </div>
   <div class="kpi-card amber">
     <p class="kpi-label">7일차 TOP10과 겹침</p>
@@ -275,7 +277,7 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
 <div class="section">
   <div class="card">
     <p class="card-title">1일차 성적이 7일차와 얼마나 달랐나</p>
-    <p class="card-sub">전체 80편 중 1일차 TOP10과 7일차 TOP10이 겹치는 편수: <b style="color:var(--c-text)">5/10</b> — 초반 반응만으로는 최종 순위를 절반도 못 맞춘다는 뜻입니다.</p>
+    <p class="card-sub">전체 86편 중 1일차 TOP10과 7일차 TOP10이 겹치는 편수: <b style="color:var(--c-text)">5/10</b> — 초반 반응만으로는 최종 순위를 절반도 못 맞춘다는 뜻입니다.</p>
   </div>
 </div>
 
@@ -284,22 +286,22 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
     <p class="card-title">초반엔 저평가, 나중에 뜬 편 (슬로우 스타터)</p>
     <p class="card-sub">1일차 순위 → 7일차 순위 상승폭이 가장 큰 5편</p>
     <ul class="key-list">
-      <li><b>시즌5 5-14 이사랑통역되나요</b> — 1일차 73위 → 7일차 1위 <span style="color:var(--c-teal);font-weight:700">▲ 72</span></li>
-      <li><b>시즌6 6-7 프로젝트 헤일메리</b> — 1일차 41위 → 7일차 4위 <span style="color:var(--c-teal);font-weight:700">▲ 37</span></li>
-      <li><b>시즌5 5-2 짝사랑</b> — 1일차 62위 → 7일차 38위 <span style="color:var(--c-teal);font-weight:700">▲ 24</span></li>
-      <li><b>시즌3 3-12 외계생명체</b> — 1일차 35위 → 7일차 12위 <span style="color:var(--c-teal);font-weight:700">▲ 23</span></li>
-      <li><b>시즌5 5-10 아바타1</b> — 1일차 58위 → 7일차 41위 <span style="color:var(--c-teal);font-weight:700">▲ 17</span></li>
+      <li><b>시즌5 5-14 이사랑통역되나요</b> — 1일차 76위 → 7일차 1위 <span style="color:var(--c-teal);font-weight:700">▲ 75</span></li>
+      <li><b>시즌6 6-7 프로젝트 헤일메리</b> — 1일차 43위 → 7일차 5위 <span style="color:var(--c-teal);font-weight:700">▲ 38</span></li>
+      <li><b>시즌3 3-12 외계생명체</b> — 1일차 37위 → 7일차 13위 <span style="color:var(--c-teal);font-weight:700">▲ 24</span></li>
+      <li><b>시즌5 5-2 짝사랑</b> — 1일차 65위 → 7일차 41위 <span style="color:var(--c-teal);font-weight:700">▲ 24</span></li>
+      <li><b>시즌6 6-23 귀신</b> — 1일차 54위 → 7일차 31위 <span style="color:var(--c-teal);font-weight:700">▲ 23</span></li>
     </ul>
   </div>
   <div class="card">
     <p class="card-title">초반엔 반짝, 오래 못 간 편 (플래시 스타터)</p>
     <p class="card-sub">1일차 순위 → 7일차 순위 하락폭이 가장 큰 5편</p>
     <ul class="key-list">
-      <li><b>시즌6 6-4 리더쉽</b> — 1일차 30위 → 7일차 77위 <span style="color:var(--c-red);font-weight:700">▼ 47</span></li>
-      <li><b>시즌2 2-6 추리</b> — 1일차 6위 → 7일차 30위 <span style="color:var(--c-red);font-weight:700">▼ 24</span></li>
-      <li><b>시즌1 1-9 실수</b> — 1일차 20위 → 7일차 43위 <span style="color:var(--c-red);font-weight:700">▼ 23</span></li>
-      <li><b>시즌2 2-1 첫사랑</b> — 1일차 12위 → 7일차 34위 <span style="color:var(--c-red);font-weight:700">▼ 22</span></li>
-      <li><b>시즌4 4-14 제임스 카메론</b> — 1일차 47위 → 7일차 68위 <span style="color:var(--c-red);font-weight:700">▼ 21</span></li>
+      <li><b>시즌6 6-4 리더쉽</b> — 1일차 32위 → 7일차 79위 <span style="color:var(--c-red);font-weight:700">▼ 47</span></li>
+      <li><b>시즌2 2-6 추리</b> — 1일차 7위 → 7일차 33위 <span style="color:var(--c-red);font-weight:700">▼ 26</span></li>
+      <li><b>시즌1 1-9 실수</b> — 1일차 22위 → 7일차 46위 <span style="color:var(--c-red);font-weight:700">▼ 24</span></li>
+      <li><b>시즌2 2-1 첫사랑</b> — 1일차 14위 → 7일차 37위 <span style="color:var(--c-red);font-weight:700">▼ 23</span></li>
+      <li><b>시즌4 4-14 제임스 카메론</b> — 1일차 49위 → 7일차 71위 <span style="color:var(--c-red);font-weight:700">▼ 22</span></li>
     </ul>
   </div>
 </div>
@@ -321,7 +323,7 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
     <div class="chart-box" style="height:220px"><canvas id="c_season_grade_1d"></canvas></div>
   </div>
   <div class="card">
-    <p class="card-title">전체 80편 LTV Score 분포(1일차)</p>
+    <p class="card-title">전체 86편 LTV Score 분포(1일차)</p>
     <p class="card-sub">발행 순 · 색상 = 시즌</p>
     <div class="chart-box" style="height:220px"><canvas id="c_all_dist_1d"></canvas></div>
   </div>
@@ -333,7 +335,7 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
     <p class="section-desc">LTV Score(1일차) 내림차순 · VR 결측 구간은 참고용으로 표시</p>
   </div>
   <div class="filter-tabs">
-    <button class="ftab on" onclick="filterSeason('1d','all',this)">전체 80편</button>
+    <button class="ftab on" onclick="filterSeason('1d','all',this)">전체 86편</button>
     <button class="ftab" onclick="filterSeason('1d','위클리 시즌1',this)">시즌1</button>
     <button class="ftab" onclick="filterSeason('1d','위클리 시즌2',this)">시즌2</button>
     <button class="ftab" onclick="filterSeason('1d','위클리 시즌3',this)">시즌3</button>
@@ -377,12 +379,119 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
       <b>평균시청시간을 6번째 항목으로 추가했습니다</b> — 위클리 66편에서 "1일차 지표가 최종(7일차) 점수를 얼마나 잘 예측하는지" 확인해보니 참여도(r=0.79)에 이어 평균시청시간(r=0.61, 기존 공식엔 없던 지표)이 자연유입·조회율보다도 예측력이 높았습니다. 반면 CTR은 1일차엔 대부분 구독자 피드 노출이라 편차가 거의 없어(r=0.09) 원래 비중만큼의 변별력을 보여주지 못했지만, 이번엔 시청시간의 몫(예측력 비례 23.6%)만 새로 반영하고 나머지 5개 항목은 <b>7일차와 동일한 상대비율(30:25:20:15:10)을 유지</b>한 채 축소했습니다 — CTR·참여도 비중 자체를 조정하는 건 별도 논의 사항입니다. &nbsp;|&nbsp;
       <b>알고리즘/검색 보너스는 1일차에 적용하지 않습니다</b> — 원본 엑셀의 트래픽소스(추천·검색 유입) 데이터가 7일차 기준으로만 존재해서 1일차 원본값 자체가 없습니다. &nbsp;|&nbsp;
       7일차 벤치마크(채널 전체 검증 기준)를 그대로 쓰면 1일차엔 자연유입비중·조회율·CTR이 구조적으로 훨씬 높게 나와(예: 자연유입비중 1일차 평균 54.1% vs 7일차 벤치마크 31.7%) 거의 전 편이 만점 처리되므로, <b>위클리 자체 66편(VR·참여도 결측 없는 시즌1,2,3,4,6)의 1일차 평균으로 벤치마크를 별도 도출</b>했습니다: 자연유입비중 54.1%·자연유입 44,929회·조회율 29.3%·CTR 4.5%·참여도 1,477건·구독자 165명·평균시청시간 14.71분. &nbsp;|&nbsp;
-      등급도 이 리포트 내 1일차 점수의 <b>백분위 상대평가</b>: S 상위 10.0%(≥0.642) · A 다음 25.0%(≥0.581) · B+ 다음 30.0%(≥0.446) · B 다음 25.0%(≥0.358) · C 하위 10.0%(&lt;0.358)
+      등급도 이 리포트 내 1일차 점수의 <b>백분위 상대평가</b>: S 상위 10.0%(≥0.642) · A 다음 25.0%(≥0.579) · B+ 다음 30.0%(≥0.439) · B 다음 25.0%(≥0.346) · C 하위 10.0%(&lt;0.346)
     </p>
   </div>
 </div>
 
 </div><!-- /panel-1d -->
+
+<div class="panel" id="panel-28d">
+
+<div class="warn-banner">※ 시즌6 6-27 크리스토퍼놀란, 시즌6 6-26 스파이더맨, 시즌6 6-25 고민상담소은(는) 발행 후 28일 데이터가 아직 안 쌓여 이번 집계에서 제외했습니다(3편, 다음 갱신 때 28일이 지나면 자동 포함).</div>
+
+<div class="kpi-strip">
+  <div class="kpi-card purple">
+    <p class="kpi-label">전체 평균 LTV(28일차)</p>
+    <p class="kpi-val purple">0.50</p>
+    <span class="kpi-badge">28일차 도달 83편</span>
+  </div>
+  <div class="kpi-card teal">
+    <p class="kpi-label">S / A 등급(28일차)</p>
+    <p class="kpi-val teal">30편</p>
+    <span class="kpi-badge">S 9 · A 21</span>
+  </div>
+  <div class="kpi-card amber">
+    <p class="kpi-label">최고 평균 시즌(28일차)</p>
+    <p class="kpi-val amber">시즌3</p>
+    <span class="kpi-badge">평균 0.59</span>
+  </div>
+  <div class="kpi-card red">
+    <p class="kpi-label">최저 평균 시즌(28일차)</p>
+    <p class="kpi-val red">시즌6</p>
+    <span class="kpi-badge">평균 0.42</span>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-header">
+    <p class="section-title">시즌별 평균 LTV 추이(28일차)</p>
+    <p class="section-desc">시즌1→6, 막대 위 숫자 = 해당 시즌 평균 LTV Score(28일차) · 28일차 미도달편 제외</p>
+  </div>
+  <div class="card">
+    <div class="chart-box" style="height:240px"><canvas id="c_season_avg_28d"></canvas></div>
+  </div>
+</div>
+
+<div class="grid-2 section">
+  <div class="card">
+    <p class="card-title">시즌별 등급 분포(28일차)</p>
+    <p class="card-sub">스택 바 · S/A/B+/B/C</p>
+    <div class="chart-box" style="height:220px"><canvas id="c_season_grade_28d"></canvas></div>
+  </div>
+  <div class="card">
+    <p class="card-title">전체 83편 LTV Score 분포(28일차)</p>
+    <p class="card-sub">발행 순 · 색상 = 시즌</p>
+    <div class="chart-box" style="height:220px"><canvas id="c_all_dist_28d"></canvas></div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-header">
+    <p class="section-title">전체 순위표(28일차)</p>
+    <p class="section-desc">LTV Score(28일차) 내림차순 · 28일차 미도달 3편 제외</p>
+  </div>
+  <div class="filter-tabs">
+    <button class="ftab on" onclick="filterSeason('28d','all',this)">전체 83편</button>
+    <button class="ftab" onclick="filterSeason('28d','위클리 시즌1',this)">시즌1</button>
+    <button class="ftab" onclick="filterSeason('28d','위클리 시즌2',this)">시즌2</button>
+    <button class="ftab" onclick="filterSeason('28d','위클리 시즌3',this)">시즌3</button>
+    <button class="ftab" onclick="filterSeason('28d','위클리 시즌4',this)">시즌4</button>
+    <button class="ftab" onclick="filterSeason('28d','위클리 시즌5',this)">시즌5</button>
+    <button class="ftab" onclick="filterSeason('28d','위클리 시즌6',this)">시즌6</button>
+  </div>
+  <div class="card" style="padding:0">
+    <div class="tbl-scroll">
+      <table class="ep-tbl">
+        <thead><tr>
+          <th>#</th><th>에피소드</th><th>시즌</th><th>발행일</th>
+          <th class="r">LTV Score(28일차)</th><th>등급</th>
+          <th class="r">자연유입율</th><th class="r">자연유입(회)</th><th class="r">조회율(VR)</th><th class="r">CTR</th><th class="r">구독자</th><th class="r">장기성장(28d/7d)</th>
+        </tr></thead>
+        <tbody id="rankBody_28d"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="formula-box">
+    <div class="formula-line">
+      <span class="v">LTV Score(28일차)</span> = <span class="v">N</span><sub>자연유입</sub>×<span class="w">0.30</span>
+       + <span class="v">N</span><sub>조회율</sub>×<span class="w">0.25</span>
+       + <span class="v">N</span><sub>CTR</sub>×<span class="w">0.20</span>
+       + <span class="v">N</span><sub>참여도</sub>×<span class="w">0.15</span>
+       + <span class="v">N</span><sub>구독자</sub>×<span class="w">0.10</span>
+    </div>
+    <div class="formula-line">
+      &nbsp;&nbsp;<span class="plus">+ 롱테일 보너스 +0.05</span>
+      <span class="cmt">&nbsp;&nbsp;(자연유입 비중 ≥ 42.9%, 28일차 위클리 자체 평균)</span>
+    </div>
+    <div class="formula-line">
+      &nbsp;&nbsp;<span class="minus">− 복합 패널티 (조회율&lt;12.6% · 구독↓&lt;0 · CTR&lt;1.7% 각 −0.025)</span>
+      <span class="cmt">&nbsp;&nbsp;최대 −0.05</span>
+    </div>
+    <p class="formula-note">
+      <b>가중치는 7일차와 동일한 상대비율(30:25:20:15:10)을 그대로 유지</b>합니다 — 1일차 재조정 근거(CTR이 구독자 피드 노출 편중으로 변별력을 잃음, r=0.09)가 28일차엔 해당하지 않습니다. &nbsp;|&nbsp;
+      <b>알고리즘/검색 보너스는 28일차에도 적용하지 않습니다</b> — 트래픽소스 원본 데이터가 7일차 스냅샷에만 존재해 1일차와 동일한 이유입니다. &nbsp;|&nbsp;
+      7일차 벤치마크를 그대로 쓰면 시간이 지나며 계속 누적되는 구조상 거의 전 편이 만점 처리되므로(예: 자연유입비중 28일차 평균 42.9% vs 7일차 벤치마크 31.7%, 나머지 지표도 전부 7일차보다 높음), <b>28일차 도달 83편(결측 없음)의 평균으로 벤치마크를 별도 도출</b>했습니다: 자연유입비중 42.9%·자연유입 146,658회·조회율 25.3%·CTR 3.4%·참여도 3,306건·구독자 612명·시청시간 11.8분. &nbsp;|&nbsp;
+      등급도 이 리포트 내 28일차 점수의 <b>백분위 상대평가(28일차 도달편 83편 기준)</b>: S 상위 10.0%(≥0.722) · A 다음 25.0%(≥0.543) · B+ 다음 30.0%(≥0.432) · B 다음 25.0%(≥0.341) · C 하위 10.0%(&lt;0.341) &nbsp;|&nbsp;
+      28일차 미도달 3편(최근 발행분)은 이번 집계에서 제외되며, 다음 갱신 때 28일이 지나면 자동으로 포함됩니다.
+    </p>
+  </div>
+</div>
+
+</div><!-- /panel-28d -->
 
 <div class="panel" id="panel-cat">
 
@@ -390,12 +499,12 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
   <div class="kpi-card purple">
     <p class="kpi-label">카테고리 구성</p>
     <p class="kpi-val purple">6개</p>
-    <span class="kpi-badge">전체 80편 태깅</span>
+    <span class="kpi-badge">전체 86편 태깅</span>
   </div>
   <div class="kpi-card teal">
     <p class="kpi-label">최고 평균 카테고리(7일차)</p>
-    <p class="kpi-val teal">인생·감정</p>
-    <span class="kpi-badge">평균 0.69 · 18편</span>
+    <p class="kpi-val teal">장르·트로프</p>
+    <span class="kpi-badge">평균 0.69 · 20편</span>
   </div>
   <div class="kpi-card red">
     <p class="kpi-label">최저 평균 카테고리(7일차)</p>
@@ -405,7 +514,7 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
   <div class="kpi-card amber">
     <p class="kpi-label">가장 롱테일한 카테고리</p>
     <p class="kpi-val amber">영화·인물</p>
-    <span class="kpi-badge">장기성장지수 평균 ×1.25</span>
+    <span class="kpi-badge">장기성장지수 평균 ×1.28</span>
   </div>
 </div>
 
@@ -466,25 +575,25 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
         <tbody>
           <tr>
               <td class="l"><span class="season-tag" style="background:#60A5FA22;color:#60A5FA">영화·인물</span></td>
-              <td>12편</td>
-              <td>0.625</td>
-              <td>0.414</td>
-              <td>×1.25</td>
+              <td>15편</td>
+              <td>0.635</td>
+              <td>0.438</td>
+              <td>×1.28</td>
               <td class="l">시즌5 5-14 이사랑통역되나요 <span class="ep-num">(0.966)</span></td>
             </tr>
           <tr>
               <td class="l"><span class="season-tag" style="background:#9F8FF722;color:#9F8FF7">장르·트로프</span></td>
-              <td>19편</td>
+              <td>20편</td>
               <td>0.687</td>
-              <td>0.552</td>
+              <td>0.547</td>
               <td>×1.22</td>
               <td class="l">시즌3 3-2 오컬트 <span class="ep-num">(0.835)</span></td>
             </tr>
           <tr>
               <td class="l"><span class="season-tag" style="background:#F472B622;color:#F472B6">인생·감정</span></td>
-              <td>18편</td>
-              <td>0.690</td>
-              <td>0.536</td>
+              <td>20편</td>
+              <td>0.663</td>
+              <td>0.510</td>
               <td>×1.22</td>
               <td class="l">시즌3 3-3 중독 <span class="ep-num">(0.931)</span></td>
             </tr>
@@ -524,7 +633,7 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
     <p class="section-desc">각 카테고리에 어떤 회차가 편성됐는지 · 카테고리 → 발행 순 정렬</p>
   </div>
   <div class="filter-tabs">
-    <button class="ftab on" onclick="filterCategory('all',this)">전체 80편</button>
+    <button class="ftab on" onclick="filterCategory('all',this)">전체 86편</button>
     <button class="ftab" onclick="filterCategory('영화·인물',this)">영화·인물</button>
     <button class="ftab" onclick="filterCategory('장르·트로프',this)">장르·트로프</button>
     <button class="ftab" onclick="filterCategory('인생·감정',this)">인생·감정</button>
@@ -556,14 +665,14 @@ html.light .theme-btn{box-shadow:0 2px 12px rgba(0,0,0,.12);}
       <b style="color:var(--c-text)">산출 방법</b> — 원본 엑셀의 views_7d·views_28d 컬럼(발행일 기준 경과일 스냅샷이라 편마다 실제 캘린더 날짜는 다름)을 <span class="cmt" style="font-family:'SF Mono','Fira Code',monospace">views_28d ÷ views_7d</span>로 그대로 나눈 원배율입니다. LTV Score처럼 벤치마크 대비 정규화(N)하거나 가중치를 곱하는 과정이 없고, "얼마나 더 늘었나"를 있는 그대로 보여주는 게 목적이라 별도 등급·백분위 구간도 적용하지 않았습니다.<br><br>
       <b style="color:var(--c-text)">집계대기 처리</b> — 발행일로부터 28일이 아직 지나지 않은 편은 views_28d가 0(또는 결측)으로 들어와 있어 계산 자체가 불가능합니다. 이런 편은 "집계대기"로 별도 표시하고 아래 평균·순위 계산에서는 제외합니다(현재 3편).<br><br>
       <b style="color:var(--c-text)">LTV Score 공식에는 반영하지 않는 이유</b> — 최근 발행 편일수록 아직 28일이 안 지나 결측일 확률이 높은 지표라, 정식 점수 공식에 그대로 넣으면 신작이 구조적으로 불리해집니다. 그래서 점수·등급과는 완전히 분리해 참고용 배지로만 별도 운영합니다.<br><br>
-      <b style="color:var(--c-text)">현재 분포</b> — 집계 완료 77편(전체 80편 중 집계대기 3편 제외) 기준 평균 <b style="color:var(--c-text)">×1.19</b>, 최저 ×1.03(거의 추가 성장 없음)부터 최고 ×1.64(TOP1, 아래 목록 참고)까지 분포합니다.
+      <b style="color:var(--c-text)">현재 분포</b> — 집계 완료 83편(전체 86편 중 집계대기 3편 제외) 기준 평균 <b style="color:var(--c-text)">×1.20</b>, 최저 ×1.03(거의 추가 성장 없음)부터 최고 ×2.24(TOP1, 아래 목록 참고)까지 분포합니다.
     </p>
     <ul class="key-list">
+      <li><b>시즌6 6-19 스티븐스필버그</b> — 7일차 대비 28일차 조회수 <span style="color:var(--c-teal);font-weight:700">×2.24</span></li>
       <li><b>시즌6 6-7 프로젝트 헤일메리</b> — 7일차 대비 28일차 조회수 <span style="color:var(--c-teal);font-weight:700">×1.64</span></li>
       <li><b>시즌6 6-15 마이클 잭슨</b> — 7일차 대비 28일차 조회수 <span style="color:var(--c-teal);font-weight:700">×1.58</span></li>
       <li><b>시즌1 1-7 멸종</b> — 7일차 대비 28일차 조회수 <span style="color:var(--c-teal);font-weight:700">×1.52</span></li>
       <li><b>시즌3 3-12 외계생명체</b> — 7일차 대비 28일차 조회수 <span style="color:var(--c-teal);font-weight:700">×1.46</span></li>
-      <li><b>시즌1 1-10 질투</b> — 7일차 대비 28일차 조회수 <span style="color:var(--c-teal);font-weight:700">×1.45</span></li>
     </ul>
   </div>
 </div>
@@ -607,7 +716,7 @@ const DATA={ '7d':[
   {season:'위클리 시즌3',num:'3-7',title:'기적',pub:'2025-03-21',v2:0.732,grade:'A',natPct:33.9,natAbs:91060,vr:25.7,vrMissing:false,ctr:4.6,sub:344,views:268485,eng:2758},
   {season:'위클리 시즌3',num:'3-8',title:'선생님',pub:'2025-03-28',v2:0.595,grade:'B+',natPct:26.2,natAbs:73674,vr:29.3,vrMissing:false,ctr:4.7,sub:132,views:281223,eng:2067},
   {season:'위클리 시즌3',num:'3-9',title:'거짓말',pub:'2025-04-04',v2:0.865,grade:'S',natPct:49.1,natAbs:157296,vr:28.7,vrMissing:false,ctr:4.0,sub:402,views:320246,eng:3823},
-  {season:'위클리 시즌3',num:'3-10',title:'엄마',pub:'2025-04-11',v2:0.588,grade:'B',natPct:28.8,natAbs:78116,vr:29.6,vrMissing:false,ctr:4.3,sub:122,views:271453,eng:1910},
+  {season:'위클리 시즌3',num:'3-10',title:'엄마',pub:'2025-04-11',v2:0.588,grade:'B+',natPct:28.8,natAbs:78116,vr:29.6,vrMissing:false,ctr:4.3,sub:122,views:271453,eng:1910},
   {season:'위클리 시즌3',num:'3-11',title:'변신',pub:'2025-04-18',v2:0.682,grade:'B+',natPct:32.6,natAbs:85330,vr:30.7,vrMissing:false,ctr:4.6,sub:172,views:261692,eng:2060},
   {season:'위클리 시즌3',num:'3-12',title:'외계생명체',pub:'2025-04-25',v2:0.791,grade:'A',natPct:35.3,natAbs:132906,vr:29.6,vrMissing:false,ctr:3.2,sub:561,views:376266,eng:3246},
   {season:'위클리 시즌4',num:'4-1',title:'흑역사',pub:'2025-06-06',v2:0.687,grade:'B+',natPct:36.6,natAbs:76709,vr:32.6,vrMissing:false,ctr:3.6,sub:204,views:209503,eng:2567},
@@ -636,16 +745,16 @@ const DATA={ '7d':[
   {season:'위클리 시즌5',num:'5-10',title:'아바타1',pub:'2025-12-19',v2:0.636,grade:'B+',natPct:26.8,natAbs:119666,vr:11.4,vrMissing:false,ctr:3.9,sub:391,views:446823,eng:3842},
   {season:'위클리 시즌5',num:'5-11',title:'아바타2',pub:'2025-12-26',v2:0.312,grade:'C',natPct:10.8,natAbs:32239,vr:12.7,vrMissing:false,ctr:2.9,sub:60,views:297361,eng:1227},
   {season:'위클리 시즌5',num:'5-12',title:'봉준호',pub:'2026-01-02',v2:0.541,grade:'B',natPct:22.3,natAbs:95501,vr:21.7,vrMissing:false,ctr:3.5,sub:125,views:428676,eng:2258},
-  {season:'위클리 시즌5',num:'5-13',title:'토이스토리',pub:'2026-01-09',v2:0.464,grade:'C',natPct:17.8,natAbs:75303,vr:20.2,vrMissing:false,ctr:3.2,sub:37,views:422958,eng:2133},
+  {season:'위클리 시즌5',num:'5-13',title:'토이스토리',pub:'2026-01-09',v2:0.464,grade:'B',natPct:17.8,natAbs:75303,vr:20.2,vrMissing:false,ctr:3.2,sub:37,views:422958,eng:2133},
   {season:'위클리 시즌5',num:'5-14',title:'이사랑통역되나요',pub:'2026-01-16',v2:0.966,grade:'S',natPct:46.0,natAbs:275688,vr:20.5,vrMissing:false,ctr:5.7,sub:591,views:599864,eng:6671},
   {season:'위클리 시즌6',num:'6-1',title:'행운',pub:'2026-02-06',v2:0.649,grade:'B+',natPct:28.0,natAbs:99686,vr:20.9,vrMissing:false,ctr:3.9,sub:382,views:356582,eng:3111},
   {season:'위클리 시즌6',num:'6-2',title:'루머',pub:'2026-02-13',v2:0.59,grade:'B+',natPct:31.3,natAbs:107245,vr:16.6,vrMissing:false,ctr:3.5,sub:345,views:342601,eng:2268},
-  {season:'위클리 시즌6',num:'6-3',title:'이탈리아',pub:'2026-02-20',v2:0.48,grade:'C',natPct:26.9,natAbs:88681,vr:15.6,vrMissing:false,ctr:3.4,sub:125,views:329615,eng:1913},
+  {season:'위클리 시즌6',num:'6-3',title:'이탈리아',pub:'2026-02-20',v2:0.48,grade:'B',natPct:26.9,natAbs:88681,vr:15.6,vrMissing:false,ctr:3.4,sub:125,views:329615,eng:1913},
   {season:'위클리 시즌6',num:'6-4',title:'리더쉽',pub:'2026-02-27',v2:0.452,grade:'C',natPct:22.9,natAbs:77674,vr:15.6,vrMissing:false,ctr:3.5,sub:91,views:338522,eng:1797},
   {season:'위클리 시즌6',num:'6-5',title:'야구',pub:'2026-03-06',v2:0.329,grade:'C',natPct:17.3,natAbs:47706,vr:12.1,vrMissing:false,ctr:3.0,sub:20,views:275107,eng:1077},
   {season:'위클리 시즌6',num:'6-6',title:'본능',pub:'2026-03-13',v2:0.568,grade:'B',natPct:32.6,natAbs:94195,vr:16.4,vrMissing:false,ctr:4.2,sub:96,views:288714,eng:2142},
   {season:'위클리 시즌6',num:'6-7',title:'프로젝트 헤일메리',pub:'2026-03-20',v2:0.891,grade:'S',natPct:45.2,natAbs:219055,vr:17.0,vrMissing:false,ctr:3.8,sub:740,views:485109,eng:6071},
-  {season:'위클리 시즌6',num:'6-8',title:'부동산',pub:'2026-03-27',v2:0.458,grade:'C',natPct:26.8,natAbs:83115,vr:15.3,vrMissing:false,ctr:3.6,sub:82,views:309760,eng:1732},
+  {season:'위클리 시즌6',num:'6-8',title:'부동산',pub:'2026-03-27',v2:0.458,grade:'B',natPct:26.8,natAbs:83115,vr:15.3,vrMissing:false,ctr:3.6,sub:82,views:309760,eng:1732},
   {season:'위클리 시즌6',num:'6-9',title:'죽음',pub:'2026-04-03',v2:0.723,grade:'A',natPct:35.3,natAbs:140003,vr:20.7,vrMissing:false,ctr:3.7,sub:260,views:396845,eng:3118},
   {season:'위클리 시즌6',num:'6-10',title:'신분',pub:'2026-04-10',v2:0.536,grade:'B',natPct:28.0,natAbs:104834,vr:19.2,vrMissing:false,ctr:3.9,sub:111,views:374738,eng:1949},
   {season:'위클리 시즌6',num:'6-11',title:'호기심',pub:'2026-04-17',v2:0.632,grade:'B+',natPct:32.3,natAbs:115668,vr:19.0,vrMissing:false,ctr:3.9,sub:148,views:358321,eng:2572},
@@ -657,8 +766,14 @@ const DATA={ '7d':[
   {season:'위클리 시즌6',num:'6-17',title:'다이어트',pub:'2026-05-29',v2:0.531,grade:'B',natPct:34.9,natAbs:67523,vr:22.7,vrMissing:false,ctr:3.5,sub:57,views:193649,eng:1614},
   {season:'위클리 시즌6',num:'6-18',title:'프랑스',pub:'2026-06-05',v2:0.537,grade:'B',natPct:34.8,natAbs:67858,vr:21.7,vrMissing:false,ctr:3.9,sub:43,views:194844,eng:1753},
   {season:'위클리 시즌6',num:'6-19',title:'스티븐스필버그',pub:'2026-06-12',v2:0.538,grade:'B',natPct:29.5,natAbs:92815,vr:14.9,vrMissing:false,ctr:4.0,sub:156,views:314156,eng:2384},
-  {season:'위클리 시즌6',num:'6-20',title:'뮤지컬1',pub:'2026-06-19',v2:0.498,grade:'C',natPct:34.5,natAbs:70066,vr:19.3,vrMissing:false,ctr:3.4,sub:59,views:203137,eng:1332},
-  {season:'위클리 시즌6',num:'6-21',title:'뮤지컬2',pub:'2026-06-26',v2:0.397,grade:'C',natPct:18.7,natAbs:47456,vr:17.8,vrMissing:false,ctr:3.5,sub:44,views:253104,eng:1361}
+  {season:'위클리 시즌6',num:'6-20',title:'뮤지컬1',pub:'2026-06-19',v2:0.408,grade:'C',natPct:20.0,natAbs:46575,vr:19.3,vrMissing:false,ctr:3.4,sub:59,views:232973,eng:1332},
+  {season:'위클리 시즌6',num:'6-21',title:'뮤지컬2',pub:'2026-06-26',v2:0.397,grade:'C',natPct:18.7,natAbs:47456,vr:17.8,vrMissing:false,ctr:3.5,sub:44,views:253104,eng:1361},
+  {season:'위클리 시즌6',num:'6-22',title:'시선',pub:'2026-07-03',v2:0.437,grade:'C',natPct:26.1,natAbs:58058,vr:18.4,vrMissing:false,ctr:3.7,sub:69,views:222265,eng:1431},
+  {season:'위클리 시즌6',num:'6-23',title:'귀신',pub:'2026-07-10',v2:0.689,grade:'A',natPct:42.1,natAbs:137457,vr:20.3,vrMissing:false,ctr:4.4,sub:140,views:326626,eng:2669},
+  {season:'위클리 시즌6',num:'6-24',title:'티모시 살라메',pub:'2026-07-17',v2:0.439,grade:'C',natPct:29.0,natAbs:63980,vr:19.2,vrMissing:false,ctr:3.5,sub:55,views:220631,eng:1322},
+  {season:'위클리 시즌6',num:'6-25',title:'고민상담소',pub:'2026-07-24',v2:0.402,grade:'C',natPct:18.2,natAbs:47624,vr:15.5,vrMissing:false,ctr:4.0,sub:60,views:261596,eng:1410},
+  {season:'위클리 시즌6',num:'6-26',title:'스파이더맨',pub:'2026-07-31',v2:0.784,grade:'A',natPct:44.1,natAbs:155524,vr:22.6,vrMissing:false,ctr:2.7,sub:304,views:353056,eng:4243},
+  {season:'위클리 시즌6',num:'6-27',title:'크리스토퍼놀란',pub:'2026-08-07',v2:0.893,grade:'S',natPct:51.5,natAbs:239441,vr:16.3,vrMissing:false,ctr:4.2,sub:785,views:464577,eng:6903}
 ], '1d':[
   {season:'위클리 시즌1',num:'1-1',title:'꿈',pub:'2024-07-19',v2:0.417,grade:'B',natPct:15.8,natAbs:16934,vr:28.4,vrMissing:false,ctr:4.1,sub:506,views:107193,eng:1021},
   {season:'위클리 시즌1',num:'1-2',title:'미식',pub:'2024-07-26',v2:0.358,grade:'B',natPct:8.8,natAbs:13501,vr:33.1,vrMissing:false,ctr:4.8,sub:120,views:154057,eng:603},
@@ -717,17 +832,17 @@ const DATA={ '7d':[
   {season:'위클리 시즌5',num:'5-10',title:'아바타1',pub:'2025-12-19',v2:0.421,grade:'B',natPct:46.0,natAbs:57387,vr:13.9,vrMissing:false,ctr:4.3,sub:164,views:124728,eng:2153},
   {season:'위클리 시즌5',num:'5-11',title:'아바타2',pub:'2025-12-26',v2:0.201,grade:'C',natPct:17.0,natAbs:19207,vr:14.0,vrMissing:false,ctr:3.2,sub:21,views:113223,eng:811},
   {season:'위클리 시즌5',num:'5-12',title:'봉준호',pub:'2026-01-02',v2:0.409,grade:'B',natPct:28.4,natAbs:49181,vr:23.5,vrMissing:false,ctr:4.2,sub:77,views:173131,eng:1475},
-  {season:'위클리 시즌5',num:'5-13',title:'토이스토리',pub:'2026-01-09',v2:0.346,grade:'C',natPct:20.1,natAbs:41628,vr:23.0,vrMissing:false,ctr:4.3,sub:17,views:207549,eng:1325},
-  {season:'위클리 시즌5',num:'5-14',title:'이사랑통역되나요',pub:'2026-01-16',v2:0.354,grade:'C',natPct:22.2,natAbs:35859,vr:20.6,vrMissing:false,ctr:6.1,sub:57,views:161547,eng:1552},
-  {season:'위클리 시즌6',num:'6-1',title:'행운',pub:'2026-02-06',v2:0.439,grade:'B',natPct:51.2,natAbs:43857,vr:26.6,vrMissing:false,ctr:3.6,sub:86,views:85629,eng:1865},
+  {season:'위클리 시즌5',num:'5-13',title:'토이스토리',pub:'2026-01-09',v2:0.346,grade:'B',natPct:20.1,natAbs:41628,vr:23.0,vrMissing:false,ctr:4.3,sub:17,views:207549,eng:1325},
+  {season:'위클리 시즌5',num:'5-14',title:'이사랑통역되나요',pub:'2026-01-16',v2:0.354,grade:'B',natPct:22.2,natAbs:35859,vr:20.6,vrMissing:false,ctr:6.1,sub:57,views:161547,eng:1552},
+  {season:'위클리 시즌6',num:'6-1',title:'행운',pub:'2026-02-06',v2:0.439,grade:'B+',natPct:51.2,natAbs:43857,vr:26.6,vrMissing:false,ctr:3.6,sub:86,views:85629,eng:1865},
   {season:'위클리 시즌6',num:'6-2',title:'루머',pub:'2026-02-13',v2:0.474,grade:'B+',natPct:52.7,natAbs:61966,vr:21.9,vrMissing:false,ctr:4.1,sub:191,views:117492,eng:1514},
   {season:'위클리 시즌6',num:'6-3',title:'이탈리아',pub:'2026-02-20',v2:0.382,grade:'B',natPct:37.0,natAbs:45257,vr:20.3,vrMissing:false,ctr:3.9,sub:53,views:122171,eng:1231},
-  {season:'위클리 시즌6',num:'6-4',title:'리더쉽',pub:'2026-02-27',v2:0.579,grade:'B+',natPct:100.0,natAbs:45271,vr:41.3,vrMissing:false,ctr:4.2,sub:56,views:45271,eng:1220},
+  {season:'위클리 시즌6',num:'6-4',title:'리더쉽',pub:'2026-02-27',v2:0.579,grade:'A',natPct:100.0,natAbs:45271,vr:41.3,vrMissing:false,ctr:4.2,sub:56,views:45271,eng:1220},
   {season:'위클리 시즌6',num:'6-5',title:'야구',pub:'2026-03-06',v2:0.205,grade:'C',natPct:18.6,natAbs:25443,vr:11.4,vrMissing:false,ctr:3.6,sub:4,views:136979,eng:662},
   {season:'위클리 시즌6',num:'6-6',title:'본능',pub:'2026-03-13',v2:0.398,grade:'B',natPct:33.2,natAbs:48040,vr:17.9,vrMissing:false,ctr:5.3,sub:41,views:144679,eng:1416},
   {season:'위클리 시즌6',num:'6-7',title:'프로젝트 헤일메리',pub:'2026-03-20',v2:0.506,grade:'B+',natPct:39.4,natAbs:70469,vr:15.2,vrMissing:false,ctr:4.4,sub:201,views:178940,eng:2447},
-  {season:'위클리 시즌6',num:'6-8',title:'부동산',pub:'2026-03-27',v2:0.349,grade:'C',natPct:33.2,natAbs:41574,vr:16.1,vrMissing:false,ctr:4.3,sub:32,views:125253,eng:1083},
-  {season:'위클리 시즌6',num:'6-9',title:'죽음',pub:'2026-04-03',v2:0.579,grade:'B+',natPct:56.1,natAbs:64429,vr:24.7,vrMissing:false,ctr:4.7,sub:100,views:114756,eng:1923},
+  {season:'위클리 시즌6',num:'6-8',title:'부동산',pub:'2026-03-27',v2:0.349,grade:'B',natPct:33.2,natAbs:41574,vr:16.1,vrMissing:false,ctr:4.3,sub:32,views:125253,eng:1083},
+  {season:'위클리 시즌6',num:'6-9',title:'죽음',pub:'2026-04-03',v2:0.579,grade:'A',natPct:56.1,natAbs:64429,vr:24.7,vrMissing:false,ctr:4.7,sub:100,views:114756,eng:1923},
   {season:'위클리 시즌6',num:'6-10',title:'신분',pub:'2026-04-10',v2:0.424,grade:'B',natPct:42.5,natAbs:55947,vr:21.9,vrMissing:false,ctr:4.4,sub:59,views:131542,eng:1283},
   {season:'위클리 시즌6',num:'6-11',title:'호기심',pub:'2026-04-17',v2:0.472,grade:'B+',natPct:51.8,natAbs:57593,vr:23.2,vrMissing:false,ctr:4.6,sub:57,views:111163,eng:1605},
   {season:'위클리 시즌6',num:'6-12',title:'실패',pub:'2026-04-24',v2:0.416,grade:'B',natPct:47.0,natAbs:45952,vr:23.2,vrMissing:false,ctr:4.9,sub:29,views:97794,eng:1470},
@@ -738,13 +853,104 @@ const DATA={ '7d':[
   {season:'위클리 시즌6',num:'6-17',title:'다이어트',pub:'2026-05-29',v2:0.375,grade:'B',natPct:40.0,natAbs:35885,vr:24.3,vrMissing:false,ctr:4.3,sub:19,views:89709,eng:1061},
   {season:'위클리 시즌6',num:'6-18',title:'프랑스',pub:'2026-06-05',v2:0.436,grade:'B',natPct:37.2,natAbs:35960,vr:30.3,vrMissing:false,ctr:4.7,sub:27,views:96663,eng:1223},
   {season:'위클리 시즌6',num:'6-19',title:'스티븐스필버그',pub:'2026-06-12',v2:0.314,grade:'C',natPct:28.2,natAbs:31207,vr:15.9,vrMissing:false,ctr:4.0,sub:34,views:110825,eng:1046},
-  {season:'위클리 시즌6',num:'6-20',title:'뮤지컬1',pub:'2026-06-19',v2:0.335,grade:'C',natPct:40.0,natAbs:22811,vr:29.2,vrMissing:false,ctr:4.2,sub:31,views:57045,eng:784},
-  {season:'위클리 시즌6',num:'6-21',title:'뮤지컬2',pub:'2026-06-26',v2:0.267,grade:'C',natPct:23.2,natAbs:25949,vr:15.7,vrMissing:false,ctr:4.3,sub:18,views:111635,eng:865}
+  {season:'위클리 시즌6',num:'6-20',title:'뮤지컬1',pub:'2026-06-19',v2:0.299,grade:'C',natPct:21.8,natAbs:22739,vr:29.2,vrMissing:false,ctr:4.2,sub:31,views:104239,eng:784},
+  {season:'위클리 시즌6',num:'6-21',title:'뮤지컬2',pub:'2026-06-26',v2:0.267,grade:'C',natPct:23.2,natAbs:25949,vr:15.7,vrMissing:false,ctr:4.3,sub:18,views:111635,eng:865},
+  {season:'위클리 시즌6',num:'6-22',title:'시선',pub:'2026-07-03',v2:0.283,grade:'C',natPct:24.1,natAbs:24014,vr:15.8,vrMissing:false,ctr:4.8,sub:24,views:99788,eng:782},
+  {season:'위클리 시즌6',num:'6-23',title:'귀신',pub:'2026-07-10',v2:0.451,grade:'B+',natPct:41.8,natAbs:58795,vr:21.8,vrMissing:false,ctr:5.5,sub:55,views:140510,eng:1554},
+  {season:'위클리 시즌6',num:'6-24',title:'티모시 살라메',pub:'2026-07-17',v2:0.341,grade:'C',natPct:32.9,natAbs:34321,vr:23.0,vrMissing:false,ctr:3.8,sub:11,views:104281,eng:885},
+  {season:'위클리 시즌6',num:'6-25',title:'고민상담소',pub:'2026-07-24',v2:0.268,grade:'C',natPct:24.4,natAbs:28780,vr:13.6,vrMissing:false,ctr:4.5,sub:45,views:117950,eng:1046},
+  {season:'위클리 시즌6',num:'6-26',title:'스파이더맨',pub:'2026-07-31',v2:0.625,grade:'A',natPct:59.7,natAbs:63477,vr:33.4,vrMissing:false,ctr:3.5,sub:132,views:106347,eng:2374},
+  {season:'위클리 시즌6',num:'6-27',title:'크리스토퍼놀란',pub:'2026-08-07',v2:0.665,grade:'S',natPct:62.6,natAbs:145297,vr:16.0,vrMissing:false,ctr:4.5,sub:455,views:232103,eng:4435}
+], '28d':[
+  {season:'위클리 시즌1',num:'1-1',title:'꿈',pub:'2024-07-19',v2:0.494,grade:'B+',natPct:24.5,natAbs:69657,vr:26.5,vrMissing:false,ctr:3.5,sub:1795,views:284016,eng:3825},
+  {season:'위클리 시즌1',num:'1-2',title:'미식',pub:'2024-07-26',v2:0.411,grade:'B',natPct:17.4,natAbs:49221,vr:32.8,vrMissing:false,ctr:4.1,sub:495,views:283481,eng:1555},
+  {season:'위클리 시즌1',num:'1-3',title:'노화',pub:'2024-08-02',v2:0.548,grade:'A',natPct:32.5,natAbs:104177,vr:29.4,vrMissing:false,ctr:4.6,sub:1361,views:320965,eng:2625},
+  {season:'위클리 시즌1',num:'1-4',title:'여행',pub:'2024-08-09',v2:0.454,grade:'B+',natPct:22.7,natAbs:65792,vr:31.9,vrMissing:false,ctr:4.0,sub:757,views:289779,eng:2104},
+  {season:'위클리 시즌1',num:'1-5',title:'올드머니',pub:'2024-08-16',v2:0.596,grade:'A',natPct:48.4,natAbs:123836,vr:29.5,vrMissing:false,ctr:3.3,sub:2336,views:255866,eng:3146},
+  {season:'위클리 시즌1',num:'1-6',title:'판타지',pub:'2024-08-23',v2:0.618,grade:'A',natPct:41.0,natAbs:204551,vr:29.2,vrMissing:false,ctr:2.5,sub:2020,views:498309,eng:4281},
+  {season:'위클리 시즌1',num:'1-7',title:'멸종',pub:'2024-08-30',v2:0.666,grade:'A',natPct:65.6,natAbs:181297,vr:32.8,vrMissing:false,ctr:3.4,sub:1287,views:276213,eng:2808},
+  {season:'위클리 시즌1',num:'1-8',title:'빌런',pub:'2024-09-06',v2:0.625,grade:'A',natPct:51.5,natAbs:160778,vr:30.6,vrMissing:false,ctr:2.6,sub:1246,views:312207,eng:3569},
+  {season:'위클리 시즌1',num:'1-9',title:'실수',pub:'2024-09-13',v2:0.539,grade:'B+',natPct:39.1,natAbs:129631,vr:28.8,vrMissing:false,ctr:3.1,sub:1277,views:331422,eng:3145},
+  {season:'위클리 시즌1',num:'1-10',title:'질투',pub:'2024-09-20',v2:0.815,grade:'S',natPct:66.0,natAbs:361316,vr:24.6,vrMissing:false,ctr:3.4,sub:5026,views:547259,eng:9957},
+  {season:'위클리 시즌2',num:'2-1',title:'첫사랑',pub:'2024-10-25',v2:0.543,grade:'A',natPct:37.8,natAbs:121182,vr:28.3,vrMissing:false,ctr:3.4,sub:942,views:320449,eng:4435},
+  {season:'위클리 시즌2',num:'2-2',title:'스파이',pub:'2024-11-01',v2:0.416,grade:'B',natPct:29.7,natAbs:118856,vr:25.9,vrMissing:false,ctr:2.9,sub:364,views:400544,eng:2308},
+  {season:'위클리 시즌2',num:'2-3',title:'천국과지옥',pub:'2024-11-08',v2:0.459,grade:'B+',natPct:34.0,natAbs:126772,vr:24.7,vrMissing:false,ctr:3.2,sub:563,views:372595,eng:2966},
+  {season:'위클리 시즌2',num:'2-4',title:'코미디',pub:'2024-11-15',v2:0.593,grade:'A',natPct:52.3,natAbs:164276,vr:26.4,vrMissing:false,ctr:3.7,sub:722,views:314386,eng:3283},
+  {season:'위클리 시즌2',num:'2-5',title:'중세시대',pub:'2024-11-22',v2:0.587,grade:'A',natPct:55.9,natAbs:153534,vr:31.4,vrMissing:false,ctr:2.9,sub:807,views:274899,eng:3058},
+  {season:'위클리 시즌2',num:'2-6',title:'추리',pub:'2024-11-29',v2:0.586,grade:'A',natPct:51.5,natAbs:159751,vr:29.6,vrMissing:false,ctr:2.9,sub:728,views:310069,eng:3508},
+  {season:'위클리 시즌2',num:'2-7',title:'무술',pub:'2024-12-06',v2:0.409,grade:'B',natPct:41.7,natAbs:109268,vr:26.4,vrMissing:false,ctr:2.9,sub:346,views:262284,eng:2157},
+  {season:'위클리 시즌2',num:'2-8',title:'SF',pub:'2024-12-13',v2:0.567,grade:'A',natPct:43.7,natAbs:155110,vr:29.2,vrMissing:false,ctr:2.7,sub:587,views:355115,eng:3808},
+  {season:'위클리 시즌2',num:'2-9',title:'크리스마스',pub:'2024-12-20',v2:0.494,grade:'B+',natPct:37.0,natAbs:117730,vr:27.9,vrMissing:false,ctr:3.8,sub:460,views:318257,eng:3751},
+  {season:'위클리 시즌3',num:'3-1',title:'친구',pub:'2025-02-07',v2:0.736,grade:'S',natPct:58.7,natAbs:215123,vr:26.9,vrMissing:false,ctr:3.1,sub:1851,views:366546,eng:6283},
+  {season:'위클리 시즌3',num:'3-2',title:'오컬트',pub:'2025-02-14',v2:0.701,grade:'A',natPct:56.6,natAbs:197693,vr:31.8,vrMissing:false,ctr:3.3,sub:1125,views:348973,eng:4504},
+  {season:'위클리 시즌3',num:'3-3',title:'중독',pub:'2025-02-21',v2:0.79,grade:'S',natPct:70.6,natAbs:281562,vr:28.3,vrMissing:false,ctr:3.8,sub:1463,views:398778,eng:4574},
+  {season:'위클리 시즌3',num:'3-4',title:'자유와억압',pub:'2025-02-28',v2:0.577,grade:'A',natPct:46.0,natAbs:141653,vr:32.2,vrMissing:false,ctr:3.7,sub:467,views:308155,eng:3235},
+  {season:'위클리 시즌3',num:'3-5',title:'공주와왕자',pub:'2025-03-07',v2:0.546,grade:'A',natPct:47.0,natAbs:143210,vr:28.6,vrMissing:false,ctr:3.0,sub:428,views:304400,eng:3655},
+  {season:'위클리 시즌3',num:'3-6',title:'예언',pub:'2025-03-14',v2:0.482,grade:'B+',natPct:38.4,natAbs:140896,vr:28.8,vrMissing:false,ctr:3.8,sub:290,views:367293,eng:2650},
+  {season:'위클리 시즌3',num:'3-7',title:'기적',pub:'2025-03-21',v2:0.502,grade:'B+',natPct:39.5,natAbs:120453,vr:26.0,vrMissing:false,ctr:4.4,sub:548,views:305147,eng:3241},
+  {season:'위클리 시즌3',num:'3-8',title:'선생님',pub:'2025-03-28',v2:0.439,grade:'B+',natPct:31.0,natAbs:93384,vr:29.9,vrMissing:false,ctr:4.3,sub:172,views:300933,eng:2323},
+  {season:'위클리 시즌3',num:'3-9',title:'거짓말',pub:'2025-04-04',v2:0.636,grade:'A',natPct:49.0,natAbs:196125,vr:26.8,vrMissing:false,ctr:3.7,sub:570,views:400367,eng:4389},
+  {season:'위클리 시즌3',num:'3-10',title:'엄마',pub:'2025-04-11',v2:0.432,grade:'B+',natPct:33.7,natAbs:99217,vr:29.6,vrMissing:false,ctr:4.0,sub:166,views:294829,eng:2229},
+  {season:'위클리 시즌3',num:'3-11',title:'변신',pub:'2025-04-18',v2:0.46,grade:'B+',natPct:35.9,natAbs:104413,vr:30.8,vrMissing:false,ctr:4.3,sub:229,views:290919,eng:2325},
+  {season:'위클리 시즌3',num:'3-12',title:'외계생명체',pub:'2025-04-25',v2:0.774,grade:'S',natPct:55.6,natAbs:305959,vr:29.9,vrMissing:false,ctr:2.4,sub:1935,views:549796,eng:5080},
+  {season:'위클리 시즌4',num:'4-1',title:'흑역사',pub:'2025-06-06',v2:0.458,grade:'B+',natPct:40.0,natAbs:97262,vr:32.7,vrMissing:false,ctr:3.6,sub:252,views:243171,eng:2907},
+  {season:'위클리 시즌4',num:'4-2',title:'복수',pub:'2025-06-13',v2:0.494,grade:'B+',natPct:48.8,natAbs:102698,vr:35.1,vrMissing:false,ctr:3.3,sub:158,views:210356,eng:2121},
+  {season:'위클리 시즌4',num:'4-3',title:'고양이',pub:'2025-06-20',v2:0.451,grade:'B+',natPct:43.0,natAbs:91886,vr:25.3,vrMissing:false,ctr:3.7,sub:145,views:213545,eng:2407},
+  {season:'위클리 시즌4',num:'4-4',title:'정치와권력',pub:'2025-06-27',v2:0.409,grade:'B',natPct:41.7,natAbs:88779,vr:27.4,vrMissing:false,ctr:3.9,sub:149,views:213055,eng:2195},
+  {season:'위클리 시즌4',num:'4-5',title:'좀비',pub:'2025-07-04',v2:0.408,grade:'B',natPct:33.4,natAbs:102501,vr:28.0,vrMissing:false,ctr:3.2,sub:188,views:306922,eng:2372},
+  {season:'위클리 시즌4',num:'4-6',title:'천재',pub:'2025-07-11',v2:0.513,grade:'B+',natPct:59.8,natAbs:115806,vr:36.1,vrMissing:false,ctr:3.1,sub:154,views:193751,eng:2310},
+  {season:'위클리 시즌4',num:'4-7',title:'금기',pub:'2025-07-18',v2:0.567,grade:'A',natPct:60.6,natAbs:141668,vr:32.4,vrMissing:false,ctr:3.6,sub:400,views:233783,eng:2888},
+  {season:'위클리 시즌4',num:'4-8',title:'디지털게임',pub:'2025-07-25',v2:0.504,grade:'B+',natPct:79.7,natAbs:125781,vr:31.5,vrMissing:false,ctr:2.8,sub:195,views:157852,eng:2479},
+  {season:'위클리 시즌4',num:'4-9',title:'연민과증오',pub:'2025-08-01',v2:0.494,grade:'B+',natPct:60.8,natAbs:113048,vr:30.3,vrMissing:false,ctr:3.3,sub:192,views:185940,eng:2463},
+  {season:'위클리 시즌4',num:'4-10',title:'우울',pub:'2025-08-08',v2:0.617,grade:'A',natPct:71.9,natAbs:174760,vr:28.0,vrMissing:false,ctr:2.9,sub:807,views:243000,eng:4011},
+  {season:'위클리 시즌4',num:'4-11',title:'습관',pub:'2025-08-15',v2:0.776,grade:'S',natPct:78.0,natAbs:238314,vr:27.2,vrMissing:false,ctr:3.2,sub:2759,views:305487,eng:7024},
+  {season:'위클리 시즌4',num:'4-12',title:'잠',pub:'2025-08-22',v2:0.519,grade:'B+',natPct:70.5,natAbs:136506,vr:28.8,vrMissing:false,ctr:3.0,sub:230,views:193674,eng:3017},
+  {season:'위클리 시즌4',num:'4-13',title:'에일리언',pub:'2025-09-05',v2:0.742,grade:'S',natPct:66.0,natAbs:298726,vr:25.3,vrMissing:false,ctr:1.9,sub:1076,views:452332,eng:5716},
+  {season:'위클리 시즌4',num:'4-14',title:'제임스 카메론',pub:'2025-09-18',v2:0.389,grade:'B',natPct:49.0,natAbs:86996,vr:23.6,vrMissing:false,ctr:2.3,sub:148,views:177581,eng:1983},
+  {season:'위클리 시즌5',num:'5-1',title:'돈',pub:'2025-10-17',v2:0.458,grade:'B+',natPct:41.9,natAbs:116112,vr:30.4,vrMissing:false,ctr:3.3,sub:251,views:277358,eng:2977},
+  {season:'위클리 시즌5',num:'5-2',title:'짝사랑',pub:'2025-10-24',v2:0.441,grade:'B+',natPct:38.7,natAbs:136835,vr:24.8,vrMissing:false,ctr:3.4,sub:249,views:353431,eng:2573},
+  {season:'위클리 시즌5',num:'5-3',title:'사이코패스',pub:'2025-10-31',v2:0.647,grade:'A',natPct:62.3,natAbs:225661,vr:28.8,vrMissing:false,ctr:2.5,sub:724,views:362379,eng:4053},
+  {season:'위클리 시즌5',num:'5-4',title:'시간여행',pub:'2025-11-07',v2:0.565,grade:'A',natPct:60.6,natAbs:175651,vr:28.7,vrMissing:false,ctr:2.7,sub:431,views:289844,eng:3305},
+  {season:'위클리 시즌5',num:'5-5',title:'외국어',pub:'2025-11-14',v2:0.582,grade:'A',natPct:57.7,natAbs:167366,vr:27.6,vrMissing:false,ctr:2.9,sub:597,views:289961,eng:3823},
+  {season:'위클리 시즌5',num:'5-6',title:'술',pub:'2025-11-21',v2:0.448,grade:'B+',natPct:23.7,natAbs:129310,vr:29.9,vrMissing:false,ctr:3.5,sub:182,views:545933,eng:2378},
+  {season:'위클리 시즌5',num:'5-7',title:'취미',pub:'2025-11-28',v2:0.403,grade:'B',natPct:36.4,natAbs:100366,vr:22.9,vrMissing:false,ctr:4.0,sub:160,views:275677,eng:2345},
+  {season:'위클리 시즌5',num:'5-8',title:'직장인',pub:'2025-12-05',v2:0.404,grade:'B',natPct:37.5,natAbs:114964,vr:24.5,vrMissing:false,ctr:3.6,sub:121,views:306570,eng:2104},
+  {season:'위클리 시즌5',num:'5-9',title:'기억',pub:'2025-12-12',v2:0.419,grade:'B',natPct:30.6,natAbs:117633,vr:26.4,vrMissing:false,ctr:3.4,sub:167,views:384145,eng:2434},
+  {season:'위클리 시즌5',num:'5-10',title:'아바타1',pub:'2025-12-19',v2:0.48,grade:'B+',natPct:30.7,natAbs:171632,vr:11.8,vrMissing:false,ctr:4.0,sub:609,views:558457,eng:4846},
+  {season:'위클리 시즌5',num:'5-11',title:'아바타2',pub:'2025-12-26',v2:0.229,grade:'C',natPct:13.1,natAbs:39984,vr:13.0,vrMissing:false,ctr:2.8,sub:82,views:305106,eng:1472},
+  {season:'위클리 시즌5',num:'5-12',title:'봉준호',pub:'2026-01-02',v2:0.392,grade:'B',natPct:25.7,natAbs:115971,vr:22.6,vrMissing:false,ctr:3.2,sub:153,views:450838,eng:2528},
+  {season:'위클리 시즌5',num:'5-13',title:'토이스토리',pub:'2026-01-09',v2:0.331,grade:'C',natPct:19.7,natAbs:93434,vr:18.8,vrMissing:false,ctr:2.8,sub:67,views:473374,eng:2518},
+  {season:'위클리 시즌5',num:'5-14',title:'이사랑통역되나요',pub:'2026-01-16',v2:0.833,grade:'S',natPct:57.3,natAbs:435548,vr:21.9,vrMissing:false,ctr:5.4,sub:920,views:759724,eng:10046},
+  {season:'위클리 시즌6',num:'6-1',title:'행운',pub:'2026-02-06',v2:0.499,grade:'B+',natPct:34.7,natAbs:141224,vr:22.4,vrMissing:false,ctr:3.7,sub:596,views:407016,eng:3885},
+  {season:'위클리 시즌6',num:'6-2',title:'루머',pub:'2026-02-13',v2:0.428,grade:'B',natPct:37.0,natAbs:142996,vr:18.5,vrMissing:false,ctr:3.3,sub:423,views:386791,eng:2652},
+  {season:'위클리 시즌6',num:'6-3',title:'이탈리아',pub:'2026-02-20',v2:0.339,grade:'C',natPct:27.5,natAbs:105387,vr:15.1,vrMissing:false,ctr:3.2,sub:144,views:383327,eng:2244},
+  {season:'위클리 시즌6',num:'6-4',title:'리더쉽',pub:'2026-02-27',v2:0.341,grade:'B',natPct:27.5,natAbs:98712,vr:17.1,vrMissing:false,ctr:3.3,sub:136,views:359560,eng:2097},
+  {season:'위클리 시즌6',num:'6-5',title:'야구',pub:'2026-03-06',v2:0.247,grade:'C',natPct:21.7,natAbs:62956,vr:13.0,vrMissing:false,ctr:2.8,sub:54,views:290357,eng:1310},
+  {season:'위클리 시즌6',num:'6-6',title:'본능',pub:'2026-03-13',v2:0.41,grade:'B',natPct:39.6,natAbs:127443,vr:18.3,vrMissing:false,ctr:3.7,sub:181,views:321962,eng:2820},
+  {season:'위클리 시즌6',num:'6-7',title:'프로젝트 헤일메리',pub:'2026-03-20',v2:0.788,grade:'S',natPct:57.0,natAbs:451853,vr:19.2,vrMissing:false,ctr:3.5,sub:1857,views:793411,eng:12186},
+  {season:'위클리 시즌6',num:'6-8',title:'부동산',pub:'2026-03-27',v2:0.366,grade:'B',natPct:34.1,natAbs:117434,vr:16.6,vrMissing:false,ctr:3.4,sub:172,views:344096,eng:2177},
+  {season:'위클리 시즌6',num:'6-9',title:'죽음',pub:'2026-04-03',v2:0.684,grade:'A',natPct:50.7,natAbs:284731,vr:18.3,vrMissing:false,ctr:3.3,sub:674,views:561608,eng:4905},
+  {season:'위클리 시즌6',num:'6-10',title:'신분',pub:'2026-04-10',v2:0.409,grade:'B',natPct:33.6,natAbs:136371,vr:20.6,vrMissing:false,ctr:3.6,sub:144,views:406443,eng:2289},
+  {season:'위클리 시즌6',num:'6-11',title:'호기심',pub:'2026-04-17',v2:0.468,grade:'B+',natPct:40.3,natAbs:164021,vr:20.4,vrMissing:false,ctr:3.5,sub:283,views:406674,eng:3303},
+  {season:'위클리 시즌6',num:'6-12',title:'실패',pub:'2026-04-24',v2:0.398,grade:'B',natPct:36.0,natAbs:121405,vr:18.9,vrMissing:false,ctr:3.6,sub:112,views:337592,eng:2838},
+  {season:'위클리 시즌6',num:'6-13',title:'럭셔리',pub:'2026-05-01',v2:0.455,grade:'B+',natPct:43.0,natAbs:113680,vr:23.7,vrMissing:false,ctr:3.7,sub:157,views:264414,eng:2038},
+  {season:'위클리 시즌6',num:'6-14',title:'디저트',pub:'2026-05-08',v2:0.362,grade:'B',natPct:36.9,natAbs:94645,vr:21.7,vrMissing:false,ctr:3.5,sub:68,views:256432,eng:2004},
+  {season:'위클리 시즌6',num:'6-15',title:'마이클 잭슨',pub:'2026-05-15',v2:0.722,grade:'S',natPct:54.0,natAbs:366917,vr:17.7,vrMissing:false,ctr:2.6,sub:838,views:679993,eng:7112},
+  {season:'위클리 시즌6',num:'6-16',title:'초능력',pub:'2026-05-22',v2:0.341,grade:'B',natPct:36.1,natAbs:83804,vr:22.5,vrMissing:false,ctr:3.4,sub:33,views:231913,eng:1606},
+  {season:'위클리 시즌6',num:'6-17',title:'다이어트',pub:'2026-05-29',v2:0.358,grade:'B',natPct:40.1,natAbs:84562,vr:24.0,vrMissing:false,ctr:3.4,sub:75,views:210688,eng:1800},
+  {season:'위클리 시즌6',num:'6-18',title:'프랑스',pub:'2026-06-05',v2:0.359,grade:'B',natPct:38.6,natAbs:79846,vr:22.2,vrMissing:false,ctr:3.7,sub:84,views:206832,eng:2037},
+  {season:'위클리 시즌6',num:'6-19',title:'스티븐스필버그',pub:'2026-06-12',v2:0.432,grade:'B+',natPct:20.2,natAbs:141830,vr:16.4,vrMissing:false,ctr:4.1,sub:276,views:703572,eng:3052},
+  {season:'위클리 시즌6',num:'6-20',title:'뮤지컬1',pub:'2026-06-19',v2:0.292,grade:'C',natPct:24.2,natAbs:62175,vr:16.9,vrMissing:false,ctr:3.4,sub:74,views:256878,eng:1594},
+  {season:'위클리 시즌6',num:'6-21',title:'뮤지컬2',pub:'2026-06-26',v2:0.292,grade:'C',natPct:22.1,natAbs:58498,vr:18.2,vrMissing:false,ctr:3.3,sub:69,views:264709,eng:1620},
+  {season:'위클리 시즌6',num:'6-22',title:'시선',pub:'2026-07-03',v2:0.328,grade:'C',natPct:31.1,natAbs:80219,vr:18.4,vrMissing:false,ctr:3.4,sub:118,views:257890,eng:1845},
+  {season:'위클리 시즌6',num:'6-23',title:'귀신',pub:'2026-07-10',v2:0.557,grade:'A',natPct:46.3,natAbs:201077,vr:17.8,vrMissing:false,ctr:4.0,sub:258,views:434006,eng:3442},
+  {season:'위클리 시즌6',num:'6-24',title:'티모시 살라메',pub:'2026-07-17',v2:0.321,grade:'C',natPct:33.6,natAbs:79184,vr:19.8,vrMissing:false,ctr:3.3,sub:83,views:235835,eng:1515}
 ] };
 const RANKED={ '7d':[
   {season:'위클리 시즌5',num:'5-14',title:'이사랑통역되나요',pub:'2026-01-16',v2:0.966,grade:'S',natPct:46.0,natAbs:275688,vr:20.5,vrMissing:false,ctr:5.7,sub:591,growth28:1.266},
   {season:'위클리 시즌3',num:'3-3',title:'중독',pub:'2025-02-21',v2:0.931,grade:'S',natPct:62.8,natAbs:197725,vr:28.9,vrMissing:false,ctr:3.9,sub:1093,growth28:1.266},
   {season:'위클리 시즌1',num:'1-10',title:'질투',pub:'2024-09-20',v2:0.913,grade:'S',natPct:50.9,natAbs:192692,vr:24.4,vrMissing:false,ctr:3.9,sub:2526,growth28:1.445},
+  {season:'위클리 시즌6',num:'6-27',title:'크리스토퍼놀란',pub:'2026-08-07',v2:0.893,grade:'S',natPct:51.5,natAbs:239441,vr:16.3,vrMissing:false,ctr:4.2,sub:785,growth28:null},
   {season:'위클리 시즌6',num:'6-7',title:'프로젝트 헤일메리',pub:'2026-03-20',v2:0.891,grade:'S',natPct:45.2,natAbs:219055,vr:17.0,vrMissing:false,ctr:3.8,sub:740,growth28:1.636},
   {season:'위클리 시즌4',num:'4-13',title:'에일리언',pub:'2025-09-05',v2:0.882,grade:'S',natPct:58.5,natAbs:216827,vr:24.5,vrMissing:false,ctr:2.4,sub:780,growth28:1.221},
   {season:'위클리 시즌4',num:'4-11',title:'습관',pub:'2025-08-15',v2:0.881,grade:'S',natPct:69.7,natAbs:154310,vr:27.6,vrMissing:false,ctr:3.5,sub:1469,growth28:1.379},
@@ -754,6 +960,7 @@ const RANKED={ '7d':[
   {season:'위클리 시즌3',num:'3-1',title:'친구',pub:'2025-02-07',v2:0.813,grade:'A',natPct:45.6,natAbs:126751,vr:26.6,vrMissing:false,ctr:3.5,sub:985,growth28:1.318},
   {season:'위클리 시즌5',num:'5-3',title:'사이코패스',pub:'2025-10-31',v2:0.792,grade:'A',natPct:51.8,natAbs:146930,vr:27.7,vrMissing:false,ctr:2.9,sub:372,growth28:1.278},
   {season:'위클리 시즌3',num:'3-12',title:'외계생명체',pub:'2025-04-25',v2:0.791,grade:'A',natPct:35.3,natAbs:132906,vr:29.6,vrMissing:false,ctr:3.2,sub:561,growth28:1.461},
+  {season:'위클리 시즌6',num:'6-26',title:'스파이더맨',pub:'2026-07-31',v2:0.784,grade:'A',natPct:44.1,natAbs:155524,vr:22.6,vrMissing:false,ctr:2.7,sub:304,growth28:null},
   {season:'위클리 시즌4',num:'4-10',title:'우울',pub:'2025-08-08',v2:0.783,grade:'A',natPct:62.6,natAbs:114251,vr:28.1,vrMissing:false,ctr:3.6,sub:372,growth28:1.332},
   {season:'위클리 시즌4',num:'4-7',title:'금기',pub:'2025-07-18',v2:0.75,grade:'A',natPct:54.5,natAbs:102834,vr:33.1,vrMissing:false,ctr:3.9,sub:244,growth28:1.239},
   {season:'위클리 시즌5',num:'5-5',title:'외국어',pub:'2025-11-14',v2:0.75,grade:'A',natPct:50.3,natAbs:123946,vr:26.6,vrMissing:false,ctr:3.1,sub:338,growth28:1.176},
@@ -770,6 +977,7 @@ const RANKED={ '7d':[
   {season:'위클리 시즌1',num:'1-8',title:'빌런',pub:'2024-09-06',v2:0.7,grade:'A',natPct:38.1,natAbs:93327,vr:29.5,vrMissing:false,ctr:2.7,sub:722,growth28:1.276},
   {season:'위클리 시즌3',num:'3-6',title:'예언',pub:'2025-03-14',v2:0.692,grade:'A',natPct:32.9,natAbs:107807,vr:28.2,vrMissing:false,ctr:4.0,sub:192,growth28:1.12},
   {season:'위클리 시즌4',num:'4-12',title:'잠',pub:'2025-08-22',v2:0.692,grade:'A',natPct:67.7,natAbs:101990,vr:29.2,vrMissing:false,ctr:3.1,sub:151,growth28:1.286},
+  {season:'위클리 시즌6',num:'6-23',title:'귀신',pub:'2026-07-10',v2:0.689,grade:'A',natPct:42.1,natAbs:137457,vr:20.3,vrMissing:false,ctr:4.4,sub:140,growth28:1.329},
   {season:'위클리 시즌4',num:'4-1',title:'흑역사',pub:'2025-06-06',v2:0.687,grade:'B+',natPct:36.6,natAbs:76709,vr:32.6,vrMissing:false,ctr:3.6,sub:204,growth28:1.161},
   {season:'위클리 시즌2',num:'2-6',title:'추리',pub:'2024-11-29',v2:0.684,grade:'B+',natPct:40.8,natAbs:103803,vr:29.0,vrMissing:false,ctr:3.4,sub:173,growth28:1.22},
   {season:'위클리 시즌3',num:'3-11',title:'변신',pub:'2025-04-18',v2:0.682,grade:'B+',natPct:32.6,natAbs:85330,vr:30.7,vrMissing:false,ctr:4.6,sub:172,growth28:1.112},
@@ -794,7 +1002,7 @@ const RANKED={ '7d':[
   {season:'위클리 시즌4',num:'4-4',title:'정치와권력',pub:'2025-06-27',v2:0.594,grade:'B+',natPct:37.9,natAbs:65759,vr:26.4,vrMissing:false,ctr:4.2,sub:97,growth28:1.228},
   {season:'위클리 시즌4',num:'4-3',title:'고양이',pub:'2025-06-20',v2:0.59,grade:'B+',natPct:38.0,natAbs:71234,vr:24.5,vrMissing:false,ctr:3.9,sub:106,growth28:1.139},
   {season:'위클리 시즌6',num:'6-2',title:'루머',pub:'2026-02-13',v2:0.59,grade:'B+',natPct:31.3,natAbs:107245,vr:16.6,vrMissing:false,ctr:3.5,sub:345,growth28:1.129},
-  {season:'위클리 시즌3',num:'3-10',title:'엄마',pub:'2025-04-11',v2:0.588,grade:'B',natPct:28.8,natAbs:78116,vr:29.6,vrMissing:false,ctr:4.3,sub:122,growth28:1.086},
+  {season:'위클리 시즌3',num:'3-10',title:'엄마',pub:'2025-04-11',v2:0.588,grade:'B+',natPct:28.8,natAbs:78116,vr:29.6,vrMissing:false,ctr:4.3,sub:122,growth28:1.086},
   {season:'위클리 시즌6',num:'6-13',title:'럭셔리',pub:'2026-05-01',v2:0.579,grade:'B',natPct:36.3,natAbs:86014,vr:22.7,vrMissing:false,ctr:4.0,sub:81,growth28:1.117},
   {season:'위클리 시즌1',num:'1-3',title:'노화',pub:'2024-08-02',v2:0.573,grade:'B',natPct:11.9,natAbs:29158,vr:31.2,vrMissing:false,ctr:5.8,sub:288,growth28:1.305},
   {season:'위클리 시즌6',num:'6-6',title:'본능',pub:'2026-03-13',v2:0.568,grade:'B',natPct:32.6,natAbs:94195,vr:16.4,vrMissing:false,ctr:4.2,sub:96,growth28:1.115},
@@ -804,7 +1012,7 @@ const RANKED={ '7d':[
   {season:'위클리 시즌2',num:'2-2',title:'스파이',pub:'2024-11-01',v2:0.542,grade:'B',natPct:22.3,natAbs:80784,vr:24.8,vrMissing:false,ctr:2.9,sub:228,growth28:1.105},
   {season:'위클리 시즌1',num:'1-4',title:'여행',pub:'2024-08-09',v2:0.541,grade:'B',natPct:10.8,natAbs:27158,vr:31.3,vrMissing:false,ctr:4.9,sub:274,growth28:1.154},
   {season:'위클리 시즌5',num:'5-12',title:'봉준호',pub:'2026-01-02',v2:0.541,grade:'B',natPct:22.3,natAbs:95501,vr:21.7,vrMissing:false,ctr:3.5,sub:125,growth28:1.052},
-  {season:'위클리 시즌6',num:'6-19',title:'스티븐스필버그',pub:'2026-06-12',v2:0.538,grade:'B',natPct:29.5,natAbs:92815,vr:14.9,vrMissing:false,ctr:4.0,sub:156,growth28:null},
+  {season:'위클리 시즌6',num:'6-19',title:'스티븐스필버그',pub:'2026-06-12',v2:0.538,grade:'B',natPct:29.5,natAbs:92815,vr:14.9,vrMissing:false,ctr:4.0,sub:156,growth28:2.24},
   {season:'위클리 시즌6',num:'6-18',title:'프랑스',pub:'2026-06-05',v2:0.537,grade:'B',natPct:34.8,natAbs:67858,vr:21.7,vrMissing:false,ctr:3.9,sub:43,growth28:1.062},
   {season:'위클리 시즌6',num:'6-10',title:'신분',pub:'2026-04-10',v2:0.536,grade:'B',natPct:28.0,natAbs:104834,vr:19.2,vrMissing:false,ctr:3.9,sub:111,growth28:1.085},
   {season:'위클리 시즌6',num:'6-14',title:'디저트',pub:'2026-05-08',v2:0.536,grade:'B',natPct:32.4,natAbs:77435,vr:20.7,vrMissing:false,ctr:3.8,sub:40,growth28:1.072},
@@ -814,18 +1022,22 @@ const RANKED={ '7d':[
   {season:'위클리 시즌1',num:'1-2',title:'미식',pub:'2024-07-26',v2:0.526,grade:'B',natPct:10.6,natAbs:27644,vr:32.5,vrMissing:false,ctr:4.1,sub:281,growth28:1.082},
   {season:'위클리 시즌6',num:'6-12',title:'실패',pub:'2026-04-24',v2:0.512,grade:'B',natPct:30.2,natAbs:93493,vr:17.2,vrMissing:false,ctr:3.9,sub:72,growth28:1.09},
   {season:'위클리 시즌6',num:'6-16',title:'초능력',pub:'2026-05-22',v2:0.511,grade:'B',natPct:32.3,natAbs:70641,vr:21.6,vrMissing:false,ctr:3.5,sub:21,growth28:1.06},
-  {season:'위클리 시즌6',num:'6-20',title:'뮤지컬1',pub:'2026-06-19',v2:0.498,grade:'C',natPct:34.5,natAbs:70066,vr:19.3,vrMissing:false,ctr:3.4,sub:59,growth28:null},
-  {season:'위클리 시즌6',num:'6-3',title:'이탈리아',pub:'2026-02-20',v2:0.48,grade:'C',natPct:26.9,natAbs:88681,vr:15.6,vrMissing:false,ctr:3.4,sub:125,growth28:1.163},
-  {season:'위클리 시즌5',num:'5-13',title:'토이스토리',pub:'2026-01-09',v2:0.464,grade:'C',natPct:17.8,natAbs:75303,vr:20.2,vrMissing:false,ctr:3.2,sub:37,growth28:1.119},
-  {season:'위클리 시즌6',num:'6-8',title:'부동산',pub:'2026-03-27',v2:0.458,grade:'C',natPct:26.8,natAbs:83115,vr:15.3,vrMissing:false,ctr:3.6,sub:82,growth28:1.111},
+  {season:'위클리 시즌6',num:'6-3',title:'이탈리아',pub:'2026-02-20',v2:0.48,grade:'B',natPct:26.9,natAbs:88681,vr:15.6,vrMissing:false,ctr:3.4,sub:125,growth28:1.163},
+  {season:'위클리 시즌5',num:'5-13',title:'토이스토리',pub:'2026-01-09',v2:0.464,grade:'B',natPct:17.8,natAbs:75303,vr:20.2,vrMissing:false,ctr:3.2,sub:37,growth28:1.119},
+  {season:'위클리 시즌6',num:'6-8',title:'부동산',pub:'2026-03-27',v2:0.458,grade:'B',natPct:26.8,natAbs:83115,vr:15.3,vrMissing:false,ctr:3.6,sub:82,growth28:1.111},
   {season:'위클리 시즌6',num:'6-4',title:'리더쉽',pub:'2026-02-27',v2:0.452,grade:'C',natPct:22.9,natAbs:77674,vr:15.6,vrMissing:false,ctr:3.5,sub:91,growth28:1.062},
-  {season:'위클리 시즌6',num:'6-21',title:'뮤지컬2',pub:'2026-06-26',v2:0.397,grade:'C',natPct:18.7,natAbs:47456,vr:17.8,vrMissing:false,ctr:3.5,sub:44,growth28:null},
+  {season:'위클리 시즌6',num:'6-24',title:'티모시 살라메',pub:'2026-07-17',v2:0.439,grade:'C',natPct:29.0,natAbs:63980,vr:19.2,vrMissing:false,ctr:3.5,sub:55,growth28:1.069},
+  {season:'위클리 시즌6',num:'6-22',title:'시선',pub:'2026-07-03',v2:0.437,grade:'C',natPct:26.1,natAbs:58058,vr:18.4,vrMissing:false,ctr:3.7,sub:69,growth28:1.16},
+  {season:'위클리 시즌6',num:'6-20',title:'뮤지컬1',pub:'2026-06-19',v2:0.408,grade:'C',natPct:20.0,natAbs:46575,vr:19.3,vrMissing:false,ctr:3.4,sub:59,growth28:1.103},
+  {season:'위클리 시즌6',num:'6-25',title:'고민상담소',pub:'2026-07-24',v2:0.402,grade:'C',natPct:18.2,natAbs:47624,vr:15.5,vrMissing:false,ctr:4.0,sub:60,growth28:null},
+  {season:'위클리 시즌6',num:'6-21',title:'뮤지컬2',pub:'2026-06-26',v2:0.397,grade:'C',natPct:18.7,natAbs:47456,vr:17.8,vrMissing:false,ctr:3.5,sub:44,growth28:1.046},
   {season:'위클리 시즌6',num:'6-5',title:'야구',pub:'2026-03-06',v2:0.329,grade:'C',natPct:17.3,natAbs:47706,vr:12.1,vrMissing:false,ctr:3.0,sub:20,growth28:1.055},
   {season:'위클리 시즌5',num:'5-11',title:'아바타2',pub:'2025-12-26',v2:0.312,grade:'C',natPct:10.8,natAbs:32239,vr:12.7,vrMissing:false,ctr:2.9,sub:60,growth28:1.026}
 ], '1d':[
   {season:'위클리 시즌3',num:'3-3',title:'중독',pub:'2025-02-21',v2:0.73,grade:'S',natPct:94.7,natAbs:71875,vr:34.2,vrMissing:false,ctr:4.9,sub:381,growth28:1.266},
   {season:'위클리 시즌3',num:'3-9',title:'거짓말',pub:'2025-04-04',v2:0.696,grade:'S',natPct:78.1,natAbs:69643,vr:33.7,vrMissing:false,ctr:5.2,sub:141,growth28:1.25},
   {season:'위클리 시즌4',num:'4-13',title:'에일리언',pub:'2025-09-05',v2:0.693,grade:'S',natPct:57.2,natAbs:72522,vr:26.5,vrMissing:false,ctr:4.3,sub:262,growth28:1.221},
+  {season:'위클리 시즌6',num:'6-27',title:'크리스토퍼놀란',pub:'2026-08-07',v2:0.665,grade:'S',natPct:62.6,natAbs:145297,vr:16.0,vrMissing:false,ctr:4.5,sub:455,growth28:null},
   {season:'위클리 시즌3',num:'3-5',title:'공주와왕자',pub:'2025-03-07',v2:0.664,grade:'S',natPct:88.9,natAbs:56774,vr:39.5,vrMissing:false,ctr:4.4,sub:134,growth28:1.278},
   {season:'위클리 시즌4',num:'4-7',title:'금기',pub:'2025-07-18',v2:0.663,grade:'S',natPct:86.6,natAbs:55272,vr:37.0,vrMissing:false,ctr:5.1,sub:111,growth28:1.239},
   {season:'위클리 시즌2',num:'2-6',title:'추리',pub:'2024-11-29',v2:0.657,grade:'S',natPct:77.5,natAbs:47068,vr:35.9,vrMissing:false,ctr:4.8,sub:398,growth28:1.22},
@@ -834,6 +1046,7 @@ const RANKED={ '7d':[
   {season:'위클리 시즌2',num:'2-9',title:'크리스마스',pub:'2024-12-20',v2:0.642,grade:'S',natPct:79.6,natAbs:48396,vr:36.1,vrMissing:false,ctr:4.8,sub:149,growth28:1.237},
   {season:'위클리 시즌4',num:'4-12',title:'잠',pub:'2025-08-22',v2:0.637,grade:'A',natPct:99.7,natAbs:54811,vr:35.9,vrMissing:false,ctr:3.9,sub:90,growth28:1.286},
   {season:'위클리 시즌4',num:'4-11',title:'습관',pub:'2025-08-15',v2:0.634,grade:'A',natPct:70.8,natAbs:54023,vr:30.5,vrMissing:false,ctr:4.3,sub:250,growth28:1.379},
+  {season:'위클리 시즌6',num:'6-26',title:'스파이더맨',pub:'2026-07-31',v2:0.625,grade:'A',natPct:59.7,natAbs:63477,vr:33.4,vrMissing:false,ctr:3.5,sub:132,growth28:null},
   {season:'위클리 시즌2',num:'2-1',title:'첫사랑',pub:'2024-10-25',v2:0.625,grade:'A',natPct:63.7,natAbs:40104,vr:32.0,vrMissing:false,ctr:4.2,sub:322,growth28:1.163},
   {season:'위클리 시즌2',num:'2-8',title:'SF',pub:'2024-12-13',v2:0.62,grade:'A',natPct:69.4,natAbs:43777,vr:34.7,vrMissing:false,ctr:4.1,sub:228,growth28:1.277},
   {season:'위클리 시즌3',num:'3-2',title:'오컬트',pub:'2025-02-14',v2:0.615,grade:'A',natPct:61.0,natAbs:54324,vr:33.5,vrMissing:false,ctr:4.1,sub:206,growth28:1.204},
@@ -851,8 +1064,8 @@ const RANKED={ '7d':[
   {season:'위클리 시즌3',num:'3-11',title:'변신',pub:'2025-04-18',v2:0.584,grade:'A',natPct:64.3,natAbs:45204,vr:35.6,vrMissing:false,ctr:5.6,sub:59,growth28:1.112},
   {season:'위클리 시즌4',num:'4-8',title:'디지털게임',pub:'2025-07-25',v2:0.584,grade:'A',natPct:93.9,natAbs:53217,vr:34.4,vrMissing:false,ctr:3.8,sub:66,growth28:1.225},
   {season:'위클리 시즌4',num:'4-6',title:'천재',pub:'2025-07-11',v2:0.581,grade:'A',natPct:64.5,natAbs:46100,vr:37.3,vrMissing:false,ctr:4.6,sub:40,growth28:1.195},
-  {season:'위클리 시즌6',num:'6-9',title:'죽음',pub:'2026-04-03',v2:0.579,grade:'B+',natPct:56.1,natAbs:64429,vr:24.7,vrMissing:false,ctr:4.7,sub:100,growth28:1.415},
-  {season:'위클리 시즌6',num:'6-4',title:'리더쉽',pub:'2026-02-27',v2:0.579,grade:'B+',natPct:100.0,natAbs:45271,vr:41.3,vrMissing:false,ctr:4.2,sub:56,growth28:1.062},
+  {season:'위클리 시즌6',num:'6-9',title:'죽음',pub:'2026-04-03',v2:0.579,grade:'A',natPct:56.1,natAbs:64429,vr:24.7,vrMissing:false,ctr:4.7,sub:100,growth28:1.415},
+  {season:'위클리 시즌6',num:'6-4',title:'리더쉽',pub:'2026-02-27',v2:0.579,grade:'A',natPct:100.0,natAbs:45271,vr:41.3,vrMissing:false,ctr:4.2,sub:56,growth28:1.062},
   {season:'위클리 시즌5',num:'5-5',title:'외국어',pub:'2025-11-14',v2:0.577,grade:'B+',natPct:63.0,natAbs:59234,vr:31.4,vrMissing:false,ctr:3.9,sub:124,growth28:1.176},
   {season:'위클리 시즌3',num:'3-8',title:'선생님',pub:'2025-03-28',v2:0.562,grade:'B+',natPct:54.7,natAbs:42376,vr:33.3,vrMissing:false,ctr:5.9,sub:79,growth28:1.07},
   {season:'위클리 시즌4',num:'4-2',title:'복수',pub:'2025-06-13',v2:0.56,grade:'B+',natPct:89.9,natAbs:38462,vr:38.7,vrMissing:false,ctr:4.3,sub:34,growth28:1.149},
@@ -874,8 +1087,9 @@ const RANKED={ '7d':[
   {season:'위클리 시즌5',num:'5-1',title:'돈',pub:'2025-10-17',v2:0.472,grade:'B+',natPct:40.8,natAbs:39943,vr:33.5,vrMissing:false,ctr:4.4,sub:81,growth28:1.127},
   {season:'위클리 시즌6',num:'6-11',title:'호기심',pub:'2026-04-17',v2:0.472,grade:'B+',natPct:51.8,natAbs:57593,vr:23.2,vrMissing:false,ctr:4.6,sub:57,growth28:1.135},
   {season:'위클리 시즌1',num:'1-5',title:'올드머니',pub:'2024-08-16',v2:0.465,grade:'B+',natPct:19.8,natAbs:20983,vr:29.2,vrMissing:false,ctr:5.7,sub:2052,growth28:1.43},
+  {season:'위클리 시즌6',num:'6-23',title:'귀신',pub:'2026-07-10',v2:0.451,grade:'B+',natPct:41.8,natAbs:58795,vr:21.8,vrMissing:false,ctr:5.5,sub:55,growth28:1.329},
   {season:'위클리 시즌5',num:'5-8',title:'직장인',pub:'2025-12-05',v2:0.446,grade:'B+',natPct:42.0,natAbs:52381,vr:27.5,vrMissing:false,ctr:4.9,sub:44,growth28:1.05},
-  {season:'위클리 시즌6',num:'6-1',title:'행운',pub:'2026-02-06',v2:0.439,grade:'B',natPct:51.2,natAbs:43857,vr:26.6,vrMissing:false,ctr:3.6,sub:86,growth28:1.141},
+  {season:'위클리 시즌6',num:'6-1',title:'행운',pub:'2026-02-06',v2:0.439,grade:'B+',natPct:51.2,natAbs:43857,vr:26.6,vrMissing:false,ctr:3.6,sub:86,growth28:1.141},
   {season:'위클리 시즌2',num:'2-2',title:'스파이',pub:'2024-11-01',v2:0.436,grade:'B',natPct:35.3,natAbs:41598,vr:26.5,vrMissing:false,ctr:3.4,sub:101,growth28:1.105},
   {season:'위클리 시즌6',num:'6-18',title:'프랑스',pub:'2026-06-05',v2:0.436,grade:'B',natPct:37.2,natAbs:35960,vr:30.3,vrMissing:false,ctr:4.7,sub:27,growth28:1.062},
   {season:'위클리 시즌5',num:'5-9',title:'기억',pub:'2025-12-12',v2:0.431,grade:'B',natPct:38.3,natAbs:48906,vr:28.7,vrMissing:false,ctr:4.5,sub:50,growth28:1.067},
@@ -895,27 +1109,117 @@ const RANKED={ '7d':[
   {season:'위클리 시즌6',num:'6-17',title:'다이어트',pub:'2026-05-29',v2:0.375,grade:'B',natPct:40.0,natAbs:35885,vr:24.3,vrMissing:false,ctr:4.3,sub:19,growth28:1.088},
   {season:'위클리 시즌6',num:'6-14',title:'디저트',pub:'2026-05-08',v2:0.373,grade:'B',natPct:37.1,natAbs:44397,vr:19.7,vrMissing:false,ctr:4.7,sub:21,growth28:1.072},
   {season:'위클리 시즌1',num:'1-2',title:'미식',pub:'2024-07-26',v2:0.358,grade:'B',natPct:8.8,natAbs:13501,vr:33.1,vrMissing:false,ctr:4.8,sub:120,growth28:1.082},
-  {season:'위클리 시즌5',num:'5-14',title:'이사랑통역되나요',pub:'2026-01-16',v2:0.354,grade:'C',natPct:22.2,natAbs:35859,vr:20.6,vrMissing:false,ctr:6.1,sub:57,growth28:1.266},
-  {season:'위클리 시즌6',num:'6-8',title:'부동산',pub:'2026-03-27',v2:0.349,grade:'C',natPct:33.2,natAbs:41574,vr:16.1,vrMissing:false,ctr:4.3,sub:32,growth28:1.111},
-  {season:'위클리 시즌5',num:'5-13',title:'토이스토리',pub:'2026-01-09',v2:0.346,grade:'C',natPct:20.1,natAbs:41628,vr:23.0,vrMissing:false,ctr:4.3,sub:17,growth28:1.119},
-  {season:'위클리 시즌6',num:'6-20',title:'뮤지컬1',pub:'2026-06-19',v2:0.335,grade:'C',natPct:40.0,natAbs:22811,vr:29.2,vrMissing:false,ctr:4.2,sub:31,growth28:null},
-  {season:'위클리 시즌6',num:'6-19',title:'스티븐스필버그',pub:'2026-06-12',v2:0.314,grade:'C',natPct:28.2,natAbs:31207,vr:15.9,vrMissing:false,ctr:4.0,sub:34,growth28:null},
-  {season:'위클리 시즌6',num:'6-21',title:'뮤지컬2',pub:'2026-06-26',v2:0.267,grade:'C',natPct:23.2,natAbs:25949,vr:15.7,vrMissing:false,ctr:4.3,sub:18,growth28:null},
+  {season:'위클리 시즌5',num:'5-14',title:'이사랑통역되나요',pub:'2026-01-16',v2:0.354,grade:'B',natPct:22.2,natAbs:35859,vr:20.6,vrMissing:false,ctr:6.1,sub:57,growth28:1.266},
+  {season:'위클리 시즌6',num:'6-8',title:'부동산',pub:'2026-03-27',v2:0.349,grade:'B',natPct:33.2,natAbs:41574,vr:16.1,vrMissing:false,ctr:4.3,sub:32,growth28:1.111},
+  {season:'위클리 시즌5',num:'5-13',title:'토이스토리',pub:'2026-01-09',v2:0.346,grade:'B',natPct:20.1,natAbs:41628,vr:23.0,vrMissing:false,ctr:4.3,sub:17,growth28:1.119},
+  {season:'위클리 시즌6',num:'6-24',title:'티모시 살라메',pub:'2026-07-17',v2:0.341,grade:'C',natPct:32.9,natAbs:34321,vr:23.0,vrMissing:false,ctr:3.8,sub:11,growth28:1.069},
+  {season:'위클리 시즌6',num:'6-19',title:'스티븐스필버그',pub:'2026-06-12',v2:0.314,grade:'C',natPct:28.2,natAbs:31207,vr:15.9,vrMissing:false,ctr:4.0,sub:34,growth28:2.24},
+  {season:'위클리 시즌6',num:'6-20',title:'뮤지컬1',pub:'2026-06-19',v2:0.299,grade:'C',natPct:21.8,natAbs:22739,vr:29.2,vrMissing:false,ctr:4.2,sub:31,growth28:1.103},
+  {season:'위클리 시즌6',num:'6-22',title:'시선',pub:'2026-07-03',v2:0.283,grade:'C',natPct:24.1,natAbs:24014,vr:15.8,vrMissing:false,ctr:4.8,sub:24,growth28:1.16},
+  {season:'위클리 시즌6',num:'6-25',title:'고민상담소',pub:'2026-07-24',v2:0.268,grade:'C',natPct:24.4,natAbs:28780,vr:13.6,vrMissing:false,ctr:4.5,sub:45,growth28:null},
+  {season:'위클리 시즌6',num:'6-21',title:'뮤지컬2',pub:'2026-06-26',v2:0.267,grade:'C',natPct:23.2,natAbs:25949,vr:15.7,vrMissing:false,ctr:4.3,sub:18,growth28:1.046},
   {season:'위클리 시즌6',num:'6-5',title:'야구',pub:'2026-03-06',v2:0.205,grade:'C',natPct:18.6,natAbs:25443,vr:11.4,vrMissing:false,ctr:3.6,sub:4,growth28:1.055},
   {season:'위클리 시즌5',num:'5-11',title:'아바타2',pub:'2025-12-26',v2:0.201,grade:'C',natPct:17.0,natAbs:19207,vr:14.0,vrMissing:false,ctr:3.2,sub:21,growth28:1.026}
+], '28d':[
+  {season:'위클리 시즌5',num:'5-14',title:'이사랑통역되나요',pub:'2026-01-16',v2:0.833,grade:'S',natPct:57.3,natAbs:435548,vr:21.9,vrMissing:false,ctr:5.4,sub:920,growth28:1.266},
+  {season:'위클리 시즌1',num:'1-10',title:'질투',pub:'2024-09-20',v2:0.815,grade:'S',natPct:66.0,natAbs:361316,vr:24.6,vrMissing:false,ctr:3.4,sub:5026,growth28:1.445},
+  {season:'위클리 시즌3',num:'3-3',title:'중독',pub:'2025-02-21',v2:0.79,grade:'S',natPct:70.6,natAbs:281562,vr:28.3,vrMissing:false,ctr:3.8,sub:1463,growth28:1.266},
+  {season:'위클리 시즌6',num:'6-7',title:'프로젝트 헤일메리',pub:'2026-03-20',v2:0.788,grade:'S',natPct:57.0,natAbs:451853,vr:19.2,vrMissing:false,ctr:3.5,sub:1857,growth28:1.636},
+  {season:'위클리 시즌4',num:'4-11',title:'습관',pub:'2025-08-15',v2:0.776,grade:'S',natPct:78.0,natAbs:238314,vr:27.2,vrMissing:false,ctr:3.2,sub:2759,growth28:1.379},
+  {season:'위클리 시즌3',num:'3-12',title:'외계생명체',pub:'2025-04-25',v2:0.774,grade:'S',natPct:55.6,natAbs:305959,vr:29.9,vrMissing:false,ctr:2.4,sub:1935,growth28:1.461},
+  {season:'위클리 시즌4',num:'4-13',title:'에일리언',pub:'2025-09-05',v2:0.742,grade:'S',natPct:66.0,natAbs:298726,vr:25.3,vrMissing:false,ctr:1.9,sub:1076,growth28:1.221},
+  {season:'위클리 시즌3',num:'3-1',title:'친구',pub:'2025-02-07',v2:0.736,grade:'S',natPct:58.7,natAbs:215123,vr:26.9,vrMissing:false,ctr:3.1,sub:1851,growth28:1.318},
+  {season:'위클리 시즌6',num:'6-15',title:'마이클 잭슨',pub:'2026-05-15',v2:0.722,grade:'S',natPct:54.0,natAbs:366917,vr:17.7,vrMissing:false,ctr:2.6,sub:838,growth28:1.582},
+  {season:'위클리 시즌3',num:'3-2',title:'오컬트',pub:'2025-02-14',v2:0.701,grade:'A',natPct:56.6,natAbs:197693,vr:31.8,vrMissing:false,ctr:3.3,sub:1125,growth28:1.204},
+  {season:'위클리 시즌6',num:'6-9',title:'죽음',pub:'2026-04-03',v2:0.684,grade:'A',natPct:50.7,natAbs:284731,vr:18.3,vrMissing:false,ctr:3.3,sub:674,growth28:1.415},
+  {season:'위클리 시즌1',num:'1-7',title:'멸종',pub:'2024-08-30',v2:0.666,grade:'A',natPct:65.6,natAbs:181297,vr:32.8,vrMissing:false,ctr:3.4,sub:1287,growth28:1.522},
+  {season:'위클리 시즌5',num:'5-3',title:'사이코패스',pub:'2025-10-31',v2:0.647,grade:'A',natPct:62.3,natAbs:225661,vr:28.8,vrMissing:false,ctr:2.5,sub:724,growth28:1.278},
+  {season:'위클리 시즌3',num:'3-9',title:'거짓말',pub:'2025-04-04',v2:0.636,grade:'A',natPct:49.0,natAbs:196125,vr:26.8,vrMissing:false,ctr:3.7,sub:570,growth28:1.25},
+  {season:'위클리 시즌1',num:'1-8',title:'빌런',pub:'2024-09-06',v2:0.625,grade:'A',natPct:51.5,natAbs:160778,vr:30.6,vrMissing:false,ctr:2.6,sub:1246,growth28:1.276},
+  {season:'위클리 시즌1',num:'1-6',title:'판타지',pub:'2024-08-23',v2:0.618,grade:'A',natPct:41.0,natAbs:204551,vr:29.2,vrMissing:false,ctr:2.5,sub:2020,growth28:1.32},
+  {season:'위클리 시즌4',num:'4-10',title:'우울',pub:'2025-08-08',v2:0.617,grade:'A',natPct:71.9,natAbs:174760,vr:28.0,vrMissing:false,ctr:2.9,sub:807,growth28:1.332},
+  {season:'위클리 시즌1',num:'1-5',title:'올드머니',pub:'2024-08-16',v2:0.596,grade:'A',natPct:48.4,natAbs:123836,vr:29.5,vrMissing:false,ctr:3.3,sub:2336,growth28:1.43},
+  {season:'위클리 시즌2',num:'2-4',title:'코미디',pub:'2024-11-15',v2:0.593,grade:'A',natPct:52.3,natAbs:164276,vr:26.4,vrMissing:false,ctr:3.7,sub:722,growth28:1.19},
+  {season:'위클리 시즌2',num:'2-5',title:'중세시대',pub:'2024-11-22',v2:0.587,grade:'A',natPct:55.9,natAbs:153534,vr:31.4,vrMissing:false,ctr:2.9,sub:807,growth28:1.187},
+  {season:'위클리 시즌2',num:'2-6',title:'추리',pub:'2024-11-29',v2:0.586,grade:'A',natPct:51.5,natAbs:159751,vr:29.6,vrMissing:false,ctr:2.9,sub:728,growth28:1.22},
+  {season:'위클리 시즌5',num:'5-5',title:'외국어',pub:'2025-11-14',v2:0.582,grade:'A',natPct:57.7,natAbs:167366,vr:27.6,vrMissing:false,ctr:2.9,sub:597,growth28:1.176},
+  {season:'위클리 시즌3',num:'3-4',title:'자유와억압',pub:'2025-02-28',v2:0.577,grade:'A',natPct:46.0,natAbs:141653,vr:32.2,vrMissing:false,ctr:3.7,sub:467,growth28:1.171},
+  {season:'위클리 시즌2',num:'2-8',title:'SF',pub:'2024-12-13',v2:0.567,grade:'A',natPct:43.7,natAbs:155110,vr:29.2,vrMissing:false,ctr:2.7,sub:587,growth28:1.277},
+  {season:'위클리 시즌4',num:'4-7',title:'금기',pub:'2025-07-18',v2:0.567,grade:'A',natPct:60.6,natAbs:141668,vr:32.4,vrMissing:false,ctr:3.6,sub:400,growth28:1.239},
+  {season:'위클리 시즌5',num:'5-4',title:'시간여행',pub:'2025-11-07',v2:0.565,grade:'A',natPct:60.6,natAbs:175651,vr:28.7,vrMissing:false,ctr:2.7,sub:431,growth28:1.179},
+  {season:'위클리 시즌6',num:'6-23',title:'귀신',pub:'2026-07-10',v2:0.557,grade:'A',natPct:46.3,natAbs:201077,vr:17.8,vrMissing:false,ctr:4.0,sub:258,growth28:1.329},
+  {season:'위클리 시즌1',num:'1-3',title:'노화',pub:'2024-08-02',v2:0.548,grade:'A',natPct:32.5,natAbs:104177,vr:29.4,vrMissing:false,ctr:4.6,sub:1361,growth28:1.305},
+  {season:'위클리 시즌3',num:'3-5',title:'공주와왕자',pub:'2025-03-07',v2:0.546,grade:'A',natPct:47.0,natAbs:143210,vr:28.6,vrMissing:false,ctr:3.0,sub:428,growth28:1.278},
+  {season:'위클리 시즌2',num:'2-1',title:'첫사랑',pub:'2024-10-25',v2:0.543,grade:'A',natPct:37.8,natAbs:121182,vr:28.3,vrMissing:false,ctr:3.4,sub:942,growth28:1.163},
+  {season:'위클리 시즌1',num:'1-9',title:'실수',pub:'2024-09-13',v2:0.539,grade:'B+',natPct:39.1,natAbs:129631,vr:28.8,vrMissing:false,ctr:3.1,sub:1277,growth28:1.179},
+  {season:'위클리 시즌4',num:'4-12',title:'잠',pub:'2025-08-22',v2:0.519,grade:'B+',natPct:70.5,natAbs:136506,vr:28.8,vrMissing:false,ctr:3.0,sub:230,growth28:1.286},
+  {season:'위클리 시즌4',num:'4-6',title:'천재',pub:'2025-07-11',v2:0.513,grade:'B+',natPct:59.8,natAbs:115806,vr:36.1,vrMissing:false,ctr:3.1,sub:154,growth28:1.195},
+  {season:'위클리 시즌4',num:'4-8',title:'디지털게임',pub:'2025-07-25',v2:0.504,grade:'B+',natPct:79.7,natAbs:125781,vr:31.5,vrMissing:false,ctr:2.8,sub:195,growth28:1.225},
+  {season:'위클리 시즌3',num:'3-7',title:'기적',pub:'2025-03-21',v2:0.502,grade:'B+',natPct:39.5,natAbs:120453,vr:26.0,vrMissing:false,ctr:4.4,sub:548,growth28:1.137},
+  {season:'위클리 시즌6',num:'6-1',title:'행운',pub:'2026-02-06',v2:0.499,grade:'B+',natPct:34.7,natAbs:141224,vr:22.4,vrMissing:false,ctr:3.7,sub:596,growth28:1.141},
+  {season:'위클리 시즌1',num:'1-1',title:'꿈',pub:'2024-07-19',v2:0.494,grade:'B+',natPct:24.5,natAbs:69657,vr:26.5,vrMissing:false,ctr:3.5,sub:1795,growth28:1.101},
+  {season:'위클리 시즌2',num:'2-9',title:'크리스마스',pub:'2024-12-20',v2:0.494,grade:'B+',natPct:37.0,natAbs:117730,vr:27.9,vrMissing:false,ctr:3.8,sub:460,growth28:1.237},
+  {season:'위클리 시즌4',num:'4-2',title:'복수',pub:'2025-06-13',v2:0.494,grade:'B+',natPct:48.8,natAbs:102698,vr:35.1,vrMissing:false,ctr:3.3,sub:158,growth28:1.149},
+  {season:'위클리 시즌4',num:'4-9',title:'연민과증오',pub:'2025-08-01',v2:0.494,grade:'B+',natPct:60.8,natAbs:113048,vr:30.3,vrMissing:false,ctr:3.3,sub:192,growth28:1.191},
+  {season:'위클리 시즌3',num:'3-6',title:'예언',pub:'2025-03-14',v2:0.482,grade:'B+',natPct:38.4,natAbs:140896,vr:28.8,vrMissing:false,ctr:3.8,sub:290,growth28:1.12},
+  {season:'위클리 시즌5',num:'5-10',title:'아바타1',pub:'2025-12-19',v2:0.48,grade:'B+',natPct:30.7,natAbs:171632,vr:11.8,vrMissing:false,ctr:4.0,sub:609,growth28:1.25},
+  {season:'위클리 시즌6',num:'6-11',title:'호기심',pub:'2026-04-17',v2:0.468,grade:'B+',natPct:40.3,natAbs:164021,vr:20.4,vrMissing:false,ctr:3.5,sub:283,growth28:1.135},
+  {season:'위클리 시즌3',num:'3-11',title:'변신',pub:'2025-04-18',v2:0.46,grade:'B+',natPct:35.9,natAbs:104413,vr:30.8,vrMissing:false,ctr:4.3,sub:229,growth28:1.112},
+  {season:'위클리 시즌2',num:'2-3',title:'천국과지옥',pub:'2024-11-08',v2:0.459,grade:'B+',natPct:34.0,natAbs:126772,vr:24.7,vrMissing:false,ctr:3.2,sub:563,growth28:1.158},
+  {season:'위클리 시즌4',num:'4-1',title:'흑역사',pub:'2025-06-06',v2:0.458,grade:'B+',natPct:40.0,natAbs:97262,vr:32.7,vrMissing:false,ctr:3.6,sub:252,growth28:1.161},
+  {season:'위클리 시즌5',num:'5-1',title:'돈',pub:'2025-10-17',v2:0.458,grade:'B+',natPct:41.9,natAbs:116112,vr:30.4,vrMissing:false,ctr:3.3,sub:251,growth28:1.127},
+  {season:'위클리 시즌6',num:'6-13',title:'럭셔리',pub:'2026-05-01',v2:0.455,grade:'B+',natPct:43.0,natAbs:113680,vr:23.7,vrMissing:false,ctr:3.7,sub:157,growth28:1.117},
+  {season:'위클리 시즌1',num:'1-4',title:'여행',pub:'2024-08-09',v2:0.454,grade:'B+',natPct:22.7,natAbs:65792,vr:31.9,vrMissing:false,ctr:4.0,sub:757,growth28:1.154},
+  {season:'위클리 시즌4',num:'4-3',title:'고양이',pub:'2025-06-20',v2:0.451,grade:'B+',natPct:43.0,natAbs:91886,vr:25.3,vrMissing:false,ctr:3.7,sub:145,growth28:1.139},
+  {season:'위클리 시즌5',num:'5-6',title:'술',pub:'2025-11-21',v2:0.448,grade:'B+',natPct:23.7,natAbs:129310,vr:29.9,vrMissing:false,ctr:3.5,sub:182,growth28:1.044},
+  {season:'위클리 시즌5',num:'5-2',title:'짝사랑',pub:'2025-10-24',v2:0.441,grade:'B+',natPct:38.7,natAbs:136835,vr:24.8,vrMissing:false,ctr:3.4,sub:249,growth28:1.091},
+  {season:'위클리 시즌3',num:'3-8',title:'선생님',pub:'2025-03-28',v2:0.439,grade:'B+',natPct:31.0,natAbs:93384,vr:29.9,vrMissing:false,ctr:4.3,sub:172,growth28:1.07},
+  {season:'위클리 시즌3',num:'3-10',title:'엄마',pub:'2025-04-11',v2:0.432,grade:'B+',natPct:33.7,natAbs:99217,vr:29.6,vrMissing:false,ctr:4.0,sub:166,growth28:1.086},
+  {season:'위클리 시즌6',num:'6-19',title:'스티븐스필버그',pub:'2026-06-12',v2:0.432,grade:'B+',natPct:20.2,natAbs:141830,vr:16.4,vrMissing:false,ctr:4.1,sub:276,growth28:2.24},
+  {season:'위클리 시즌6',num:'6-2',title:'루머',pub:'2026-02-13',v2:0.428,grade:'B',natPct:37.0,natAbs:142996,vr:18.5,vrMissing:false,ctr:3.3,sub:423,growth28:1.129},
+  {season:'위클리 시즌5',num:'5-9',title:'기억',pub:'2025-12-12',v2:0.419,grade:'B',natPct:30.6,natAbs:117633,vr:26.4,vrMissing:false,ctr:3.4,sub:167,growth28:1.067},
+  {season:'위클리 시즌2',num:'2-2',title:'스파이',pub:'2024-11-01',v2:0.416,grade:'B',natPct:29.7,natAbs:118856,vr:25.9,vrMissing:false,ctr:2.9,sub:364,growth28:1.105},
+  {season:'위클리 시즌1',num:'1-2',title:'미식',pub:'2024-07-26',v2:0.411,grade:'B',natPct:17.4,natAbs:49221,vr:32.8,vrMissing:false,ctr:4.1,sub:495,growth28:1.082},
+  {season:'위클리 시즌6',num:'6-6',title:'본능',pub:'2026-03-13',v2:0.41,grade:'B',natPct:39.6,natAbs:127443,vr:18.3,vrMissing:false,ctr:3.7,sub:181,growth28:1.115},
+  {season:'위클리 시즌2',num:'2-7',title:'무술',pub:'2024-12-06',v2:0.409,grade:'B',natPct:41.7,natAbs:109268,vr:26.4,vrMissing:false,ctr:2.9,sub:346,growth28:1.19},
+  {season:'위클리 시즌4',num:'4-4',title:'정치와권력',pub:'2025-06-27',v2:0.409,grade:'B',natPct:41.7,natAbs:88779,vr:27.4,vrMissing:false,ctr:3.9,sub:149,growth28:1.228},
+  {season:'위클리 시즌6',num:'6-10',title:'신분',pub:'2026-04-10',v2:0.409,grade:'B',natPct:33.6,natAbs:136371,vr:20.6,vrMissing:false,ctr:3.6,sub:144,growth28:1.085},
+  {season:'위클리 시즌4',num:'4-5',title:'좀비',pub:'2025-07-04',v2:0.408,grade:'B',natPct:33.4,natAbs:102501,vr:28.0,vrMissing:false,ctr:3.2,sub:188,growth28:1.113},
+  {season:'위클리 시즌5',num:'5-8',title:'직장인',pub:'2025-12-05',v2:0.404,grade:'B',natPct:37.5,natAbs:114964,vr:24.5,vrMissing:false,ctr:3.6,sub:121,growth28:1.05},
+  {season:'위클리 시즌5',num:'5-7',title:'취미',pub:'2025-11-28',v2:0.403,grade:'B',natPct:36.4,natAbs:100366,vr:22.9,vrMissing:false,ctr:4.0,sub:160,growth28:1.076},
+  {season:'위클리 시즌6',num:'6-12',title:'실패',pub:'2026-04-24',v2:0.398,grade:'B',natPct:36.0,natAbs:121405,vr:18.9,vrMissing:false,ctr:3.6,sub:112,growth28:1.09},
+  {season:'위클리 시즌5',num:'5-12',title:'봉준호',pub:'2026-01-02',v2:0.392,grade:'B',natPct:25.7,natAbs:115971,vr:22.6,vrMissing:false,ctr:3.2,sub:153,growth28:1.052},
+  {season:'위클리 시즌4',num:'4-14',title:'제임스 카메론',pub:'2025-09-18',v2:0.389,grade:'B',natPct:49.0,natAbs:86996,vr:23.6,vrMissing:false,ctr:2.3,sub:148,growth28:1.099},
+  {season:'위클리 시즌6',num:'6-8',title:'부동산',pub:'2026-03-27',v2:0.366,grade:'B',natPct:34.1,natAbs:117434,vr:16.6,vrMissing:false,ctr:3.4,sub:172,growth28:1.111},
+  {season:'위클리 시즌6',num:'6-14',title:'디저트',pub:'2026-05-08',v2:0.362,grade:'B',natPct:36.9,natAbs:94645,vr:21.7,vrMissing:false,ctr:3.5,sub:68,growth28:1.072},
+  {season:'위클리 시즌6',num:'6-18',title:'프랑스',pub:'2026-06-05',v2:0.359,grade:'B',natPct:38.6,natAbs:79846,vr:22.2,vrMissing:false,ctr:3.7,sub:84,growth28:1.062},
+  {season:'위클리 시즌6',num:'6-17',title:'다이어트',pub:'2026-05-29',v2:0.358,grade:'B',natPct:40.1,natAbs:84562,vr:24.0,vrMissing:false,ctr:3.4,sub:75,growth28:1.088},
+  {season:'위클리 시즌6',num:'6-4',title:'리더쉽',pub:'2026-02-27',v2:0.341,grade:'B',natPct:27.5,natAbs:98712,vr:17.1,vrMissing:false,ctr:3.3,sub:136,growth28:1.062},
+  {season:'위클리 시즌6',num:'6-16',title:'초능력',pub:'2026-05-22',v2:0.341,grade:'B',natPct:36.1,natAbs:83804,vr:22.5,vrMissing:false,ctr:3.4,sub:33,growth28:1.06},
+  {season:'위클리 시즌6',num:'6-3',title:'이탈리아',pub:'2026-02-20',v2:0.339,grade:'C',natPct:27.5,natAbs:105387,vr:15.1,vrMissing:false,ctr:3.2,sub:144,growth28:1.163},
+  {season:'위클리 시즌5',num:'5-13',title:'토이스토리',pub:'2026-01-09',v2:0.331,grade:'C',natPct:19.7,natAbs:93434,vr:18.8,vrMissing:false,ctr:2.8,sub:67,growth28:1.119},
+  {season:'위클리 시즌6',num:'6-22',title:'시선',pub:'2026-07-03',v2:0.328,grade:'C',natPct:31.1,natAbs:80219,vr:18.4,vrMissing:false,ctr:3.4,sub:118,growth28:1.16},
+  {season:'위클리 시즌6',num:'6-24',title:'티모시 살라메',pub:'2026-07-17',v2:0.321,grade:'C',natPct:33.6,natAbs:79184,vr:19.8,vrMissing:false,ctr:3.3,sub:83,growth28:1.069},
+  {season:'위클리 시즌6',num:'6-20',title:'뮤지컬1',pub:'2026-06-19',v2:0.292,grade:'C',natPct:24.2,natAbs:62175,vr:16.9,vrMissing:false,ctr:3.4,sub:74,growth28:1.103},
+  {season:'위클리 시즌6',num:'6-21',title:'뮤지컬2',pub:'2026-06-26',v2:0.292,grade:'C',natPct:22.1,natAbs:58498,vr:18.2,vrMissing:false,ctr:3.3,sub:69,growth28:1.046},
+  {season:'위클리 시즌6',num:'6-5',title:'야구',pub:'2026-03-06',v2:0.247,grade:'C',natPct:21.7,natAbs:62956,vr:13.0,vrMissing:false,ctr:2.8,sub:54,growth28:1.055},
+  {season:'위클리 시즌5',num:'5-11',title:'아바타2',pub:'2025-12-26',v2:0.229,grade:'C',natPct:13.1,natAbs:39984,vr:13.0,vrMissing:false,ctr:2.8,sub:82,growth28:1.026}
 ] };
 const CATEGORY_COLOR={'영화·인물':'#60A5FA','장르·트로프':'#9F8FF7','인생·감정':'#F472B6','사회·문화':'#F5A623','일상·취향':'#3DD68C','관계·가족':'#22D3EE'};
 const CATLIST=[
   {category:'영화·인물',season:'위클리 시즌5',num:'5-14',title:'이사랑통역되나요',pub:'2026-01-16',v2:0.966,grade:'S'},
+  {category:'영화·인물',season:'위클리 시즌6',num:'6-27',title:'크리스토퍼놀란',pub:'2026-08-07',v2:0.893,grade:'S'},
   {category:'영화·인물',season:'위클리 시즌6',num:'6-7',title:'프로젝트 헤일메리',pub:'2026-03-20',v2:0.891,grade:'S'},
   {category:'영화·인물',season:'위클리 시즌4',num:'4-13',title:'에일리언',pub:'2025-09-05',v2:0.882,grade:'S'},
   {category:'영화·인물',season:'위클리 시즌6',num:'6-15',title:'마이클 잭슨',pub:'2026-05-15',v2:0.849,grade:'S'},
+  {category:'영화·인물',season:'위클리 시즌6',num:'6-26',title:'스파이더맨',pub:'2026-07-31',v2:0.784,grade:'A'},
   {category:'영화·인물',season:'위클리 시즌5',num:'5-10',title:'아바타1',pub:'2025-12-19',v2:0.636,grade:'B+'},
   {category:'영화·인물',season:'위클리 시즌5',num:'5-12',title:'봉준호',pub:'2026-01-02',v2:0.541,grade:'B'},
   {category:'영화·인물',season:'위클리 시즌6',num:'6-19',title:'스티븐스필버그',pub:'2026-06-12',v2:0.538,grade:'B'},
   {category:'영화·인물',season:'위클리 시즌4',num:'4-14',title:'제임스 카메론',pub:'2025-09-18',v2:0.531,grade:'B'},
-  {category:'영화·인물',season:'위클리 시즌6',num:'6-20',title:'뮤지컬1',pub:'2026-06-19',v2:0.498,grade:'C'},
-  {category:'영화·인물',season:'위클리 시즌5',num:'5-13',title:'토이스토리',pub:'2026-01-09',v2:0.464,grade:'C'},
+  {category:'영화·인물',season:'위클리 시즌5',num:'5-13',title:'토이스토리',pub:'2026-01-09',v2:0.464,grade:'B'},
+  {category:'영화·인물',season:'위클리 시즌6',num:'6-24',title:'티모시 살라메',pub:'2026-07-17',v2:0.439,grade:'C'},
+  {category:'영화·인물',season:'위클리 시즌6',num:'6-20',title:'뮤지컬1',pub:'2026-06-19',v2:0.408,grade:'C'},
   {category:'영화·인물',season:'위클리 시즌6',num:'6-21',title:'뮤지컬2',pub:'2026-06-26',v2:0.397,grade:'C'},
   {category:'영화·인물',season:'위클리 시즌5',num:'5-11',title:'아바타2',pub:'2025-12-26',v2:0.312,grade:'C'},
   {category:'장르·트로프',season:'위클리 시즌3',num:'3-2',title:'오컬트',pub:'2025-02-14',v2:0.835,grade:'A'},
@@ -929,6 +1233,7 @@ const CATLIST=[
   {category:'장르·트로프',season:'위클리 시즌1',num:'1-7',title:'멸종',pub:'2024-08-30',v2:0.725,grade:'A'},
   {category:'장르·트로프',season:'위클리 시즌1',num:'1-8',title:'빌런',pub:'2024-09-06',v2:0.7,grade:'A'},
   {category:'장르·트로프',season:'위클리 시즌3',num:'3-6',title:'예언',pub:'2025-03-14',v2:0.692,grade:'A'},
+  {category:'장르·트로프',season:'위클리 시즌6',num:'6-23',title:'귀신',pub:'2026-07-10',v2:0.689,grade:'A'},
   {category:'장르·트로프',season:'위클리 시즌2',num:'2-6',title:'추리',pub:'2024-11-29',v2:0.684,grade:'B+'},
   {category:'장르·트로프',season:'위클리 시즌3',num:'3-11',title:'변신',pub:'2025-04-18',v2:0.682,grade:'B+'},
   {category:'장르·트로프',season:'위클리 시즌1',num:'1-6',title:'판타지',pub:'2024-08-23',v2:0.642,grade:'B+'},
@@ -955,6 +1260,8 @@ const CATLIST=[
   {category:'인생·감정',season:'위클리 시즌1',num:'1-1',title:'꿈',pub:'2024-07-19',v2:0.565,grade:'B'},
   {category:'인생·감정',season:'위클리 시즌5',num:'5-9',title:'기억',pub:'2025-12-12',v2:0.544,grade:'B'},
   {category:'인생·감정',season:'위클리 시즌6',num:'6-12',title:'실패',pub:'2026-04-24',v2:0.512,grade:'B'},
+  {category:'인생·감정',season:'위클리 시즌6',num:'6-22',title:'시선',pub:'2026-07-03',v2:0.437,grade:'C'},
+  {category:'인생·감정',season:'위클리 시즌6',num:'6-25',title:'고민상담소',pub:'2026-07-24',v2:0.402,grade:'C'},
   {category:'사회·문화',season:'위클리 시즌4',num:'4-7',title:'금기',pub:'2025-07-18',v2:0.75,grade:'A'},
   {category:'사회·문화',season:'위클리 시즌3',num:'3-4',title:'자유와억압',pub:'2025-02-28',v2:0.745,grade:'A'},
   {category:'사회·문화',season:'위클리 시즌5',num:'5-1',title:'돈',pub:'2025-10-17',v2:0.66,grade:'B+'},
@@ -964,7 +1271,7 @@ const CATLIST=[
   {category:'사회·문화',season:'위클리 시즌6',num:'6-2',title:'루머',pub:'2026-02-13',v2:0.59,grade:'B+'},
   {category:'사회·문화',season:'위클리 시즌6',num:'6-13',title:'럭셔리',pub:'2026-05-01',v2:0.579,grade:'B'},
   {category:'사회·문화',season:'위클리 시즌6',num:'6-10',title:'신분',pub:'2026-04-10',v2:0.536,grade:'B'},
-  {category:'사회·문화',season:'위클리 시즌6',num:'6-8',title:'부동산',pub:'2026-03-27',v2:0.458,grade:'C'},
+  {category:'사회·문화',season:'위클리 시즌6',num:'6-8',title:'부동산',pub:'2026-03-27',v2:0.458,grade:'B'},
   {category:'사회·문화',season:'위클리 시즌6',num:'6-4',title:'리더쉽',pub:'2026-02-27',v2:0.452,grade:'C'},
   {category:'일상·취향',season:'위클리 시즌5',num:'5-5',title:'외국어',pub:'2025-11-14',v2:0.75,grade:'A'},
   {category:'일상·취향',season:'위클리 시즌2',num:'2-9',title:'크리스마스',pub:'2024-12-20',v2:0.722,grade:'A'},
@@ -978,14 +1285,14 @@ const CATLIST=[
   {category:'일상·취향',season:'위클리 시즌5',num:'5-7',title:'취미',pub:'2025-11-28',v2:0.533,grade:'B'},
   {category:'일상·취향',season:'위클리 시즌6',num:'6-17',title:'다이어트',pub:'2026-05-29',v2:0.531,grade:'B'},
   {category:'일상·취향',season:'위클리 시즌1',num:'1-2',title:'미식',pub:'2024-07-26',v2:0.526,grade:'B'},
-  {category:'일상·취향',season:'위클리 시즌6',num:'6-3',title:'이탈리아',pub:'2026-02-20',v2:0.48,grade:'C'},
+  {category:'일상·취향',season:'위클리 시즌6',num:'6-3',title:'이탈리아',pub:'2026-02-20',v2:0.48,grade:'B'},
   {category:'일상·취향',season:'위클리 시즌6',num:'6-5',title:'야구',pub:'2026-03-06',v2:0.329,grade:'C'},
   {category:'관계·가족',season:'위클리 시즌3',num:'3-1',title:'친구',pub:'2025-02-07',v2:0.813,grade:'A'},
   {category:'관계·가족',season:'위클리 시즌3',num:'3-5',title:'공주와왕자',pub:'2025-03-07',v2:0.728,grade:'A'},
   {category:'관계·가족',season:'위클리 시즌2',num:'2-1',title:'첫사랑',pub:'2024-10-25',v2:0.662,grade:'B+'},
   {category:'관계·가족',season:'위클리 시즌5',num:'5-2',title:'짝사랑',pub:'2025-10-24',v2:0.652,grade:'B+'},
   {category:'관계·가족',season:'위클리 시즌3',num:'3-8',title:'선생님',pub:'2025-03-28',v2:0.595,grade:'B+'},
-  {category:'관계·가족',season:'위클리 시즌3',num:'3-10',title:'엄마',pub:'2025-04-11',v2:0.588,grade:'B'}
+  {category:'관계·가족',season:'위클리 시즌3',num:'3-10',title:'엄마',pub:'2025-04-11',v2:0.588,grade:'B+'}
 ];
 
 Chart.defaults.color='#6E6D7A';
@@ -996,7 +1303,7 @@ function sw(id,btn){
   document.getElementById('panel-'+id).classList.add('show');
   document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('on'));
   btn.classList.add('on');
-  document.getElementById('growthGlobalSection').style.display = id==='cat' ? 'none' : '';
+  document.getElementById('growthGlobalSection').style.display = (id==='cat'||id==='28d') ? 'none' : '';
   Object.values(charts).forEach(c=>{ if(c) c.resize(); });
 }
 
@@ -1034,13 +1341,17 @@ function allDistChart(id, tab){
               y:{grid:{color:GRID},ticks:{...TICK,callback:v=>v.toFixed(1)},min:0,max:1}}}});
 }
 
-charts.seasonAvg7d = seasonAvgChart('c_season_avg', ['시즌1','시즌2','시즌3','시즌4','시즌5','시즌6'], [0.64,0.67,0.75,0.687,0.63,0.562], ['#60A5FA','#9F8FF7','#F472B6','#F5A623','#34D399','#22D3EE']);
-charts.seasonGrade7d = seasonGradeChart('c_season_grade', ['시즌1','시즌2','시즌3','시즌4','시즌5','시즌6'], [1,0,2,2,1,2],[2,4,7,3,3,1],[3,4,2,7,5,3],[4,1,1,2,3,9],[0,0,0,0,2,6]);
+charts.seasonAvg7d = seasonAvgChart('c_season_avg', ['시즌1','시즌2','시즌3','시즌4','시즌5','시즌6'], [0.64,0.67,0.75,0.687,0.63,0.569], ['#60A5FA','#9F8FF7','#F472B6','#F5A623','#34D399','#22D3EE']);
+charts.seasonGrade7d = seasonGradeChart('c_season_grade', ['시즌1','시즌2','시즌3','시즌4','시즌5','시즌6'], [1,0,2,2,1,3],[2,4,7,3,3,3],[3,4,3,7,5,3],[4,1,0,2,4,11],[0,0,0,0,1,7]);
 charts.allDist7d = allDistChart('c_all_dist', '7d');
 
-charts.seasonAvg1d = seasonAvgChart('c_season_avg_1d', ['시즌1','시즌2','시즌3','시즌4','시즌5','시즌6'], [0.478,0.581,0.617,0.574,0.44,0.416], ['#60A5FA','#9F8FF7','#F472B6','#F5A623','#34D399','#22D3EE']);
-charts.seasonGrade1d = seasonGradeChart('c_season_grade_1d', ['시즌1','시즌2','시즌3','시즌4','시즌5','시즌6'], [0,2,4,2,0,1],[2,4,5,6,2,0],[4,2,3,6,4,5],[4,1,0,0,5,10],[0,0,0,0,3,5]);
+charts.seasonAvg1d = seasonAvgChart('c_season_avg_1d', ['시즌1','시즌2','시즌3','시즌4','시즌5','시즌6'], [0.478,0.581,0.617,0.574,0.44,0.42], ['#60A5FA','#9F8FF7','#F472B6','#F5A623','#34D399','#22D3EE']);
+charts.seasonGrade1d = seasonGradeChart('c_season_grade_1d', ['시즌1','시즌2','시즌3','시즌4','시즌5','시즌6'], [0,2,4,2,0,2],[2,4,5,6,2,3],[4,2,3,6,4,5],[4,1,0,0,7,10],[0,0,0,0,1,7]);
 charts.allDist1d = allDistChart('c_all_dist_1d', '1d');
+
+charts.seasonAvg28d = seasonAvgChart('c_season_avg_28d', ['시즌1','시즌2','시즌3','시즌4','시즌5','시즌6'], [0.577,0.517,0.59,0.524,0.474,0.425], ['#60A5FA','#9F8FF7','#F472B6','#F5A623','#34D399','#22D3EE']);
+charts.seasonGrade28d = seasonGradeChart('c_season_grade_28d', ['시즌1','시즌2','시즌3','시즌4','시즌5','시즌6'], [1,0,3,2,1,2],[5,5,4,2,3,2],[3,2,5,7,4,4],[1,2,0,3,4,10],[0,0,0,0,2,6]);
+charts.allDist28d = allDistChart('c_all_dist_28d', '28d');
 
 function catAvgChart(id, labels, avg7d, avg1d, colors){
   return new Chart(document.getElementById(id),{type:'bar',
@@ -1085,21 +1396,21 @@ function seasonCatChart(id, labels, datasets){
               y:{stacked:true,grid:{color:GRID},ticks:{...TICK,callback:v=>v+'%'},min:0,max:100}}}});
 }
 
-charts.catAvg = catAvgChart('c_cat_avg', ['영화·인물','장르·트로프','인생·감정','사회·문화','일상·취향','관계·가족'], [0.625,0.687,0.69,0.598,0.576,0.673], [0.414,0.552,0.536,0.489,0.456,0.577], ['#60A5FA','#9F8FF7','#F472B6','#F5A623','#3DD68C','#22D3EE']);
-charts.catGrade7d = catGradeChart('c_cat_grade_7d', ['영화·인물','장르·트로프','인생·감정','사회·문화','일상·취향','관계·가족'], [4,0,4,0,0,0],[0,11,2,2,3,2],[1,5,7,5,3,3],[3,3,5,2,6,1],[4,0,0,2,2,0]);
-charts.catGrade1d = catGradeChart('c_cat_grade_1d', ['영화·인물','장르·트로프','인생·감정','사회·문화','일상·취향','관계·가족'], [2,1,2,1,1,2],[0,9,6,1,2,1],[2,7,4,6,3,2],[2,2,6,2,7,1],[6,0,0,1,1,0]);
-charts.catGrowth = catGrowthChart('c_cat_growth', ['영화·인물','장르·트로프','인생·감정','사회·문화','일상·취향','관계·가족'], [1.25,1.216,1.218,1.159,1.133,1.168], ['#60A5FA','#9F8FF7','#F472B6','#F5A623','#3DD68C','#22D3EE']);
+charts.catAvg = catAvgChart('c_cat_avg', ['영화·인물','장르·트로프','인생·감정','사회·문화','일상·취향','관계·가족'], [0.635,0.687,0.663,0.598,0.576,0.673], [0.438,0.547,0.51,0.489,0.456,0.577], ['#60A5FA','#9F8FF7','#F472B6','#F5A623','#3DD68C','#22D3EE']);
+charts.catGrade7d = catGradeChart('c_cat_grade_7d', ['영화·인물','장르·트로프','인생·감정','사회·문화','일상·취향','관계·가족'], [5,0,4,0,0,0],[1,12,2,2,3,2],[1,5,7,5,3,4],[4,3,5,3,7,0],[4,0,2,1,1,0]);
+charts.catGrade1d = catGradeChart('c_cat_grade_1d', ['영화·인물','장르·트로프','인생·감정','사회·문화','일상·취향','관계·가족'], [3,1,2,1,1,2],[1,9,7,2,2,1],[2,8,4,5,3,2],[4,2,5,3,7,1],[5,0,2,0,1,0]);
+charts.catGrowth = catGrowthChart('c_cat_growth', ['영화·인물','장르·트로프','인생·감정','사회·문화','일상·취향','관계·가족'], [1.285,1.222,1.215,1.159,1.133,1.168], ['#60A5FA','#9F8FF7','#F472B6','#F5A623','#3DD68C','#22D3EE']);
 charts.seasonCat = seasonCatChart('c_season_cat', ['시즌1','시즌2','시즌3','시즌4','시즌5','시즌6'], [
-  {label:'영화·인물',data:[0.0,0.0,0.0,14.3,35.7,23.8],backgroundColor:'#60A5FACC'},
-  {label:'장르·트로프',data:[30.0,77.8,41.7,7.1,14.3,4.8],backgroundColor:'#9F8FF7CC'},
-  {label:'인생·감정',data:[40.0,0.0,16.7,42.9,7.1,23.8],backgroundColor:'#F472B6CC'},
-  {label:'사회·문화',data:[10.0,0.0,8.3,14.3,14.3,23.8],backgroundColor:'#F5A623CC'},
-  {label:'일상·취향',data:[20.0,11.1,0.0,21.4,21.4,23.8],backgroundColor:'#3DD68CCC'},
+  {label:'영화·인물',data:[0.0,0.0,0.0,14.3,35.7,29.6],backgroundColor:'#60A5FACC'},
+  {label:'장르·트로프',data:[30.0,77.8,41.7,7.1,14.3,7.4],backgroundColor:'#9F8FF7CC'},
+  {label:'인생·감정',data:[40.0,0.0,16.7,42.9,7.1,25.9],backgroundColor:'#F472B6CC'},
+  {label:'사회·문화',data:[10.0,0.0,8.3,14.3,14.3,18.5],backgroundColor:'#F5A623CC'},
+  {label:'일상·취향',data:[20.0,11.1,0.0,21.4,21.4,18.5],backgroundColor:'#3DD68CCC'},
   {label:'관계·가족',data:[0.0,11.1,33.3,0.0,7.1,0.0],backgroundColor:'#22D3EECC'}
 ]);
 
 /* 순위 테이블 */
-const curSeason = { '7d':'all', '1d':'all' };
+const curSeason = { '7d':'all', '1d':'all', '28d':'all' };
 function filterSeason(tab,s,btn){
   curSeason[tab]=s;
   btn.parentElement.querySelectorAll('.ftab').forEach(t=>t.classList.remove('on'));
@@ -1130,6 +1441,7 @@ function renderRank(tab){
 }
 renderRank('7d');
 renderRank('1d');
+renderRank('28d');
 
 /* 카테고리별 편성 목록 */
 let curCatFilter = 'all';
@@ -1161,7 +1473,7 @@ renderCatList();
 // 통합리포트 셸에서 ?tab=cat 등으로 딥링크할 때 해당 탭을 바로 열어줌
 (function(){
   const tab = new URLSearchParams(location.search).get('tab');
-  if (tab === 'cat' || tab === '1d') {
+  if (tab === 'cat' || tab === '1d' || tab === '28d') {
     const btn = document.querySelector(`.nav-tab[onclick*="'${tab}'"]`);
     if (btn) sw(tab, btn);
   }
