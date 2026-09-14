@@ -17,3 +17,6 @@ rpt.xlsx
 
 # 의존성 캐시 (재생성 가능, 배포 대상 아님)
 node_modules/
+
+# API 원본 데이터 덤프 (재조회 가능, 배포 대상 아님)
+resources/data/
