@@ -1,0 +1,670 @@
+<meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>PLUS 트라이브 유입 분석 리포트</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --page-bg:#f9f9f7; --surface:#fcfcfb; --surface-alt:#f2f2ef;
+    --text-primary:#0b0b0b; --text-secondary:#52514e; --text-muted:#898781;
+    --border:rgba(11,11,11,0.10); --grid:#e1e0d9; --baseline:#c3c2b7;
+    --accent:#2a78d6;
+    --series-web:#2a78d6; --series-aos:#eb6834; --series-ios:#1baf7a;
+    --status-good:#0ca30c; --status-good-bg:#e2f4e0;
+    --status-warn:#c98200; --status-warn-bg:#fdf0d8;
+    --status-crit:#d03b3b; --status-crit-bg:#fbe4e2;
+    --pending-fill:#dedcd4;
+    color-scheme:light;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --page-bg:#0d0d0d; --surface:#18191b; --surface-alt:#212224;
+      --text-primary:#f5f5f3; --text-secondary:#c3c2b7; --text-muted:#8b8a84;
+      --border:rgba(255,255,255,0.12); --grid:#2c2c2a; --baseline:#3a3a37;
+      --accent:#5a9ce8;
+      --series-web:#5a9ce8; --series-aos:#e8804f; --series-ios:#33c78f;
+      --status-good:#3fc23f; --status-good-bg:rgba(63,194,63,0.16);
+      --status-warn:#fab219; --status-warn-bg:rgba(250,178,25,0.16);
+      --status-crit:#e66767; --status-crit-bg:rgba(230,103,103,0.18);
+      --pending-fill:#333432;
+      color-scheme:dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --page-bg:#0d0d0d; --surface:#18191b; --surface-alt:#212224;
+    --text-primary:#f5f5f3; --text-secondary:#c3c2b7; --text-muted:#8b8a84;
+    --border:rgba(255,255,255,0.12); --grid:#2c2c2a; --baseline:#3a3a37;
+    --accent:#5a9ce8;
+    --series-web:#5a9ce8; --series-aos:#e8804f; --series-ios:#33c78f;
+    --status-good:#3fc23f; --status-good-bg:rgba(63,194,63,0.16);
+    --status-warn:#fab219; --status-warn-bg:rgba(250,178,25,0.16);
+    --status-crit:#e66767; --status-crit-bg:rgba(230,103,103,0.18);
+    --pending-fill:#333432;
+    color-scheme:dark;
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background:var(--page-bg); color:var(--text-primary);
+    font-family:"IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    line-height:1.5; padding:28px 20px 64px;
+  }
+  .wrap{max-width:1040px; margin:0 auto; display:flex; flex-direction:column; gap:22px;}
+  h1,h2,h3{font-family:"Sora", "IBM Plex Sans", sans-serif; text-wrap:balance; margin:0;}
+  .num{font-family:"IBM Plex Mono", ui-monospace, monospace;}
+  .tabular{font-variant-numeric:tabular-nums;}
+
+  /* header */
+  header{display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:14px 24px; border-bottom:1px solid var(--border); padding-bottom:18px;}
+  header .titles{display:flex; flex-direction:column; gap:6px;}
+  header h1{font-size:22px; font-weight:700; letter-spacing:-0.01em;}
+  header p{margin:0; color:var(--text-secondary); font-size:13.5px; max-width:100%;}
+  .meta{display:flex; flex-direction:column; align-items:flex-end; gap:6px; font-size:12px; color:var(--text-muted);}
+  .meta .updated{font-family:"IBM Plex Mono",monospace; color:var(--text-secondary);}
+  .legend-row{display:flex; gap:14px; flex-wrap:wrap; font-size:12px; color:var(--text-muted);}
+  .legend-row .chip{display:inline-flex; align-items:center; gap:5px;}
+  .legend-row .dot{width:8px; height:8px; border-radius:2px; display:inline-block;}
+
+  /* snapshot tiles */
+  .tiles{display:grid; grid-template-columns:repeat(auto-fit, minmax(210px,1fr)); gap:12px;}
+  .tile{background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:14px 16px; display:flex; flex-direction:column; gap:8px;}
+  .tile.tile-total{border-color:var(--text-secondary);}
+  .tile .tile-head{display:flex; align-items:center; justify-content:space-between;}
+  .tile .plat{display:flex; align-items:center; gap:7px; font-size:12.5px; font-weight:600; color:var(--text-secondary); text-transform:uppercase; letter-spacing:.04em;}
+  .tile .plat .sw{width:10px; height:10px; border-radius:3px; flex:none;}
+  .tile .plat .sw-group{display:flex; gap:2px; flex:none;}
+  .tile .plat .sw-group i{width:6px; height:10px; border-radius:2px; display:block; font-style:normal;}
+  .tile .val{font-family:"IBM Plex Mono",monospace; font-size:26px; font-weight:600; letter-spacing:-0.01em;}
+  .tile .sub{font-size:12px; color:var(--text-muted); display:flex; gap:8px; align-items:baseline;}
+  .delta{font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:12px;}
+  .delta.up{color:var(--status-good);}
+  .delta.down{color:var(--status-crit);}
+  .tile .tile-secondary{display:flex; justify-content:space-between; gap:10px; margin-top:2px; padding-top:9px; border-top:1px solid var(--border);}
+  .tile .stat-pair{display:flex; flex-direction:column; gap:2px;}
+  .tile .stat-pair .k{font-size:10.5px; color:var(--text-muted); text-transform:uppercase; letter-spacing:.03em;}
+  .tile .stat-pair .v{font-family:"IBM Plex Mono",monospace; font-size:13px; color:var(--text-secondary); font-weight:500;}
+  .tile .stat-pair.align-end{align-items:flex-end;}
+
+  /* panel shell */
+  .panel{background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:18px 20px 20px;}
+  .panel-head{display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between; gap:8px 20px; margin-bottom:4px;}
+  .panel-head h2{font-size:15.5px; font-weight:700;}
+  .panel-head .desc{font-size:12.5px; color:var(--text-muted); max-width:100%;}
+
+  .chart-scroll{overflow-x:auto;}
+  svg{display:block; overflow:visible; font-family:"IBM Plex Mono",monospace;}
+  .axis-label{fill:var(--text-muted); font-size:10.5px;}
+  .grid-line{stroke:var(--grid); stroke-width:1;}
+  .baseline{stroke:var(--baseline); stroke-width:1;}
+  .crosshair{stroke:var(--text-muted); stroke-width:1; stroke-dasharray:2 3; opacity:0;}
+  .hover-col{fill:transparent;}
+
+  .tooltip{
+    position:absolute; pointer-events:none; background:var(--surface); border:1px solid var(--border);
+    border-radius:8px; padding:8px 10px; font-size:11.5px; box-shadow:0 6px 18px rgba(0,0,0,.14);
+    opacity:0; transition:opacity .08s ease; z-index:5; min-width:150px;
+  }
+  .tooltip .tt-date{font-weight:600; color:var(--text-primary); margin-bottom:5px; font-family:"IBM Plex Mono",monospace;}
+  .tooltip .tt-row{display:flex; align-items:center; gap:6px; justify-content:space-between; color:var(--text-secondary); padding:1px 0;}
+  .tooltip .tt-row .k{display:flex; align-items:center; gap:5px;}
+  .tooltip .tt-row .sw{width:7px;height:7px;border-radius:2px;flex:none;}
+  .tooltip .tt-row .v{font-family:"IBM Plex Mono",monospace; color:var(--text-primary); font-weight:500;}
+  .chart-wrap{position:relative;}
+
+  /* legend under charts */
+  .chart-legend{display:flex; gap:16px; flex-wrap:wrap; margin-top:10px; font-size:12px; color:var(--text-secondary);}
+  .chart-legend .item{display:flex; align-items:center; gap:6px;}
+  .chart-legend .sw{width:14px; height:3px; border-radius:2px; display:inline-block;}
+  .chart-legend .sw.dashed{background:none; border-top:2px dashed var(--text-muted); height:0;}
+
+  /* error bar mini panels */
+  .mini-charts{display:flex; flex-direction:column; gap:18px;}
+  .mini-chart-title{font-size:12.5px; font-weight:600; color:var(--text-secondary); display:flex; align-items:center; gap:7px; margin-bottom:6px;}
+  .mini-chart-title .sw{width:10px;height:10px;border-radius:3px;}
+  .status-legend{display:flex; gap:14px; flex-wrap:wrap; font-size:11.5px; color:var(--text-muted); margin-top:8px;}
+  .status-legend .item{display:flex; align-items:center; gap:5px;}
+  .status-legend .dot{width:8px;height:8px;border-radius:50%;}
+
+  /* table */
+  .table-scroll{overflow-x:auto;}
+  .table-caption{font-size:11px; font-weight:600; color:var(--text-muted); text-transform:uppercase; letter-spacing:.05em; margin:18px 0 8px;}
+  table{border-collapse:collapse; width:100%; font-size:12.5px;}
+  table.tbl-narrow{min-width:600px;}
+  table.tbl-wide{min-width:900px;}
+  thead th{position:sticky; top:0; background:var(--surface-alt); text-align:right; font-weight:600; color:var(--text-secondary); padding:8px 10px; border-bottom:1px solid var(--border); white-space:nowrap;}
+  thead th:first-child, tbody td:first-child{text-align:left;}
+  thead tr.group-row th{background:var(--surface); border-bottom:none; padding-bottom:2px; color:var(--text-muted); font-size:11px; text-transform:uppercase; letter-spacing:.04em;}
+  tbody td{padding:7px 10px; text-align:right; border-bottom:1px solid var(--border); font-family:"IBM Plex Mono",monospace; color:var(--text-primary); white-space:nowrap;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even) td{background:var(--surface-alt);}
+  tbody tr.is-partial td{color:var(--text-muted);}
+  th.grp-div, td.grp-div{border-left:1px solid var(--border);}
+  .pill{display:inline-flex; align-items:center; gap:4px; padding:2px 8px; border-radius:999px; font-size:11px; font-weight:600;}
+  .pill.good{background:var(--status-good-bg); color:var(--status-good);}
+  .pill.warn{background:var(--status-warn-bg); color:var(--status-warn);}
+  .pill.crit{background:var(--status-crit-bg); color:var(--status-crit);}
+  .pill.pending{background:var(--surface-alt); color:var(--text-muted);}
+  .cell-muted{color:var(--text-muted) !important; font-style:italic;}
+
+  /* horizontal ranked bars (유입경로) */
+  .hbar-panel{display:flex; flex-direction:column; gap:2px;}
+  .hbar-row{display:grid; grid-template-columns:172px 1fr auto; align-items:center; gap:10px; padding:5px 0;}
+  .hbar-row .lbl{font-size:12.5px; color:var(--text-secondary); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+  .hbar-row .track{background:var(--surface-alt); border-radius:4px; height:14px; overflow:hidden;}
+  .hbar-row .fill{height:100%; border-radius:4px; min-width:2px;}
+  .hbar-row .fill-stack{height:100%; display:flex; border-radius:4px; overflow:hidden; min-width:2px;}
+  .hbar-row .val{font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--text-primary); white-space:nowrap; text-align:right; min-width:100px;}
+  .hbar-row .val .pct{color:var(--text-muted); margin-left:5px;}
+  .hbar-two-col{display:grid; grid-template-columns:1fr 1fr; gap:12px 28px;}
+  @media (max-width:640px){ .hbar-two-col{grid-template-columns:1fr;} .hbar-row{grid-template-columns:110px 1fr auto;} }
+
+  footer{border-top:1px solid var(--border); padding-top:16px; font-size:12px; color:var(--text-muted); display:flex; flex-direction:column; gap:6px;}
+  footer b{color:var(--text-secondary);}
+
+  @media (max-width:640px){
+    header{flex-direction:column; align-items:flex-start;}
+    .meta{align-items:flex-start;}
+  }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="titles">
+      <h1>트라이브 액티브 크로스체크</h1>
+      <p>PLUS 트라이브 앱의 활성사용자를 GA4(제품 애널리틱스)와 AppsFlyer(모바일 MMP) 두 계측기로 매일 나란히 재서, 신규 유입 트래킹이 서로 합의하는지 확인하는 대시보드.</p>
+    </div>
+    <div class="meta">
+      <span>마지막 갱신</span>
+      <span class="updated">2026-09-14 · 09/01–09/13 확정 · 09/14 진행중</span>
+    </div>
+  </header>
+
+  <section class="tiles" id="tiles"></section>
+  <div class="status-legend" style="margin-top:-10px;">※ '전체'는 Web+AOS+iOS 활성사용자를 단순 합산한 값 — 여러 플랫폼을 같이 쓰는 사람은 중복 포함될 수 있어 참고용 총량.</div>
+
+  <section class="panel">
+    <div class="panel-head">
+      <h2>GA4 일별 활성사용자 — Web · AOS · iOS</h2>
+      <div class="desc">같은 속성 안 3개 프로덕션 스트림을 누적 영역으로 쌓은 것 — 맨 위 굵은 선이 3개 합계(전체). Web 스트림은 앱이 아니라 공유·랜딩 웹페이지 방문자라 AppsFlyer가 볼 수 없는 영역.</div>
+    </div>
+    <div class="chart-wrap chart-scroll">
+      <svg id="chartAU" width="1000" height="300" viewBox="0 0 1000 300"></svg>
+      <div class="tooltip" id="ttAU"></div>
+    </div>
+    <div class="chart-legend" id="legendAU"></div>
+    <div class="table-caption">표로 보기</div>
+    <div class="table-scroll"><table id="tableAU" class="tbl-narrow"></table></div>
+  </section>
+
+  <section class="panel">
+    <div class="panel-head">
+      <h2>GA4와 앱스플라이어 신규 유입 비교</h2>
+      <div class="desc">진한 막대(GA4가 센 신규사용자)와 연한 막대(AppsFlyer가 센 Installs)를 나란히 놓은 것 — 높이가 비슷하면 두 시스템이 잘 맞고 있는 것. 막대 아래 작은 숫자는 그 차이를 %로 환산한 값. 옅게 표시된 막대(맨 오른쪽)는 아직 집계 중인 당일(진행중) 수치.</div>
+    </div>
+    <div class="mini-charts">
+      <div>
+        <div class="mini-chart-title"><span class="sw" style="background:var(--series-aos)"></span>Android</div>
+        <div class="chart-scroll"><svg id="chartCmpAOS" width="1000" height="190" viewBox="0 0 1000 190"></svg></div>
+      </div>
+      <div>
+        <div class="mini-chart-title"><span class="sw" style="background:var(--series-ios)"></span>iOS</div>
+        <div class="chart-scroll"><svg id="chartCmpIOS" width="1000" height="190" viewBox="0 0 1000 190"></svg></div>
+      </div>
+    </div>
+    <div class="chart-legend" id="legendCmp"></div>
+    <div class="table-caption">표로 보기</div>
+    <div class="table-scroll"><table id="tableCmp" class="tbl-narrow"></table></div>
+  </section>
+
+  <section class="panel">
+    <div class="panel-head">
+      <h2>유입경로 상세 — Web(GA4) vs OS별(AppsFlyer)</h2>
+      <div class="desc">09/01–09/13 누적(전일까지), 매일 갱신. Web은 GA4 firstUserSource 기준 신규사용자, AOS·iOS는 AppsFlyer Installs 기준 — 계측기가 서로 달라서 비중을 그대로 더하거나 맞비교하면 안 됨(플랫폼별로 각자 보는 용도).</div>
+    </div>
+    <div class="mini-chart-title" style="margin-top:8px;"><span class="sw" style="background:var(--series-web)"></span>Web (GA4 · 신규사용자)</div>
+    <div id="barsWeb" class="hbar-panel"></div>
+    <div class="hbar-two-col" style="margin-top:18px;">
+      <div>
+        <div class="mini-chart-title"><span class="sw" style="background:var(--series-aos)"></span>Android (AppsFlyer · Installs)</div>
+        <div id="barsAOS" class="hbar-panel"></div>
+      </div>
+      <div>
+        <div class="mini-chart-title"><span class="sw" style="background:var(--series-ios)"></span>iOS (AppsFlyer · Installs)</div>
+        <div id="barsIOS" class="hbar-panel"></div>
+      </div>
+    </div>
+    <div class="status-legend" style="margin-top:12px;">
+      <span>※ hanwhafireworks.com은 광고 매체가 아니라 한화 불꽃축제 티켓 이벤트 페이지(실물 경품 유인 — 앱 콘텐츠 관심과 무관한 트래픽일 수 있음). nice.checkplus.co.kr(본인인증 리다이렉트)은 유입이 아니라서 Web 집계에서 제외.</span>
+    </div>
+    <div class="status-legend">
+      <span>※ GA4는 앱(iOS·AOS) 유입경로 귀속이 구조적으로 거의 불가(iOS 100%·AOS 81%가 (direct)/(not set)) — OS별 유입경로는 AppsFlyer가 신뢰 가능한 쪽.</span>
+    </div>
+
+    <div class="mini-chart-title" style="margin-top:22px;">애드셋별 신규설치 — Android+iOS 합산 (AppsFlyer, 설치 기준)</div>
+    <div class="chart-legend" style="margin:0 0 8px;">
+      <span class="item"><span class="sw" style="background:var(--series-aos)"></span>Android</span>
+      <span class="item"><span class="sw" style="background:var(--series-ios)"></span>iOS</span>
+    </div>
+    <div id="barsAdsetCombined" class="hbar-panel"></div>
+    <div class="status-legend" style="margin-top:12px;">
+      <span>※ "활성사용자"가 아니라 설치(Installs) 기준 — AppsFlyer 집계 리포트는 매체×캠페인까지만 쪼개져 애드셋 차원이 없어, 활성사용자·세션은 API로 못 받고 raw 설치 로그만 가능함(Organic·카카오채널 등 애드셋 없는 매체는 제외하고 계산).</span>
+    </div>
+    <div class="status-legend">
+      <span>※ 같은 캠페인 소재를 AOS/IOS 이름만 다르게 붙여 운영하는 경우가 많아, 라벨에서 플랫폼 표기를 지우고 하나로 합쳐서 순위를 매김(예: "AOS_E스포츠대회티켓"+"IOS_E스포츠대회티켓"→"E스포츠대회티켓"). 막대 안 두 색 구성은 위 범례 참고.</span>
+    </div>
+    <div class="status-legend">
+      <span>※ "구글애즈 UAC(2604_install_0416)"는 Android 전용 — Google UAC가 자동 생성하는 코드일 뿐 실제 애드셋명이 아님. Facebook Ads 항목만 실제 소재·캠페인명이 그대로 노출됨.</span>
+    </div>
+  </section>
+
+  <footer>
+    <div><b>읽는 법.</b> GA4 활성사용자엔 웹 스트림이 섞여 있어 AppsFlyer 전체 활성사용자와 직접 비교할 수 없음 — 비교 가능한 지점은 "신규 유입"(AF Installs ↔ GA4 신규사용자)뿐.</div>
+    <div><b>2026-09-14 데이터 정정.</b> 09/10 신규유입 오차가 AOS +70%·iOS +112%로 비정상적으로 크게 나와 재검증한 결과, <b>GA4 쪽 09/10 수치가 처음 "확정"으로 기록했던 날(09/11 재조회 시점)에도 아직 집계가 다 안 끝난 상태였음</b>을 확인 — 오늘(09/14, 4일 경과) 다시 조회하니 GA4 09/10 값이 크게 늘어남(예: AOS 신규사용자 982→1,473, iOS 383→715). AppsFlyer 쪽은 raw 설치 로그와 집계 리포트가 완전히 일치해 정상 확인됨(Organic 제외 전 매체가 1건도 안 틀리게 일치) — 문제는 AppsFlyer가 아니라 GA4의 처리 지연이었음. 위 표의 09/10 값은 이번에 소급 정정한 것(정정 후 오차 AOS +13.4%·iOS +13.6%로 정상 범위 복귀). 인접일(09/06·09/09)은 같은 방식으로 재조회해도 값이 그대로라 09/10만의 국지적 지연이었던 것으로 확인 — "다음날 재조회하면 확정"이라는 기존 가정이 항상 안전하지는 않다는 반례로 기록.</div>
+    <div><b>미해결.</b> AppsFlyer 대시보드의 진짜 활성사용자 대응 지표(Retention/Overview Unique Users)는 아직 API로 확인 못함 — 화면 확인 필요.</div>
+    <div>PLUS 트라이브 · GA4 property 298197652 · AppsFlyer iOS id1631958069 / Android com.hanwha.lifeplus.tribes.app</div>
+  </footer>
+</div>
+
+<script>
+(function(){
+  // ---------- data (append new days here on daily updates) ----------
+  var GA4 = [
+    {d:'09-01', web:{au:10868,new:7200}, aos:{au:5099,new:1085}, ios:{au:4473,new:522}},
+    {d:'09-02', web:{au:8921, new:7517}, aos:{au:3668,new:934},  ios:{au:2513,new:372}},
+    {d:'09-03', web:{au:12089,new:9373}, aos:{au:7217,new:1664}, ios:{au:3870,new:591}},
+    {d:'09-04', web:{au:16748,new:15211},aos:{au:3789,new:941},  ios:{au:2444,new:370}},
+    {d:'09-05', web:{au:25020,new:24152},aos:{au:4579,new:1246}, ios:{au:2650,new:385}},
+    {d:'09-06', web:{au:3134, new:2857}, aos:{au:2959,new:1181}, ios:{au:1534,new:360}},
+    {d:'09-07', web:{au:4785, new:3293}, aos:{au:4169,new:1197}, ios:{au:2681,new:602}},
+    {d:'09-08', web:{au:1973, new:1249}, aos:{au:3472,new:1027}, ios:{au:1847,new:541}},
+    {d:'09-09', web:{au:1420, new:817},  aos:{au:2881,new:995},  ios:{au:1656,new:373}},
+    {d:'09-10', web:{au:4640, new:2212}, aos:{au:6598,new:1473}, ios:{au:3185,new:715}}, // 2026-09-14 재검증으로 소급 정정(하단 각주 참고) — 원래값 web3866/1024·aos4926/982·ios2014/383
+    {d:'09-11', web:{au:2933, new:1897}, aos:{au:3340,new:1213}, ios:{au:2204,new:630}},
+    {d:'09-12', web:{au:2659, new:1839}, aos:{au:3921,new:1349}, ios:{au:2220,new:596}},
+    {d:'09-13', web:{au:2001, new:1439}, aos:{au:3757,new:1325}, ios:{au:1659,new:514}},
+    {d:'09-14', web:{au:299,  new:193},  aos:{au:650, new:210},  ios:{au:268, new:87}, partial:true}
+  ];
+  var AF = [
+    {d:'09-01', aos:{installs:1187, loyal:650},  ios:{installs:490, loyal:45}},
+    {d:'09-02', aos:{installs:970,  loyal:535},  ios:{installs:370, loyal:17}},
+    {d:'09-03', aos:{installs:1804, loyal:1208}, ios:{installs:625, loyal:74}},
+    {d:'09-04', aos:{installs:984,  loyal:502},  ios:{installs:355, loyal:27}},
+    {d:'09-05', aos:{installs:1290, loyal:682},  ios:{installs:388, loyal:20}},
+    {d:'09-06', aos:{installs:1274, loyal:620},  ios:{installs:359, loyal:19}},
+    {d:'09-07', aos:{installs:1296, loyal:660},  ios:{installs:675, loyal:37}},
+    {d:'09-08', aos:{installs:926,  loyal:444},  ios:{installs:481, loyal:15}},
+    {d:'09-09', aos:{installs:1060, loyal:547},  ios:{installs:381, loyal:5}},
+    {d:'09-10', aos:{installs:1670, loyal:944},  ios:{installs:812, loyal:8}},
+    {d:'09-11', aos:{installs:1233, loyal:713},  ios:{installs:598, loyal:21}},
+    {d:'09-12', aos:{installs:1348, loyal:753},  ios:{installs:555, loyal:12}},
+    {d:'09-13', aos:{installs:1248, loyal:636},  ios:{installs:499, loyal:5}},
+    {d:'09-14', aos:{installs:44,   loyal:18},   ios:{installs:17,  loyal:0}}
+  ];
+
+  var css = getComputedStyle(document.documentElement);
+  function tok(name){ return css.getPropertyValue(name).trim(); }
+  var COLORS = {
+    web: tok('--series-web'), aos: tok('--series-aos'), ios: tok('--series-ios'),
+    grid: tok('--grid'), baseline: tok('--baseline'), muted: tok('--text-muted'),
+    secondary: tok('--text-secondary'), primary: tok('--text-primary'), surface: tok('--surface'),
+    good: tok('--status-good'), warn: tok('--status-warn'), crit: tok('--status-crit'),
+    pending: tok('--pending-fill')
+  };
+
+  function fmt(n){ return n.toLocaleString('en-US'); }
+  function pct(n){ return (n>0?'+':'') + n.toFixed(1) + '%'; }
+
+  // ---------- snapshot tiles: 전체 + Web/AOS/iOS, 각각 최신/전일/누적 ----------
+  // partial:true인 날(진행중 당일)은 "확정"이 아니라서 최신/전일/누적 계산에서 전부 제외
+  var confirmed = GA4.filter(function(r){ return !r.partial; });
+  var iLatest = confirmed.length-1, iPrev = confirmed.length-2;
+  var rangeLabel = confirmed[0].d+'~'+confirmed[confirmed.length-1].d;
+  function auOf(r, key){ return key==='total' ? (r.web.au+r.aos.au+r.ios.au) : r[key].au; }
+  function cumOf(key){ return confirmed.reduce(function(s,r){ return s+auOf(r,key); },0); }
+
+  var tiles = [
+    {label:'전체', key:'total', dotHTML:'<span class="sw-group"><i style="background:'+COLORS.web+'"></i><i style="background:'+COLORS.aos+'"></i><i style="background:'+COLORS.ios+'"></i></span>'},
+    {label:'Web', key:'web', dotHTML:'<span class="sw" style="background:'+COLORS.web+'"></span>'},
+    {label:'Android', key:'aos', dotHTML:'<span class="sw" style="background:'+COLORS.aos+'"></span>'},
+    {label:'iOS', key:'ios', dotHTML:'<span class="sw" style="background:'+COLORS.ios+'"></span>'}
+  ];
+  var tilesHTML = tiles.map(function(t){
+    var cur = auOf(confirmed[iLatest], t.key), before = auOf(confirmed[iPrev], t.key);
+    var d = ((cur-before)/before*100);
+    var dirClass = d>=0 ? 'up' : 'down';
+    var arrow = d>=0 ? '▲' : '▼';
+    var cum = cumOf(t.key);
+    return '<div class="tile'+(t.key==='total'?' tile-total':'')+'">'+
+      '<div class="tile-head"><span class="plat">'+t.dotHTML+t.label+'</span></div>'+
+      '<div class="val tabular">'+fmt(cur)+'</div>'+
+      '<div class="sub">'+confirmed[iLatest].d+' 활성사용자 <span class="delta '+dirClass+'">'+arrow+' '+Math.abs(d).toFixed(1)+'%</span> <span>전일比</span></div>'+
+      '<div class="tile-secondary">'+
+        '<div class="stat-pair"><span class="k">전일('+confirmed[iPrev].d+')</span><span class="v tabular">'+fmt(before)+'</span></div>'+
+        '<div class="stat-pair align-end"><span class="k">누적('+rangeLabel+')</span><span class="v tabular">'+fmt(cum)+'</span></div>'+
+      '</div>'+
+    '</div>';
+  }).join('');
+  document.getElementById('tiles').innerHTML = tilesHTML;
+
+  // ================= Chart 1: GA4 daily active users (누적 영역, 3개 스트림 + 전체) =================
+  (function(){
+    var svg = document.getElementById('chartAU');
+    var W=1000,H=300, ML=44,MR=16,MT=16,MB=30;
+    var plotW=W-ML-MR, plotH=H-MT-MB;
+    var n = GA4.length;
+
+    // 누적 스택: Web(바닥) → Android → iOS(맨 위) — ios1(맨 위 경계)이 곧 3개 합계(전체)
+    var stacks = GA4.map(function(r){
+      var web=r.web.au, aos=r.aos.au, ios=r.ios.au;
+      return {web0:0, web1:web, aos0:web, aos1:web+aos, ios0:web+aos, ios1:web+aos+ios, total:web+aos+ios};
+    });
+    var maxTotal = Math.max.apply(null, stacks.map(function(s){return s.total;}));
+    var niceMax = Math.ceil(maxTotal/5000)*5000;
+    function x(i){ return ML + (i/(n-1))*plotW; }
+    function y(v){ return MT + plotH - (v/niceMax)*plotH; }
+
+    var svgns = 'http://www.w3.org/2000/svg';
+    function el(tag, attrs){
+      var e = document.createElementNS(svgns, tag);
+      for (var k in attrs) e.setAttribute(k, attrs[k]);
+      return e;
+    }
+
+    // gridlines + y labels (전체 합계 기준 스케일)
+    var ticks = 4;
+    for (var t=0; t<=ticks; t++){
+      var val = niceMax * t/ticks;
+      var yy = y(val);
+      svg.appendChild(el('line',{x1:ML,x2:W-MR,y1:yy,y2:yy,class: t===0?'baseline':'grid-line'}));
+      var lab = el('text',{x:ML-8,y:yy+3,class:'axis-label','text-anchor':'end'});
+      lab.textContent = val>=1000 ? (val/1000)+'k' : val;
+      svg.appendChild(lab);
+    }
+    // x labels
+    GA4.forEach(function(r,i){
+      var lab = el('text',{x:x(i),y:H-8,class:'axis-label','text-anchor':'middle'});
+      lab.textContent = r.d;
+      svg.appendChild(lab);
+    });
+
+    var layers = [
+      {key:'web', y0k:'web0', y1k:'web1', color:COLORS.web},
+      {key:'aos', y0k:'aos0', y1k:'aos1', color:COLORS.aos},
+      {key:'ios', y0k:'ios0', y1k:'ios1', color:COLORS.ios}
+    ];
+    // 마지막 날이 아직 진행중(부분 집계)인 경우에만 그 구간을 옅게+점선으로 별도 표시
+    var lastIsPartial = !!GA4[n-1].partial;
+    var solidIdx = []; for (var si=0; si<(lastIsPartial?n-1:n); si++) solidIdx.push(si);
+    var partialIdx = lastIsPartial ? [n-2, n-1] : [];
+
+    function areaPath(idxs, y0k, y1k){
+      var top = idxs.map(function(i){ return x(i)+','+y(stacks[i][y1k]); });
+      var bot = idxs.slice().reverse().map(function(i){ return x(i)+','+y(stacks[i][y0k]); });
+      return 'M'+top.join(' L')+' L'+bot.join(' L')+' Z';
+    }
+    function lineD(idxs, yk){
+      return idxs.map(function(i,j){ return (j===0?'M':'L')+x(i)+','+y(stacks[i][yk]); }).join(' ');
+    }
+
+    layers.forEach(function(L){
+      // 확정 구간(진하게 채움 + 층 경계선)
+      svg.appendChild(el('path',{d:areaPath(solidIdx, L.y0k, L.y1k), fill:L.color, 'fill-opacity':0.5, stroke:'none'}));
+      svg.appendChild(el('path',{d:lineD(solidIdx, L.y1k), fill:'none', stroke:L.color, 'stroke-width':1.5}));
+      // 진행중 마지막 구간(옅게 채움 + 점선 경계) — 진행중인 날이 있을 때만
+      if (partialIdx.length){
+        svg.appendChild(el('path',{d:areaPath(partialIdx, L.y0k, L.y1k), fill:L.color, 'fill-opacity':0.2, stroke:'none'}));
+        svg.appendChild(el('path',{d:lineD(partialIdx, L.y1k), fill:'none', stroke:L.color, 'stroke-width':1.5, 'stroke-dasharray':'3 4', opacity:0.85}));
+      }
+    });
+
+    // 전체(합계) 강조선 — 스택 맨 위 경계(ios1)를 굵은 선으로 한 번 더 덧그림
+    svg.appendChild(el('path',{d:lineD(solidIdx, 'ios1'), fill:'none', stroke:COLORS.primary, 'stroke-width':2.5, 'stroke-linejoin':'round','stroke-linecap':'round'}));
+    if (partialIdx.length){
+      svg.appendChild(el('path',{d:lineD(partialIdx, 'ios1'), fill:'none', stroke:COLORS.primary, 'stroke-width':2.5, 'stroke-dasharray':'3 4', opacity:0.85}));
+    }
+    stacks.forEach(function(s,i){
+      var isPartial = !!GA4[i].partial;
+      svg.appendChild(el('circle',{cx:x(i), cy:y(s.total), r: isPartial?4:3.5,
+        fill: isPartial ? COLORS.surface : COLORS.primary,
+        stroke: COLORS.primary, 'stroke-width': isPartial?2:0}));
+    });
+
+    // hover interaction (Web/Android/iOS 각각 + 전체 합계까지 툴팁에 노출)
+    var tooltip = document.getElementById('ttAU');
+    var crosshair = el('line', {class:'crosshair', y1:MT, y2:MT+plotH});
+    svg.appendChild(crosshair);
+    var colW = plotW/(n-1);
+    for (var i=0;i<n;i++){
+      (function(i){
+        var hitX = ML + i*colW - colW/2;
+        var hit = el('rect',{class:'hover-col', x: i===0?ML:hitX, y:MT, width: (i===0||i===n-1)?colW/2:colW, height:plotH});
+        hit.addEventListener('mouseenter', function(){
+          crosshair.setAttribute('x1', x(i)); crosshair.setAttribute('x2', x(i)); crosshair.style.opacity=1;
+          var r = GA4[i], s = stacks[i];
+          var rows = layers.map(function(L){
+            var lbl = L.key==='web'?'Web':L.key==='aos'?'Android':'iOS';
+            return '<div class="tt-row"><span class="k"><span class="sw" style="background:'+L.color+'"></span>'+lbl+'</span><span class="v">'+fmt(r[L.key].au)+'</span></div>';
+          }).join('');
+          var totalRow = '<div class="tt-row" style="border-top:1px solid var(--border);margin-top:3px;padding-top:4px;font-weight:600;"><span class="k">전체</span><span class="v">'+fmt(s.total)+'</span></div>';
+          tooltip.innerHTML = '<div class="tt-date">09-'+r.d.split('-')[1]+(r.partial?' · 진행중':'')+'</div>'+rows+totalRow;
+          var box = svg.getBoundingClientRect();
+          var wrapBox = svg.parentElement.getBoundingClientRect();
+          // 오른쪽 절반 지점은 툴팁을 커서 왼쪽으로 뒤집어서 그려야 chart-scroll의
+          // overflow-x:auto에 잘려 숫자가 안 보이는 문제(우측 끝 근처 날짜에서 발생)를 피함
+          var isRightHalf = x(i) > ML + plotW/2;
+          if (isRightHalf){
+            tooltip.style.left = (box.left - wrapBox.left + x(i) - 12) + 'px';
+            tooltip.style.transform = 'translateX(-100%)';
+          } else {
+            tooltip.style.left = (box.left - wrapBox.left + x(i) + 12) + 'px';
+            tooltip.style.transform = 'translateX(0)';
+          }
+          tooltip.style.top = (box.top - wrapBox.top + 8) + 'px';
+          tooltip.style.opacity = 1;
+        });
+        hit.addEventListener('mouseleave', function(){ crosshair.style.opacity=0; tooltip.style.opacity=0; });
+        svg.appendChild(hit);
+      })(i);
+    }
+
+    document.getElementById('legendAU').innerHTML =
+      '<span class="item"><span class="sw" style="background:'+COLORS.web+'"></span>Web</span>'+
+      '<span class="item"><span class="sw" style="background:'+COLORS.aos+'"></span>Android</span>'+
+      '<span class="item"><span class="sw" style="background:'+COLORS.ios+'"></span>iOS</span>'+
+      '<span class="item"><span class="sw" style="background:'+COLORS.primary+'; height:3px;"></span>전체(합계)</span>'+
+      (lastIsPartial ? '<span class="item"><span class="sw dashed"></span>'+GA4[n-1].d+' 진행중(부분 집계)</span>' : '');
+  })();
+
+  // ================= Chart 2: 신규유입 나란히 비교 (그룹 막대) =================
+  function statusColor(err){
+    var a = Math.abs(err);
+    if (a<=8) return COLORS.good;
+    if (a<=15) return COLORS.warn;
+    return COLORS.crit;
+  }
+  function renderCompareChart(svgId, platform, color){
+    var svg = document.getElementById(svgId);
+    var rows = AF.map(function(row,i){
+      var af = row[platform];
+      var ga = GA4[i][platform].new;
+      return {d:row.d, ga:ga, af: af? af.installs : null, partial: !!GA4[i].partial};
+    });
+    var W=1000,H=190, ML=44,MR=16,MT=26,MB=40;
+    var plotW=W-ML-MR, plotH=H-MT-MB;
+    var n=rows.length;
+    var maxV = Math.max.apply(null, rows.map(function(r){return Math.max(r.ga, r.af||0);}));
+    var niceMax = Math.ceil(maxV/Math.pow(10,String(Math.round(maxV)).length-1))*Math.pow(10,String(Math.round(maxV)).length-1);
+    var groupW = plotW/n, barW = groupW*0.30, gap = groupW*0.06;
+    function gx(i){ return ML + i*groupW; }
+    function y(v){ return MT + plotH - (v/niceMax)*plotH; }
+    var svgns='http://www.w3.org/2000/svg';
+    function el(tag,attrs){var e=document.createElementNS(svgns,tag); for(var k in attrs) e.setAttribute(k,attrs[k]); return e;}
+
+    svg.appendChild(el('line',{x1:ML,x2:W-MR,y1:y(0),y2:y(0),class:'baseline'}));
+    rows.forEach(function(r,i){
+      var cx0 = gx(i) + groupW/2 - gap/2 - barW; // GA4 bar (left, solid)
+      var cx1 = gx(i) + groupW/2 + gap/2;        // AF bar (right, light)
+      var gaY = y(r.ga), gaH = plotH+MT-gaY;
+      svg.appendChild(el('rect',{x:cx0, y:gaY, width:barW, height:gaH, rx:2, fill:color, 'fill-opacity': r.partial?0.55:1}));
+      var gaLab = el('text',{x:cx0+barW/2, y:gaY-5, class:'axis-label', 'text-anchor':'middle'});
+      gaLab.textContent = fmt(r.ga); svg.appendChild(gaLab);
+
+      if (r.af!==null){
+        var afY = y(r.af), afH = plotH+MT-afY;
+        svg.appendChild(el('rect',{x:cx1, y:afY, width:barW, height:afH, rx:2, fill:color, 'fill-opacity': r.partial?0.20:0.35}));
+        var afLab = el('text',{x:cx1+barW/2, y:afY-5, class:'axis-label', 'text-anchor':'middle'});
+        afLab.textContent = fmt(r.af); svg.appendChild(afLab);
+        var err = (r.af-r.ga)/r.ga*100;
+        var errLab = el('text',{x:gx(i)+groupW/2, y:H-8, class:'axis-label', 'text-anchor':'middle'});
+        errLab.setAttribute('fill', statusColor(err));
+        errLab.textContent = (err>0?'+':'')+err.toFixed(1)+'%';
+        svg.appendChild(errLab);
+      } else {
+        svg.appendChild(el('rect',{x:cx1, y:y(0)-8, width:barW, height:8, rx:2, fill:'none', stroke:COLORS.pending, 'stroke-width':1.5, 'stroke-dasharray':'2 2'}));
+        var pendLab = el('text',{x:gx(i)+groupW/2, y:H-8, class:'axis-label', 'text-anchor':'middle'});
+        pendLab.textContent = '수집예정'; svg.appendChild(pendLab);
+      }
+      var dlab = el('text',{x:gx(i)+groupW/2, y:H-22, class:'axis-label', 'text-anchor':'middle'});
+      dlab.textContent = r.d + (r.partial ? ' •' : '');
+      svg.appendChild(dlab);
+    });
+  }
+  renderCompareChart('chartCmpAOS','aos', COLORS.aos);
+  renderCompareChart('chartCmpIOS','ios', COLORS.ios);
+  document.getElementById('legendCmp').innerHTML =
+    '<span class="item"><span class="sw" style="background:'+COLORS.secondary+'; opacity:1; height:8px; border-radius:2px;"></span>진한 막대(왼쪽) = GA4 신규사용자</span>'+
+    '<span class="item"><span class="sw" style="background:'+COLORS.secondary+'; opacity:.35; height:8px; border-radius:2px;"></span>연한 막대(오른쪽) = AppsFlyer Installs</span>'+
+    '<span class="item">막대 아래 %는 둘의 차이 — <span style="color:'+COLORS.good+'">±8%↓ 양호</span> · <span style="color:'+COLORS.warn+'">±8~15% 주의</span> · <span style="color:'+COLORS.crit+'">15%↑ 이상</span></span>'+
+    '<span class="item">날짜 옆 • = 당일 진행중(부분 집계)</span>';
+
+  // ================= 유입경로 상세 (09/01-09/13 누적, 매일 갱신) =================
+  // Web: GA4 firstUserSource 기준 신규사용자 (nice.checkplus.co.kr 제외, 기존 방법론)
+  var WEB_SOURCES = [
+    {label:'hanwhafireworks.com', value:53548},
+    {label:'(direct)', value:10355},
+    {label:'카카오모먼트', value:7960},
+    {label:'카카오푸시', value:2199},
+    {label:'navergfa', value:461},
+    {label:'X(트위터)', value:425},
+    {label:'기타(챗GPT·네이버·구글 등)', value:1444}
+  ];
+  // Android/iOS: AppsFlyer partners_report Media Source 기준 Installs
+  var AOS_SOURCES = [
+    {label:'구글애즈(UAC)', value:5407},
+    {label:'Facebook Ads', value:4170},
+    {label:'Organic', value:3833},
+    {label:'adpopcorn_int', value:2060},
+    {label:'share_from_web', value:556},
+    {label:'Twitter', value:122},
+    {label:'기타', value:142}
+  ];
+  var IOS_SOURCES = [
+    {label:'Facebook Ads', value:3247},
+    {label:'Organic', value:1985},
+    {label:'adpopcorn_int', value:689},
+    {label:'share_from_web', value:323},
+    {label:'kakaopush', value:131},
+    {label:'Twitter', value:115},
+    {label:'기타', value:98}
+  ];
+  // Android+iOS 합산: AppsFlyer raw installs_report Adset 기준 Installs, AOS/IOS 표기만
+  // 다른 동일 캠페인은 라벨을 합쳐서 하나로 집계(애드셋 있는 매체만, Organic 등 제외)
+  var ADSET_COMBINED = [
+    {label:'구글애즈 UAC(2604_install_0416, Android전용)', aos:5397, ios:0},
+    {label:'[앱홍보_9월] 위클리 보물찾기', aos:763, ios:593},
+    {label:'[앱홍보_9월] E스포츠대회티켓', aos:621, ios:654},
+    {label:'[앱홍보_8월] ATA페스티벌 티겟드롭', aos:526, ios:472},
+    {label:'[앱홍보_8월] 타짜시사회_티켓드롭', aos:477, ios:405},
+    {label:'[앱홍보_6월 상시] 텍스트광고', aos:578, ios:302},
+    {label:'[앱홍보_9월] 부국제 티켓드롭', aos:362, ios:310},
+    {label:'[앱홍보_8월] 로열티프로그램_위클리완독챌린지', aos:355, ios:202},
+    {label:'esports_ticketdrop_kakaopush', aos:139, ios:208},
+    {label:'[앱홍보_9월] 퐁피두 도슨트 티켓드롭', aos:182, ios:130},
+    {label:'기타(78개 애드셋)', aos:718, ios:561}
+  ];
+  function renderHBars(containerId, data, color){
+    var total = data.reduce(function(s,r){return s+r.value;},0);
+    var max = Math.max.apply(null, data.map(function(r){return r.value;}));
+    var html = data.map(function(r){
+      var w = Math.max(1, (r.value/max*100));
+      var p = (r.value/total*100).toFixed(1);
+      return '<div class="hbar-row">'+
+        '<div class="lbl" title="'+r.label+'">'+r.label+'</div>'+
+        '<div class="track"><div class="fill" style="width:'+w+'%; background:'+color+'"></div></div>'+
+        '<div class="val tabular">'+fmt(r.value)+'<span class="pct">'+p+'%</span></div>'+
+      '</div>';
+    }).join('');
+    document.getElementById(containerId).innerHTML = html;
+  }
+  // 두 그룹(AOS/iOS)을 한 막대 안에 이어붙여 비교하는 누적 막대 렌더러
+  function renderStackedHBars(containerId, data, colorA, colorB){
+    var totals = data.map(function(r){ return r.aos + r.ios; });
+    var max = Math.max.apply(null, totals);
+    var html = data.map(function(r){
+      var t = r.aos + r.ios;
+      var barW = Math.max(1, (t/max*100));
+      var aosW = t>0 ? (r.aos/t*100) : 0;
+      var iosW = t>0 ? (r.ios/t*100) : 0;
+      return '<div class="hbar-row">'+
+        '<div class="lbl" title="'+r.label+'">'+r.label+'</div>'+
+        '<div class="track"><div class="fill-stack" style="width:'+barW+'%">'+
+          '<div style="width:'+aosW+'%; background:'+colorA+'"></div>'+
+          '<div style="width:'+iosW+'%; background:'+colorB+'"></div>'+
+        '</div></div>'+
+        '<div class="val tabular">'+fmt(t)+'<span class="pct">AOS '+fmt(r.aos)+' · iOS '+fmt(r.ios)+'</span></div>'+
+      '</div>';
+    }).join('');
+    document.getElementById(containerId).innerHTML = html;
+  }
+  renderHBars('barsWeb', WEB_SOURCES, COLORS.web);
+  renderHBars('barsAOS', AOS_SOURCES, COLORS.aos);
+  renderHBars('barsIOS', IOS_SOURCES, COLORS.ios);
+  renderStackedHBars('barsAdsetCombined', ADSET_COMBINED, COLORS.aos, COLORS.ios);
+
+  // ================= 표로 보기 A: GA4 활성사용자 (차트1 바로 아래) =================
+  (function(){
+    var table = document.getElementById('tableAU');
+    var head =
+      '<thead>'+
+      '<tr class="group-row"><th></th><th colspan="2">Web</th><th colspan="2" class="grp-div">Android</th><th colspan="2" class="grp-div">iOS</th></tr>'+
+      '<tr><th>날짜</th><th>활성</th><th>신규</th>'+
+      '<th class="grp-div">활성</th><th>신규</th>'+
+      '<th class="grp-div">활성</th><th>신규</th></tr>'+
+      '</thead>';
+    var rows = GA4.map(function(r){
+      return '<tr class="'+(r.partial?'is-partial':'')+'">'+
+        '<td>'+r.d+(r.partial?' <span class="cell-muted">(진행중)</span>':'')+'</td>'+
+        '<td>'+fmt(r.web.au)+'</td><td>'+fmt(r.web.new)+'</td>'+
+        '<td class="grp-div">'+fmt(r.aos.au)+'</td><td>'+fmt(r.aos.new)+'</td>'+
+        '<td class="grp-div">'+fmt(r.ios.au)+'</td><td>'+fmt(r.ios.new)+'</td>'+
+      '</tr>';
+    }).join('');
+    table.innerHTML = head + '<tbody>'+rows+'</tbody>';
+  })();
+
+  // ================= 표로 보기 B: 신규유입 비교 (차트2 바로 아래) =================
+  (function(){
+    var table = document.getElementById('tableCmp');
+    var head =
+      '<thead>'+
+      '<tr class="group-row"><th></th><th colspan="3">Android</th><th colspan="3" class="grp-div">iOS</th></tr>'+
+      '<tr><th>날짜</th><th>GA4 신규</th><th>AF Installs</th><th>차이</th>'+
+      '<th class="grp-div">GA4 신규</th><th>AF Installs</th><th>차이</th></tr>'+
+      '</thead>';
+    function pill(err){
+      if (err===null) return '<span class="pill pending">수집예정</span>';
+      var cls = Math.abs(err)<=8?'good':Math.abs(err)<=15?'warn':'crit';
+      return '<span class="pill '+cls+'">'+(err>0?'+':'')+err.toFixed(1)+'%</span>';
+    }
+    var rows = AF.map(function(af,i){
+      var r = GA4[i];
+      var errAos = af.aos ? (af.aos.installs-r.aos.new)/r.aos.new*100 : null;
+      var errIos = af.ios ? (af.ios.installs-r.ios.new)/r.ios.new*100 : null;
+      return '<tr class="'+(r.partial?'is-partial':'')+'">'+
+        '<td>'+af.d+(r.partial?' <span class="cell-muted">(진행중)</span>':'')+'</td>'+
+        '<td>'+fmt(r.aos.new)+'</td><td>'+(af.aos?fmt(af.aos.installs):'<span class="cell-muted">—</span>')+'</td><td>'+pill(errAos)+'</td>'+
+        '<td class="grp-div">'+fmt(r.ios.new)+'</td><td>'+(af.ios?fmt(af.ios.installs):'<span class="cell-muted">—</span>')+'</td><td>'+pill(errIos)+'</td>'+
+      '</tr>';
+    }).join('');
+    table.innerHTML = head + '<tbody>'+rows+'</tbody>';
+  })();
+})();
+</script>
