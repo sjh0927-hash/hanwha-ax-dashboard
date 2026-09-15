@@ -354,10 +354,10 @@
     var plotW=W-ML-MR, plotH=H-MT-MB;
     var n = GA4.length;
 
-    // 누적 스택: Web(바닥) → Android → iOS(맨 위) — ios1(맨 위 경계)이 곧 3개 합계(전체)
+    // 누적 스택: Android(바닥) → iOS → Web(맨 위, 전체 볼륨 기여도가 가장 커서 위로 배치) — web1(맨 위 경계)이 곧 3개 합계(전체)
     var stacks = GA4.map(function(r){
       var web=r.web.au, aos=r.aos.au, ios=r.ios.au;
-      return {web0:0, web1:web, aos0:web, aos1:web+aos, ios0:web+aos, ios1:web+aos+ios, total:web+aos+ios};
+      return {aos0:0, aos1:aos, ios0:aos, ios1:aos+ios, web0:aos+ios, web1:aos+ios+web, total:web+aos+ios};
     });
     var maxTotal = Math.max.apply(null, stacks.map(function(s){return s.total;}));
     var niceMax = Math.ceil(maxTotal/5000)*5000;
@@ -389,9 +389,15 @@
     });
 
     var layers = [
-      {key:'web', y0k:'web0', y1k:'web1', color:COLORS.web},
       {key:'aos', y0k:'aos0', y1k:'aos1', color:COLORS.aos},
-      {key:'ios', y0k:'ios0', y1k:'ios1', color:COLORS.ios}
+      {key:'ios', y0k:'ios0', y1k:'ios1', color:COLORS.ios},
+      {key:'web', y0k:'web0', y1k:'web1', color:COLORS.web}
+    ];
+    // 툴팁 표시 순서는 스택 쌓는 순서와 별개로 항상 Web/Android/iOS 고정(읽기 편의용)
+    var tooltipOrder = [
+      {key:'web', color:COLORS.web},
+      {key:'aos', color:COLORS.aos},
+      {key:'ios', color:COLORS.ios}
     ];
     // 마지막 날이 아직 진행중(부분 집계)인 경우에만 그 구간을 옅게+점선으로 별도 표시
     var lastIsPartial = !!GA4[n-1].partial;
@@ -418,10 +424,10 @@
       }
     });
 
-    // 전체(합계) 강조선 — 스택 맨 위 경계(ios1)를 굵은 선으로 한 번 더 덧그림
-    svg.appendChild(el('path',{d:lineD(solidIdx, 'ios1'), fill:'none', stroke:COLORS.primary, 'stroke-width':2.5, 'stroke-linejoin':'round','stroke-linecap':'round'}));
+    // 전체(합계) 강조선 — 스택 맨 위 경계(web1)를 굵은 선으로 한 번 더 덧그림
+    svg.appendChild(el('path',{d:lineD(solidIdx, 'web1'), fill:'none', stroke:COLORS.primary, 'stroke-width':2.5, 'stroke-linejoin':'round','stroke-linecap':'round'}));
     if (partialIdx.length){
-      svg.appendChild(el('path',{d:lineD(partialIdx, 'ios1'), fill:'none', stroke:COLORS.primary, 'stroke-width':2.5, 'stroke-dasharray':'3 4', opacity:0.85}));
+      svg.appendChild(el('path',{d:lineD(partialIdx, 'web1'), fill:'none', stroke:COLORS.primary, 'stroke-width':2.5, 'stroke-dasharray':'3 4', opacity:0.85}));
     }
     stacks.forEach(function(s,i){
       var isPartial = !!GA4[i].partial;
@@ -442,7 +448,7 @@
         hit.addEventListener('mouseenter', function(){
           crosshair.setAttribute('x1', x(i)); crosshair.setAttribute('x2', x(i)); crosshair.style.opacity=1;
           var r = GA4[i], s = stacks[i];
-          var rows = layers.map(function(L){
+          var rows = tooltipOrder.map(function(L){
             var lbl = L.key==='web'?'Web':L.key==='aos'?'Android':'iOS';
             return '<div class="tt-row"><span class="k"><span class="sw" style="background:'+L.color+'"></span>'+lbl+'</span><span class="v">'+fmt(r[L.key].au)+'</span></div>';
           }).join('');
