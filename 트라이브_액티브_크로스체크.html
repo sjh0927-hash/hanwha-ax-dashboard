@@ -393,11 +393,11 @@
       {key:'ios', y0k:'ios0', y1k:'ios1', color:COLORS.ios},
       {key:'web', y0k:'web0', y1k:'web1', color:COLORS.web}
     ];
-    // 툴팁 표시 순서는 스택 쌓는 순서와 별개로 항상 Web/Android/iOS 고정(읽기 편의용)
+    // 툴팁 표시 순서 = 차트 스택의 위→아래 순서(Web맨위→iOS→Android바닥)와 동일하게 맞춤
     var tooltipOrder = [
       {key:'web', color:COLORS.web},
-      {key:'aos', color:COLORS.aos},
-      {key:'ios', color:COLORS.ios}
+      {key:'ios', color:COLORS.ios},
+      {key:'aos', color:COLORS.aos}
     ];
     // 마지막 날이 아직 진행중(부분 집계)인 경우에만 그 구간을 옅게+점선으로 별도 표시
     var lastIsPartial = !!GA4[n-1].partial;
