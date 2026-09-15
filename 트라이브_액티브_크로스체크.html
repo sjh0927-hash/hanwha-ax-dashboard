@@ -173,7 +173,7 @@
     </div>
     <div class="meta">
       <span>마지막 갱신</span>
-      <span class="updated">2026-09-15 · 09/01–09/14 확정 · 09/15 데이터 미집계(수집예정)</span>
+      <span class="updated">2026-09-16 · 09/01–09/15 확정 · 09/16 데이터 미집계(수집예정)</span>
     </div>
   </header>
 
@@ -217,7 +217,7 @@
   <section class="panel">
     <div class="panel-head">
       <h2>유입경로 상세 — Web(GA4) vs OS별(AppsFlyer)</h2>
-      <div class="desc">09/01–09/14 누적(전일까지), 매일 갱신. Web은 GA4 firstUserSource 기준 신규사용자, AOS·iOS는 AppsFlyer Installs 기준 — 계측기가 서로 달라서 비중을 그대로 더하거나 맞비교하면 안 됨(플랫폼별로 각자 보는 용도).</div>
+      <div class="desc">09/01–09/15 누적(전일까지), 매일 갱신. Web은 GA4 firstUserSource 기준 신규사용자, AOS·iOS는 AppsFlyer Installs 기준 — 계측기가 서로 달라서 비중을 그대로 더하거나 맞비교하면 안 됨(플랫폼별로 각자 보는 용도).</div>
     </div>
     <div class="mini-chart-title" style="margin-top:8px;"><span class="sw" style="background:var(--series-web)"></span>Web (GA4 · 신규사용자)</div>
     <div id="barsWeb" class="hbar-panel"></div>
@@ -259,7 +259,7 @@
     <div><b>읽는 법.</b> GA4 활성사용자엔 웹 스트림이 섞여 있어 AppsFlyer 전체 활성사용자와 직접 비교할 수 없음 — 비교 가능한 지점은 "신규 유입"(AF Installs ↔ GA4 신규사용자)뿐.</div>
     <div><b>2026-09-14 데이터 정정.</b> 09/10 신규유입 오차가 AOS +70%·iOS +112%로 비정상적으로 크게 나와 재검증한 결과, <b>GA4 쪽 09/10 수치가 처음 "확정"으로 기록했던 날(09/11 재조회 시점)에도 아직 집계가 다 안 끝난 상태였음</b>을 확인 — 그 다음날(09/14, 4일 경과) 다시 조회하니 GA4 09/10 값이 크게 늘어남(예: AOS 신규사용자 982→1,473, iOS 383→715). AppsFlyer 쪽은 raw 설치 로그와 집계 리포트가 완전히 일치해 정상 확인됨(Organic 제외 전 매체가 1건도 안 틀리게 일치) — 문제는 AppsFlyer가 아니라 GA4의 처리 지연이었음. "다음날 재조회하면 확정"이라는 기존 가정이 항상 안전하지는 않다는 반례로 기록.</div>
     <div><b>2026-09-15 추가 발견 — GA4 활성사용자(AU)는 신규사용자보다 훨씬 늦게, 더 크게 흔들림.</b> 09/01–09/14 전체를 다시 훑어본 결과 대부분 날짜는 오차 1% 미만으로 안정적이었지만, <b>Android 활성사용자만 유독 09/08(3,472→2,939, -15.4%)·09/13(3,757→3,019, -19.6%)에서 크게 하향 조정</b>됨 — 같은 날짜의 신규사용자는 각각 -6.4%·-6.3%로 정상 범위(±8%) 안이었음. 즉 신규사용자는 며칠 지나면 대체로 안정되는데, 활성사용자는 그보다 늦게(그리고 방향도 예측 불가하게, 이번엔 감소 쪽으로) 더 크게 재조정될 수 있다는 뜻 — 아마도 GA4의 사용자 식별자 중복제거(identity resolution)가 며칠에 걸쳐 뒤늦게 반영되기 때문으로 추정(미확인). 위 차트·표의 09/01–09/14 활성사용자 값은 이번에 전부 재조회한 최신값으로 갱신(신규사용자·AppsFlyer Installs는 재조회해도 거의 그대로였음 — 안정성 재확인). AppsFlyer daily_report 09/14 확정치는 API 일 1회 제한상 오늘 처음 확보(전일 부분집계 aos 44/ios 17 → 확정 aos 994/ios 435로 급증, 예상된 패턴).</div>
-    <div><b>미해결.</b> AppsFlyer 대시보드의 진짜 활성사용자 대응 지표(Retention/Overview Unique Users)는 아직 API로 확인 못함 — 화면 확인 필요. 09/15 데이터는 GA4·AppsFlyer 양쪽 다 아직 한 행도 안 잡혀 있어(당일 진행중 표시조차 못 함) 다음 갱신 때 확인 필요.</div>
+    <div><b>미해결.</b> AppsFlyer 대시보드의 진짜 활성사용자 대응 지표(Retention/Overview Unique Users)는 아직 API로 확인 못함 — 화면 확인 필요. 09/16 데이터는 GA4·AppsFlyer 양쪽 다 아직 한 행도 안 잡혀 있어(당일 진행중 표시조차 못 함) 다음 갱신 때 확인 필요.</div>
     <div>PLUS 트라이브 · GA4 property 298197652 · AppsFlyer iOS id1631958069 / Android com.hanwha.lifeplus.tribes.app</div>
   </footer>
 </div>
@@ -281,7 +281,8 @@
     {d:'09-11', web:{au:2939, new:1897}, aos:{au:3351,new:1213}, ios:{au:2211,new:631}},
     {d:'09-12', web:{au:2659, new:1839}, aos:{au:3925,new:1352}, ios:{au:2224,new:596}},
     {d:'09-13', web:{au:1895, new:1439}, aos:{au:3019,new:1242}, ios:{au:1666,new:514}}, // 2026-09-15 재검증: aos AU 3757→3019(-19.6%, 하단 각주)
-    {d:'09-14', web:{au:2645, new:1290}, aos:{au:4026,new:1049}, ios:{au:2136,new:413}}
+    {d:'09-14', web:{au:2645, new:1290}, aos:{au:4026,new:1049}, ios:{au:2136,new:413}},
+    {d:'09-15', web:{au:1663, new:1025}, aos:{au:3276,new:1000}, ios:{au:1633,new:373}}
   ];
   var AF = [
     {d:'09-01', aos:{installs:1187, loyal:659},  ios:{installs:490, loyal:61}},
@@ -297,7 +298,8 @@
     {d:'09-11', aos:{installs:1233, loyal:722},  ios:{installs:598, loyal:31}},
     {d:'09-12', aos:{installs:1348, loyal:768},  ios:{installs:555, loyal:18}},
     {d:'09-13', aos:{installs:1248, loyal:651},  ios:{installs:499, loyal:8}},
-    {d:'09-14', aos:{installs:994,  loyal:474},  ios:{installs:435, loyal:4}}
+    {d:'09-14', aos:{installs:994,  loyal:474},  ios:{installs:435, loyal:4}},
+    {d:'09-15', aos:{installs:992,  loyal:481},  ios:{installs:400, loyal:7}}
   ];
 
   var css = getComputedStyle(document.documentElement);
@@ -536,50 +538,50 @@
     '<span class="item">막대 아래 %는 둘의 차이 — <span style="color:'+COLORS.good+'">±8%↓ 양호</span> · <span style="color:'+COLORS.warn+'">±8~15% 주의</span> · <span style="color:'+COLORS.crit+'">15%↑ 이상</span></span>'+
     '<span class="item">날짜 옆 • = 당일 진행중(부분 집계)</span>';
 
-  // ================= 유입경로 상세 (09/01-09/14 누적, 매일 갱신) =================
+  // ================= 유입경로 상세 (09/01-09/15 누적, 매일 갱신) =================
   // Web: GA4 firstUserSource 기준 신규사용자 (nice.checkplus.co.kr 제외, 기존 방법론)
   var WEB_SOURCES = [
-    {label:'hanwhafireworks.com', value:53548},
-    {label:'(direct)', value:10894},
-    {label:'카카오모먼트', value:8178},
-    {label:'카카오푸시', value:2365},
-    {label:'navergfa', value:645},
+    {label:'hanwhafireworks.com', value:53551},
+    {label:'(direct)', value:11347},
+    {label:'카카오모먼트', value:8356},
+    {label:'카카오푸시', value:2389},
+    {label:'navergfa', value:922},
     {label:'X(트위터)', value:451},
-    {label:'기타(챗GPT·네이버·구글 등)', value:1458}
+    {label:'기타(챗GPT·네이버·구글 등)', value:1494}
   ];
   // Android/iOS: AppsFlyer partners_report Media Source 기준 Installs
   var AOS_SOURCES = [
-    {label:'구글애즈(UAC)', value:5874},
-    {label:'Facebook Ads', value:4447},
-    {label:'Organic', value:3941},
-    {label:'adpopcorn_int', value:2162},
-    {label:'share_from_web', value:579},
-    {label:'Twitter', value:128},
-    {label:'기타', value:153}
+    {label:'구글애즈(UAC)', value:6336},
+    {label:'Facebook Ads', value:4743},
+    {label:'Organic', value:4051},
+    {label:'adpopcorn_int', value:2274},
+    {label:'share_from_web', value:597},
+    {label:'Twitter', value:134},
+    {label:'기타', value:163}
   ];
   var IOS_SOURCES = [
-    {label:'Facebook Ads', value:3513},
-    {label:'Organic', value:2078},
-    {label:'adpopcorn_int', value:721},
-    {label:'share_from_web', value:341},
-    {label:'kakaopush', value:145},
-    {label:'Twitter', value:125},
-    {label:'기타', value:100}
+    {label:'Facebook Ads', value:3761},
+    {label:'Organic', value:2181},
+    {label:'adpopcorn_int', value:749},
+    {label:'share_from_web', value:358},
+    {label:'kakaopush', value:146},
+    {label:'Twitter', value:130},
+    {label:'기타', value:105}
   ];
   // Android+iOS 합산: AppsFlyer raw installs_report Adset 기준 Installs, AOS/IOS 표기만
   // 다른 동일 캠페인은 라벨을 합쳐서 하나로 집계(애드셋 있는 매체만, Organic 등 제외)
   var ADSET_COMBINED = [
-    {label:'구글애즈 UAC(2604_install_0416, Android전용)', aos:5865, ios:0},
-    {label:'[앱홍보_9월] 위클리 보물찾기', aos:882, ios:707},
-    {label:'[앱홍보_9월] E스포츠대회티켓', aos:622, ios:654},
+    {label:'구글애즈 UAC(2604_install_0416, Android전용)', aos:6328, ios:0},
+    {label:'[앱홍보_9월] 위클리 보물찾기', aos:998, ios:821},
+    {label:'[앱홍보_9월] E스포츠대회티켓', aos:623, ios:655},
+    {label:'[앱홍보_6월 상시] 텍스트광고', aos:686, ios:368},
     {label:'[앱홍보_8월] ATA페스티벌 티겟드롭', aos:526, ios:472},
-    {label:'[앱홍보_6월 상시] 텍스트광고', aos:631, ios:332},
     {label:'[앱홍보_8월] 타짜시사회_티켓드롭', aos:477, ios:405},
-    {label:'[앱홍보_9월] 부국제 티켓드롭', aos:389, ios:380},
-    {label:'[앱홍보_8월] 로열티프로그램_위클리완독챌린지', aos:384, ios:217},
-    {label:'[앱홍보_9월] 퐁피두 도슨트 티켓드롭', aos:207, ios:151},
+    {label:'[앱홍보_9월] 부국제 티켓드롭', aos:443, ios:427},
+    {label:'[앱홍보_8월] 로열티프로그램_위클리완독챌린지', aos:405, ios:233},
+    {label:'[앱홍보_9월] 퐁피두 도슨트 티켓드롭', aos:227, ios:174},
     {label:'esports_ticketdrop_kakaopush', aos:139, ios:208},
-    {label:'기타(82개 애드셋)', aos:784, ios:622}
+    {label:'기타(83개 애드셋)', aos:841, ios:660}
   ];
   function renderHBars(containerId, data, color){
     var total = data.reduce(function(s,r){return s+r.value;},0);
