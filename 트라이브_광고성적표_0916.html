@@ -1,0 +1,1303 @@
+
+<title>트라이브 광고 성적표</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700;900&family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  :root{
+    color-scheme:light;
+    --page-bg:#eef1e7; --surface:#fbfcf7; --surface-alt:#e5ebda;
+    --ink-primary:#12160e; --ink-secondary:#4a5140; --ink-muted:#828a74;
+    --rule:#c7d2b7; --rule-strong:#9aab84;
+    --accent:#1f3f8f; --accent-soft:#dfe6f6; --accent-ink:#1a3573;
+    --series-spend:#2a78d6; --series-install:#1baf7a;
+    --series-aos:#2a78d6; --series-ios:#eb6834;
+    --media-ig:#2a78d6; --media-x:#4a3aa7; --media-km:#eda100; --media-nv:#008300;
+    --status-good:#0ca30c; --status-good-bg:#e2f4e0;
+    --status-warn:#b8790a; --status-warn-bg:#fbedd2;
+    --status-serious:#c85f36; --status-serious-bg:#fbe2d5;
+    --status-crit:#c23434; --status-crit-bg:#fbe0df;
+    --grid:#dbe3cf; --shadow:0 1px 2px rgba(20,25,10,.06);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      color-scheme:dark;
+      --page-bg:#10130c; --surface:#181c13; --surface-alt:#212617;
+      --ink-primary:#eef1e7; --ink-secondary:#bfc7b0; --ink-muted:#8b9480;
+      --rule:#333f28; --rule-strong:#455337;
+      --accent:#7f9de8; --accent-soft:#202c48; --accent-ink:#a9c0f2;
+      --series-spend:#3987e5; --series-install:#199e70;
+      --series-aos:#3987e5; --series-ios:#d95926;
+      --media-ig:#3987e5; --media-x:#9085e9; --media-km:#c98500; --media-nv:#008300;
+      --status-good:#3fc23f; --status-good-bg:rgba(63,194,63,.16);
+      --status-warn:#e8a531; --status-warn-bg:rgba(232,165,49,.16);
+      --status-serious:#e8916c; --status-serious-bg:rgba(232,145,108,.16);
+      --status-crit:#e46a6a; --status-crit-bg:rgba(228,106,106,.18);
+      --grid:#2a3222; --shadow:none;
+    }
+  }
+  :root[data-theme="dark"]{
+    color-scheme:dark;
+    --page-bg:#10130c; --surface:#181c13; --surface-alt:#212617;
+    --ink-primary:#eef1e7; --ink-secondary:#bfc7b0; --ink-muted:#8b9480;
+    --rule:#333f28; --rule-strong:#455337;
+    --accent:#7f9de8; --accent-soft:#202c48; --accent-ink:#a9c0f2;
+    --series-spend:#3987e5; --series-install:#199e70;
+    --series-aos:#3987e5; --series-ios:#d95926;
+    --media-ig:#3987e5; --media-x:#9085e9; --media-km:#c98500; --media-nv:#008300;
+    --status-good:#3fc23f; --status-good-bg:rgba(63,194,63,.16);
+    --status-warn:#e8a531; --status-warn-bg:rgba(232,165,49,.16);
+    --status-serious:#e8916c; --status-serious-bg:rgba(232,145,108,.16);
+    --status-crit:#e46a6a; --status-crit-bg:rgba(228,106,106,.18);
+    --grid:#2a3222; --shadow:none;
+  }
+  *{box-sizing:border-box;}
+  body{
+    background:var(--page-bg); color:var(--ink-primary);
+    font-family:"IBM Plex Sans KR","IBM Plex Sans",system-ui,-apple-system,sans-serif;
+    line-height:1.6; padding:0 0 72px;
+  }
+  .wrap{max-width:900px; margin:0 auto; padding:0 20px;}
+  .num{font-family:"IBM Plex Mono",ui-monospace,monospace;}
+  .tabular{font-variant-numeric:tabular-nums;}
+  h1,h2,h3{font-family:"Noto Serif KR","IBM Plex Sans KR",serif; text-wrap:balance; margin:0; font-weight:700;}
+  p{margin:0;}
+  ::selection{background:var(--accent-soft);}
+
+  /* masthead */
+  .masthead{background:var(--surface); border-bottom:3px double var(--rule-strong); padding:36px 0 26px;}
+  .masthead .wrap{display:flex; flex-direction:column; gap:16px;}
+  .eyebrow{font-size:12px; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-muted); display:flex; gap:10px; align-items:center; flex-wrap:wrap;}
+  .eyebrow .tag{border:1px solid var(--rule-strong); border-radius:3px; padding:2px 7px; color:var(--ink-secondary);}
+  .masthead h1{font-size:34px; letter-spacing:-.01em;}
+  .masthead .dek{color:var(--ink-secondary); font-size:14.5px; max-width:100%;}
+  .ledger-row{display:flex; flex-wrap:wrap; gap:0; border-top:1px solid var(--rule); margin-top:6px;}
+  .ledger-cell{flex:1 1 140px; padding:14px 18px 4px 0; border-right:1px solid var(--rule);}
+  .ledger-cell:last-child{border-right:none;}
+  .ledger-cell .k{font-size:11.5px; color:var(--ink-muted); text-transform:uppercase; letter-spacing:.04em; margin-bottom:5px;}
+  .ledger-cell .v{font-family:"IBM Plex Mono",monospace; font-size:23px; font-weight:600; letter-spacing:-.01em;}
+  .ledger-cell .v small{font-size:13px; font-weight:500; color:var(--ink-secondary); margin-left:2px;}
+
+  /* sections */
+  section{padding:34px 0;}
+  section + section{border-top:1px solid var(--rule);}
+  .sec-head{display:flex; align-items:baseline; gap:12px; margin-bottom:6px;}
+  .sec-no{font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--ink-muted); border:1px solid var(--rule-strong); border-radius:50%; width:22px; height:22px; display:flex; align-items:center; justify-content:center; flex:none;}
+  .sec-head h2{font-size:19px;}
+  .sec-desc{color:var(--ink-secondary); font-size:13.5px; max-width:100%; margin:6px 0 20px;}
+
+  /* verdict box */
+  .verdict{background:var(--surface); border:1px solid var(--rule); border-left:4px solid var(--accent); border-radius:2px; padding:20px 22px; box-shadow:var(--shadow);}
+  .verdict h2{font-size:17px; margin-bottom:10px;}
+  .verdict p{font-size:14px; color:var(--ink-secondary); margin-bottom:10px;}
+  .verdict p:last-child{margin-bottom:0;}
+  .verdict b{color:var(--ink-primary); font-weight:600;}
+
+  /* chart shell */
+  .chart-card{background:var(--surface); border:1px solid var(--rule); border-radius:2px; padding:18px 20px 14px; box-shadow:var(--shadow);}
+  .chart-scroll{overflow-x:auto;}
+  svg{display:block; overflow:visible; font-family:"IBM Plex Mono",monospace;}
+  .axis-label{fill:var(--ink-muted); font-size:10.5px;}
+  .bar-label{fill:var(--ink-primary); font-size:11.5px; font-weight:500;}
+  .bar-sub{fill:var(--ink-muted); font-size:10px;}
+  .grid-line{stroke:var(--grid); stroke-width:1;}
+  .baseline{stroke:var(--rule-strong); stroke-width:1;}
+  .legend-row{display:flex; gap:16px; flex-wrap:wrap; margin-top:12px; font-size:12px; color:var(--ink-secondary);}
+  .legend-row .item{display:flex; align-items:center; gap:6px;}
+  .legend-row .sw{width:12px; height:12px; border-radius:2px; display:inline-block; flex:none;}
+  .foot-note{font-size:12px; color:var(--ink-muted); margin-top:12px; line-height:1.55;}
+  .foot-note + .foot-note{margin-top:6px;}
+
+  /* status pill */
+  .pill{display:inline-flex; align-items:center; gap:4px; padding:2px 9px; border-radius:999px; font-size:11px; font-weight:600; font-family:"IBM Plex Mono",monospace;}
+  .pill.good{background:var(--status-good-bg); color:var(--status-good);}
+  .pill.warn{background:var(--status-warn-bg); color:var(--status-warn);}
+  .pill.serious{background:var(--status-serious-bg); color:var(--status-serious);}
+  .pill.crit{background:var(--status-crit-bg); color:var(--status-crit);}
+  .pill.info{background:var(--surface-alt); color:var(--ink-muted);}
+  .pill.milestone{background:var(--accent-soft); color:var(--accent-ink);}
+
+  /* 일자별 로그 타임라인 */
+  .timeline{display:flex; flex-direction:column;}
+  .tl-item{display:grid; grid-template-columns:80px 20px 1fr; gap:0 14px;}
+  .tl-item:not(:last-child){padding-bottom:16px;}
+  .tl-date{font-family:"IBM Plex Mono",monospace; font-size:12.5px; font-weight:600; color:var(--ink-secondary); padding-top:2px;}
+  .tl-rail{display:flex; flex-direction:column; align-items:center;}
+  .tl-dot{width:10px; height:10px; border-radius:50%; flex:none; margin-top:4px;}
+  .tl-line{flex:1; width:2px; background:var(--rule); margin-top:3px; min-height:14px;}
+  .tl-body .tl-head{display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:3px;}
+  .tl-body .tl-title{font-weight:600; font-size:13.5px; color:var(--ink-primary);}
+  .tl-body p{font-size:12.5px; color:var(--ink-secondary); margin:0; line-height:1.55;}
+  .tl-sub{display:flex; gap:9px; align-items:baseline; font-size:12.5px; color:var(--ink-secondary); line-height:1.55; margin-top:5px;}
+  .tl-sub:first-of-type{margin-top:0;}
+  .tl-tag{flex:none; font-size:9.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:var(--ink-muted); background:var(--surface-alt); border-radius:3px; padding:1.5px 6px; min-width:30px; text-align:center;}
+  @media (max-width:480px){ .tl-item{grid-template-columns:70px 16px 1fr;} .tl-sub{flex-direction:column; gap:2px;} }
+
+  /* ranking table (ledger style) */
+  .rank-table{display:flex; flex-direction:column; gap:0; border:1px solid var(--rule); border-radius:2px; overflow:hidden; background:var(--surface); box-shadow:var(--shadow);}
+  .rank-table .r-head{display:grid; grid-template-columns:28px 1fr 90px 78px 90px; gap:10px; padding:9px 14px; background:var(--surface-alt); font-size:10.5px; color:var(--ink-muted); text-transform:uppercase; letter-spacing:.04em;}
+  .rank-row{display:grid; grid-template-columns:28px 1fr 90px 78px 90px; gap:10px; padding:11px 14px; border-top:1px solid var(--rule); align-items:center; font-size:12.5px;}
+  .rank-row .idx{font-family:"IBM Plex Mono",monospace; color:var(--ink-muted); font-size:11px;}
+  .rank-row .nm{color:var(--ink-primary); font-weight:500;}
+  .rank-row .nm .media-tag{display:block; font-size:10.5px; color:var(--ink-muted); font-weight:400; margin-top:1px;}
+  .rank-row .num-cell{font-family:"IBM Plex Mono",monospace; text-align:right; color:var(--ink-secondary);}
+  @media (max-width:640px){
+    .rank-table .r-head, .rank-row{grid-template-columns:20px 1fr 68px 62px; }
+    .rank-table .r-head span:nth-child(5), .rank-row .num-cell:nth-child(5){display:none;}
+  }
+
+  .two-col{display:grid; grid-template-columns:1fr 1fr; gap:20px;}
+  @media (max-width:720px){ .two-col{grid-template-columns:1fr;} }
+
+  /* mini campaign table (X / kakaomoment 내부 캠페인) */
+  .mini-table{border:1px solid var(--rule); border-radius:2px; overflow:hidden; background:var(--surface);}
+  .mini-table .mt-title{padding:8px 12px; background:var(--surface-alt); font-size:12px; font-weight:600; color:var(--ink-secondary); display:flex; align-items:center; gap:7px;}
+  .mini-table .mt-title .sw{width:10px; height:10px; border-radius:2px; flex:none;}
+  .mini-row{display:grid; grid-template-columns:1fr 66px 76px; gap:8px; padding:8px 12px; border-top:1px solid var(--rule); font-size:12px; align-items:center;}
+  .mini-row span:nth-child(2), .mini-row span:nth-child(3){text-align:right; font-family:"IBM Plex Mono",monospace; color:var(--ink-secondary);}
+
+  /* small-multiple grid (데일리 캠페인 추이) */
+  .sm-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  @media (max-width:680px){ .sm-grid{grid-template-columns:1fr;} }
+  .sm-panel{background:var(--surface); border:1px solid var(--rule); border-radius:2px; padding:12px 14px 10px; box-shadow:var(--shadow);}
+  .sm-panel .sm-title{font-size:12.5px; font-weight:600; color:var(--ink-primary); margin-bottom:2px;}
+  .sm-panel .sm-cap{font-size:11.5px; color:var(--ink-secondary); margin-top:6px; line-height:1.5;}
+
+  .callout{border:1px solid var(--rule); border-radius:2px; background:var(--accent-soft); padding:18px 20px; margin-top:18px;}
+  .callout.warn-tone{background:var(--status-warn-bg);}
+  .callout h3{font-size:14.5px; margin-bottom:8px; color:var(--ink-primary);}
+  .callout p{font-size:13px; color:var(--ink-secondary); margin-bottom:6px;}
+  .callout p:last-child{margin-bottom:0;}
+  .callout .stat-row{display:flex; gap:22px; flex-wrap:wrap; margin:10px 0 12px;}
+  .callout .stat{display:flex; flex-direction:column; gap:2px;}
+  .callout .stat .k{font-size:10.5px; color:var(--ink-muted); text-transform:uppercase; letter-spacing:.03em;}
+  .callout .stat .v{font-family:"IBM Plex Mono",monospace; font-size:19px; font-weight:600; color:var(--ink-primary);}
+
+  /* conclusion list */
+  .reco-list{display:flex; flex-direction:column; gap:14px;}
+  .reco{display:flex; gap:14px; padding:14px 16px; background:var(--surface); border:1px solid var(--rule); border-radius:2px; box-shadow:var(--shadow);}
+  .reco .mark{width:26px; height:26px; border-radius:50%; flex:none; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; font-family:"IBM Plex Mono",monospace;}
+  .reco .mark.up{background:var(--status-good-bg); color:var(--status-good);}
+  .reco .mark.down{background:var(--status-crit-bg); color:var(--status-crit);}
+  .reco .mark.watch{background:var(--status-warn-bg); color:var(--status-warn);}
+  .reco .body b{display:block; font-size:14px; margin-bottom:3px; color:var(--ink-primary);}
+  .reco .body span{font-size:13px; color:var(--ink-secondary);}
+
+  /* hover tooltip (전 차트 공용) */
+  .g-tooltip{position:fixed; pointer-events:none; background:var(--surface); border:1px solid var(--rule);
+    border-left:3px solid var(--accent); border-radius:6px; padding:9px 13px; font-size:12.5px;
+    box-shadow:0 8px 22px rgba(20,25,10,.18); opacity:0; transition:opacity .06s ease; z-index:80; min-width:150px;}
+  .g-tooltip .tt-title{font-weight:700; margin-bottom:5px; font-family:"IBM Plex Mono",monospace; color:var(--ink-primary); white-space:nowrap;}
+  .g-tooltip .tt-row{display:flex; justify-content:space-between; gap:16px; color:var(--ink-secondary); padding:1.5px 0; white-space:nowrap;}
+  .g-tooltip .tt-row b{font-family:"IBM Plex Mono",monospace; color:var(--ink-primary); font-weight:600; margin-left:auto;}
+  svg .hit{fill:transparent; cursor:pointer;}
+  svg .hit:hover{fill:var(--ink-primary); fill-opacity:.04;}
+
+  footer{border-top:3px double var(--rule-strong); padding:24px 0 40px; margin-top:8px;}
+  footer p{font-size:11.5px; color:var(--ink-muted); margin-bottom:6px; line-height:1.6;}
+
+  @media (max-width:640px){
+    .masthead h1{font-size:26px;}
+    .ledger-cell{flex-basis:44%; border-right:none; border-bottom:1px solid var(--rule);}
+  }
+</style>
+
+<div class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">
+      <span class="tag">한화 PLUS 트라이브</span>
+      <span>유료 매체 raw 데이터 자체 분석</span>
+      <span>·</span>
+      <span>2026-09-01 ~ 2026-09-15 (15일)</span>
+    </div>
+    <h1>트라이브 광고 성적표</h1>
+    <p class="dek">같은 예산이라도 어디에 썼는지에 따라 설치 1건의 값이 최대 360배까지 벌어졌다 — 15일간 매체 10곳, 애드셋 105개에 집행된 raw 데이터를 소재·애드셋 단위까지 뜯어본 결과. 지난 리포트가 경고했던 부산 국제 영화제·퐁피두 도슨트의 CPI 급등이 이번엔 서로 다른 결말(하나는 반전, 하나는 지속)로 갈렸고, 이스포츠 빈자리를 채웠던 위클리보물찾기에서도 새 피로 신호가 시작됐다.</p>
+    <div class="ledger-row">
+      <div class="ledger-cell"><div class="k">총 광고비</div><div class="v tabular">157,166,404<small>원</small></div></div>
+      <div class="ledger-cell"><div class="k">AF 설치</div><div class="v tabular">18,780<small>건</small></div></div>
+      <div class="ledger-cell"><div class="k">블렌디드 CPI</div><div class="v tabular">8,369<small>원/설치</small></div></div>
+      <div class="ledger-cell"><div class="k">CTR · CVR</div><div class="v tabular">0.27%<small> · 7.63%</small></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <section id="verdict">
+    <div class="verdict">
+      <h2>총평 — 3줄 요약</h2>
+      <p>① <b>지난 경고, 서로 다른 결말로 갈렸다</b> — 부산 국제 영화제는 09/13 정점(CPI 10,233원)을 찍은 뒤 오히려 개선 중이다(09/15 8,961원, CTR도 1.39%→1.59%로 반등) — 이스포츠와는 다른 패턴이다. 반면 <b>퐁피두 도슨트는 여전히 경고권에 머문다</b>(17,408원, CTR도 낮은 수준(1.67%)에서 반등 기미가 없다) — 같은 시점에 같은 경고를 받았지만 결과가 갈린 첫 사례.</p>
+      <p>② <b>새로운 피로 신호 — 이번엔 위클리보물찾기</b>다. 이스포츠 빈자리를 채우며 계정 최저가 소재로 꼽혔던 그 소재의 CPI가 닷새 만에 89% 뛰었다(2,398원→4,536원), CTR도 6.99%→4.22%로 계속 낮아지는 중 — 아직 위험 등급은 아니지만 앞선 두 캠페인과 똑같은 초기 궤적을 그리고 있다.</p>
+      <p>③ 카카오모먼트는 재개 상태를 그대로 유지 중이고(부산 국제 영화제로 09/15까지 지속 집행, CPI 83,019원 — 인스타그램 대비 여전히 10.6배), <b>네이버GFA는 학습곡선이 한 단계 더 진행됐다</b> — 설치 27→55건으로 배증, CPI도 85,049원→53,172원까지 추가 개선.</p>
+    </div>
+  </section>
+
+  <section id="media-spend">
+    <div class="sec-head"><span class="sec-no">1</span><h2>매체별 광고비 &amp; 설치</h2></div>
+    <p class="sec-desc">막대 길이는 광고비(원), 막대 아래 작은 숫자는 실제 AF 설치 건수. 광고비 1위인 인스타그램이 설치도 1위지만, 2~4위(UAC·카카오모먼트·카톡플친)는 비슷한 돈을 쓰고도 설치 건수가 최대 51배 차이 난다.</p>
+    <div class="chart-card">
+      <div class="chart-scroll"><svg id="chartMediaSpend" width="820" height="330" viewBox="0 0 820 330"></svg></div>
+      <div class="foot-note">※ "네이버검색"은 이 기간 설치 0건 — 인지도/트래픽 목적일 가능성이 높으나 raw 데이터만으로는 목적 확인 불가.</div>
+      <div class="foot-note">※ <b>정정 후속</b> — "네이버GFA"는 09/10 이후 계속 집행되며 설치가 0→3→1→8→16→27→55건으로 꾸준히 늘고 있고, CPI도 85,049원→53,172원까지 추가 개선 중(UAC와 비슷한 학습 곡선) — 하루 결과만 보고 성급히 판단하면 안 된다는 반례가 다시 한 번 확인됨.</div>
+    </div>
+  </section>
+
+  <section id="media-cpi">
+    <div class="sec-head"><span class="sec-no">2</span><h2>매체별 효율 — 설치 1건의 값 (CPI)</h2></div>
+    <p class="sec-desc">숫자가 작을수록 좋음(그만큼 싸게 설치를 얻었다는 뜻). 블렌디드 평균(8,369원) 대비 4단계로 등급을 매김 — <span class="pill good">양호</span> ≤6천원 · <span class="pill warn">주의</span> 6천~1.5만원 · <span class="pill serious">경고</span> 1.5만~4만원 · <span class="pill crit">위험</span> 4만원 초과.</p>
+    <div class="rank-table" id="rankMediaCPI"></div>
+    <div class="foot-note" style="margin-top:14px;">※ 카톡플친(카카오톡 채널)은 신규 설치가 아니라 <b>기존 구독자에게 보내는 발송형 캠페인</b>이라 CPI로 줄세우면 불리하게 나온다 — 이 기간 4회 발송(가장 최근인 09/14 발송은 여러 이벤트를 묶은 다이제스트형으로, GA4 활성사용자 크로스체크에서 그날 17시 전 플랫폼 동시 스파이크의 원인으로 확인된 바로 그 메시지다). 7번 섹션에서 별도로 다룸.</div>
+    <div class="foot-note">※ 애드팝콘은 <b>설치 시 보상을 주는 리워드형 매체</b>라 CPI가 구조적으로 낮게 나올 수밖에 없다 — 이유는 7번 섹션 참고.</div>
+  </section>
+
+  <section id="device">
+    <div class="sec-head"><span class="sec-no">3</span><h2>OS별 격차 — 안드로이드가 늘 더 싸다</h2></div>
+    <p class="sec-desc">기기 구분 없이 집행되는 매체(UAC·카카오모먼트·X·네이버 등, 광고비 5,669만원)는 제외하고 OS가 명시된 캠페인만 비교.</p>
+    <div class="two-col">
+      <div class="chart-card">
+        <div class="chart-scroll"><svg id="chartDevice" width="360" height="230" viewBox="0 0 360 230"></svg></div>
+      </div>
+      <div class="chart-card" style="display:flex; flex-direction:column; justify-content:center; gap:10px;">
+        <div class="foot-note" style="margin-top:0; font-size:13px; color:var(--ink-secondary);">
+          AOS 11,114건 · <b class="num">5,462원</b><br>
+          iOS 3,931건 · <b class="num">10,118원</b>
+        </div>
+        <div class="foot-note">15일 내내 이 순서가 뒤집힌 날이 하루도 없었다(격차 1.85배, 10일차 리포트의 1.9배와 거의 동일) — iOS 사용자 타겟팅(Apple Search Ads 포함)이 구조적으로 더 비쌈. LTV·매출 데이터가 없어 "그래도 남는 장사인지"는 이 리포트만으로 판단 불가 — 별도 확인 필요.</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="trend">
+    <div class="sec-head"><span class="sec-no">4</span><h2>15일의 흐름 — 9/7 이후 완전히 다른 그래프</h2></div>
+    <p class="sec-desc">9/7 "LOL 국가대표 평가전" 티켓드롭 소재가 투입되면서 응모·투표 클릭이 0에서 폭발적으로 늘고, 같은 광고비로도 CPI가 뚝 떨어졌다.</p>
+    <div class="chart-card">
+      <div class="chart-scroll">
+        <div class="foot-note" style="margin:0 0 4px; font-weight:600; color:var(--ink-secondary);">일별 광고비(원)</div>
+        <svg id="chartDailySpend" width="820" height="130" viewBox="0 0 820 130"></svg>
+        <div class="foot-note" style="margin:16px 0 4px; font-weight:600; color:var(--ink-secondary);">일별 설치 · 응모/투표 클릭(건)</div>
+        <svg id="chartDailyEvent" width="820" height="170" viewBox="0 0 820 170"></svg>
+      </div>
+      <div class="legend-row" id="legendDaily"></div>
+    </div>
+  </section>
+
+  <section id="signup">
+    <div class="sec-head"><span class="sec-no">5</span><h2>설치 다음 — 회원가입까지 이어지나</h2></div>
+    <p class="sec-desc">설치는 시작일 뿐이다 — 실제로 회원가입까지 이어진 비율. <b>애드팝콘이 67.8%로 1위</b>지만, 보상 지급 조건이 회원가입까지라면 이 숫자에도 리워드 유인이 섞여 있을 수 있다(확정 불가, 7번 섹션 참고). 볼륨 1위였던 UAC는 오히려 34.4%로 중하위권. 네이버GFA(60.0%)는 표본이 55건으로 늘었지만 여전히 참고용.</p>
+    <div class="chart-card">
+      <div class="chart-scroll"><svg id="chartSignup" width="820" height="290" viewBox="0 0 820 290"></svg></div>
+    </div>
+  </section>
+
+  <section id="spotlight">
+    <div class="sec-head"><span class="sec-no">6</span><h2>스포트라이트 — 왜 "이스포츠" 소재인가</h2></div>
+    <div class="callout">
+      <h3>[앱홍보_9월] E스포츠대회티켓 · LOL 국가대표 평가전 — 사후 리뷰: 경고대로 끝났다</h3>
+      <div class="stat-row">
+        <div class="stat"><div class="k">최종 광고비</div><div class="v">6,379,090원</div></div>
+        <div class="stat"><div class="k">최종 설치</div><div class="v">1,264건</div></div>
+        <div class="stat"><div class="k">최종 CPI</div><div class="v">5,047원(첫날 2,472원→마지막날 8,996원)</div></div>
+        <div class="stat"><div class="k">응모 클릭</div><div class="v">999건 (79%)</div></div>
+        <div class="stat"><div class="k">투표 클릭</div><div class="v">960건 (76%)</div></div>
+      </div>
+      <p>지난 리포트가 "CPI가 4일 만에 3.6배 뛰었다, 소재 교체·타겟 확장을 준비하라"고 경고했던 바로 그 소재 — 실제로 다음날(09/11)부터 캠페인이 완전히 빠졌다. 4일 집행이 전부였지만 설치자 10명 중 8명이 응모·투표까지 참여한, 이 리포트 전체를 통틀어 참여율이 두 자릿수 %를 넘는 사실상 유일한 사례로 마무리됐다. <b>"설치만 싸게 사는 것"과 "설치 후 진짜 관심을 갖게 만드는 것"을 둘 다 해낸 흔치 않은 성공 사례이자, CPI 상승 경고를 실제 운영에 반영한 좋은 선례.</b></p>
+      <p>ATA페스티벌·타짜시사회 티켓드롭도 각각 09/08·09/06을 끝으로 완전 종료됐다(누적 1,061건·985건) — 신규 소재(이스포츠 이후엔 부산국제영화제·퐁피두 도슨트·위클리보물찾기)로 순차 교체되는 운영 리듬이 자리잡은 것으로 보인다.</p>
+    </div>
+
+    <div class="callout warn-tone" style="margin-top:16px;">
+      <h3>경고 그 이후 — 부산 국제 영화제는 반전, 퐁피두 도슨트는 지속, 그리고 새로 등장한 위클리보물찾기</h3>
+      <div class="stat-row">
+        <div class="stat"><div class="k">부산국제영화제 CPI</div><div class="v">7,315→10,233원(정점,09/13)→8,961원(09/15, 반전)</div></div>
+        <div class="stat"><div class="k">퐁피두 도슨트 CPI</div><div class="v">7,880→21,178원(정점,09/14)→17,408원(09/15)</div></div>
+        <div class="stat"><div class="k">위클리보물찾기 CPI [신규]</div><div class="v">2,398원(09/11,최저)→4,536원(09/15, +89%)</div></div>
+      </div>
+      <p>지난 리포트가 이스포츠와 같은 패턴이라고 경고했던 두 캠페인의 결말이 이번엔 서로 갈렸다. <b>부산 국제 영화제는 09/13에 정점을 찍은 뒤 오히려 개선 중</b>이다 — CTR도 같은 시점(1.39%)에서 반등해 09/15엔 1.59%까지 올라왔다(12번 섹션 참고). 반면 <b>퐁피두 도슨트는 여전히 경고권에 머문다</b> — CPI는 정점보다 소폭 내렸지만 CTR은 낮은 수준(1.67%)에서 반등 기미가 없어, 이스포츠와 더 가까운 궤적을 그리고 있다.</p>
+      <p>동시에 <b>이스포츠의 빈자리를 채우며 계정에서 가장 저렴한 소재로 꼽혔던 위클리보물찾기에서도 같은 초기 신호가 나타났다</b> — 볼륨이 3배로 커진 09/11부터 CPI가 꾸준히 올라 09/15엔 최저치 대비 89% 상승했고, CTR도 6.99%→4.22%로 계속 낮아지는 중(12번 섹션 참고). 아직 블렌디드 평균(8,369원)보다는 한참 싸지만, 앞선 두 캠페인 모두 같은 방식으로 시작해서 경고 단계에 진입했다는 걸 감안하면 지금부터 지켜볼 가치가 있다.</p>
+    </div>
+  </section>
+
+  <section id="ranking">
+    <div class="sec-head"><span class="sec-no">7</span><h2>캠페인 순위표</h2></div>
+    <p class="sec-desc">설치 20건 이상 애드셋만 대상(소액 노이즈 제외).</p>
+    <div class="two-col">
+      <div>
+        <div class="foot-note" style="margin:0 0 8px; font-weight:600; color:var(--status-good);">베스트 6 — CPI 낮은 순</div>
+        <div class="rank-table" id="rankBest"></div>
+      </div>
+      <div>
+        <div class="foot-note" style="margin:0 0 8px; font-weight:600; color:var(--status-crit);">워스트 5 — CPI 높은 순</div>
+        <div class="rank-table" id="rankWorst"></div>
+      </div>
+    </div>
+    <div class="callout">
+      <h3>베스트 1위, 애드팝콘 — "잘한 마케팅"으로 읽으면 안 되는 이유</h3>
+      <p><b>애드팝콘은 설치하면 포인트·캐시 같은 보상을 주는 리워드형 매체</b>다. 설치 자체가 목적인 사람만 모으면 되니 CPI가 낮게 나오는 게 구조적으로 당연하다 — 1,017원이라는 숫자는 타겟팅이나 소재가 뛰어나서가 아니라 "리워드형이라 원래 이런 숫자"에 가깝다. 이스포츠·보물찾기(콘텐츠·타겟팅으로 만든 효율)와 같은 선상에 놓고 "1위"로 비교하면 안 된다.</p>
+      <p>회원가입 전환율(67.8%, 15일 누적으로 소폭 상승)도 마찬가지 의문이 있다 — 보상 지급 조건이 "설치"에서 끝나는지 "회원가입까지"인지에 따라 이 숫자에도 리워드 유인이 섞여 있을 수 있는데, raw 데이터만으론 확인이 안 된다.</p>
+    </div>
+
+    <div class="callout warn-tone">
+      <h3>워스트 순위 읽을 때 주의할 점</h3>
+      <p><b>카톡플친(카카오톡 채널) 발송 2건</b>은 신규 설치용 광고가 아니라 이미 구독한 사람에게 보내는 발송 캠페인이다 — "9/7 발송"(esports_ticketdrop_kakaopush)은 314설치에 투표 클릭 774건(설치보다 많음 = 재참여 목적대로 작동), "9/14 발송"(여러 이벤트를 묶은 다이제스트, 워스트 표엔 없지만 참고)은 34설치에 응모 클릭 446건으로 같은 패턴이 반복됐다 — 이 발송들은 CPI가 아니라 "발송당 참여 클릭 수"로 따로 평가해야 한다(11번 섹션의 카톡플친 소단원 참고).</p>
+      <p><b>kakaomoment의 gambler_kakaobiz_1</b>(신규 유입 목적의 유료 매체인데도 설치 1건에 122,542원, ATA·타짜 시절의 유산)과 <b>애플서치애드</b>(iOS 검색 특성상 원래 비싸지만 51,417원까지 더 올라 과함)는 개선 기미 없이 여전히 문제다.</p>
+      <p><b>부산 국제 영화제를 태운 kakaomoment(63,571원)·네이버GFA(53,172원)</b>는 지난 리포트와 순위가 뒤바뀌었다 — 네이버GFA는 계속 개선되며(85,049원→53,172원) 이번엔 kakaomoment보다 오히려 저렴해졌고, kakaomoment는 반대로 소폭 나빠졌다(58,374원→63,571원). 네이버GFA는 "아직 학습 중" 케이스로 계속 지켜보면 되지만, kakaomoment는 이미 3주 가까이 운영된 매체라 "학습 중"이라는 설명이 점점 힘을 잃고 있다.</p>
+    </div>
+  </section>
+
+  <section id="meta-focus">
+    <div class="sec-head"><span class="sec-no">8</span><h2>메타(Instagram) 집중분석<span class="pill good" style="margin-left:8px;">주력 매체</span></h2></div>
+    <p class="sec-desc">전체 광고비의 47%(74,025,055원), 설치의 45%(8,414건)가 이 한 매체에서 나온다 — 369개 라인아이템, 15일 전 기간 집행. 매체 평균 하나로는 안 보이는 것들을 디바이스·일자·캠페인·크리에이티브 4단으로 쪼갠다.</p>
+
+    <div class="chart-card">
+      <div class="foot-note" style="margin:0 0 10px; font-weight:600; color:var(--ink-secondary);">① 디바이스 — 격차가 캠페인마다 다르게 벌어진다</div>
+      <div class="two-col">
+        <div>
+          <div class="chart-scroll"><svg id="chartMetaDevice" width="380" height="150" viewBox="0 0 380 150"></svg></div>
+          <div class="foot-note">"리타겟 전용"(위클리업데이트23·24·25, 노출기기 미분류)은 3개 캠페인 합쳐 15건뿐이라 이 차트에서 제외 — CPI로 판단할 대상 아님. 새로 등장한 부산국제영화제·퐁피두 도슨트·위클리보물찾기·로열티프로그램은 표본이 15건 이상인 캠페인만 오른쪽 표에 추가했다.</div>
+        </div>
+        <div class="mini-table">
+          <div class="mt-title">캠페인별 AOS vs iOS CPI</div>
+          <div id="mtDevCamp"></div>
+          <div class="foot-note" style="margin:8px 12px 10px; padding-top:0;">e스포츠(종료된 캠페인)만 유일하게 <b>iOS가 더 저렴</b>(4,837원 vs 5,270원) — 계정 전체 규칙(안드로이드가 항상 쌈)의 유일한 예외. 부산국제영화제는 AOS·iOS 격차가 7,697원 vs 8,021원으로 여전히 거의 없다시피 함 — 격차 크기 자체는 캠페인마다 다르다는 걸 재확인.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chart-card" style="margin-top:16px;">
+      <div class="foot-note" style="margin:0 0 10px; font-weight:600; color:var(--ink-secondary);">② 일자별 흐름 — CTR도 9/7 이후 같이 뛰었다(1.3%대 → 2.05%)</div>
+      <div class="chart-scroll">
+        <div class="foot-note" style="margin:0 0 4px; font-weight:600; color:var(--ink-secondary);">일별 광고비(원)</div>
+        <svg id="chartMetaDailySpend" width="820" height="120" viewBox="0 0 820 120"></svg>
+        <div class="foot-note" style="margin:14px 0 4px; font-weight:600; color:var(--ink-secondary);">일별 설치 · 응모 · 투표(건)</div>
+        <svg id="chartMetaDailyEvent" width="820" height="160" viewBox="0 0 820 160"></svg>
+      </div>
+      <div class="legend-row" id="legendMetaDaily"></div>
+      <div class="foot-note">※ <b>확인 완료</b> — "매체설치" 컬럼이 이번 raw 파일부터 09/11 이후분도 채워져 들어와 15일 전체 검증이 가능해짐. 메타 자체 집계 설치는 AppsFlyer 대비 6.1%(9/9)~21.0%(9/10) 사이를 오르내리며 15일 평균 14.5% 과다계상 — 지난 리포트의 "물량이 늘수록 계속 커진다"는 가설은 절반만 맞았다(9/10까지는 그래 보였지만 이후엔 줄었다 늘었다를 반복) — 물량과 정비례하는 게 아니라 그때그때 캠페인 구성에 좌우되는 것으로 보인다.</div>
+    </div>
+
+    <div class="chart-card" style="margin-top:16px;">
+      <div class="foot-note" style="margin:0 0 10px; font-weight:600; color:var(--ink-secondary);">③ 캠페인별 회원가입 전환율 — 회색은 리타겟(표본 5~9건, 비교 대상 아님)</div>
+      <div class="chart-scroll"><svg id="chartMetaSignup" width="820" height="290" viewBox="0 0 820 290"></svg></div>
+    </div>
+
+    <div class="two-col" style="margin-top:16px;">
+      <div>
+        <div class="foot-note" style="margin:0 0 8px; font-weight:600; color:var(--status-good);">④ 크리에이티브 베스트 6 — CPI 낮은 순 (설치 15건↑)</div>
+        <div class="rank-table" id="rankMetaBest"></div>
+      </div>
+      <div>
+        <div class="foot-note" style="margin:0 0 8px; font-weight:600; color:var(--status-crit);">크리에이티브 워스트 6 — CPI 높은 순</div>
+        <div class="rank-table" id="rankMetaWorst"></div>
+      </div>
+    </div>
+    <div class="callout" style="margin-top:16px;">
+      <h3>포맷의 문제 — "티켓드롭"은 이기고 "라이프스타일 콘텐츠"는 진다</h3>
+      <p>워스트 6 중 4개가 "일상블로그"·"귀칼(vol23)" 같은 콘텐츠 공감형 소재다(CPI 18,000~44,000원) — 반면 베스트 6은 전부 이벤트 응모/티켓드롭형. 같은 매체·같은 예산이라도 <b>포맷 자체가 성과를 가른다</b>는 근거가 크리에이티브 단위에서도 반복 확인됨.</p>
+    </div>
+  </section>
+
+  <section id="media-campaign">
+    <div class="sec-head"><span class="sec-no">9</span><h2>매체별 운영 캠페인 성과 비교</h2></div>
+    <p class="sec-desc">한 매체 안에서 여러 캠페인을 동시에 돌릴 때, 그 매체 예산을 어디에 더 실어줘야 하는지 보는 관점(인스타그램은 13개를 동시 운영 중이라 격차가 가장 크게 드러남 — 이 중 "메이드인코리아"는 09/14 투입 이후 이틀째에도 설치 1건뿐이라 여전히 평가 이름). 같은 데이터를 반대로 — 캠페인 기준으로 매체를 비교하는 건 다음 섹션에서.</p>
+    <div class="foot-note" style="margin:0 0 8px; font-weight:600; color:var(--ink-secondary);">인스타그램 내부 캠페인 CPI (회색 = 리타겟팅, 신규 설치가 목적이 아니라 비교 대상 아님)</div>
+    <div class="rank-table" id="rankIGCampaign"></div>
+    <div class="two-col" style="margin-top:16px;">
+      <div class="mini-table">
+        <div class="mt-title"><span class="sw" style="background:var(--media-x)"></span>X 내부 캠페인 (3개)</div>
+        <div id="mtX"></div>
+      </div>
+      <div class="mini-table">
+        <div class="mt-title"><span class="sw" style="background:var(--media-km)"></span>kakaomoment 내부 캠페인 (3개)</div>
+        <div id="mtKM"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="cross-media">
+    <div class="sec-head"><span class="sec-no">10</span><h2>동일 캠페인, 다른 매체 — 진짜 원인은 소재가 아니라 매체다</h2></div>
+    <p class="sec-desc">4개 캠페인은 같은 소재/컨셉을 여러 매체에 동시 집행했다. 소재를 고정한 채 매체만 바꿔봤더니 CPI가 최대 19배(ATA페스티벌 기준), 이상치 하루가 낀 매거진 9월 상시소재까지 포함하면 52배까지 벌어진다 — "이 소재가 별로다"가 아니라 "이 매체에 이 소재를 태우면 안 된다"는 뜻. 부산 국제 영화제는 네이버GFA가 크게 개선되며 kakaomoment보다 오히려 저렴해져 3개 매체 순위가 뒤바뀌었다.</p>
+    <div class="sm-grid" id="crossMediaGrid"></div>
+    <div class="foot-note" style="margin-top:14px;">※ 매거진 9월 상시소재의 kakaomoment CPI(382,325원)가 유독 높은 건 09/10 하루(555,635원 쓰고 설치 0건)가 통째로 이 캠페인에 잡혀 있기 때문 — 09/11부터는 부산국제영화제로 갈아타 그쪽 CPI(83,019원)가 훨씬 낫다.</div>
+  </section>
+
+  <section id="daily-campaign">
+    <div class="sec-head"><span class="sec-no">11</span><h2>데일리 캠페인 성과 추이</h2></div>
+    <p class="sec-desc">매체·소재 랭킹은 14일 합계였다. 하루 단위로 쪼개보면 같은 캠페인 안에서도 "좋아지는 중"인지 "나빠지는 중"인지가 갈린다.</p>
+    <div class="sm-grid" id="smGrid"></div>
+  </section>
+
+  <section id="creative-ctr">
+    <div class="sec-head"><span class="sec-no">12</span><h2>소재별 클릭율(CTR) 추이 — 중단·증액·감액 판단용</h2></div>
+    <p class="sec-desc">같은 캠페인 안에서 소재(1안/2안 등)별로 CTR이 날마다 어떻게 움직였는지. <b>계속 떨어지면 소재 피로 — 교체·중단 후보</b>, <b>다른 소재보다 꾸준히 높으면 그 소재에 예산 집중(증액)</b>, 등락만 있고 추세가 없으면 그대로 유지. 점 크기는 그날 설치 건수(클수록 설치 많음).</p>
+    <div class="sm-grid" id="ctrGrid"></div>
+    <div class="foot-note" style="margin-top:6px;">※ 인스타그램 캠페인 중 이틀 이상 데이터가 있는 것 전부(광고소재 라벨에서 AOS/IOS 표기만 지우고 같은 소재끼리 합산, 대소문자 표기 차이도 병합). "메이드인코리아"는 이번에 이틀치가 쌓여 새로 추가했지만 설치가 아직 1건뿐이라 추세 판단은 다음 갱신으로 유보.</div>
+  </section>
+
+  <section id="daily-log">
+    <div class="sec-head"><span class="sec-no">13</span><h2>일자별 이슈·조치 로그</h2></div>
+    <p class="sec-desc">14일간 실제로 무슨 일이 있었고 어디서 조치가 필요했는지를 날짜순으로 정리 — 위 섹션들에 흩어진 발견을 시간순으로 다시 묶은 것.</p>
+    <div class="chart-card">
+      <div class="timeline" id="dailyLog"></div>
+    </div>
+  </section>
+
+  <section id="conclusion">
+    <div class="sec-head"><span class="sec-no">14</span><h2>제안</h2></div>
+    <div class="reco-list">
+      <div class="reco"><div class="mark up">↑</div><div class="body"><b>"경고→조치→결과 확인" 판단 기준을 앞으로도 그대로 재사용</b><span>이스포츠 소재의 CPI 상승 경고가 실제 캠페인 중단으로 이어졌고, 참여율(79%)도 끝까지 최상위였다(6번 섹션) — 이 리포트 최초로 사이클이 완성된 사례. 아래 부산국제영화제·퐁피두 도슨트에도 지금 같은 기준을 적용할 것.</span></div></div>
+      <div class="reco"><div class="mark down">↓</div><div class="body"><b>퐁피두 도슨트는 소재 교체를 지금 실행, 부산 국제 영화제는 반전 여부를 며칠 더 확인</b><span>퐁피두는 CPI·CTR 모두 개선 기미가 없어(6번 섹션) 신규 크리에이티브 A/B를 우선 투입할 것을 제안. 부산 국제 영화제는 09/13 정점 이후 이틀 연속 개선 중이라 당장 교체보다는 이 흐름이 진짜 반전인지 2~3일 더 지켜본 뒤 판단할 것.</span></div></div>
+      <div class="reco"><div class="mark watch">?</div><div class="body"><b>위클리보물찾기, 새로 나타난 피로 신호를 다음 갱신에서 최우선 확인</b><span>CPI가 닷새 만에 89% 뛰었고(2,398원→4,536원) CTR도 계속 낮아지는 중(6번 섹션) — 아직 계정 전체에서 가장 싼 편이지만, 부산·퐁피두와 같은 초기 패턴이라 다음 raw 파일이 오면 가장 먼저 확인할 것.</span></div></div>
+      <div class="reco"><div class="mark watch">?</div><div class="body"><b>카카오모먼트, 재개 이후 성과를 계속 추적</b><span>ATA·타짜 시절보다는 크게 개선됐지만(총평 참고) 같은 소재를 인스타그램에 태울 때보다 여전히 10배 이상 비싸다. 이번엔 네이버GFA가 학습곡선을 타고 kakaomoment보다 저렴해진 것도 확인됨 — "인스타그램 대비 몇 배까지 허용할지" 기준선을 미리 정해두고 다음 갱신에서 재확인.</span></div></div>
+      <div class="reco"><div class="mark watch">?</div><div class="body"><b>애드팝콘은 CPI로 다른 매체와 비교·의사결정하지 말 것</b><span>보상형(리워드) 매체라 CPI·회원가입 전환율이 구조적으로 유리하게 나온 것(7번 섹션) — 같은 잣대로 줄세우면 안 됨. 예산을 더 쓸지는 리워드 유저의 장기 리텐션·LTV로 따로 판단해야 하는데 이 데이터엔 없음.</span></div></div>
+      <div class="reco"><div class="mark up">↑</div><div class="body"><b>네이버GFA, 개선 흐름이 더 뚜렷해짐 — 계속 이대로 지켜볼 것</b><span>"하루 테스트 실패"가 아니라 UAC와 같은 학습 곡선을 그리는 중 — 이번 갱신에서 설치가 27→55건으로 배증하고 CPI도 53,172원까지 개선되며 흐름이 더 뚜렷해졌다(1번 섹션 참고).</span></div></div>
+      <div class="reco"><div class="mark watch">?</div><div class="body"><b>카톡플친(카카오톡 채널) — CPI 대신 "발송 목적별 참여 클릭"으로 평가 체계 고정</b><span>재참여 유도형 발송(9/7·9/14)은 설치 대비 참여 클릭이 최대 13배로 목적대로 작동했지만, 위클리 업데이트형(9/3·9/10)은 CPI 잣대로는 계속 나쁘게 보인다(7번 섹션) — 애초에 CPI 표에서 빼고 "참여 클릭/발송" 지표로 별도 트래킹할 것을 권장.</span></div></div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <p><b>데이터 출처</b> — 한화 PLUS 트라이브_RAW_20260916(매체 raw 데이터, 09/01~09/15, 595행). 원본 파일은 08/01부터 있으나 이 리포트는 09/01~09/10판과 이어보기 위해 09월분만 사용. Net_Cost/Gross_Cost/광고비 3개 비용 컬럼 중 "광고비"(Gross_Cost×1.1, 부가세 포함 추정)를 전체 비용 기준으로 사용.</p>
+    <p><b>방법 노트</b> — CPI = 광고비 ÷ AF_Install(AppsFlyer 귀속 설치). 애드셋(Aeset)명이 없는 행(Organic 등, 총 설치의 일부)은 애드셋 랭킹에서 제외. "매체설치"(플랫폼 자체 집계, 인스타그램만 제공)는 AppsFlyer 대비 09/01~09/15 전체 평균 약 14.5% 높게 잡혔음(일자별 6.1~21.0%, 8번 섹션 참고) — 이번 raw 파일부터 09/11 이후분도 채워져 15일 전체 검증 완료.</p>
+    <p>09/01~09/14판 대비 갱신 — 09/15 1일치 추가, 부산 국제 영화제·퐁피두 도슨트 경고의 서로 다른 결말(반전 vs 지속) 확인, 위클리보물찾기 신규 피로 신호 포착, "매체설치" 컬럼 15일 전체 검증 완료 등 반영.</p>
+    <p>이 리포트는 Claude가 raw 데이터를 자체적으로 읽고 구성한 분석입니다 · 최초 작성 2026-09-11 · 갱신 2026-09-16</p>
+  </div>
+</footer>
+
+<div class="g-tooltip" id="gTooltip"></div>
+
+<script>
+(function(){
+  var css = getComputedStyle(document.documentElement);
+  function tok(n){ return css.getPropertyValue(n).trim(); }
+  var C = {
+    spend: tok('--series-spend'), install: tok('--series-install'),
+    aos: tok('--series-aos'), ios: tok('--series-ios'),
+    mediaIg: tok('--media-ig'), mediaX: tok('--media-x'), mediaKm: tok('--media-km'), mediaNv: tok('--media-nv'),
+    good: tok('--status-good'), warn: tok('--status-warn'), serious: tok('--status-serious'), crit: tok('--status-crit'),
+    grid: tok('--grid'), baseline: tok('--rule-strong'), muted: tok('--ink-muted'),
+    primary: tok('--ink-primary'), secondary: tok('--ink-secondary'), surface: tok('--surface'),
+    accent: tok('--accent')
+  };
+  var svgns = 'http://www.w3.org/2000/svg';
+  function el(tag, attrs){ var e = document.createElementNS(svgns, tag); for (var k in attrs) e.setAttribute(k, attrs[k]); return e; }
+  function fmt(n){ return Math.round(n).toLocaleString('en-US'); }
+
+  // ---------------- 공용 호버 툴팁 ----------------
+  var gTip = document.getElementById('gTooltip');
+  function tipShow(evt, html){
+    gTip.innerHTML = html;
+    gTip.style.opacity = 1;
+    var pad = 16, vw = window.innerWidth, vh = window.innerHeight;
+    var rect = gTip.getBoundingClientRect();
+    var left = evt.clientX + pad, top = evt.clientY + pad;
+    if (left + rect.width > vw - 8) left = evt.clientX - rect.width - pad;
+    if (top + rect.height > vh - 8) top = evt.clientY - rect.height - pad;
+    gTip.style.left = left + 'px';
+    gTip.style.top = top + 'px';
+  }
+  function tipHide(){ gTip.style.opacity = 0; }
+  function tipRow(k, v){ return '<div class="tt-row"><span>'+k+'</span><b>'+v+'</b></div>'; }
+  // 날짜별 상세(전체/메타 일자 트렌드 공용) — r: {d,spend,install,apply,vote[,ctr]}
+  function dailyTipHtml(r){
+    var cpi = r.install ? fmt(Math.round(r.spend/r.install)) : null;
+    return '<div class="tt-title">'+r.d+'</div>'+
+      tipRow('광고비', fmt(r.spend)+'원') +
+      tipRow('설치', fmt(r.install)+'건') +
+      (cpi ? tipRow('CPI', cpi+'원') : '') +
+      (r.ctr!=null ? tipRow('CTR', r.ctr+'%') : '') +
+      tipRow('응모 클릭', fmt(r.apply)+'건') +
+      tipRow('투표 클릭', fmt(r.vote)+'건');
+  }
+  // 날짜 그룹 하나에 전체 높이의 투명 히트영역을 깔아주는 헬퍼
+  function addDateHits(svg, dates, ML, groupW, H, getRow){
+    dates.forEach(function(d,i){
+      var hit = el('rect',{class:'hit', x:ML+groupW*i, y:0, width:groupW, height:H});
+      hit.addEventListener('mousemove', function(e){ tipShow(e, dailyTipHtml(getRow(i))); });
+      hit.addEventListener('mouseleave', tipHide);
+      svg.appendChild(hit);
+    });
+  }
+
+  function tier(cpi){
+    if (cpi<=6000) return {c:C.good, label:'양호'};
+    if (cpi<=15000) return {c:C.warn, label:'주의'};
+    if (cpi<=40000) return {c:C.serious, label:'경고'};
+    return {c:C.crit, label:'위험'};
+  }
+
+  // ---------------- data ----------------
+  var MEDIA = [
+    {name:'instagram', spend:74025055, install:8414},
+    {name:'UAC', spend:23742321, install:6313},
+    {name:'kakaomoment', spend:21654007, install:125},
+    {name:'카톡플친', spend:19879590, install:423},
+    {name:'X', spend:7166758, install:292},
+    {name:'애플서치애드', spend:3496371, install:68},
+    {name:'애드팝콘', spend:3129280, install:3077},
+    {name:'네이버GFA', spend:2924464, install:55},
+    {name:'Ace', spend:732185, install:13},
+    {name:'네이버검색', spend:416373, install:0}
+  ];
+  var SIGNUP = [
+    {name:'애드팝콘', rate:67.8, install:3077, signup:2087},
+    {name:'X', rate:57.9, install:292, signup:169},
+    {name:'instagram', rate:58.0, install:8414, signup:4876},
+    {name:'네이버GFA', rate:60.0, install:55, signup:33},
+    {name:'애플서치애드', rate:45.6, install:68, signup:31},
+    {name:'kakaomoment', rate:40.0, install:125, signup:50},
+    {name:'UAC', rate:34.4, install:6313, signup:2169},
+    {name:'Ace', rate:15.4, install:13, signup:2},
+    {name:'카톡플친', rate:6.1, install:423, signup:26}
+  ];
+  var DAILY = [
+    {d:'09-01', spend:11307030, install:1095, apply:263, vote:0},
+    {d:'09-02', spend:11205332, install:904, apply:212, vote:0},
+    {d:'09-03', spend:13711623, install:972, apply:258, vote:0},
+    {d:'09-04', spend:9904981, install:898, apply:128, vote:0},
+    {d:'09-05', spend:11220878, install:1199, apply:144, vote:0},
+    {d:'09-06', spend:10836984, install:1274, apply:167, vote:0},
+    {d:'09-07', spend:11114506, install:1523, apply:1102, vote:1023},
+    {d:'09-08', spend:6352658, install:1233, apply:435, vote:366},
+    {d:'09-09', spend:6108540, install:1066, apply:311, vote:245},
+    {d:'09-10', spend:18953527, install:1614, apply:643, vote:175},
+    {d:'09-11', spend:8712758, install:1515, apply:393, vote:0},
+    {d:'09-12', spend:8981057, install:1532, apply:292, vote:0},
+    {d:'09-13', spend:9719164, install:1493, apply:288, vote:0},
+    {d:'09-14', spend:10949616, install:1287, apply:636, vote:0},
+    {d:'09-15', spend:8087750, install:1175, apply:167, vote:0}
+  ];
+  var DEVICE = [
+    {name:'AOS', spend:60701011, install:11114, cpi:5462, color:C.aos},
+    {name:'iOS', spend:39772610, install:3931, cpi:10118, color:C.ios}
+  ];
+  var BEST = [
+    {name:'adpopcorn_int', media:'애드팝콘(리워드형)', spend:3129280, install:3077, cpi:1017},
+    {name:'[앱홍보_9월 상시] AOS_텍스트광고C', media:'instagram', spend:925259, install:416, cpi:2224},
+    {name:'[앱홍보_9월] AOS 위클리 보물찾기 1안', media:'instagram', spend:2757509, install:978, cpi:2820},
+    {name:'[앱홍보_9월_AOS] 로열티프로그램_위클리완독챌린지 vol25(2안)', media:'instagram', spend:275631, install:92, cpi:2996},
+    {name:'[앱홍보_9월_AOS] 로열티프로그램_위클리완독챌린지 vol25(1안)', media:'instagram', spend:358702, install:109, cpi:3291},
+    {name:'[앱홍보_9월] IOS 위클리 보물찾기 1안', media:'instagram', spend:2782035, install:796, cpi:3495}
+  ];
+  var WORST = [
+    {name:'vol25_kakaopush_list1', media:'카톡플친*', spend:9529096, install:26, cpi:366504},
+    {name:'vol24_kakaopush_list1', media:'카톡플친*', spend:2840442, install:20, cpi:142022},
+    {name:'gambler_kakaobiz_1', media:'kakaomoment*', spend:5636939, install:46, cpi:122542},
+    {name:'busan_ticketdrop_kakaomoment', media:'kakaomoment*', spend:1907123, install:30, cpi:63571},
+    {name:'busan_ticketdrop_navergfa', media:'네이버GFA*', spend:2924464, install:55, cpi:53172},
+    {name:'Apple Search Ads', media:'애플서치애드', spend:3496371, install:68, cpi:51417}
+  ];
+
+  // ---------------- Chart 1: 매체별 광고비 (horizontal bar, desc) ----------------
+  (function(){
+    var svg = document.getElementById('chartMediaSpend');
+    var W=820,H=330, ML=118,MR=70,MT=8,MB=8;
+    var rows = MEDIA.slice().sort(function(a,b){return b.spend-a.spend;});
+    var n=rows.length, rowH=(H-MT-MB)/n, barH=rowH*0.56;
+    var max = rows[0].spend;
+    var totalSpend = MEDIA.reduce(function(s,r){return s+r.spend;},0);
+    function bw(v){ return (v/max)*(W-ML-MR); }
+    rows.forEach(function(r,i){
+      var y = MT + i*rowH + (rowH-barH)/2;
+      var w = Math.max(2,bw(r.spend));
+      svg.appendChild(el('rect',{x:ML,y:y,width:w,height:barH,rx:2,fill:C.spend}));
+      var lbl = el('text',{x:ML-10,y:y+barH/2+4,class:'bar-label','text-anchor':'end'});
+      lbl.textContent = r.name; svg.appendChild(lbl);
+      var val = el('text',{x:ML+w+8,y:y+barH/2+4,class:'bar-label tabular'});
+      val.textContent = fmt(r.spend)+'원'; svg.appendChild(val);
+      var sub = el('text',{x:ML+w+8,y:y+barH/2+16,class:'bar-sub tabular'});
+      sub.textContent = '설치 '+fmt(r.install)+'건'; svg.appendChild(sub);
+      var hit = el('rect',{class:'hit', x:0, y:MT+i*rowH, width:W, height:rowH});
+      hit.addEventListener('mousemove', function(e){
+        tipShow(e, '<div class="tt-title">'+r.name+'</div>'+
+          tipRow('광고비', fmt(r.spend)+'원') + tipRow('비중', (r.spend/totalSpend*100).toFixed(1)+'%') +
+          tipRow('설치', fmt(r.install)+'건'));
+      });
+      hit.addEventListener('mouseleave', tipHide);
+      svg.appendChild(hit);
+    });
+  })();
+
+  // ---------------- 매체별 CPI 순위표 (숫자 나열, 색은 등급 배지) ----------------
+  (function(){
+    var rows = MEDIA.filter(function(r){return r.install>0;}).map(function(r){return {name:r.name, install:r.install, spend:r.spend, cpi:r.spend/r.install};});
+    rows.sort(function(a,b){return a.cpi-b.cpi;});
+    var head = '<div class="r-head"><span>#</span><span>매체</span><span style="text-align:right">CPI</span><span style="text-align:right">설치</span><span style="text-align:right">광고비</span></div>';
+    var body = rows.map(function(r,i){
+      var t = tier(r.cpi);
+      return '<div class="rank-row">'+
+        '<div class="idx">'+(i+1)+'</div>'+
+        '<div class="nm">'+r.name+'</div>'+
+        '<div class="num-cell"><span class="pill" style="background:'+t.c+'22; color:'+t.c+'">'+fmt(r.cpi)+'원 · '+t.label+'</span></div>'+
+        '<div class="num-cell">'+fmt(r.install)+'</div>'+
+        '<div class="num-cell">'+fmt(r.spend)+'원</div>'+
+      '</div>';
+    }).join('');
+    document.getElementById('rankMediaCPI').innerHTML = head+body;
+  })();
+
+  // ---------------- Chart 3: Device (2 vertical bars) ----------------
+  (function(){
+    var svg = document.getElementById('chartDevice');
+    var W=360,H=230, ML=50,MR=20,MT=20,MB=34;
+    var max = Math.max.apply(null, DEVICE.map(function(r){return r.cpi;}));
+    var plotH = H-MT-MB, plotW=W-ML-MR;
+    var bw = plotW/DEVICE.length*0.42;
+    function y(v){ return MT+plotH-(v/max)*plotH; }
+    var ticks=3;
+    for(var t=0;t<=ticks;t++){ var val=max*t/ticks; var yy=y(val);
+      svg.appendChild(el('line',{x1:ML,x2:W-MR,y1:yy,y2:yy,class:t===0?'baseline':'grid-line'}));
+      var lab=el('text',{x:ML-8,y:yy+3,class:'axis-label','text-anchor':'end'}); lab.textContent=fmt(val); svg.appendChild(lab);
+    }
+    DEVICE.forEach(function(r,i){
+      var cx = ML + plotW*(i+0.5)/DEVICE.length;
+      var yy = y(r.cpi), h = plotH+MT-yy;
+      svg.appendChild(el('rect',{x:cx-bw/2,y:yy,width:bw,height:h,rx:3,fill:r.color}));
+      var val = el('text',{x:cx,y:yy-8,class:'bar-label tabular','text-anchor':'middle'}); val.textContent=fmt(r.cpi)+'원'; svg.appendChild(val);
+      var lab = el('text',{x:cx,y:H-12,class:'axis-label','text-anchor':'middle'}); lab.textContent=r.name; svg.appendChild(lab);
+      var hit = el('rect',{class:'hit', x:ML+plotW*i/DEVICE.length, y:0, width:plotW/DEVICE.length, height:H});
+      hit.addEventListener('mousemove', function(e){
+        tipShow(e, '<div class="tt-title">'+r.name+'</div>'+tipRow('CPI', fmt(r.cpi)+'원')+tipRow('설치', fmt(r.install)+'건')+tipRow('광고비', fmt(r.spend)+'원'));
+      });
+      hit.addEventListener('mouseleave', tipHide);
+      svg.appendChild(hit);
+    });
+  })();
+
+  // ---------------- Chart 4: daily spend (bar) ----------------
+  (function(){
+    var svg = document.getElementById('chartDailySpend');
+    var W=820,H=130, ML=70,MR=16,MT=14,MB=26;
+    var plotW=W-ML-MR, plotH=H-MT-MB, n=DAILY.length;
+    var max = Math.max.apply(null, DAILY.map(function(r){return r.spend;}));
+    var groupW = plotW/n, bw=groupW*0.5;
+    function y(v){ return MT+plotH-(v/max)*plotH; }
+    svg.appendChild(el('line',{x1:ML,x2:W-MR,y1:MT+plotH,y2:MT+plotH,class:'baseline'}));
+    DAILY.forEach(function(r,i){
+      var cx = ML+groupW*(i+0.5);
+      var yy=y(r.spend), h=plotH+MT-yy;
+      var isEvent = r.d==='09-07';
+      svg.appendChild(el('rect',{x:cx-bw/2,y:yy,width:bw,height:h,rx:2,fill:isEvent?C.crit:C.spend,'fill-opacity':isEvent?1:0.85}));
+      var lab = el('text',{x:cx,y:H-8,class:'axis-label','text-anchor':'middle'}); lab.textContent=r.d; svg.appendChild(lab);
+    });
+    var evI = DAILY.findIndex(function(r){return r.d==='09-07';});
+    var evX = ML+groupW*(evI+0.5);
+    var mark = el('text',{x:evX,y:MT-2,class:'bar-sub','text-anchor':'middle',fill:C.crit}); mark.textContent='LOL 평가전 투입'; svg.appendChild(mark);
+    addDateHits(svg, DAILY, ML, groupW, H, function(i){ return DAILY[i]; });
+  })();
+
+  // ---------------- Chart 5: daily install + apply/vote (grouped) ----------------
+  (function(){
+    var svg = document.getElementById('chartDailyEvent');
+    var W=820,H=170, ML=70,MR=16,MT=16,MB=26;
+    var plotW=W-ML-MR, plotH=H-MT-MB, n=DAILY.length;
+    var max = Math.max.apply(null, DAILY.map(function(r){return Math.max(r.install,r.apply,r.vote);}));
+    var groupW = plotW/n, bw=groupW*0.24, gap=groupW*0.03;
+    function y(v){ return MT+plotH-(v/max)*plotH; }
+    svg.appendChild(el('line',{x1:ML,x2:W-MR,y1:MT+plotH,y2:MT+plotH,class:'baseline'}));
+    DAILY.forEach(function(r,i){
+      var base = ML+groupW*i + groupW*0.08;
+      [['install',C.install,r.install],['apply',C.spend,r.apply],['vote',C.crit,r.vote]].forEach(function(s,si){
+        var cx = base + si*(bw+gap);
+        var yy=y(s[2]), h=plotH+MT-yy;
+        svg.appendChild(el('rect',{x:cx,y:yy,width:bw,height:Math.max(0,h),rx:1.5,fill:s[1]}));
+      });
+      var lab = el('text',{x:ML+groupW*(i+0.5),y:H-8,class:'axis-label','text-anchor':'middle'}); lab.textContent=r.d; svg.appendChild(lab);
+    });
+    addDateHits(svg, DAILY, ML, groupW, H, function(i){ return DAILY[i]; });
+  })();
+  document.getElementById('legendDaily').innerHTML =
+    '<span class="item"><span class="sw" style="background:'+C.install+'"></span>설치(AF_Install)</span>'+
+    '<span class="item"><span class="sw" style="background:'+C.spend+'"></span>응모 클릭</span>'+
+    '<span class="item"><span class="sw" style="background:'+C.crit+'"></span>투표 클릭</span>';
+
+  // ---------------- Chart 6: signup rate ----------------
+  (function(){
+    var svg = document.getElementById('chartSignup');
+    var W=820,H=290, ML=118,MR=70,MT=8,MB=8;
+    var rows = SIGNUP;
+    var n=rows.length, rowH=(H-MT-MB)/n, barH=rowH*0.56;
+    var max=100;
+    function bw(v){ return (v/max)*(W-ML-MR); }
+    rows.forEach(function(r,i){
+      var y = MT + i*rowH + (rowH-barH)/2;
+      var w = Math.max(2,bw(r.rate));
+      svg.appendChild(el('rect',{x:ML,y:y,width:w,height:barH,rx:2,fill:C.install}));
+      var lbl = el('text',{x:ML-10,y:y+barH/2+4,class:'bar-label','text-anchor':'end'});
+      lbl.textContent = r.name; svg.appendChild(lbl);
+      var val = el('text',{x:ML+w+8,y:y+barH/2+4,class:'bar-label tabular'});
+      val.textContent = r.rate+'%'; svg.appendChild(val);
+      var sub = el('text',{x:ML+w+8,y:y+barH/2+16,class:'bar-sub tabular'});
+      sub.textContent = fmt(r.signup)+'/'+fmt(r.install)+'건'; svg.appendChild(sub);
+      var hit = el('rect',{class:'hit', x:0, y:MT+i*rowH, width:W, height:rowH});
+      hit.addEventListener('mousemove', function(e){
+        tipShow(e, '<div class="tt-title">'+r.name+'</div>'+tipRow('회원가입 전환율', r.rate+'%')+tipRow('회원가입', fmt(r.signup)+'건')+tipRow('설치', fmt(r.install)+'건'));
+      });
+      hit.addEventListener('mouseleave', tipHide);
+      svg.appendChild(hit);
+    });
+  })();
+
+  // ---------------- ranking tables ----------------
+  function renderRank(containerId, rows, isWorst){
+    var head = '<div class="r-head"><span>#</span><span>애드셋</span><span style="text-align:right">CPI</span><span style="text-align:right">설치</span><span style="text-align:right">광고비</span></div>';
+    var body = rows.map(function(r,i){
+      var t = tier(r.cpi);
+      return '<div class="rank-row">'+
+        '<div class="idx">'+(i+1)+'</div>'+
+        '<div class="nm">'+r.name+'<span class="media-tag">'+r.media+'</span></div>'+
+        '<div class="num-cell"><span class="pill" style="background:'+t.c+'22; color:'+t.c+'">'+fmt(r.cpi)+'원</span></div>'+
+        '<div class="num-cell">'+fmt(r.install)+'</div>'+
+        '<div class="num-cell">'+fmt(r.spend)+'원</div>'+
+      '</div>';
+    }).join('');
+    document.getElementById(containerId).innerHTML = head+body;
+  }
+  renderRank('rankBest', BEST, false);
+  renderRank('rankWorst', WORST, true);
+
+  // ================= 8) 매체별 운영 캠페인 성과 비교 =================
+  var IG_CAMPAIGNS = [
+    {name:'ATA페스티벌', spend:15046766, install:1015, cpi:14824},
+    {name:'타짜시사회 티켓드롭', spend:12878267, install:915, cpi:14075},
+    {name:'매거진 9월 상시소재', spend:9585884, install:1294, cpi:7408},
+    {name:'부산 국제 영화제', spend:6639642, install:845, cpi:7858},
+    {name:'e스포츠 국가대표 평가전', spend:6379091, install:1264, cpi:5047},
+    {name:'위클리보물찾기', spend:5542859, install:1774, cpi:3124},
+    {name:'퐁피두 도슨트', spend:5200005, install:390, cpi:13333},
+    {name:'티스퀘어 티켓드롭', spend:4176206, install:264, cpi:15819},
+    {name:'로열티프로그램', spend:3655406, install:634, cpi:5766},
+    {name:'위클리업데이트24', spend:2311345, install:9, cpi:256816, retarget:true},
+    {name:'위클리업데이트25', spend:1660678, install:4, cpi:415170, retarget:true},
+    {name:'위클리업데이트23', spend:850120, install:5, cpi:170024, retarget:true},
+    {name:'메이드인코리아', spend:98784, install:1, cpi:98784}
+  ];
+  var X_CAMPAIGNS = [
+    {name:'매거진 9월 상시소재', spend:3299832, install:255, cpi:12941},
+    {name:'타짜시사회 티켓드롭', spend:1934715, install:17, cpi:113807},
+    {name:'ATA페스티벌', spend:1932211, install:20, cpi:96611}
+  ];
+  var KM_CAMPAIGNS = [
+    {name:'ATA페스티벌', spend:7385665, install:26, cpi:284064},
+    {name:'타짜시사회 티켓드롭', spend:6558495, install:53, cpi:123745},
+    {name:'매거진 9월 상시소재', spend:4970225, install:13, cpi:382325},
+    {name:'부산 국제 영화제', spend:2739623, install:33, cpi:83019}
+  ];
+
+  (function(){
+    var withCpiRows = IG_CAMPAIGNS.filter(function(r){return r.cpi!=null;}).sort(function(a,b){return a.cpi-b.cpi;});
+    var noCpiRows = IG_CAMPAIGNS.filter(function(r){return r.cpi==null;});
+    var rows = withCpiRows.concat(noCpiRows);
+    var head = '<div class="r-head"><span>#</span><span>캠페인</span><span style="text-align:right">CPI</span><span style="text-align:right">설치</span><span style="text-align:right">광고비</span></div>';
+    var body = rows.map(function(r,i){
+      var cell;
+      if (r.retarget){
+        cell = '<span class="pill" style="background:var(--surface-alt); color:var(--ink-muted);">리타겟</span>';
+      } else if (r.cpi){
+        var t = tier(r.cpi);
+        cell = '<span class="pill" style="background:'+t.c+'22; color:'+t.c+'">'+fmt(r.cpi)+'원 · '+t.label+'</span>';
+      } else {
+        cell = '<span class="pill" style="background:var(--surface-alt); color:var(--ink-muted);">설치 0건</span>';
+      }
+      return '<div class="rank-row">'+
+        '<div class="idx">'+(i+1)+'</div>'+
+        '<div class="nm">'+r.name+(r.retarget?'<span class="media-tag">리타겟팅 — 신규설치 목적 아님</span>':'')+'</div>'+
+        '<div class="num-cell">'+cell+'</div>'+
+        '<div class="num-cell">'+fmt(r.install)+'</div>'+
+        '<div class="num-cell">'+fmt(r.spend)+'원</div>'+
+      '</div>';
+    }).join('');
+    document.getElementById('rankIGCampaign').innerHTML = head+body;
+  })();
+
+  function renderMiniTable(id, rows){
+    document.getElementById(id).innerHTML = rows.map(function(r){
+      return '<div class="mini-row"><span>'+r.name+'</span><span>'+fmt(r.install)+'건</span><span>'+(r.cpi?fmt(r.cpi)+'원':'설치 0건')+'</span></div>';
+    }).join('');
+  }
+  renderMiniTable('mtX', X_CAMPAIGNS);
+  renderMiniTable('mtKM', KM_CAMPAIGNS);
+
+  // ================= 9) 동일 캠페인, 다른 매체 (교차비교) =================
+  var CROSS_MEDIA = [
+    {campaign:'ATA페스티벌', rows:[
+      {media:'instagram', color:C.mediaIg, cpi:14824, install:1015},
+      {media:'X', color:C.mediaX, cpi:96611, install:20},
+      {media:'kakaomoment', color:C.mediaKm, cpi:284064, install:26}
+    ]},
+    {campaign:'타짜시사회 티켓드롭', rows:[
+      {media:'instagram', color:C.mediaIg, cpi:14075, install:915},
+      {media:'X', color:C.mediaX, cpi:113807, install:17},
+      {media:'kakaomoment', color:C.mediaKm, cpi:123745, install:53}
+    ]},
+    {campaign:'매거진 9월 상시소재', rows:[
+      {media:'instagram', color:C.mediaIg, cpi:7408, install:1294},
+      {media:'X', color:C.mediaX, cpi:12941, install:255},
+      {media:'kakaomoment', color:C.mediaKm, cpi:382325, install:13}
+    ]},
+    {campaign:'부산 국제 영화제', rows:[
+      {media:'instagram', color:C.mediaIg, cpi:7858, install:845},
+      {media:'kakaomoment', color:C.mediaKm, cpi:83019, install:33},
+      {media:'네이버GFA', color:C.mediaNv, cpi:53172, install:55}
+    ]}
+  ];
+  (function(){
+    var grid = document.getElementById('crossMediaGrid');
+    CROSS_MEDIA.forEach(function(g){
+      var cpis = g.rows.filter(function(r){return r.cpi;}).map(function(r){return r.cpi;});
+      var mult = cpis.length>1 ? Math.max.apply(null,cpis)/Math.min.apply(null,cpis) : 1;
+      var wrap = document.createElement('div'); wrap.className='mini-table';
+      var title = document.createElement('div'); title.className='mt-title'; title.textContent=g.campaign;
+      wrap.appendChild(title);
+      g.rows.forEach(function(r){
+        var row = document.createElement('div'); row.className='mini-row';
+        var valueHtml = r.cpi ? fmt(r.cpi)+'원' : '<span style="color:var(--ink-muted)">설치 0건</span>';
+        row.innerHTML = '<span><span style="display:inline-block; width:9px; height:9px; border-radius:2px; margin-right:6px; background:'+r.color+'"></span>'+r.media+'</span>'+
+          '<span>'+(r.install?fmt(r.install)+'건':'—')+'</span><span>'+valueHtml+'</span>';
+        wrap.appendChild(row);
+      });
+      if (mult>1.05){
+        var cap = document.createElement('div'); cap.className='sm-cap'; cap.style.padding='8px 12px 10px';
+        cap.textContent = '가장 비싼 매체가 가장 싼 매체보다 '+mult.toFixed(1)+'배 비쌈';
+        wrap.appendChild(cap);
+      }
+      grid.appendChild(wrap);
+    });
+  })();
+
+  // ================= 10) 데일리 캠페인 성과 추이 (small multiples) =================
+  var DAILY_CAMPAIGNS = [
+    {name:'ATA페스티벌', color:C.mediaIg,
+      data:[{d:'09-01',install:161,cpi:21935},{d:'09-02',install:177,cpi:21378},{d:'09-03',install:149,cpi:25051},{d:'09-04',install:136,cpi:25397},{d:'09-05',install:146,cpi:24834},{d:'09-06',install:154,cpi:23500},{d:'09-07',install:99,cpi:20031},{d:'09-08',install:39,cpi:16276}],
+      cap:'8일 집행 후 종료 — 대체로 2만원대를 유지하다 물량을 줄인 마지막 이틀(9/7~9/8)에 16,276원까지 개선된 채로 중단. 09/09 이후 재개 없음, 계정 전체 캠페인으로는 완전히 마감.'},
+    {name:'타짜시사회 티켓드롭', color:C.mediaIg,
+      data:[{d:'09-01',install:235,cpi:15978},{d:'09-02',install:154,cpi:23646},{d:'09-03',install:137,cpi:27326},{d:'09-04',install:134,cpi:24459},{d:'09-05',install:178,cpi:20938},{d:'09-06',install:147,cpi:21953}],
+      cap:'6일 만에 조기 종료 — 개선되는 흐름 없이 16,000~27,000원 사이를 오르내리다 9/6에 바로 중단, 이후 재개 없음.'},
+    {name:'매거진 9월 상시소재', color:C.spend,
+      data:[{d:'09-01',install:70,cpi:11615},{d:'09-02',install:74,cpi:11298},{d:'09-03',install:76,cpi:11598},{d:'09-04',install:53,cpi:14694},{d:'09-05',install:69,cpi:14681},{d:'09-06',install:115,cpi:8734},{d:'09-07',install:79,cpi:10783},{d:'09-08',install:79,cpi:11108},{d:'09-09',install:77,cpi:10428},{d:'09-10',install:192,cpi:8353},{d:'09-11',install:113,cpi:16650},{d:'09-12',install:129,cpi:13936},{d:'09-13',install:178,cpi:11559},{d:'09-14',install:139,cpi:9339},{d:'09-15',install:119,cpi:11411}],
+      cap:'상시 운영(베이스라인) 소재 — 9/9부터 크리에이티브가 텍스트광고C·현빈(Vol25) 중심으로 교체되며 볼륨이 커졌다(12번 섹션 참고), CPI는 계속 8,300~16,700원 사이에서 등락 중(09/15 11,411원).'},
+    {name:'UAC (구글)', color:C.install,
+      data:[{d:'09-01',install:199,cpi:7530},{d:'09-02',install:202,cpi:7086},{d:'09-03',install:278,cpi:4974},{d:'09-04',install:264,cpi:4458},{d:'09-05',install:491,cpi:3945},{d:'09-06',install:547,cpi:3395},{d:'09-07',install:504,cpi:3129},{d:'09-08',install:467,cpi:3531},{d:'09-09',install:426,cpi:3927},{d:'09-10',install:500,cpi:3378},{d:'09-11',install:432,cpi:3502},{d:'09-12',install:537,cpi:2967},{d:'09-13',install:513,cpi:3103},{d:'09-14',install:484,cpi:3266},{d:'09-15',install:469,cpi:3398}],
+      cap:'학습 효과가 15일째도 유지 중 — 초반 7,000원대에서 9/6 이후 줄곧 2,900~3,900원대. 9/12(토) 2,967원으로 이 기간 최저치 경신, 09/15도 같은 밴드 안(3,398원).'},
+    {name:'e스포츠 국가대표 평가전 (종료)', color:C.crit,
+      data:[{d:'09-07',install:270,cpi:2472},{d:'09-08',install:431,cpi:3734},{d:'09-09',install:304,cpi:5830},{d:'09-10',install:259,cpi:8996}],
+      cap:'피로 신호 그대로 적중 — 투입 첫날 2,472원이던 CPI가 4일 만에 8,996원(3.6배)까지 오른 뒤, 09/11부터 캠페인 자체가 완전히 빠짐. 경고가 실제 조치로 이어진 사례.'},
+    {name:'카톡플친 (발송 4회)', color:C.mediaX,
+      data:[{d:'09-03',install:27,cpi:105202},{d:'09-07',install:314,cpi:15098},{d:'09-10',install:48,cpi:198523},{d:'09-14',install:34,cpi:81449}],
+      cap:'발송마다 성격이 다름 — 9/3·9/10(위클리 업데이트)은 CPI 10만~20만원대, 9/7(이스포츠 투표 유도)만 15,098원으로 양호. 9/14(이벤트 다이제스트)는 81,449원으로 중간 수준 — 응모 클릭은 446건(설치의 13배)으로 참여 유도 자체는 효과적이었음(7번 섹션 참고).'},
+    {name:'부산 국제 영화제 [반전]', color:C.mediaKm,
+      data:[{d:'09-09',install:45,cpi:7315},{d:'09-10',install:155,cpi:8866},{d:'09-11',install:190,cpi:10371},{d:'09-12',install:152,cpi:14486},{d:'09-13',install:136,cpi:17320},{d:'09-14',install:123,cpi:16880},{d:'09-15',install:132,cpi:15122}],
+      cap:'반전 — 09/13 정점(17,320원)을 찍은 뒤 이틀 연속 하락(16,880→15,122원) — 이스포츠와 달리 소재가 회복되는 모양새, 아직 안심하긴 이르지만 당장 교체는 보류할 만하다.'},
+    {name:'퐁피두 도슨트 [경고 지속]', color:C.aos,
+      data:[{d:'09-10',install:92,cpi:7880},{d:'09-11',install:89,cpi:9831},{d:'09-12',install:66,cpi:15016},{d:'09-13',install:58,cpi:17002},{d:'09-14',install:38,cpi:21178},{d:'09-15',install:47,cpi:17408}],
+      cap:'경고 지속 — 09/14 정점(21,178원) 이후 09/15도 17,408원으로 여전히 높은 수준, CTR도 반등 없음(12번 섹션) — 이 리포트에서 가장 시급한 소재 교체 후보로 남아있다.'},
+    {name:'위클리보물찾기 [신규 경고]', color:C.warn,
+      data:[{d:'09-11',install:458,cpi:2398},{d:'09-12',install:360,cpi:2623},{d:'09-13',install:341,cpi:3333},{d:'09-14',install:258,cpi:3783},{d:'09-15',install:214,cpi:4536}],
+      cap:'경고 — 이스포츠 빈자리를 채우며 계정 최저가로 꼽혔던 소재의 CPI가 닷새 만에 89% 상승(2,398→4,536원) — 부산·퐁피두와 같은 초기 궤적, 다음 갱신에서 최우선 확인 대상.'}
+  ];
+  (function(){
+    var grid = document.getElementById('smGrid');
+    DAILY_CAMPAIGNS.forEach(function(camp){
+      var wrap = document.createElement('div'); wrap.className='sm-panel';
+      var title = document.createElement('div'); title.className='sm-title'; title.textContent=camp.name;
+      wrap.appendChild(title);
+      var svg = el('svg',{width:380,height:120,viewBox:'0 0 380 120'});
+      var W=380,H=120, ML=14,MR=14,MT=20,MB=18;
+      var plotW=W-ML-MR, plotH=H-MT-MB, n=camp.data.length;
+      var cpis = camp.data.map(function(r){return r.cpi;});
+      var max = Math.max.apply(null,cpis), min = Math.min.apply(null,cpis);
+      var pad = (max-min)*0.15 || max*0.1;
+      function x(i){ return n===1? ML+plotW/2 : ML + (i/(n-1))*plotW; }
+      function y(v){ return MT + plotH - ((v-(min-pad))/((max+pad)-(min-pad)))*plotH; }
+      svg.appendChild(el('line',{x1:ML,x2:W-MR,y1:MT+plotH,y2:MT+plotH,class:'baseline'}));
+      var d = camp.data.map(function(r,i){ return (i===0?'M':'L')+x(i)+','+y(r.cpi); }).join(' ');
+      svg.appendChild(el('path',{d:d, fill:'none', stroke:camp.color, 'stroke-width':2, 'stroke-linejoin':'round','stroke-linecap':'round'}));
+      camp.data.forEach(function(r,i){
+        svg.appendChild(el('circle',{cx:x(i), cy:y(r.cpi), r:3.2, fill:camp.color}));
+        var lab = el('text',{x:x(i), y:y(r.cpi)-7, class:'bar-sub tabular','text-anchor':'middle'}); lab.textContent=fmt(r.cpi); svg.appendChild(lab);
+        var dl = el('text',{x:x(i), y:H-4, class:'axis-label','text-anchor':'middle'}); dl.textContent=r.d.slice(3); svg.appendChild(dl);
+        var hit = el('circle',{cx:x(i), cy:y(r.cpi), r:9, fill:'transparent', style:'cursor:pointer'});
+        hit.addEventListener('mousemove', function(e){
+          tipShow(e, '<div class="tt-title">'+camp.name+' · '+r.d+'</div>'+tipRow('CPI', fmt(r.cpi)+'원')+tipRow('설치', fmt(r.install)+'건'));
+        });
+        hit.addEventListener('mouseleave', tipHide);
+        svg.appendChild(hit);
+      });
+      wrap.appendChild(svg);
+      var cap = document.createElement('div'); cap.className='sm-cap'; cap.textContent=camp.cap;
+      wrap.appendChild(cap);
+      grid.appendChild(wrap);
+    });
+  })();
+
+  // ================= 메타(Instagram) 집중분석 =================
+  var META_DEVICE = [
+    {name:'AOS', spend:34576527, install:4665, cpi:7412, color:C.aos},
+    {name:'iOS', spend:34626385, install:3731, cpi:9281, color:C.ios}
+  ];
+  var META_DEV_CAMP = [
+    {name:'ATA페스티벌', aosCpi:14219, iosCpi:15491},
+    {name:'타짜시사회 티켓드롭', aosCpi:13165, iosCpi:15119},
+    {name:'매거진 9월 상시소재', aosCpi:5666, iosCpi:10698},
+    {name:'e스포츠 국가대표 평가전', aosCpi:5270, iosCpi:4837, reversed:true},
+    {name:'부산 국제 영화제', aosCpi:7697, iosCpi:8021},
+    {name:'퐁피두 도슨트', aosCpi:11545, iosCpi:15671},
+    {name:'티스퀘어 티켓드롭', aosCpi:13116, iosCpi:19849},
+    {name:'로열티프로그램', aosCpi:4579, iosCpi:7793},
+    {name:'위클리보물찾기', aosCpi:2822, iosCpi:3497}
+  ];
+  var META_DAILY = [
+    {d:'09-01', spend:5265784, install:457, apply:231, vote:0, ctr:1.52},
+    {d:'09-02', spend:5333995, install:370, apply:179, vote:0, ctr:1.35},
+    {d:'09-03', spend:5476000, install:371, apply:128, vote:0, ctr:1.4},
+    {d:'09-04', spend:5193898, install:345, apply:119, vote:0, ctr:1.34},
+    {d:'09-05', spend:6354948, install:403, apply:135, vote:0, ctr:1.43},
+    {d:'09-06', spend:6126957, install:432, apply:158, vote:0, ctr:1.52},
+    {d:'09-07', spend:3539178, install:468, apply:307, vote:242, ctr:1.8},
+    {d:'09-08', spend:3829860, install:595, apply:409, vote:351, ctr:1.84},
+    {d:'09-09', spend:3871624, install:478, apply:297, vote:235, ctr:1.77},
+    {d:'09-10', spend:6187185, install:868, apply:420, vote:158, ctr:2.05},
+    {d:'09-11', spend:4398782, install:898, apply:369, vote:0, ctr:3.3},
+    {d:'09-12', spend:4598004, install:825, apply:268, vote:0, ctr:2.74},
+    {d:'09-13', spend:5311516, install:796, apply:270, vote:0, ctr:2.4},
+    {d:'09-14', spend:4308840, install:588, apply:154, vote:0, ctr:2.24},
+    {d:'09-15', spend:4228485, install:520, apply:133, vote:0, ctr:2.37}
+  ];
+  var META_SIGNUP = [
+    {name:'e스포츠 국가대표 평가전', rate:66.1, install:1264, signup:836},
+    {name:'매거진 9월 상시소재', rate:60.5, install:1294, signup:783},
+    {name:'로열티프로그램', rate:58.7, install:634, signup:372},
+    {name:'부산 국제 영화제', rate:56.9, install:845, signup:481},
+    {name:'위클리보물찾기', rate:56.8, install:1774, signup:1008},
+    {name:'타짜시사회 티켓드롭', rate:56.3, install:915, signup:515},
+    {name:'ATA페스티벌', rate:53.9, install:1015, signup:547},
+    {name:'티스퀘어 티켓드롭', rate:50.0, install:264, signup:132},
+    {name:'퐁피두 도슨트', rate:49.5, install:390, signup:193}
+  ];
+  var META_BEST = [
+    {name:'[앱홍보_9월 상시] AOS_텍스트광고C', camp:'매거진 9월 상시소재', spend:925259, install:416, cpi:2224},
+    {name:'[앱홍보_9월] AOS 위클리 보물찾기 1안', camp:'위클리보물찾기', spend:2757509, install:978, cpi:2820},
+    {name:'[앱홍보_9월_AOS] 로열티프로그램_위클리완독챌린지 vol25(2안)', camp:'로열티프로그램', spend:275631, install:92, cpi:2996},
+    {name:'[앱홍보_9월_AOS] 로열티프로그램_위클리완독챌린지 vol25(1안)', camp:'로열티프로그램', spend:358702, install:109, cpi:3291},
+    {name:'[앱홍보_9월] IOS 위클리 보물찾기 1안', camp:'위클리보물찾기', spend:2782035, install:796, cpi:3495},
+    {name:'[앱홍보_9월] IOS_E스포츠대회티켓_LOL평가전 2안', camp:'e스포츠 국가대표 평가전', spend:1045516, install:247, cpi:4233}
+  ];
+  var META_WORST = [
+    {name:'[앱홍보_9월 상시] IOS_콘텐츠광고_일상블로그(Vol24)', camp:'매거진 9월 상시소재', spend:660955, install:15, cpi:44064},
+    {name:'[앱홍보_9월 상시] IOS_현빈(Vol25)', camp:'매거진 9월 상시소재', spend:850802, install:38, cpi:22390},
+    {name:'[앱홍보_9월 상시] AOS_콘텐츠광고_일상블로그(Vol24)', camp:'매거진 9월 상시소재', spend:493102, install:23, cpi:21439},
+    {name:'[앱홍보_8월 상시] IOS_귀칼(vol23)', camp:'매거진 9월 상시소재', spend:501368, install:24, cpi:20890},
+    {name:'[앱홍보_9월] IOS 티스퀘어 티켓드롭 1안', camp:'티스퀘어 티켓드롭', spend:2103942, install:106, cpi:19849},
+    {name:'[앱홍보_8월_IOS] 로열티프로그램_위클리완독챌린지vol23', camp:'로열티프로그램', spend:289289, install:16, cpi:18081}
+  ];
+
+  (function(){
+    var svg = document.getElementById('chartMetaDevice');
+    var W=380,H=150, ML=50,MR=20,MT=16,MB=32;
+    var max = Math.max.apply(null, META_DEVICE.map(function(r){return r.cpi;}));
+    var plotH=H-MT-MB, plotW=W-ML-MR, bw = plotW/META_DEVICE.length*0.4;
+    function y(v){ return MT+plotH-(v/max)*plotH; }
+    svg.appendChild(el('line',{x1:ML,x2:W-MR,y1:MT+plotH,y2:MT+plotH,class:'baseline'}));
+    META_DEVICE.forEach(function(r,i){
+      var cx = ML+plotW*(i+0.5)/META_DEVICE.length;
+      var yy=y(r.cpi), h=plotH+MT-yy;
+      svg.appendChild(el('rect',{x:cx-bw/2,y:yy,width:bw,height:h,rx:3,fill:r.color}));
+      var val=el('text',{x:cx,y:yy-8,class:'bar-label tabular','text-anchor':'middle'}); val.textContent=fmt(r.cpi)+'원'; svg.appendChild(val);
+      var sub=el('text',{x:cx,y:yy+14,class:'bar-sub tabular','text-anchor':'middle',fill:C.surface}); sub.textContent=fmt(r.install)+'건'; svg.appendChild(sub);
+      var lab=el('text',{x:cx,y:H-10,class:'axis-label','text-anchor':'middle'}); lab.textContent=r.name; svg.appendChild(lab);
+      var hit = el('rect',{class:'hit', x:ML+plotW*i/META_DEVICE.length, y:0, width:plotW/META_DEVICE.length, height:H});
+      hit.addEventListener('mousemove', function(e){
+        tipShow(e, '<div class="tt-title">'+r.name+' (메타)</div>'+tipRow('CPI', fmt(r.cpi)+'원')+tipRow('설치', fmt(r.install)+'건')+tipRow('광고비', fmt(r.spend)+'원'));
+      });
+      hit.addEventListener('mouseleave', tipHide);
+      svg.appendChild(hit);
+    });
+  })();
+
+  (function(){
+    var headerRow = '<div class="mini-row" style="border-top:none;"><span></span><span style="color:'+C.aos+'; font-weight:600;">AOS</span><span style="color:'+C.ios+'; font-weight:600;">iOS</span></div>';
+    var dataRows = META_DEV_CAMP.map(function(r){
+      return '<div class="mini-row"><span>'+r.name+(r.reversed?' ⚑':'')+'</span><span style="color:'+C.aos+'">'+fmt(r.aosCpi)+'원</span><span style="color:'+C.ios+'">'+fmt(r.iosCpi)+'원</span></div>';
+    }).join('');
+    document.getElementById('mtDevCamp').innerHTML = headerRow + dataRows;
+  })();
+
+  (function(){
+    var svg = document.getElementById('chartMetaDailySpend');
+    var W=820,H=120, ML=70,MR=16,MT=10,MB=26;
+    var plotW=W-ML-MR, plotH=H-MT-MB, n=META_DAILY.length;
+    var max = Math.max.apply(null, META_DAILY.map(function(r){return r.spend;}));
+    var groupW = plotW/n, bw=groupW*0.5;
+    function y(v){ return MT+plotH-(v/max)*plotH; }
+    svg.appendChild(el('line',{x1:ML,x2:W-MR,y1:MT+plotH,y2:MT+plotH,class:'baseline'}));
+    META_DAILY.forEach(function(r,i){
+      var cx = ML+groupW*(i+0.5);
+      var yy=y(r.spend), h=plotH+MT-yy;
+      var isEvent = r.d==='09-07';
+      svg.appendChild(el('rect',{x:cx-bw/2,y:yy,width:bw,height:h,rx:2,fill:isEvent?C.crit:C.spend,'fill-opacity':isEvent?1:0.85}));
+      var lab = el('text',{x:cx,y:H-8,class:'axis-label','text-anchor':'middle'}); lab.textContent=r.d; svg.appendChild(lab);
+    });
+    addDateHits(svg, META_DAILY, ML, groupW, H, function(i){ return META_DAILY[i]; });
+  })();
+  (function(){
+    var svg = document.getElementById('chartMetaDailyEvent');
+    var W=820,H=160, ML=70,MR=16,MT=16,MB=26;
+    var plotW=W-ML-MR, plotH=H-MT-MB, n=META_DAILY.length;
+    var max = Math.max.apply(null, META_DAILY.map(function(r){return Math.max(r.install,r.apply,r.vote);}));
+    var groupW = plotW/n, bw=groupW*0.24, gap=groupW*0.03;
+    function y(v){ return MT+plotH-(v/max)*plotH; }
+    svg.appendChild(el('line',{x1:ML,x2:W-MR,y1:MT+plotH,y2:MT+plotH,class:'baseline'}));
+    META_DAILY.forEach(function(r,i){
+      var base = ML+groupW*i + groupW*0.08;
+      [['install',C.install,r.install],['apply',C.spend,r.apply],['vote',C.crit,r.vote]].forEach(function(s,si){
+        var cx = base + si*(bw+gap);
+        var yy=y(s[2]), h=plotH+MT-yy;
+        svg.appendChild(el('rect',{x:cx,y:yy,width:bw,height:Math.max(0,h),rx:1.5,fill:s[1]}));
+      });
+      var lab = el('text',{x:ML+groupW*(i+0.5),y:H-8,class:'axis-label','text-anchor':'middle'}); lab.textContent=r.d; svg.appendChild(lab);
+    });
+    addDateHits(svg, META_DAILY, ML, groupW, H, function(i){ return META_DAILY[i]; });
+  })();
+  document.getElementById('legendMetaDaily').innerHTML =
+    '<span class="item"><span class="sw" style="background:'+C.install+'"></span>설치</span>'+
+    '<span class="item"><span class="sw" style="background:'+C.spend+'"></span>응모 클릭</span>'+
+    '<span class="item"><span class="sw" style="background:'+C.crit+'"></span>투표 클릭</span>';
+
+  (function(){
+    var svg = document.getElementById('chartMetaSignup');
+    var W=820,H=290, ML=170,MR=70,MT=8,MB=8;
+    var rows = META_SIGNUP;
+    var n=rows.length, rowH=(H-MT-MB)/n, barH=rowH*0.56;
+    var max=70;
+    function bw(v){ return (v/max)*(W-ML-MR); }
+    rows.forEach(function(r,i){
+      var y = MT + i*rowH + (rowH-barH)/2;
+      var w = Math.max(2,bw(r.rate));
+      svg.appendChild(el('rect',{x:ML,y:y,width:w,height:barH,rx:2,fill:r.retarget?C.muted:C.install,'fill-opacity':r.retarget?0.5:1}));
+      var lbl = el('text',{x:ML-10,y:y+barH/2+4,class:'bar-label','text-anchor':'end'});
+      lbl.textContent = r.name+(r.retarget?' [리타겟]':''); svg.appendChild(lbl);
+      var val = el('text',{x:ML+w+8,y:y+barH/2+4,class:'bar-label tabular'});
+      val.textContent = r.rate+'%'; svg.appendChild(val);
+      var sub = el('text',{x:ML+w+8,y:y+barH/2+16,class:'bar-sub tabular'});
+      sub.textContent = fmt(r.signup)+'/'+fmt(r.install)+'건'; svg.appendChild(sub);
+      var hit = el('rect',{class:'hit', x:0, y:MT+i*rowH, width:W, height:rowH});
+      hit.addEventListener('mousemove', function(e){
+        tipShow(e, '<div class="tt-title">'+r.name+(r.retarget?' [리타겟]':'')+'</div>'+tipRow('회원가입 전환율', r.rate+'%')+tipRow('회원가입', fmt(r.signup)+'건')+tipRow('설치', fmt(r.install)+'건'));
+      });
+      hit.addEventListener('mouseleave', tipHide);
+      svg.appendChild(hit);
+    });
+  })();
+
+  function renderMetaRank(containerId, rows){
+    var head = '<div class="r-head"><span>#</span><span>크리에이티브</span><span style="text-align:right">CPI</span><span style="text-align:right">설치</span><span style="text-align:right">광고비</span></div>';
+    var body = rows.map(function(r,i){
+      var t = tier(r.cpi);
+      return '<div class="rank-row">'+
+        '<div class="idx">'+(i+1)+'</div>'+
+        '<div class="nm">'+r.name+'<span class="media-tag">'+r.camp+'</span></div>'+
+        '<div class="num-cell"><span class="pill" style="background:'+t.c+'22; color:'+t.c+'">'+fmt(r.cpi)+'원</span></div>'+
+        '<div class="num-cell">'+fmt(r.install)+'</div>'+
+        '<div class="num-cell">'+fmt(r.spend)+'원</div>'+
+      '</div>';
+    }).join('');
+    document.getElementById(containerId).innerHTML = head+body;
+  }
+  renderMetaRank('rankMetaBest', META_BEST);
+  renderMetaRank('rankMetaWorst', META_WORST);
+
+  // ================= 12) 일자별 이슈·조치 로그 =================
+  var DAILY_LOG = [
+    {d:'09-01(화)', status:'정보', title:'4개 캠페인 동시 운영 시작', items:[
+      {cat:'운영', text:'ATA페스티벌·타짜시사회 티켓드롭·매거진 9월 상시소재·UAC 동시 집행. 계정 CPI 10,326원으로 출발.'}
+    ]},
+    {d:'09-02(수)', status:'정보', title:'소규모 매체 테스트 종료', items:[
+      {cat:'매체', text:'Ace 이틀(9/1~9/2, 합계 732,184원) 집행 후 완전 중단, 이후 다시 등장 안 함 — 짧은 테스트 성격.'}
+    ]},
+    {d:'09-03(목)', status:'주의', title:'카톡플친 첫 발송, CPI 105,202원', items:[
+      {cat:'운영', text:'위클리업데이트24 캐러셀 발송 — 신규설치 기준으론 매우 비효율(설치 27건). 조치: 발송 목적을 "설치"가 아니라 "참여"로 재설정 필요.'}
+    ]},
+    {d:'09-04(금)', status:'양호', title:'X(트위터) 예산 83% 삭감', items:[
+      {cat:'예산', text:'1,320,000원/일 → 786,926원(전환일) → 익일부터 220,000원/일로 고정. 설치는 이후에도 20건대 안팎을 유지해 삭감 전보다 오히려 효율이 개선됨.'}
+    ]},
+    {d:'09-05(토)', status:'양호', title:'주말 진입 — UAC 설치 급증', items:[
+      {cat:'디바이스', text:'UAC 설치 264→491건, CPI 3,945원까지 하락. 계정 전체 AOS 비중도 이날 79.6%로 급등(전일 73.9%) — 학습효과+주말 효과가 겹친 것으로 추정(11번 섹션 참고).'},
+      {cat:'참고', text:'애플서치애드는 이날 설치 1건으로 이 기간 최저(원래 하루 5~10건 수준의 소량 매체라 우연일 가능성도 있음, 9/9~9/10엔 오히려 8·10건으로 최고치 기록).'}
+    ]},
+    {d:'09-06(일)', status:'정보', title:'주말 이틀째 — AOS 비중 최고치', items:[
+      {cat:'디바이스', text:'계정 전체 AOS 비중 80.6%로 이 기간 최고치, UAC 설치도 547건으로 최고치 경신.'},
+      {cat:'매체', text:'타짜시사회 티켓드롭 마지막 집행일 — 익일부터 완전 중단, 신규 소재(이스포츠) 교체를 앞둔 시점으로 추정.'}
+    ]},
+    {d:'09-07(월)', status:'전환점', title:'이스포츠(LOL 국가대표 평가전) 소재 투입', items:[
+      {cat:'전환점', text:'AOS·iOS 4개 변형 동시 투입 + ATA페스티벌 사실상 마지막 대량집행 + 카톡플친 2차 발송(이스포츠 투표 유도, CPI 15,098원으로 양호) — 이날부터 응모·투표 클릭이 0에서 폭발적으로 증가.'},
+      {cat:'매체', text:'같은 날 kakaomoment 지출이 219만원대 → 547,678원으로 급감 — 사실상 종료 수순 시작.'},
+      {cat:'품질', text:'계정 전체 CTR이 0.19%→0.45%로 뛰기 시작했지만, 광고 품질 개선이라기보단 저품질·고노출 매체(kakaomoment)가 빠지며 생긴 통계적 효과에 가까움. 같은 날 회원가입 전환율은 오히려 이 기간 최저(38.1%) — 행사성 설치라 투표는 많이 해도 가입까지는 덜 이어지는 경향.'}
+    ]},
+    {d:'09-08(화)', status:'양호', title:'계정 전체 CPI 이 기간 최저치', items:[
+      {cat:'운영', text:'ATA페스티벌 완전 중단. 계정 CPI 5,152원으로 14일 전체 중에서도 최저 달성, CVR도 11.93%로 최고치 근접.'},
+      {cat:'매체', text:'kakaomoment 지출 272,192원으로 축소 지속 — 사실상 소멸 직전.'}
+    ]},
+    {d:'09-09(수)', status:'주의', title:'이스포츠 CPI 상승 지속 확인', items:[
+      {cat:'이슈', text:'2,472→3,734→5,830원으로 계속 상승 — 조치: 소재 피로 모니터링(6번 섹션 스포트라이트 참고).'},
+      {cat:'매체', text:'kakaomoment 지출 0원 — 이 기간 유일한 완전 휴업일.'},
+      {cat:'품질', text:'계정 전체 CTR 1.35%로 이 기간 최고치를 찍었지만 노출(임프레션) 자체가 691,176으로 최저치라 "품질 개선"보다는 "노출이 쪼그라들며 생긴 착시"에 가까움 — CTR 단독 수치를 그대로 믿지 말 것.'}
+    ]},
+    {d:'09-10(목)', status:'주의', title:'최대 지출일 + 복합 이슈', items:[
+      {cat:'운영', text:'광고비 18,953,528원(평균의 1.7배)으로 최고. 카톡플친 3차 발송이 이 기간 최악 CPI(198,523원) — 조치: 발송 재점검 필요.'},
+      {cat:'매체', text:'kakaomoment 하루짜리 재활성화 — 555,635원 쓰고 설치 0건으로 그대로 끝남(9~10번 섹션에서 "누적 실패"로만 알려졌던 게 실제로는 이 하루에 전부 몰려있던 것으로 확인).'},
+      {cat:'실험', text:'네이버GFA 이 기간 최초 집행일 — "부산 국제 영화제" 캠페인으로 323,162원 썼는데 설치 0건. 하루치만으로 매체 자체를 평가하기엔 이름(→ 09/14 항목에서 정정).'},
+      {cat:'이슈', text:'이스포츠 CPI도 8,996원까지 올라 블렌디드 평균(9,400원)에 근접 — 조치: 소재 교체·타겟 확장 준비.'}
+    ]},
+    {d:'09-11(금)', status:'전환점', title:'경고가 적중 — 이스포츠 캠페인 완전 종료, kakaomoment 새 캠페인으로 복귀', items:[
+      {cat:'전환점', text:'이스포츠(LOL 국가대표 평가전) 캠페인이 09/10을 마지막으로 완전 중단됨 — 전일 경고했던 CPI 상승 추세가 실제 조치로 이어진 것으로 보임(최종 누적 1,264건, 응모율 79%).'},
+      {cat:'매체', text:'kakaomoment가 이틀 휴업(09/09 지출 0원) 뒤 "매거진 9월 상시소재"·"부산 국제 영화제" 2개 캠페인으로 하루 1,656,135원 재개 — ATA·타짜 시절과 달리 이번엔 실제 설치(16건)도 동반.'},
+      {cat:'운영', text:'위클리보물찾기 볼륨 3배 확대(143→458건/일), CPI는 2,398원으로 여전히 최상위권 — 이스포츠 빈자리를 사실상 대신하는 모양새.'}
+    ]},
+    {d:'09-12(토)', status:'양호', title:'주말 진입 — 로열티프로그램도 주말 효과', items:[
+      {cat:'운영', text:'로열티프로그램 설치 113건으로 이 기간 최고치(CPI 3,043원, 이 캠페인 최저) — 09/05·09/06 UAC 급증에 이어 세 번째로 관찰된 주말 효과(표본 부족으로 확정은 아님).'},
+      {cat:'매체', text:'UAC도 이날 CPI 2,967원으로 14일 전체 최저치 경신 — 학습효과가 안정적으로 유지되는 중.'}
+    ]},
+    {d:'09-13(일)', status:'주의', title:'새 경고 신호가 뚜렷해짐', items:[
+      {cat:'이슈', text:'부산 국제 영화제 CPI 17,320원으로 6일 만에 2.4배 상승(09/09 7,315원→), 퐁피두 도슨트도 17,002원으로 2.2배 상승 — 이스포츠와 동일한 소재 피로 패턴이 반복되는 중(6·12번 섹션 참고).'},
+      {cat:'운영', text:'이날은 카톡플친 발송 없음 — 계정 전체 CPI 6,510원으로 비교적 안정.'}
+    ]},
+    {d:'09-14(월)', status:'전환점', title:'신규 캠페인 투입 + 카톡플친 4차 발송(이벤트 다이제스트)', items:[
+      {cat:'전환점', text:'"메이드인코리아" 신규 캠페인이 인스타그램에 투입됨(첫날 21,338원, 설치 0건 — 평가 이름). 퐁피두 도슨트 CPI는 21,178원까지 올라(누적 2.7배) 소재 교체가 임박한 것으로 보임.'},
+      {cat:'운영', text:'카톡플친 4차 발송(event_kakaopush_list1~5, 여러 이벤트를 한 번에 묶은 다이제스트형) — 2,769,272원으로 설치 34건·응모 클릭 446건(설치의 13배)을 만들어냄. 같은 날 GA4 활성사용자 크로스체크에서도 17시에 Web·Android·iOS가 동시에 3~6배 튄 것으로 확인된 바로 그 발송.'},
+      {cat:'품질', text:'계정 전체 CTR이 0.41%로 낮아짐 — kakaomoment가 다시 노출을 크게 잡아먹기 시작하면서 09/09에 관찰했던 "CTR 착시"가 반대 방향으로 재현됨(노출 회복 → CTR 자연 하락, 광고 품질 변화 아님).'},
+      {cat:'정정', text:'네이버GFA는 09/10 "하루짜리 실패(설치 0건)"로 기록됐던 것과 달리 이후에도 계속 집행되며 설치가 0→3→1→8→16건으로 늘어나는 중 — 성급한 판단이었음을 정정.'}
+    ]},
+    {d:'09-15(화)', status:'주의', title:'부산 국제 영화제 반전 확인, 위클리보물찾기는 새 경고', items:[
+      {cat:'전환점', text:'부산 국제 영화제 CPI가 09/13 정점(17,320원) 이후 이틀 연속 하락해 15,122원까지 내려옴(인스타그램 단독 기준 8,961원) — CTR도 1.39%→1.59%로 반등, 이스포츠와 다른 결말로 갈리는 중(6번 섹션).'},
+      {cat:'이슈', text:'반면 위클리보물찾기 CPI는 4,536원까지 올라 09/11 최저치 대비 89% 상승, CTR도 4.22%로 계속 낮아지는 중 — 새로운 소재 피로 후보로 등극(6번 섹션 스포트라이트 참고).'},
+      {cat:'매체', text:'네이버GFA 설치 27→55건으로 배증, CPI 53,172원까지 추가 개선 — kakaomoment(부산국제영화제, 83,019원)보다 오히려 저렴해짐.'},
+      {cat:'정정', text:'"매체설치" 컬럼이 이번 raw 파일부터 09/11 이후분도 채워져 15일 전체 검증 가능해짐 — 메타 자체 과다계상은 평균 14.5%(6.1~21.0% 사이 등락), "물량이 늘수록 커진다"는 지난 가설은 절반만 맞는 것으로 정정(8번 섹션).'}
+    ]}
+  ];
+  (function(){
+    var statusColor = {'정보':C.muted, '양호':C.good, '주의':C.warn, '전환점':C.accent};
+    var pillClass = {'정보':'info', '양호':'good', '주의':'warn', '전환점':'milestone'};
+    var html = DAILY_LOG.map(function(item,i){
+      var isLast = i===DAILY_LOG.length-1;
+      var color = statusColor[item.status] || C.muted;
+      var subRows = item.items.map(function(s){
+        return '<div class="tl-sub"><span class="tl-tag">'+s.cat+'</span><span>'+s.text+'</span></div>';
+      }).join('');
+      return '<div class="tl-item">'+
+        '<div class="tl-date">'+item.d+'</div>'+
+        '<div class="tl-rail"><div class="tl-dot" style="background:'+color+'"></div>'+(isLast?'':'<div class="tl-line"></div>')+'</div>'+
+        '<div class="tl-body">'+
+          '<div class="tl-head"><span class="tl-title">'+item.title+'</span><span class="pill '+pillClass[item.status]+'">'+item.status+'</span></div>'+
+          subRows+
+        '</div>'+
+      '</div>';
+    }).join('');
+    document.getElementById('dailyLog').innerHTML = html;
+  })();
+
+  // ================= 12) 소재별 CTR 추이 (중단/증액/감액 판단용) =================
+  var ALL10 = ['09-01','09-02','09-03','09-04','09-05','09-06','09-07','09-08','09-09','09-10','09-11','09-12','09-13','09-14','09-15'];
+  var CTR_PANELS = [
+    {camp:'ATA페스티벌', series:[
+      {name:'1안', color:C.spend, data:[{d:'09-01',ctr:1.4,install:109},{d:'09-02',ctr:1.31,install:135},{d:'09-03',ctr:1.3,install:117},{d:'09-04',ctr:1.21,install:121},{d:'09-05',ctr:1.46,install:127},{d:'09-06',ctr:1.48,install:136},{d:'09-07',ctr:1.61,install:80},{d:'09-08',ctr:2.36,install:30}]},
+      {name:'2안', color:C.ios, data:[{d:'09-01',ctr:1.26,install:43},{d:'09-02',ctr:1.13,install:27},{d:'09-03',ctr:1.14,install:20},{d:'09-04',ctr:0.98,install:12},{d:'09-05',ctr:1.04,install:18},{d:'09-06',ctr:1.25,install:18},{d:'09-07',ctr:1.16,install:18},{d:'09-08',ctr:1.38,install:4}]}
+    ], cap:'8일 집행 후 09/08 완전 종료(1안이 2안보다 CTR 꾸준히 높았음, 마지막날 2.36% vs 1.38%) — 이후 재개 없이 결과 확정.'},
+    {camp:'타짜시사회 티켓드롭', series:[
+      {name:'1안', color:C.spend, data:[{d:'09-01',ctr:1.84,install:144},{d:'09-02',ctr:1.52,install:77},{d:'09-03',ctr:1.57,install:90},{d:'09-04',ctr:1.67,install:69},{d:'09-05',ctr:2.0,install:92},{d:'09-06',ctr:1.86,install:80}]},
+      {name:'2안', color:C.ios, data:[{d:'09-01',ctr:1.38,install:74},{d:'09-02',ctr:1.17,install:63},{d:'09-03',ctr:1.07,install:34},{d:'09-04',ctr:1.24,install:54},{d:'09-05',ctr:1.21,install:77},{d:'09-06',ctr:1.3,install:61}]}
+    ], cap:'6일 만에 09/06 조기 종료 — 1안이 항상 2안보다 CTR 우위(평균 1.7%대 vs 1.2%대)였지만 개선 흐름 없이 그대로 중단.'},
+    {camp:'e스포츠 국가대표 평가전 (종료)', series:[
+      {name:'1안', color:C.spend, data:[{d:'09-07',ctr:2.5,install:134},{d:'09-08',ctr:2.13,install:273},{d:'09-09',ctr:1.78,install:237},{d:'09-10',ctr:1.22,install:190}]},
+      {name:'2안', color:C.ios, data:[{d:'09-07',ctr:2.98,install:136},{d:'09-08',ctr:2.73,install:158},{d:'09-09',ctr:2.34,install:67},{d:'09-10',ctr:1.93,install:69}]}
+    ], cap:'1안·2안 모두 CTR이 뚜렷하게 하락하며 소재 피로를 예고했고(1안 2.50%→1.22%, 2안 2.98%→1.93%), 실제로 다음날(09/11) 캠페인이 완전히 빠졌다 — CPI·CTR 두 지표가 같은 결론을 가리켰던 사례.'},
+    {camp:'로열티프로그램', series:[
+      {name:'vol24(9월)', color:C.spend, data:[{d:'09-03',ctr:1.64,install:37},{d:'09-04',ctr:2.12,install:47},{d:'09-05',ctr:1.59,install:33},{d:'09-06',ctr:1.64,install:55},{d:'09-07',ctr:1.66,install:25},{d:'09-08',ctr:1.91,install:26},{d:'09-09',ctr:1.8,install:33},{d:'09-10',ctr:1.74,install:16}]},
+      {name:'vol25(1안)', color:C.aos, data:[{d:'09-11',ctr:2.2,install:31},{d:'09-12',ctr:2.94,install:66},{d:'09-13',ctr:3.04,install:51},{d:'09-14',ctr:2.52,install:21},{d:'09-15',ctr:2.51,install:14}]},
+      {name:'vol25(2안)', color:C.ios, data:[{d:'09-11',ctr:2.12,install:20},{d:'09-12',ctr:2.07,install:47},{d:'09-13',ctr:1.81,install:25},{d:'09-14',ctr:1.67,install:24},{d:'09-15',ctr:2.28,install:20}]}
+    ], cap:'vol24는 09/10 종료. 그 자리를 채운 vol25는 두 안 다 vol24보다 CTR이 높아졌고(1안 최고 3.04%), 1안이 2안보다 대체로 우세 — 09/15엔 격차가 좁혀졌지만(2.51% vs 2.28%) 여전히 vol25(1안) 우세가 유지되는 흐름.'},
+    {camp:'매거진 9월 상시소재 (구 소재, 09/10 종료)', series:[
+      {name:'텍스트광고B', color:C.spend, data:[{d:'09-01',ctr:2.05,install:35},{d:'09-02',ctr:1.84,install:37},{d:'09-03',ctr:1.57,install:34},{d:'09-04',ctr:1.57,install:31},{d:'09-05',ctr:1.54,install:36},{d:'09-06',ctr:2.13,install:54},{d:'09-07',ctr:1.91,install:36},{d:'09-08',ctr:1.69,install:30},{d:'09-09',ctr:2.13,install:37},{d:'09-10',ctr:2.78,install:8}]},
+      {name:'귀칼(vol23)', color:C.ios, data:[{d:'09-01',ctr:1.49,install:6},{d:'09-02',ctr:1.25,install:8},{d:'09-03',ctr:1.9,install:3},{d:'09-04',ctr:1.68,install:1},{d:'09-05',ctr:1.13,install:1},{d:'09-06',ctr:1.89,install:13},{d:'09-07',ctr:1.58,install:7},{d:'09-08',ctr:1.48,install:8},{d:'09-09',ctr:1.59,install:7},{d:'09-10',ctr:2.71,install:4}]},
+      {name:'일상블로그(콘텐츠형)', color:C.crit, data:[{d:'09-03',ctr:1.55,install:6},{d:'09-04',ctr:1.3,install:6},{d:'09-05',ctr:1.17,install:10},{d:'09-06',ctr:1.22,install:4},{d:'09-07',ctr:1.12,install:4},{d:'09-08',ctr:1.0,install:6},{d:'09-09',ctr:1.26,install:2},{d:'09-10',ctr:0.9,install:0}]}
+    ], cap:'09/09~10을 기점으로 셋 다 소진되고 신규 소재로 교체됨(오른쪽 패널) — "일상블로그만 CTR이 계속 하락"했던 종전 결론은 데이터 종료로 그대로 확정.'},
+    {camp:'매거진 9월 상시소재 (신 소재, 09/09~)', series:[
+      {name:'텍스트광고C', color:C.aos, data:[{d:'09-09',ctr:2.31,install:11},{d:'09-10',ctr:2.15,install:131},{d:'09-11',ctr:1.71,install:66},{d:'09-12',ctr:1.8,install:101},{d:'09-13',ctr:1.63,install:142},{d:'09-14',ctr:1.58,install:99},{d:'09-15',ctr:1.69,install:86}]},
+      {name:'현빈(Vol25)', color:C.warn, data:[{d:'09-10',ctr:1.81,install:23},{d:'09-11',ctr:2.61,install:25},{d:'09-12',ctr:2.72,install:15},{d:'09-13',ctr:2.64,install:19},{d:'09-14',ctr:1.75,install:24},{d:'09-15',ctr:1.9,install:15}]}
+    ], cap:'구 소재를 이어받은 두 신규 소재 — 텍스트광고C가 지금 계정 전체에서 가장 많은 설치를 만들어내는 소재로 등극(하루 최대 142건). CTR은 완만히 낮아지는 중이지만 볼륨이 워낙 커서(왼쪽 패널 대비 10배 이상) 아직 위험 신호는 아니다.'},
+    {camp:'티스퀘어 티켓드롭', series:[
+      {name:'1안', color:C.spend, data:[{d:'09-07',ctr:0.86,install:15},{d:'09-08',ctr:0.88,install:50},{d:'09-09',ctr:0.94,install:31},{d:'09-10',ctr:1.09,install:36},{d:'09-11',ctr:1.3,install:31},{d:'09-12',ctr:1.17,install:26},{d:'09-13',ctr:1.01,install:33},{d:'09-14',ctr:0.97,install:23},{d:'09-15',ctr:0.98,install:19}]}
+    ], cap:'09/07~09/11까지 CTR이 계속 상승(0.86%→1.30%)했지만, 09/12부터 하락해 09/13 이후로는 0.97~1.01%에서 3일째 안정화 — 정점을 찍고 꺾인 뒤 새 평형을 찾은 모양, 증액보다 관망이 맞다.'},
+    {camp:'부산 국제 영화제', series:[
+      {name:'1안', color:C.spend, data:[{d:'09-09',ctr:2.92,install:45},{d:'09-10',ctr:2.83,install:105}]},
+      {name:'2안', color:C.ios, data:[{d:'09-10',ctr:2.07,install:50},{d:'09-11',ctr:1.94,install:174},{d:'09-12',ctr:1.46,install:143},{d:'09-13',ctr:1.44,install:126},{d:'09-14',ctr:1.39,install:101},{d:'09-15',ctr:1.59,install:101}]}
+    ], cap:'반전 — 1안은 이틀 만에 종료됐고, 이어받은 2안의 CTR이 5일 연속 하락했지만(1.94%→1.39%) 09/15엔 1.59%로 반등 — CPI도 같은 시점(09/13 정점)부터 개선 중(6·11번 섹션 참고), 이스포츠와 다른 결말을 향하는 것으로 보인다.'},
+    {camp:'퐁피두 도슨트', series:[
+      {name:'1안', color:C.spend, data:[{d:'09-10',ctr:2.08,install:92},{d:'09-11',ctr:2.36,install:89},{d:'09-12',ctr:2.17,install:66},{d:'09-13',ctr:1.84,install:58},{d:'09-14',ctr:1.65,install:38},{d:'09-15',ctr:1.67,install:47}]}
+    ], cap:'경고 — 투입 이틀째(09/11) CTR 2.36%로 정점을 찍은 뒤 5일 연속 낮은 수준에 머문다(2.36%→1.65%→1.67%, 반등 없음) — 같은 기간 CPI도 여전히 경고권(11번 섹션)이라 이 리포트에서 가장 뚜렷하게 남은 소재 피로 사례.'},
+    {camp:'위클리보물찾기', series:[
+      {name:'1안', color:C.spend, data:[{d:'09-10',ctr:6.99,install:143},{d:'09-11',ctr:5.86,install:458},{d:'09-12',ctr:5.06,install:360},{d:'09-13',ctr:4.19,install:341},{d:'09-14',ctr:3.95,install:258},{d:'09-15',ctr:4.22,install:214}]}
+    ], cap:'09/10 단 하루 6.99%로 리포트 전체 최고치를 찍은 뒤 볼륨을 3배로 키우며(143→458건/일) CTR이 계속 낮아지는 중(6.99%→3.95%→4.22%) — CPI도 같은 기간 89% 상승(11번 섹션 참고), 이 리포트에서 가장 최근에 등장한 소재 피로 신호.'},
+    {camp:'리타겟팅 웨이브(위클리업데이트 23·24·25)', series:[
+      {name:'23(9월 초)', color:C.spend, data:[{d:'09-01',ctr:1.25,install:4},{d:'09-02',ctr:1.38,install:0},{d:'09-03',ctr:1.18,install:1}]},
+      {name:'24(9월 중)', color:C.ios, data:[{d:'09-03',ctr:1.16,install:1},{d:'09-04',ctr:1.21,install:3},{d:'09-05',ctr:1.64,install:1},{d:'09-06',ctr:1.6,install:1},{d:'09-07',ctr:1.6,install:0},{d:'09-08',ctr:1.35,install:0},{d:'09-09',ctr:1.63,install:3},{d:'09-10',ctr:1.28,install:0}]},
+      {name:'25(9월 말)', color:C.crit, data:[{d:'09-10',ctr:1.73,install:0},{d:'09-11',ctr:1.75,install:0},{d:'09-12',ctr:1.8,install:0},{d:'09-13',ctr:1.62,install:1},{d:'09-14',ctr:1.69,install:0},{d:'09-15',ctr:1.82,install:3}]}
+    ], cap:'리타겟팅이라 설치는 거의 없음(회차당 0~3건) — 25회차도 닷새 더 지켜봤지만 설치는 여전히 0~3건 수준, CTR만 1.5~1.9%에서 등락. 소재보다 그때그때 타겟 리스트 크기에 좌우되는 것으로 보인다는 기존 결론 유지.'},
+    {camp:'메이드인코리아 [신규, 관찰중]', series:[
+      {name:'게시글', color:C.spend, data:[{d:'09-14',ctr:0.8,install:0},{d:'09-15',ctr:0.82,install:1}]}
+    ], cap:'09/14 투입, 이틀치뿐이라 추세 판단 불가 — 스냅샷으로만 기록하고 다음 갱신에서 계속 추적.'}
+  ];
+  (function(){
+    var grid = document.getElementById('ctrGrid');
+    var YMAX = 3.5;
+    var W=380,H=150, ML=32,MR=10,MT=14,MB=20;
+    var plotW=W-ML-MR, plotH=H-MT-MB, n=ALL10.length;
+    function gx(i){ return ML + (i/(n-1))*plotW; }
+    function gy(v){ return MT + plotH - (v/YMAX)*plotH; }
+
+    CTR_PANELS.forEach(function(panel){
+      var wrap = document.createElement('div'); wrap.className='sm-panel';
+      var title = document.createElement('div'); title.className='sm-title'; title.textContent=panel.camp;
+      wrap.appendChild(title);
+      var svg = el('svg',{width:W,height:H,viewBox:'0 0 '+W+' '+H});
+
+      // y gridlines (0/1/2/3%)
+      [0,1,2,3].forEach(function(v){
+        var yy=gy(v);
+        svg.appendChild(el('line',{x1:ML,x2:W-MR,y1:yy,y2:yy,class:v===0?'baseline':'grid-line'}));
+        var lab=el('text',{x:ML-5,y:yy+3,class:'axis-label','text-anchor':'end'}); lab.textContent=v+'%'; svg.appendChild(lab);
+      });
+      // x labels (날짜 있는 인덱스만, 너무 촘촘하니 짝수 인덱스만 표기)
+      ALL10.forEach(function(d,i){
+        if (i%2!==0 && i!==n-1) return;
+        var lab=el('text',{x:gx(i),y:H-6,class:'axis-label','text-anchor':'middle'}); lab.textContent=d.slice(3); svg.appendChild(lab);
+      });
+
+      panel.series.forEach(function(s){
+        var idxOf = {}; ALL10.forEach(function(d,i){ idxOf[d]=i; });
+        var pathD = s.data.map(function(r,j){ return (j===0?'M':'L')+gx(idxOf[r.d])+','+gy(r.ctr); }).join(' ');
+        svg.appendChild(el('path',{d:pathD, fill:'none', stroke:s.color, 'stroke-width':2, 'stroke-linejoin':'round','stroke-linecap':'round'}));
+        s.data.forEach(function(r){
+          var i = idxOf[r.d];
+          var rad = 2.5 + Math.sqrt(Math.max(r.install,1))*0.55; // 설치 많을수록 큰 점
+          svg.appendChild(el('circle',{cx:gx(i), cy:gy(r.ctr), r:rad, fill:s.color, 'fill-opacity':0.9}));
+          var hit = el('circle',{cx:gx(i), cy:gy(r.ctr), r:Math.max(rad,8), fill:'transparent', style:'cursor:pointer'});
+          hit.addEventListener('mousemove', function(e){
+            tipShow(e, '<div class="tt-title">'+panel.camp+' · '+s.name+' · '+r.d+'</div>'+tipRow('CTR', r.ctr+'%')+tipRow('설치', fmt(r.install)+'건'));
+          });
+          hit.addEventListener('mouseleave', tipHide);
+          svg.appendChild(hit);
+        });
+      });
+      wrap.appendChild(svg);
+
+      var legend = document.createElement('div'); legend.className='legend-row'; legend.style.marginTop='4px';
+      legend.innerHTML = panel.series.map(function(s){
+        return '<span class="item"><span class="sw" style="background:'+s.color+'"></span>'+s.name+'</span>';
+      }).join('');
+      wrap.appendChild(legend);
+
+      var cap = document.createElement('div'); cap.className='sm-cap'; cap.textContent=panel.cap;
+      wrap.appendChild(cap);
+      grid.appendChild(wrap);
+    });
+  })();
+})();
+</script>
