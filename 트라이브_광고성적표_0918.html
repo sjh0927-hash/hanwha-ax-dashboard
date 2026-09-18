@@ -207,15 +207,15 @@
       <span class="tag">한화 PLUS 트라이브</span>
       <span>유료 매체 raw 데이터 자체 분석</span>
       <span>·</span>
-      <span>2026-09-01 ~ 2026-09-17 (17일, 단 09/13~09/17은 설치 데이터 결측)</span>
+      <span>2026-09-01 ~ 2026-09-17 (17일, 재추출본으로 09/13~09/17 설치 데이터 결측 해소)</span>
     </div>
     <h1>트라이브 광고 성적표</h1>
-    <p class="dek">이번 raw 파일에서 가장 중요한 발견은 캠페인 성과가 아니라 <b>데이터 자체의 이상</b>이다 — 09/13부터 계정 전체 설치(AF_Install) 컬럼이 모든 매체에서 0으로 찍히기 시작했고, 심지어 지난 판(09/16)에서 이미 정상 확인했던 09/13~09/15 설치 실적까지 이번 판에서 통째로 사라졌다. 광고비는 하루 400만~500만원씩 계속 나가는데 설치는 0건으로 기록되는 상태라, 이 리포트의 신뢰 가능한 성과 분석 구간은 실질적으로 09/01~09/12로 좁혀진다.</p>
+    <p class="dek">지난 판이 발견했던 "09/13부터 설치(AF_Install) 컬럼이 계정 전체에서 0으로 붕괴"한 raw 데이터 결측이 사용자의 재추출로 해소됐다 — 09/01~09/17 전 구간을 다시 정상적으로 분석할 수 있게 됐다. 그 결과 지난 판이 미해결로 남겼던 3개 캠페인의 결말이 전부 확정됐다: <b>부산 국제 영화제는 "자체 반전"이 일시적이었을 뿐, 09/17엔 22,010원으로 역대 최고치를 다시 찍으며 계속 악화 중</b>이고, 퐁피두 도슨트도 1.9만원대에서 여전히 안 좋으며, 위클리보물찾기는 CPI가 3배 넘게 뛰며(2,398→7,735원) 볼륨까지 급감했다. 추가로 09/17 전 플랫폼 GA4 활성사용자 폭증의 원인이 카톡플친(카카오톡 채널) 발송이었다는 것도 이번에 raw 데이터로 확정됐다.</p>
     <div class="ledger-row">
-      <div class="ledger-cell"><div class="k">총 광고비(09/01~09/12)</div><div class="v tabular">128,409,874<small>원</small></div></div>
-      <div class="ledger-cell"><div class="k">AF 설치(09/01~09/12)</div><div class="v tabular">14,825<small>건</small></div></div>
-      <div class="ledger-cell"><div class="k">블렌디드 CPI</div><div class="v tabular">8,662<small>원/설치</small></div></div>
-      <div class="ledger-cell"><div class="k">09/13~09/17 상태</div><div class="v tabular" style="color:var(--status-crit);">설치 0건<small> · 광고비는 지속</small></div></div>
+      <div class="ledger-cell"><div class="k">총 광고비(09/01~09/17)</div><div class="v tabular">177,992,194<small>원</small></div></div>
+      <div class="ledger-cell"><div class="k">AF 설치(09/01~09/17)</div><div class="v tabular">21,168<small>건</small></div></div>
+      <div class="ledger-cell"><div class="k">블렌디드 CPI</div><div class="v tabular">8,409<small>원/설치</small></div></div>
+      <div class="ledger-cell"><div class="k">회원가입 전환율</div><div class="v tabular">50.1<small>% (10,606건)</small></div></div>
     </div>
   </div>
 </div>
@@ -224,39 +224,38 @@
 
   <section id="verdict">
     <div class="verdict">
-      <div class="callout crit-tone" style="margin-top:0; margin-bottom:18px;">
-        <h3>⚠️ 데이터 경고 — 09/13부터 설치(AF_Install) 컬럼이 계정 전체에서 0으로 붕괴</h3>
-        <p>09/01~09/12는 매체·기기·캠페인 할 것 없이 지금까지와 똑같이 정상적인 설치 숫자가 찍혀 있다. 그런데 <b>09/13부터는 인스타그램·UAC·카카오모먼트·네이버GFA·애드팝콘·카톡플친 등 매체 10곳 전부에서 설치가 정확히 0건</b>으로 나온다 — 같은 기간 광고비는 하루 390만~490만원씩 정상적으로 계속 집행됐다(09/13~09/17 합계 약 2,193만원). 매체 10곳이 완전히 다른 플랫폼(메타·구글·카카오·네이버 등)인데 같은 날 전부 설치 0건을 찍는 건 실제 성과 붕괴로는 설명이 안 되고, <b>이 raw 파일을 만드는 집계 파이프라인이 09/13부터 설치 데이터를 못 받아오고 있다는 뜻</b>으로 보는 게 합리적이다.</p>
-        <p>더 심각한 건 <b>이게 새 날짜의 "아직 안 들어온 데이터"가 아니라 이미 있던 데이터가 사라진 것</b>이라는 점이다 — 지난 판(09/16 raw, 09/01~09/15 커버)에는 09/13~09/15 설치가 정상적으로 들어 있었다(예: 09/13 전체 설치 1,493건, 인스타그램만 82행에 걸쳐 1,904건·13,848,842원 집행). 이번 판(09/18 raw)에서는 정확히 같은 날짜·같은 매체·같은 캠페인 행이 설치 0건·광고비 0원(인스타그램)으로 리셋돼 있다. 이전 리포트(09/16)가 "부산 국제 영화제 반전"·"퐁피두 도슨트 경고 지속"이라고 결론 냈던 근거 데이터 자체가 사라진 셈이라, <b>그 결론들은 이번 판 기준으로는 검증도 반박도 할 수 없다</b>(6번 섹션 참고). 실제 AppsFlyer API로는 09/17 하루에도 AOS 1,280건·iOS 384건의 설치가 정상 확인되고 있어(같은 세션의 "트라이브 액티브 크로스체크" 참고), 진짜 설치가 없었던 게 아니라 이 raw 파일의 설치 컬럼만 끊긴 것으로 보인다.</p>
-        <p><b>조치 필요</b>: 이 raw 파일을 만드는 대행사/데이터팀에 09/13 이후 AF_Install 컬럼 누락을 알리고 재정산 요청. 다음 raw 파일에서 이 구간이 다시 채워지는지가 최우선 확인 대상이다.</p>
+      <div class="callout" style="margin-top:0; margin-bottom:18px; background:var(--status-good-bg); border-color:var(--status-good);">
+        <h3>✓ 데이터 결측 해소 — 사용자가 raw 파일을 재추출, 09/13~09/17 설치 데이터 정상 복구</h3>
+        <p>지난 판이 "09/13부터 계정 전체 설치(AF_Install)가 0건으로 붕괴했다"고 경고했던 그 구간이, 사용자가 raw 파일을 다시 추출해 올리면서 정상 복구됐다. 재확인 결과 09/13=1,493건·09/14=1,287건·09/15=1,175건으로, 지난 판(09/16 raw)이 한 번 확정했던 값과 정확히 일치 — 원인은 raw 파일을 만드는 집계 파이프라인의 일시적 결측이었지 실제 성과 붕괴가 아니었음이 확정됐다. 이번 판은 09/01~09/17 전 구간(693행)을 정상적으로 다시 계산했다.</p>
       </div>
-      <h2>총평 — 3줄 요약(09/01~09/12 기준)</h2>
-      <p>① <b>지난 경고, 서로 다른 결말로 갈리는 중이었다(09/12까지 기준)</b> — 부산 국제 영화제는 09/12 14,486원까지 오른 채였고, 퐁피두 도슨트도 09/12 15,016원으로 계속 상승 중이었다. 두 캠페인이 실제로 반전했는지 계속 나빠졌는지는 위 데이터 경고 때문에 09/13 이후로는 이 raw 파일로 확인이 안 된다 — 미해결로 남김(6번 섹션).</p>
-      <p>② <b>위클리보물찾기 피로 신호도 09/12까지만 확인됨</b> — 이스포츠 빈자리를 채운 이 소재의 CPI가 투입 하루 만에 9%대 올랐다(09/11 2,398원→09/12 2,623원), 이후 흐름은 마찬가지로 데이터 경고 구간에 걸려 미확인.</p>
-      <p>③ 카카오모먼트는 부산 국제 영화제로 재개 이후 09/12까지 CPI가 계속 개선 중이었고(83,019원 근처), 네이버GFA도 학습곡선을 타는 중이었다 — 두 매체 모두 09/13 이후 광고비 집행 자체는 계속 확인되지만(위 경고 참고) 설치 기준 효율은 같은 이유로 판단 불가.</p>
+      <h2>총평 — 4줄 요약(09/01~09/17 기준)</h2>
+      <p>① <b>부산 국제 영화제 — "반전"은 착시였다.</b> 09/13 정점(17,320원) 이후 이틀 반짝 개선(15,122원)됐던 걸 지난 판은 "반전 성공"으로 읽었지만, 그 뒤 09/16 19,469원·09/17 22,010원으로 다시 올라 <b>이 캠페인 전체 기간 중 최고치를 경신</b>했다. 짧은 하락은 반전이 아니라 등락의 일부였다(6번 섹션).</p>
+      <p>② <b>퐁피두 도슨트 — 경고 그대로, 개선 없이 3주째 지속.</b> 09/17 CPI 19,458원으로 09/12(15,016원) 대비 오히려 더 나빠졌다 — 소재 교체 없이는 반등 기미가 안 보인다(6번 섹션).</p>
+      <p>③ <b>위클리보물찾기 — 피로가 아니라 급성 소진.</b> 09/11 최저치(2,398원) 대비 09/17 7,735원으로 3.2배 뛰었고, 같은 날 설치량도 246건→66건으로 뚝 떨어졌다 — 소재 2차(2안)를 09/17에 투입했지만 아직 반등 신호 없음(6번 섹션).</p>
+      <p>④ <b>09/17 GA4 활성사용자 폭증(같은 세션 "트라이브 액티브 크로스체크" 참고)의 원인이 카톡플친 발송으로 확정됐다.</b> 09/17 카톡플친이 2,759,900원을 태워(09/14 발송과 거의 동일 금액) 설치 19건·응모 69건을 만들었는데, 설치 반응은 09/14(34건)보다 작으면서도 그 시각 GA4 활성사용자는 관측 이래 최고치를 찍었다 — 카톡플친은 신규 설치가 아니라 기존 구독자 재방문을 유도하는 채널이라는 설명과 정확히 들어맞는다(6번 섹션 새 콜아웃 참고).</p>
     </div>
   </section>
 
   <section id="media-spend">
-    <div class="sec-head"><span class="sec-no">1</span><h2>매체별 광고비 &amp; 설치(09/01~09/12)</h2></div>
-    <p class="sec-desc">막대 길이는 광고비(원), 막대 아래 작은 숫자는 실제 AF 설치 건수. 광고비 1위인 인스타그램이 설치도 1위지만, 2~4위(UAC·카카오모먼트·카톡플친)는 비슷한 돈을 쓰고도 설치 건수가 최대 47배 차이 난다.</p>
+    <div class="sec-head"><span class="sec-no">1</span><h2>매체별 광고비 &amp; 설치(09/01~09/17)</h2></div>
+    <p class="sec-desc">막대 길이는 광고비(원), 막대 아래 작은 숫자는 실제 AF 설치 건수. 광고비 1위인 인스타그램이 설치도 1위지만, 2~4위(UAC·카카오모먼트·카톡플친)는 비슷한 돈을 쓰고도 설치 건수가 최대 55배 차이 난다.</p>
     <div class="chart-card">
       <div class="chart-scroll"><svg id="chartMediaSpend" width="820" height="330" viewBox="0 0 820 330"></svg></div>
       <div class="foot-note">※ "네이버검색"은 이 기간 설치 0건 — 인지도/트래픽 목적일 가능성이 높으나 raw 데이터만으로는 목적 확인 불가.</div>
-      <div class="foot-note">※ <b>네이버GFA는 09/12까지는 여전히 초기 단계</b>(09/10~09/12 사흘간 설치 4건뿐) — 지난 판에서 봤던 "55건까지 배증"은 09/13 이후 구간이라 이번엔 데이터 경고로 확인 불가(위 참고). 학습곡선이 계속되는지는 다음 raw 파일에서 재확인 필요.</div>
+      <div class="foot-note">※ <b>네이버GFA(부산국제영화제 전용)가 17일 합계 5,015,134원·107건까지 성장</b> — 09/16 하루 만에 일 광고비가 545,064원→1,047,787원으로 2배 증액되며 볼륨이 커졌다(13번 섹션 일자별 로그 참고). CPI는 46,870원으로 여전히 인스타그램 대비 5.5배 비싸지만, 표본이 20건을 넘어서면서 이제 순위표(7번 섹션)에도 처음 등장한다.</div>
     </div>
   </section>
 
   <section id="media-cpi">
-    <div class="sec-head"><span class="sec-no">2</span><h2>매체별 효율 — 설치 1건의 값 (CPI, 09/01~09/12)</h2></div>
-    <p class="sec-desc">숫자가 작을수록 좋음(그만큼 싸게 설치를 얻었다는 뜻). 블렌디드 평균(8,662원) 대비 4단계로 등급을 매김 — <span class="pill good">양호</span> ≤6천원 · <span class="pill warn">주의</span> 6천~1.5만원 · <span class="pill serious">경고</span> 1.5만~4만원 · <span class="pill crit">위험</span> 4만원 초과.</p>
+    <div class="sec-head"><span class="sec-no">2</span><h2>매체별 효율 — 설치 1건의 값 (CPI, 09/01~09/17)</h2></div>
+    <p class="sec-desc">숫자가 작을수록 좋음(그만큼 싸게 설치를 얻었다는 뜻). 블렌디드 평균(8,409원) 대비 4단계로 등급을 매김 — <span class="pill good">양호</span> ≤6천원 · <span class="pill warn">주의</span> 6천~1.5만원 · <span class="pill serious">경고</span> 1.5만~4만원 · <span class="pill crit">위험</span> 4만원 초과.</p>
     <div class="rank-table" id="rankMediaCPI"></div>
-    <div class="foot-note" style="margin-top:14px;">※ 카톡플친(카카오톡 채널)은 신규 설치가 아니라 <b>기존 구독자에게 보내는 발송형 캠페인</b>이라 CPI로 줄세우면 불리하게 나온다 — 이 기간(09/01~09/12) 3회 발송분만 반영(09/14 발송은 데이터 경고 구간이라 이번엔 집계에서 빠짐, GA4 활성사용자 크로스체크에서 그날 17시 스파이크의 원인으로 이미 확인된 바 있음). 7번 섹션에서 별도로 다룸.</div>
+    <div class="foot-note" style="margin-top:14px;">※ 카톡플친(카카오톡 채널)은 신규 설치가 아니라 <b>기존 구독자에게 보내는 발송형 캠페인</b>이라 CPI로 줄세우면 불리하게 나온다 — 이번 판엔 09/14·09/17 발송분(각각 2,769,272원·2,759,900원, 거의 같은 금액)까지 전부 반영됐다. 두 발송 모두 GA4 활성사용자 크로스체크에서 같은 시각 활성사용자가 폭증한 원인으로 확인됐다(6번 섹션 새 콜아웃). 7번 섹션에서 별도로 다룸.</div>
     <div class="foot-note">※ 애드팝콘은 <b>설치 시 보상을 주는 리워드형 매체</b>라 CPI가 구조적으로 낮게 나올 수밖에 없다 — 이유는 7번 섹션 참고.</div>
   </section>
 
   <section id="device">
-    <div class="sec-head"><span class="sec-no">3</span><h2>OS별 격차 — 안드로이드가 늘 더 싸다(09/01~09/12)</h2></div>
+    <div class="sec-head"><span class="sec-no">3</span><h2>OS별 격차 — 안드로이드가 늘 더 싸다(09/01~09/17)</h2></div>
     <p class="sec-desc">기기 구분 없이 집행되는 매체(UAC·카카오모먼트·X·네이버 등)는 제외하고 OS가 명시된 캠페인만 비교.</p>
     <div class="two-col">
       <div class="chart-card">
@@ -264,16 +263,16 @@
       </div>
       <div class="chart-card" style="display:flex; flex-direction:column; justify-content:center; gap:10px;">
         <div class="foot-note" style="margin-top:0; font-size:13px; color:var(--ink-secondary);">
-          AOS 8,544건 · <b class="num">5,770원</b><br>
-          iOS 3,088건 · <b class="num">10,429원</b>
+          AOS 12,701건 · <b class="num">5,346원</b><br>
+          iOS 4,322건 · <b class="num">10,250원</b>
         </div>
-        <div class="foot-note">12일 내내 이 순서가 뒤집힌 날이 하루도 없었다(격차 1.81배, 10일차 리포트의 1.9배와 비슷한 수준 유지) — iOS 사용자 타겟팅(Apple Search Ads 포함)이 구조적으로 더 비쌈. LTV·매출 데이터가 없어 "그래도 남는 장사인지"는 이 리포트만으로 판단 불가 — 별도 확인 필요.</div>
+        <div class="foot-note">17일 내내 이 순서가 뒤집힌 날이 하루도 없었다(격차 1.92배, 12일차 리포트의 1.81배보다 오히려 더 벌어짐) — iOS 사용자 타겟팅(Apple Search Ads 포함)이 구조적으로 더 비쌈. LTV·매출 데이터가 없어 "그래도 남는 장사인지"는 이 리포트만으로 판단 불가 — 별도 확인 필요.</div>
       </div>
     </div>
   </section>
 
   <section id="trend">
-    <div class="sec-head"><span class="sec-no">4</span><h2>17일의 흐름 — 9/7 이후 완전히 다른 그래프, 9/13 이후 설치 데이터 절벽</h2></div>
+    <div class="sec-head"><span class="sec-no">4</span><h2>17일의 흐름 — 9/7 이후 완전히 다른 그래프</h2></div>
     <p class="sec-desc">9/7 "LOL 국가대표 평가전" 티켓드롭 소재가 투입되면서 응모·투표 클릭이 0에서 폭발적으로 늘고, 같은 광고비로도 CPI가 뚝 떨어졌다.</p>
     <div class="chart-card">
       <div class="chart-scroll">
@@ -283,13 +282,13 @@
         <svg id="chartDailyEvent" width="820" height="170" viewBox="0 0 820 170"></svg>
       </div>
       <div class="legend-row" id="legendDaily"></div>
-      <div class="foot-note" style="color:var(--status-crit);">※ 09/16·09/17 막대가 0으로 뚝 떨어진 건 실제 설치가 없어서가 아니라 위 데이터 경고(설치 컬럼 붕괴) 때문 — 같은 기간 광고비 막대는 정상적으로 찍혀 있다는 점과 대비해서 볼 것.</div>
+      <div class="foot-note">※ 09/16·09/17 설치가 1,249건·1,139건으로 다시 정상 표시됨(지난 판의 데이터 결측이 해소됨, 마스트헤드 참고) — 응모 클릭은 09/14 카톡플친 발송(446건 중 상당수가 이 계정 응모로 집계)과 09/17 카톡플친 발송(69건)이 겹쳐 부분적으로 튀어 보인다.</div>
     </div>
   </section>
 
   <section id="signup">
-    <div class="sec-head"><span class="sec-no">5</span><h2>설치 다음 — 회원가입까지 이어지나(09/01~09/12)</h2></div>
-    <p class="sec-desc">설치는 시작일 뿐이다 — 실제로 회원가입까지 이어진 비율. <b>애드팝콘이 67.1%로 1위</b>지만, 보상 지급 조건이 회원가입까지라면 이 숫자에도 리워드 유인이 섞여 있을 수 있다(확정 불가, 7번 섹션 참고). 볼륨 1위였던 UAC는 오히려 33.9%로 중하위권. 네이버GFA(50.0%)는 표본이 아직 4건뿐이라 참고조차 어려운 수준.</p>
+    <div class="sec-head"><span class="sec-no">5</span><h2>설치 다음 — 회원가입까지 이어지나(09/01~09/17)</h2></div>
+    <p class="sec-desc">설치는 시작일 뿐이다 — 실제로 회원가입까지 이어진 비율. <b>애드팝콘이 67.6%로 1위</b>지만, 보상 지급 조건이 회원가입까지라면 이 숫자에도 리워드 유인이 섞여 있을 수 있다(확정 불가, 7번 섹션 참고). 네이버GFA(57.9%)는 표본이 107건으로 늘어나며 이제 instagram(57.9%)과 나란히 볼 수 있는 수준이 됐다. 볼륨 1위였던 UAC는 오히려 34.7%로 하위권. 카톡플친(5.9%)이 최하위인 건 애초에 신규설치가 목적이 아닌 발송형 채널이라 당연한 결과(7번 섹션 참고).</p>
     <div class="chart-card">
       <div class="chart-scroll"><svg id="chartSignup" width="820" height="290" viewBox="0 0 820 290"></svg></div>
     </div>
@@ -311,19 +310,25 @@
     </div>
 
     <div class="callout crit-tone" style="margin-top:16px;">
-      <h3>경고 그 이후 — 부산 국제 영화제·퐁피두 도슨트·위클리보물찾기, 09/13부터 결말을 확인할 수 없게 됐다</h3>
+      <h3>경고 그 이후, 진짜 결말 — 셋 다 안 좋다. "반전"은 착시였다</h3>
       <div class="stat-row">
-        <div class="stat"><div class="k">부산국제영화제 CPI</div><div class="v">7,315원(09/09)→14,486원(09/12, 마지막 확인)</div></div>
-        <div class="stat"><div class="k">퐁피두 도슨트 CPI</div><div class="v">7,880원(09/10)→15,016원(09/12, 마지막 확인)</div></div>
-        <div class="stat"><div class="k">위클리보물찾기 CPI [신규]</div><div class="v">2,398원(09/11)→2,623원(09/12, 마지막 확인)</div></div>
+        <div class="stat"><div class="k">부산국제영화제 CPI</div><div class="v">17,320원(09/13 정점)→15,122원(09/15, 반짝 개선)→<b>22,010원(09/17, 전체 기간 최고치)</b></div></div>
+        <div class="stat"><div class="k">퐁피두 도슨트 CPI</div><div class="v">15,016원(09/12)→17,408원(09/15)→19,458원(09/17, 계속 상승)</div></div>
+        <div class="stat"><div class="k">위클리보물찾기 CPI</div><div class="v">2,398원(09/11 최저)→4,536원(09/15)→<b>7,735원(09/17, 3.2배)</b>, 설치도 246→66건으로 급감</div></div>
       </div>
-      <p>지난 판(09/16)에서는 이 세 캠페인이 "부산 국제 영화제는 09/13 정점 후 반전(8,961원까지 개선)", "퐁피두 도슨트는 경고 지속(17,408원)", "위클리보물찾기는 89% 상승한 새 경고"라는 서로 다른 세 가지 결말로 갈렸다고 결론 냈다. <b>이번 판에서는 그 결론의 근거였던 09/13~09/15 설치 데이터 자체가 사라져서(위 데이터 경고 참고) 세 캠페인 모두 09/12 이후 상태를 다시 확인할 수 없다.</b> 마지막으로 확실히 아는 것은 09/12 시점에 셋 다 CPI가 계속 오르는 중이었다는 것뿐 — 부산·퐁피두가 실제로 반전/악화됐는지, 위클리보물찾기가 계속 나빠졌는지는 전부 미해결로 남긴다.</p>
-      <p>다음 raw 파일에서 이 구간(09/13~09/17)의 설치 데이터가 정상적으로 채워지면 이 세 캠페인을 최우선으로 재확인할 것 — 특히 위클리보물찾기는 09/12 CPI(2,623원)가 여전히 블렌디드 평균(8,662원)보다 훨씬 싼 상태였다는 것만 확인해두고, 추세 판단은 다음 갱신으로 미룬다.</p>
+      <p>지난 판(09/16)이 "부산 국제 영화제는 09/13 정점 후 반전(8,961원까지 개선)"이라고 냈던 결론은, 이번에 09/16~09/17 데이터까지 마저 확인해보니 <b>반전이 아니라 등락의 일부였을 뿐</b>이었다. 09/15까지의 이틀치 하락만 보고 "반전 성공"이라 부른 게 성급했던 것 — 실제로는 09/16 19,469원, 09/17 22,010원으로 다시 올라 이 캠페인 전체 17일 중 최고 CPI를 기록했다. <b>퐁피두 도슨트</b>는 애초 예상대로 계속 나쁘다 — 소재 교체 없이 3주 가까이 1.5만~2만원대에 머물러 있다. <b>위클리보물찾기</b>는 지난 판이 "89% 상승"으로 경고했던 흐름이 멈추지 않고 더 가팔라졌다 — 09/17엔 CPI가 7,735원까지 뛰면서 동시에 설치량 자체도 246건에서 66건으로 급감했다(같은 날 신규 소재 "2차"를 처음 투입했지만 아직 반등 신호는 없다, 12번 섹션 CTR 추이 참고).</p>
+      <p><b>패턴 재확인</b>: 이스포츠(4일 만에 종료)·부산(반전 착시 후 최고치 경신)·퐁피두(3주째 미개선)·위클리보물찾기(급성 소진) — 이 리포트에서 CPI 상승 경고가 나온 소재 4개 중 실제로 "회복"된 사례는 아직 하나도 없다. 다음 소재 투입 때는 5일차부터 예방적으로 체크하는 정도가 아니라, 짧은 반등 하나로 "반전"을 선언하지 않도록 최소 3~4일 연속 개선을 확인한 뒤에 결론 낼 것.</p>
+    </div>
+
+    <div class="callout" style="margin-top:16px; background:var(--accent-soft);">
+      <h3>확정된 인과관계 — 09/17 GA4 활성사용자 폭증의 원인은 카톡플친 발송이었다</h3>
+      <p>같은 세션의 "트라이브 액티브 크로스체크"(GA4·AppsFlyer)에서 09/17에 Web 활성사용자 +233%·Android 활성사용자 +108%(관측 이래 최고치)가 재방문자 위주로 폭증한 걸 발견하고 "카톡플친 발송이 원인일 것"이라는 가설을 세웠는데, 이번 raw 데이터로 확정됐다 — <b>09/17 카톡플친이 2,759,900원을 태워 설치 19건·응모 클릭 69건·문의 클릭 26건</b>을 만들어냈다(09/14 발송 2,769,272원과 거의 동일한 금액). 설치 반응은 09/14(34건)보다 오히려 작은데, 정확히 그 시점 GA4 활성사용자는 역대 최고치를 찍었다 — <b>카톡플친은 신규 설치가 아니라 이미 앱을 쓰던 기존 구독자를 다시 불러들이는 채널이라, 효과가 "설치"가 아니라 "재방문"(활성사용자)으로 잡히는 게 메커니즘상 당연하다</b>는 걸 서로 다른 두 데이터 소스(광고 raw ↔ GA4)가 교차확인한 사례.</p>
+      <p>같은 날 네이버GFA(부산국제영화제) 광고비도 전날(09/16) 2배 증액된 수준(1,042,883원)을 유지하며 계속 집행 중이었다 — navergfa발 웹 신규유입 +29% 급증(GA4 크로스체크, 09/17)도 이 예산 증액과 하루 시차로 맞물려 있어, 09/17은 카톡플친 발송과 네이버GFA 증액이 겹친 날로 정리할 수 있다.</p>
     </div>
   </section>
 
   <section id="ranking">
-    <div class="sec-head"><span class="sec-no">7</span><h2>캠페인 순위표(09/01~09/12)</h2></div>
+    <div class="sec-head"><span class="sec-no">7</span><h2>캠페인 순위표(09/01~09/17)</h2></div>
     <p class="sec-desc">설치 20건 이상 애드셋만 대상(소액 노이즈 제외).</p>
     <div class="two-col">
       <div>
@@ -345,25 +350,25 @@
       <h3>워스트 순위 읽을 때 주의할 점</h3>
       <p><b>카톡플친(카카오톡 채널) 발송 2건</b>은 신규 설치용 광고가 아니라 이미 구독한 사람에게 보내는 발송 캠페인이다 — "9/7 발송"(esports_ticketdrop_kakaopush)은 314설치에 투표 클릭 774건(설치보다 많음 = 재참여 목적대로 작동)으로 이 두 워스트 항목과는 성격이 다르다 — 이 발송들은 CPI가 아니라 "발송당 참여 클릭 수"로 따로 평가해야 한다(11번 섹션의 카톡플친 소단원 참고).</p>
       <p><b>kakaomoment의 gambler_kakaobiz_1</b>(신규 유입 목적의 유료 매체인데도 설치 1건에 122,542원, ATA·타짜 시절의 유산)과 <b>애플서치애드</b>(iOS 검색 특성상 원래 비싸지만 44,370원까지 올라 과함)는 개선 기미 없이 여전히 문제다.</p>
-      <p><b>부산 국제 영화제를 태운 kakaomoment·네이버GFA는 이번엔 워스트 표에서 빠졌다</b> — 09/12까지는 두 매체 모두 애드셋별 설치가 20건 미만(kakaomoment 21건이 두 소재로 쪼개져 있고, 네이버GFA는 4건뿐)이라 순위표 기준(설치 20건 이상)을 못 채운다. 지난 판에서 봤던 "네이버GFA가 kakaomoment를 역전했다"는 비교는 09/13~09/15 데이터에 기반한 것이라 이번엔 검증할 수 없다(위 데이터 경고 참고) — 두 매체 모두 표본이 늘어난 다음 다시 확인할 것.</p>
+      <p><b>부산 국제 영화제를 태운 kakaomoment·네이버GFA가 이번엔 둘 다 워스트 표에 들어왔다</b> — 17일치로 표본이 늘면서 kakaomoment(busan_ticketdrop_kakaomoment, 36건·76,064원)와 네이버GFA(107건·46,870원) 모두 설치 20건을 넘겼다. 두 매체 다 ATA·타짜 시절의 수십만원대보다는 훨씬 개선됐지만, 같은 캠페인을 인스타그램에 태울 때(8,448원)보다는 여전히 5.5~9배 비싸다 — <b>"네이버GFA가 kakaomoment를 역전했다"는 지난 판 관찰은 이번 17일 누적으로도 그대로 유지</b>된다(네이버GFA가 kakaomoment보다 저렴).</p>
     </div>
   </section>
 
   <section id="meta-focus">
     <div class="sec-head"><span class="sec-no">8</span><h2>메타(Instagram) 집중분석<span class="pill good" style="margin-left:8px;">주력 매체</span></h2></div>
-    <p class="sec-desc">전체 광고비의 47%(60,176,213원), 설치의 44%(6,510건)가 이 한 매체에서 나온다 — 287개 라인아이템, 09/01~09/12 집행분(09/13 이후는 위 데이터 경고로 이 섹션 전체에서 제외). 매체 평균 하나로는 안 보이는 것들을 디바이스·일자·캠페인·크리에이티브 4단으로 쪼갠다.</p>
+    <p class="sec-desc">전체 광고비의 46%(82,298,780원), 설치의 44%(9,325건)가 이 한 매체에서 나온다 — 432개 라인아이템, 09/01~09/17 전 구간 집행분. 매체 평균 하나로는 안 보이는 것들을 디바이스·일자·캠페인·크리에이티브 4단으로 쪼갠다.</p>
 
     <div class="chart-card">
       <div class="foot-note" style="margin:0 0 10px; font-weight:600; color:var(--ink-secondary);">① 디바이스 — 격차가 캠페인마다 다르게 벌어진다</div>
       <div class="two-col">
         <div>
           <div class="chart-scroll"><svg id="chartMetaDevice" width="380" height="150" viewBox="0 0 380 150"></svg></div>
-          <div class="foot-note">"리타겟 전용"(위클리업데이트23·24·25, 노출기기 미분류)은 3개 캠페인 합쳐 15건뿐이라 이 차트에서 제외 — CPI로 판단할 대상 아님. 새로 등장한 부산국제영화제·퐁피두 도슨트·위클리보물찾기·로열티프로그램은 표본이 15건 이상인 캠페인만 오른쪽 표에 추가했다.</div>
+          <div class="foot-note">"리타겟 전용"(위클리업데이트23·24·25·26, 노출기기 미분류)은 4개 캠페인 합쳐 23건뿐이라 이 차트에서 제외 — CPI로 판단할 대상 아님. 메이드인코리아(09/14 투입)도 4건뿐이라 아직 표본 부족으로 제외.</div>
         </div>
         <div class="mini-table">
           <div class="mt-title">캠페인별 AOS vs iOS CPI</div>
           <div id="mtDevCamp"></div>
-          <div class="foot-note" style="margin:8px 12px 10px; padding-top:0;">e스포츠(종료된 캠페인)만 유일하게 <b>iOS가 더 저렴</b>(4,837원 vs 5,270원) — 계정 전체 규칙(안드로이드가 항상 쌈)의 유일한 예외. 부산국제영화제는 AOS·iOS 격차가 7,697원 vs 8,021원으로 여전히 거의 없다시피 함 — 격차 크기 자체는 캠페인마다 다르다는 걸 재확인.</div>
+          <div class="foot-note" style="margin:8px 12px 10px; padding-top:0;">e스포츠(종료된 캠페인)만 유일하게 <b>iOS가 더 저렴</b>(4,837원 vs 5,270원) — 계정 전체 규칙(안드로이드가 항상 쌈)의 유일한 예외로 17일 누적으로도 그대로 유지. 부산국제영화제는 AOS·iOS 격차가 8,191원 vs 8,722원으로 여전히 거의 없다시피 함(6.5%) — 격차 크기 자체는 캠페인마다 다르다는 걸 재확인.</div>
         </div>
       </div>
     </div>
@@ -377,7 +382,7 @@
         <svg id="chartMetaDailyEvent" width="820" height="160" viewBox="0 0 820 160"></svg>
       </div>
       <div class="legend-row" id="legendMetaDaily"></div>
-      <div class="foot-note">※ <b>09/01~09/12 기준</b> — 메타 자체 집계 설치는 AppsFlyer 대비 6.1%(9/9)~21.0%(9/10) 사이를 오르내리며 12일 평균 14.5% 과다계상 — "물량이 늘수록 계속 커진다"는 가설은 절반만 맞았다(9/10까지는 그래 보였지만 이후엔 줄었다 늘었다를 반복) — 물량과 정비례하는 게 아니라 그때그때 캠페인 구성에 좌우되는 것으로 보인다. 09/13 이후는 AF_Install 자체가 0으로 찍혀 이 비교가 구조적으로 불가능해짐(마스트헤드 데이터 경고 참고).</div>
+      <div class="foot-note">※ <b>09/01~09/17 기준</b> — 메타 자체 집계 설치는 AppsFlyer 대비 6.1%(9/9)~21.0%(9/10) 사이를 오르내리며 17일 평균 14.5% 과다계상 — "물량이 늘수록 계속 커진다"는 가설은 절반만 맞았다(물량과 정비례하는 게 아니라 그때그때 캠페인 구성에 좌우되는 것으로 보인다). 09/17 인스타그램 CTR이 2.16%로 전일(2.91%) 대비 낮아진 건 같은 날 위클리보물찾기 급성 소진(6번 섹션)으로 고CTR 소재의 노출 비중이 줄어든 영향으로 추정.</div>
     </div>
 
     <div class="chart-card" style="margin-top:16px;">
@@ -402,8 +407,8 @@
   </section>
 
   <section id="media-campaign">
-    <div class="sec-head"><span class="sec-no">9</span><h2>매체별 운영 캠페인 성과 비교(09/01~09/12)</h2></div>
-    <p class="sec-desc">한 매체 안에서 여러 캠페인을 동시에 돌릴 때, 그 매체 예산을 어디에 더 실어줘야 하는지 보는 관점(인스타그램은 12개를 동시 운영 중이라 격차가 가장 크게 드러남). "메이드인코리아"는 09/14 투입이라 이 기간엔 아직 데이터가 없어 표에서 제외. 같은 데이터를 반대로 — 캠페인 기준으로 매체를 비교하는 건 다음 섹션에서.</p>
+    <div class="sec-head"><span class="sec-no">9</span><h2>매체별 운영 캠페인 성과 비교(09/01~09/17)</h2></div>
+    <p class="sec-desc">한 매체 안에서 여러 캠페인을 동시에 돌릴 때, 그 매체 예산을 어디에 더 실어줘야 하는지 보는 관점(인스타그램은 13개를 동시 운영 중이라 격차가 가장 크게 드러남). "메이드인코리아"는 09/14 투입 후 17일까지 겨우 4건(79,316원)이라 아직 표본 부족, 표에는 넣되 순위 판단은 보류. 같은 데이터를 반대로 — 캠페인 기준으로 매체를 비교하는 건 다음 섹션에서.</p>
     <div class="foot-note" style="margin:0 0 8px; font-weight:600; color:var(--ink-secondary);">인스타그램 내부 캠페인 CPI (회색 = 리타겟팅, 신규 설치가 목적이 아니라 비교 대상 아님)</div>
     <div class="rank-table" id="rankIGCampaign"></div>
     <div class="two-col" style="margin-top:16px;">
@@ -420,14 +425,14 @@
 
   <section id="cross-media">
     <div class="sec-head"><span class="sec-no">10</span><h2>동일 캠페인, 다른 매체 — 진짜 원인은 소재가 아니라 매체다</h2></div>
-    <p class="sec-desc">4개 캠페인은 같은 소재/컨셉을 여러 매체에 동시 집행했다. 소재를 고정한 채 매체만 바꿔봤더니 CPI가 최대 19배(ATA페스티벌 기준), 이상치 하루가 낀 매거진 9월 상시소재까지 포함하면 52배까지 벌어진다 — "이 소재가 별로다"가 아니라 "이 매체에 이 소재를 태우면 안 된다"는 뜻. 부산 국제 영화제는 네이버GFA가 크게 개선되며 kakaomoment보다 오히려 저렴해져 3개 매체 순위가 뒤바뀌었다.</p>
+    <p class="sec-desc">4개 캠페인은 같은 소재/컨셉을 여러 매체에 동시 집행했다. 소재를 고정한 채 매체만 바꿔봤더니 CPI가 최대 65배(매거진 9월 상시소재 기준, kakaomoment vs instagram) 벌어진다 — "이 소재가 별로다"가 아니라 "이 매체에 이 소재를 태우면 안 된다"는 뜻. 부산 국제 영화제는 3개 매체(instagram·kakaomoment·네이버GFA) 다 붙었는데 instagram이 여전히 압도적으로 저렴하다.</p>
     <div class="sm-grid" id="crossMediaGrid"></div>
-    <div class="foot-note" style="margin-top:14px;">※ 매거진 9월 상시소재의 kakaomoment CPI(382,325원)가 유독 높은 건 09/10 하루(555,635원 쓰고 설치 0건)가 통째로 이 캠페인에 잡혀 있기 때문 — 09/11부터는 부산국제영화제로 갈아타 그쪽 CPI(83,019원)가 훨씬 낫다.</div>
+    <div class="foot-note" style="margin-top:14px;">※ 매거진 9월 상시소재의 kakaomoment CPI(476,458원)가 유독 높은 건 09/10 하루(555,635원 쓰고 설치 0건)가 통째로 이 캠페인에 잡혀 있기 때문 — 다른 날은 부산국제영화제로 예산이 넘어가 있어 이 캠페인 자체의 kakaomoment 표본이 15건뿐으로 작다.</div>
   </section>
 
   <section id="daily-campaign">
     <div class="sec-head"><span class="sec-no">11</span><h2>데일리 캠페인 성과 추이</h2></div>
-    <p class="sec-desc">매체·소재 랭킹은 09/01~09/12(09/13 이후는 데이터 경고로 제외) 합계였다. 하루 단위로 쪼개보면 같은 캠페인 안에서도 "좋아지는 중"인지 "나빠지는 중"인지가 갈린다.</p>
+    <p class="sec-desc">매체·소재 랭킹은 09/01~09/17 전 구간 합계였다. 하루 단위로 쪼개보면 같은 캠페인 안에서도 "좋아지는 중"인지 "나빠지는 중"인지가 갈린다.</p>
     <div class="sm-grid" id="smGrid"></div>
   </section>
 
@@ -435,12 +440,12 @@
     <div class="sec-head"><span class="sec-no">12</span><h2>소재별 클릭율(CTR) 추이 — 중단·증액·감액 판단용</h2></div>
     <p class="sec-desc">같은 캠페인 안에서 소재(1안/2안 등)별로 CTR이 날마다 어떻게 움직였는지. <b>계속 떨어지면 소재 피로 — 교체·중단 후보</b>, <b>다른 소재보다 꾸준히 높으면 그 소재에 예산 집중(증액)</b>, 등락만 있고 추세가 없으면 그대로 유지. 점 크기는 그날 설치 건수(클수록 설치 많음).</p>
     <div class="sm-grid" id="ctrGrid"></div>
-    <div class="foot-note" style="margin-top:6px;">※ 인스타그램 캠페인 중 이틀 이상 데이터가 있는 것 전부(광고소재 라벨에서 AOS/IOS 표기만 지우고 같은 소재끼리 합산, 대소문자 표기 차이도 병합), 09/12까지만 반영. "메이드인코리아"는 09/14 투입이라 이 기간엔 데이터가 아예 없어 이번 판에서 제외.</div>
+    <div class="foot-note" style="margin-top:6px;">※ 인스타그램 캠페인 중 이틀 이상 데이터가 있는 것 전부(광고소재 라벨에서 AOS/IOS 표기만 지우고 같은 소재끼리 합산, 대소문자 표기 차이도 병합), 09/17까지 반영. "메이드인코리아"는 09/14 투입 후에도 설치가 0~2건대라 CTR 추이를 그릴 만한 볼륨이 아직 안 돼 이번 판에서도 제외.</div>
   </section>
 
   <section id="daily-log">
     <div class="sec-head"><span class="sec-no">13</span><h2>일자별 이슈·조치 로그</h2></div>
-    <p class="sec-desc">14일간 실제로 무슨 일이 있었고 어디서 조치가 필요했는지를 날짜순으로 정리 — 위 섹션들에 흩어진 발견을 시간순으로 다시 묶은 것.</p>
+    <p class="sec-desc">17일간 실제로 무슨 일이 있었고 어디서 조치가 필요했는지를 날짜순으로 정리 — 위 섹션들에 흩어진 발견을 시간순으로 다시 묶은 것.</p>
     <div class="chart-card">
       <div class="timeline" id="dailyLog"></div>
     </div>
@@ -449,13 +454,12 @@
   <section id="conclusion">
     <div class="sec-head"><span class="sec-no">14</span><h2>제안</h2></div>
     <div class="reco-list">
-      <div class="reco"><div class="mark down">↓</div><div class="body"><b>[최우선] raw 파일 설치(AF_Install) 데이터 누락을 대행사/데이터팀에 즉시 알리고 재정산 요청</b><span>09/13부터 매체 10곳 전부에서 설치가 0건으로 찍히고, 이미 정상 확인됐던 09/13~09/15 데이터까지 사라졌다(마스트헤드 데이터 경고 참고) — 실제로는 AppsFlyer API 기준 09/17 하루에도 1,664건이 정상 확인되고 있어 진짜 설치가 없는 게 아니라 이 raw 파일의 집계 파이프라인 문제다. 다음 raw 파일에서 이 구간이 복구되는지가 다른 모든 판단보다 우선.</span></div></div>
-      <div class="reco"><div class="mark watch">?</div><div class="body"><b>부산 국제 영화제·퐁피두 도슨트, 09/12 시점 "계속 악화 중"이었던 상태를 기준으로 잠정 대응</b><span>둘 다 09/12까지 CPI가 나흘·사흘 연속 상승 중이었다(6번 섹션) — 09/13 이후 진짜 반전했는지는 이번 판으로 확인이 안 되므로, 데이터가 복구되기 전까지는 "악화 추세"를 잠정 가정하고 신규 크리에이티브 A/B 준비를 시작해두는 편이 안전하다.</span></div></div>
-      <div class="reco"><div class="mark watch">?</div><div class="body"><b>위클리보물찾기, 09/12까지의 초기 상승분만 확인 — 다음 raw 파일에서 최우선 재확인</b><span>투입 첫날 대비 CPI가 하루 만에 9.4% 올랐다(6번 섹션) — 09/13 이후 "89% 상승" 여부는 데이터 복구 후에만 확인 가능. 09/12 기준으론 아직 블렌디드 평균보다 훨씬 싼 편이라 당장 조치보다는 관찰 유지.</span></div></div>
-      <div class="reco"><div class="mark watch">?</div><div class="body"><b>"경고→조치→결과 확인" 판단 기준은 데이터 복구 후 다시 정상 가동</b><span>이스포츠 소재의 CPI 상승 경고가 실제 캠페인 중단으로 이어졌고, 참여율(79%)도 끝까지 최상위였다(6번 섹션) — 이 리포트 최초로 사이클이 완성된 사례. 09/13 이후 데이터가 복구되면 부산국제영화제·퐁피두 도슨트에도 같은 사이클을 이어서 적용할 것.</span></div></div>
-      <div class="reco"><div class="mark watch">?</div><div class="body"><b>카카오모먼트·네이버GFA, 09/13 이후 순위 비교는 데이터 복구 후 재확인</b><span>09/12까지는 카카오모먼트가 ATA·타짜 시절보다 크게 개선됐지만(부산국제영화제 기준 52,249원) 인스타그램 대비 여전히 몇 배 비쌌고, 네이버GFA는 표본이 4건뿐이라 비교 자체가 어려웠다 — "네이버GFA가 kakaomoment를 역전했다"는 지난 판 결론은 09/13~09/15 데이터 기반이라 이번엔 재확인 불가(7번 섹션).</span></div></div>
-      <div class="reco"><div class="mark watch">?</div><div class="body"><b>애드팝콘은 CPI로 다른 매체와 비교·의사결정하지 말 것</b><span>보상형(리워드) 매체라 CPI·회원가입 전환율이 구조적으로 유리하게 나온 것(7번 섹션) — 같은 잣대로 줄세우면 안 됨. 예산을 더 쓸지는 리워드 유저의 장기 리텐션·LTV로 따로 판단해야 하는데 이 데이터엔 없음.</span></div></div>
-      <div class="reco"><div class="mark watch">?</div><div class="body"><b>카톡플친(카카오톡 채널) — CPI 대신 "발송 목적별 참여 클릭"으로 평가 체계 고정</b><span>재참여 유도형 발송(9/7)은 설치 대비 참여 클릭이 최대 2.5배로 목적대로 작동했지만, 위클리 업데이트형(9/3·9/10)은 CPI 잣대로는 계속 나쁘게 보인다(7번 섹션) — 애초에 CPI 표에서 빼고 "참여 클릭/발송" 지표로 별도 트래킹할 것을 권장. 09/14·09/17 발송 실적은 데이터 경고로 이번엔 집계 불가.</span></div></div>
+      <div class="reco"><div class="mark down">↓</div><div class="body"><b>[최우선] 부산 국제 영화제·퐁피두 도슨트, "관망"이 아니라 지금 바로 소재 교체·예산 재검토</b><span>부산은 09/13 정점 후 이틀 개선됐다가 09/17 22,010원으로 전체 기간 최고치를 다시 찍었다 — 반전이 아니라 등락이었다. 퐁피두는 3주 가까이 개선 신호가 아예 없다(6번 섹션). 둘 다 "조금 더 지켜보자"로 미룰 단계는 지났다.</span></div></div>
+      <div class="reco"><div class="mark down">↓</div><div class="body"><b>위클리보물찾기, 급성 소진 국면 — 09/17 신규 투입한 "2차" 소재의 초기 반응을 3일 안에 확인</b><span>CPI가 09/11 2,398원→09/17 7,735원으로 3.2배, 설치량도 246건→66건으로 급감했다(6·12번 섹션). 담당자가 이미 09/17에 2차 소재를 투입한 상태 — 이 소재가 반등을 못 만들면 캠페인 자체를 접고 다음 대체 소재를 준비할 시점.</span></div></div>
+      <div class="reco"><div class="mark watch">?</div><div class="body"><b>"경고→조치→결과 확인" 사이클, 반전 판정 기준을 더 보수적으로</b><span>이스포츠는 경고→중단으로 사이클이 깔끔하게 완성됐지만(6번 섹션), 부산 국제 영화제는 이틀 개선만 보고 "반전"이라 부른 게 이번에 뒤집혔다 — 앞으로는 최소 3~4일 연속 개선을 확인한 뒤에만 "반전"으로 판정할 것.</span></div></div>
+      <div class="reco"><div class="mark up">↑</div><div class="body"><b>네이버GFA(부산국제영화제) — kakaomoment보다 저렴한 대안으로 계속 키울 가치 있음</b><span>17일 누적 CPI 46,870원으로 kakaomoment(95,808원)의 절반 이하 — 09/16 하루 만에 예산을 2배로 증액한 판단은 방향이 맞다(1번·7번 섹션). 다만 여전히 instagram(8,448원) 대비 5.5배 비싸 절대 규모를 키우기보단 kakaomoment 예산을 이쪽으로 옮기는 재배분이 합리적.</span></div></div>
+      <div class="reco"><div class="mark watch">?</div><div class="body"><b>애드팝콘은 CPI로 다른 매체와 비교·의사결정하지 말 것</b><span>보상형(리워드) 매체라 CPI(1,012원)·회원가입 전환율(67.6%)이 구조적으로 유리하게 나온 것(7번 섹션) — 같은 잣대로 줄세우면 안 됨. 예산을 더 쓸지는 리워드 유저의 장기 리텐션·LTV로 따로 판단해야 하는데 이 데이터엔 없음.</span></div></div>
+      <div class="reco"><div class="mark watch">?</div><div class="body"><b>카톡플친(카카오톡 채널) — CPI 대신 "발송 목적별 참여/재방문"으로 평가 체계 고정</b><span>재참여 유도형 발송(9/7)은 설치 대비 참여 클릭이 2.5배로 목적대로 작동했지만, 09/14·09/17 두 이벤트 다이제스트 발송은 설치 기준으론 계속 나쁘게 보인다(2번 섹션) — 그런데 이 두 발송은 GA4 활성사용자 폭증의 실제 원인으로 확정됐다(6번 섹션 새 콜아웃). "설치"가 아니라 "재방문(활성사용자) 유발 효과"를 카톡플친의 핵심 KPI로 다시 정의할 것을 권장.</span></div></div>
     </div>
   </section>
 
@@ -463,10 +467,10 @@
 
 <footer>
   <div class="wrap">
-    <p><b>데이터 출처</b> — 한화 PLUS 트라이브_RAW_20260918(매체 raw 데이터, 원본은 09/01~09/17·693행이나 09/13~09/17은 설치 데이터 결측으로 이 리포트의 CPI·설치 분석은 09/01~09/12·466행만 사용). 원본 파일은 08/01부터 있으나 이 리포트는 09/01~09/10판과 이어보기 위해 09월분만 사용. Net_Cost/Gross_Cost/광고비 3개 비용 컬럼 중 "광고비"(Gross_Cost×1.1, 부가세 포함 추정)를 전체 비용 기준으로 사용.</p>
-    <p><b>방법 노트</b> — CPI = 광고비 ÷ AF_Install(AppsFlyer 귀속 설치). 애드셋(Aeset)명이 없는 행(Organic 등, 총 설치의 일부)은 애드셋 랭킹에서 제외. "매체설치"(플랫폼 자체 집계, 인스타그램만 제공) 비교는 09/01~09/12 기준으로 유지(8번 섹션) — 09/13 이후는 AF_Install 자체가 0이라 비교가 불가능해짐.</p>
-    <p>09/01~09/15판(0916 raw) 대비 갱신 — <b>이번 갱신의 핵심은 새 데이터 추가가 아니라 데이터 축소다.</b> 새 raw 파일(0918)에서 09/13부터 계정 전체 설치(AF_Install) 컬럼이 0으로 붕괴한 것을 발견했고, 심지어 지난 판에 정상 기록돼 있던 09/13~09/15 설치 데이터까지 이번 판에서 사라져 있었다 — 이 때문에 "부산 국제 영화제 반전"·"퐁피두 도슨트 경고 지속"·"위클리보물찾기 89% 상승" 등 지난 판의 핵심 결론들을 전부 "09/12 시점까지만 확인됨, 이후 미해결"로 되돌렸다(마스트헤드·6번 섹션). 대신 이 raw 파일을 만드는 파이프라인 자체의 데이터 무결성 문제를 새로 포착한 것을 이번 갱신의 가장 중요한 발견으로 기록한다.</p>
-    <p>이 리포트는 Claude가 raw 데이터를 자체적으로 읽고 구성한 분석입니다 · 최초 작성 2026-09-11 · 갱신 2026-09-16</p>
+    <p><b>데이터 출처</b> — 한화 PLUS 트라이브_RAW_20260918 재추출본(매체 raw 데이터, 09/01~09/17·693행 전체 정상 사용). 원본 파일은 08/01부터 있으나 이 리포트는 09/01~09/10판과 이어보기 위해 09월분만 사용. Net_Cost/Gross_Cost/광고비 3개 비용 컬럼 중 "광고비"(Gross_Cost×1.1, 부가세 포함 추정)를 전체 비용 기준으로 사용.</p>
+    <p><b>방법 노트</b> — CPI = 광고비 ÷ AF_Install(AppsFlyer 귀속 설치). 애드셋(Aeset)명이 없는 행(Organic 등, 총 설치의 일부)은 애드셋 랭킹에서 제외. "매체설치"(플랫폼 자체 집계, 인스타그램만 제공) 비교는 09/01~09/17 전 구간 기준.</p>
+    <p><b>09/01~09/17판(0918 재추출본) 대비 갱신 이력</b> — 같은 날 처음 받았던 raw 파일(구 0918)은 09/13부터 계정 전체 설치(AF_Install)가 0으로 찍혀 있었고, 심지어 지난 판(0916 raw)에 정상 기록돼 있던 09/13~09/15 설치 데이터까지 사라져 있었다. 사용자가 raw 파일을 재추출해 다시 올리면서 이 결측이 해소됐고(마스트헤드 참고), 09/13~09/15 값은 0916 raw가 확정했던 값과 정확히 일치하는 것으로 재검증됨 — 원인은 raw 파일 집계 파이프라인의 일시적 문제였지 실제 데이터 손실이 아니었다. 이번 판은 09/01~09/17 전 구간을 정상 재계산해 (1) 부산 국제 영화제·퐁피두 도슨트·위클리보물찾기 3개 캠페인의 실제 결말을 확정하고(6번 섹션) (2) 09/17 GA4 활성사용자 폭증의 원인이 카톡플친 발송이었음을 raw 데이터로 교차확인했다(6번 섹션 새 콜아웃).</p>
+    <p>이 리포트는 Claude가 raw 데이터를 자체적으로 읽고 구성한 분석입니다 · 최초 작성 2026-09-11 · 갱신 2026-09-18</p>
   </div>
 </footer>
 
@@ -534,27 +538,27 @@
 
   // ---------------- data ----------------
   var MEDIA = [
-    {name:'instagram', spend:60176213, install:6510},
-    {name:'UAC', spend:18976187, install:4847},
-    {name:'kakaomoment', spend:17807321, install:104},
-    {name:'카톡플친', spend:17110318, install:389},
-    {name:'X', spend:6506758, install:250},
-    {name:'애플서치애드', spend:2795302, install:63},
-    {name:'애드팝콘', spend:2642640, install:2645},
-    {name:'네이버GFA', spend:1318176, install:4},
+    {name:'instagram', spend:82298782, install:9325},
+    {name:'UAC', spend:26870109, install:7365},
+    {name:'kakaomoment', spend:24923338, install:134},
+    {name:'카톡플친', spend:22639490, install:442},
+    {name:'X', spend:7606758, install:306},
+    {name:'네이버GFA', spend:5015134, install:107},
+    {name:'애플서치애드', spend:3973934, install:74},
+    {name:'애드팝콘', spend:3441900, install:3402},
     {name:'Ace', spend:732185, install:13},
-    {name:'네이버검색', spend:344774, install:0}
+    {name:'네이버검색', spend:490564, install:0}
   ];
   var SIGNUP = [
-    {name:'애드팝콘', rate:67.1, install:2645, signup:1774},
-    {name:'X', rate:58.8, install:250, signup:147},
-    {name:'instagram', rate:57.6, install:6510, signup:3750},
-    {name:'네이버GFA', rate:50.0, install:4, signup:2},
-    {name:'애플서치애드', rate:44.4, install:63, signup:28},
-    {name:'kakaomoment', rate:39.4, install:104, signup:41},
-    {name:'UAC', rate:33.9, install:4847, signup:1644},
+    {name:'애드팝콘', rate:67.6, install:3402, signup:2299},
+    {name:'네이버GFA', rate:57.9, install:107, signup:62},
+    {name:'instagram', rate:57.9, install:9325, signup:5398},
+    {name:'X', rate:57.5, install:306, signup:176},
+    {name:'애플서치애드', rate:45.9, install:74, signup:34},
+    {name:'kakaomoment', rate:41.0, install:134, signup:55},
+    {name:'UAC', rate:34.7, install:7365, signup:2554},
     {name:'Ace', rate:15.4, install:13, signup:2},
-    {name:'카톡플친', rate:6.7, install:389, signup:26}
+    {name:'카톡플친', rate:5.9, install:442, signup:26}
   ];
   var DAILY = [
     {d:'09-01', spend:11307030, install:1095, apply:263, vote:0},
@@ -572,28 +576,28 @@
     {d:'09-13', spend:9719164, install:1493, apply:288, vote:0},
     {d:'09-14', spend:10949616, install:1287, apply:636, vote:0},
     {d:'09-15', spend:8087750, install:1175, apply:167, vote:0},
-    {d:'09-16', spend:4917536, install:0, apply:0, vote:0},
-    {d:'09-17', spend:4874627, install:0, apply:0, vote:0}
+    {d:'09-16', spend:9512610, install:1249, apply:186, vote:0},
+    {d:'09-17', spend:11313180, install:1139, apply:231, vote:0}
   ];
   var DEVICE = [
-    {name:'AOS', spend:49300473, install:8544, cpi:5770, color:C.aos},
-    {name:'iOS', spend:32206202, install:3088, cpi:10429, color:C.ios}
+    {name:'AOS', spend:67901360, install:12701, cpi:5346, color:C.aos},
+    {name:'iOS', spend:44299930, install:4322, cpi:10250, color:C.ios}
   ];
   var BEST = [
-    {name:'adpopcorn_int', media:'애드팝콘(리워드형)', spend:3129280, install:3077, cpi:1017},
-    {name:'[앱홍보_9월 상시] AOS_텍스트광고C', media:'instagram', spend:925259, install:416, cpi:2224},
-    {name:'[앱홍보_9월] AOS 위클리 보물찾기 1안', media:'instagram', spend:2757509, install:978, cpi:2820},
-    {name:'[앱홍보_9월_AOS] 로열티프로그램_위클리완독챌린지 vol25(2안)', media:'instagram', spend:275631, install:92, cpi:2996},
-    {name:'[앱홍보_9월_AOS] 로열티프로그램_위클리완독챌린지 vol25(1안)', media:'instagram', spend:358702, install:109, cpi:3291},
-    {name:'[앱홍보_9월] IOS 위클리 보물찾기 1안', media:'instagram', spend:2782035, install:796, cpi:3495}
+    {name:'adpopcorn_int', media:'애드팝콘(리워드형)', spend:3441900, install:3402, cpi:1012},
+    {name:'[앱홍보_9월 상시] AOS_텍스트광고C', media:'instagram', spend:1205763, install:521, cpi:2314},
+    {name:'[앱홍보_9월] AOS 위클리 보물찾기 1안', media:'instagram', spend:3396180, install:1116, cpi:3043},
+    {name:'[앱홍보_9월_AOS] 로열티프로그램_위클리완독챌린지 vol25(1안)', media:'instagram', spend:374283, install:114, cpi:3283},
+    {name:'[앱홍보_9월_AOS] 로열티프로그램_위클리완독챌린지 vol26', media:'instagram', spend:106523, install:32, cpi:3329},
+    {name:'[앱홍보_9월_AOS] 로열티프로그램_위클리완독챌린지 vol25(2안)', media:'instagram', spend:433621, install:120, cpi:3614}
   ];
   var WORST = [
     {name:'vol25_kakaopush_list1', media:'카톡플친*', spend:9529096, install:26, cpi:366504},
     {name:'vol24_kakaopush_list1', media:'카톡플친*', spend:2840442, install:20, cpi:142022},
     {name:'gambler_kakaobiz_1', media:'kakaomoment*', spend:5636939, install:46, cpi:122542},
-    {name:'Apple Search Ads', media:'애플서치애드', spend:2795302, install:63, cpi:44370},
-    {name:'[앱홍보_9월 상시] AOS_콘텐츠광고_일상블로그(Vol24)', media:'instagram', spend:493102, install:23, cpi:21439},
-    {name:'[앱홍보_8월 상시] IOS_귀칼(vol23)', media:'instagram', spend:501368, install:24, cpi:20890}
+    {name:'busan_ticketdrop_kakaomoment', media:'kakaomoment', spend:2738311, install:36, cpi:76064},
+    {name:'Apple Search Ads', media:'애플서치애드', spend:3973934, install:74, cpi:53702},
+    {name:'busan_ticketdrop_navergfa', media:'네이버GFA', spend:5015134, install:107, cpi:46870}
   ];
 
   // ---------------- Chart 1: 매체별 광고비 (horizontal bar, desc) ----------------
@@ -764,31 +768,33 @@
   renderRank('rankBest', BEST, false);
   renderRank('rankWorst', WORST, true);
 
-  // ================= 8) 매체별 운영 캠페인 성과 비교(09/01~09/12) =================
+  // ================= 8) 매체별 운영 캠페인 성과 비교(09/01~09/17) =================
   var IG_CAMPAIGNS = [
-    {name:'ATA페스티벌', spend:15046766, install:1015, cpi:14824},
-    {name:'타짜시사회 티켓드롭', spend:12878267, install:915, cpi:14075},
-    {name:'매거진 9월 상시소재', spend:7736465, install:909, cpi:8511},
+    {name:'위클리보물찾기', spend:7304755, install:2086, cpi:3502},
     {name:'e스포츠 국가대표 평가전', spend:6379091, install:1264, cpi:5047},
-    {name:'부산 국제 영화제', spend:3460463, install:517, cpi:6693},
-    {name:'로열티프로그램', spend:2965896, install:479, cpi:6192},
-    {name:'티스퀘어 티켓드롭', spend:2845404, install:189, cpi:15055},
-    {name:'퐁피두 도슨트', spend:2590993, install:247, cpi:10490},
-    {name:'위클리보물찾기', spend:2459824, install:961, cpi:2560},
-    {name:'위클리업데이트24', spend:2311345, install:9, cpi:256816, retarget:true},
+    {name:'로열티프로그램', spend:4230904, install:739, cpi:5725},
+    {name:'매거진 9월 상시소재', spend:10920172, install:1489, cpi:7334},
+    {name:'부산 국제 영화제', spend:8845106, install:1047, cpi:8448},
+    {name:'타짜시사회 티켓드롭', spend:12878267, install:915, cpi:14075},
+    {name:'퐁피두 도슨트', spend:6360569, install:450, cpi:14135},
+    {name:'ATA페스티벌', spend:15046766, install:1015, cpi:14824},
+    {name:'티스퀘어 티켓드롭', spend:4602339, install:293, cpi:15708},
+    {name:'메이드인코리아', spend:317262, install:4, cpi:79316},
     {name:'위클리업데이트23', spend:850120, install:5, cpi:170024, retarget:true},
-    {name:'위클리업데이트25', spend:651577, install:0, cpi:null, retarget:true}
+    {name:'위클리업데이트25', spend:2077943, install:9, cpi:230883, retarget:true},
+    {name:'위클리업데이트24', spend:2311345, install:9, cpi:256816, retarget:true},
+    {name:'위클리업데이트26', spend:174141, install:0, cpi:null, retarget:true}
   ];
   var X_CAMPAIGNS = [
-    {name:'매거진 9월 상시소재', spend:2639832, install:213, cpi:12394},
-    {name:'타짜시사회 티켓드롭', spend:1934715, install:17, cpi:113807},
-    {name:'ATA페스티벌', spend:1932211, install:20, cpi:96611}
+    {name:'매거진 9월 상시소재', spend:3739832, install:269, cpi:13903},
+    {name:'ATA페스티벌', spend:1932211, install:20, cpi:96611},
+    {name:'타짜시사회 티켓드롭', spend:1934715, install:17, cpi:113807}
   ];
   var KM_CAMPAIGNS = [
-    {name:'ATA페스티벌', spend:7385665, install:26, cpi:284064},
+    {name:'부산 국제 영화제', spend:3832310, install:40, cpi:95808},
     {name:'타짜시사회 티켓드롭', spend:6558495, install:53, cpi:123745},
-    {name:'매거진 9월 상시소재', spend:2765939, install:4, cpi:691485},
-    {name:'부산 국제 영화제', spend:1097223, install:21, cpi:52249}
+    {name:'ATA페스티벌', spend:7385665, install:26, cpi:284064},
+    {name:'매거진 9월 상시소재', spend:7146868, install:15, cpi:476458}
   ];
 
   (function(){
@@ -838,13 +844,14 @@
       {media:'kakaomoment', color:C.mediaKm, cpi:123745, install:53}
     ]},
     {campaign:'매거진 9월 상시소재', rows:[
-      {media:'instagram', color:C.mediaIg, cpi:8511, install:909},
-      {media:'X', color:C.mediaX, cpi:12394, install:213},
-      {media:'kakaomoment', color:C.mediaKm, cpi:691485, install:4}
+      {media:'instagram', color:C.mediaIg, cpi:7334, install:1489},
+      {media:'X', color:C.mediaX, cpi:13903, install:269},
+      {media:'kakaomoment', color:C.mediaKm, cpi:476458, install:15}
     ]},
-    {campaign:'부산 국제 영화제(09/01~09/12, 네이버GFA는 설치 4건뿐이라 표본 부족으로 제외)', rows:[
-      {media:'instagram', color:C.mediaIg, cpi:6693, install:517},
-      {media:'kakaomoment', color:C.mediaKm, cpi:52249, install:21}
+    {campaign:'부산 국제 영화제(17일 누적, 네이버GFA도 표본 107건으로 처음 편입)', rows:[
+      {media:'instagram', color:C.mediaIg, cpi:8448, install:1047},
+      {media:'네이버GFA', color:C.mediaNv, cpi:46870, install:107},
+      {media:'kakaomoment', color:C.mediaKm, cpi:95808, install:40}
     ]}
   ];
   (function(){
@@ -879,27 +886,27 @@
     {name:'타짜시사회 티켓드롭', color:C.mediaIg,
       data:[{d:'09-01',install:235,cpi:15978},{d:'09-02',install:154,cpi:23646},{d:'09-03',install:137,cpi:27326},{d:'09-04',install:134,cpi:24459},{d:'09-05',install:178,cpi:20938},{d:'09-06',install:147,cpi:21953}],
       cap:'6일 만에 조기 종료 — 개선되는 흐름 없이 16,000~27,000원 사이를 오르내리다 9/6에 바로 중단, 이후 재개 없음.'},
-    {name:'매거진 9월 상시소재 [09/13 이후 데이터 없음]', color:C.spend,
-      data:[{d:'09-01',install:70,cpi:11615},{d:'09-02',install:74,cpi:11298},{d:'09-03',install:76,cpi:11598},{d:'09-04',install:53,cpi:14694},{d:'09-05',install:69,cpi:14681},{d:'09-06',install:115,cpi:8734},{d:'09-07',install:79,cpi:10783},{d:'09-08',install:79,cpi:11108},{d:'09-09',install:77,cpi:10428},{d:'09-10',install:192,cpi:8353},{d:'09-11',install:113,cpi:16650},{d:'09-12',install:129,cpi:13936}],
-      cap:'상시 운영(베이스라인) 소재 — 9/9부터 크리에이티브가 텍스트광고C·현빈(Vol25) 중심으로 교체되며 볼륨이 커졌다(12번 섹션 참고), 09/12까지 CPI는 8,300~16,700원 사이 등락. 09/13 이후는 raw 데이터 경고로 확인 불가.'},
-    {name:'UAC (구글) [09/13 이후 데이터 없음]', color:C.install,
-      data:[{d:'09-01',install:199,cpi:7530},{d:'09-02',install:202,cpi:7086},{d:'09-03',install:278,cpi:4974},{d:'09-04',install:264,cpi:4458},{d:'09-05',install:491,cpi:3945},{d:'09-06',install:547,cpi:3395},{d:'09-07',install:504,cpi:3129},{d:'09-08',install:467,cpi:3531},{d:'09-09',install:426,cpi:3927},{d:'09-10',install:500,cpi:3378},{d:'09-11',install:432,cpi:3502},{d:'09-12',install:537,cpi:2967}],
-      cap:'학습 효과가 12일째까지 유지 중 — 초반 7,000원대에서 9/6 이후 줄곧 2,900~3,900원대. 9/12(토) 2,967원으로 이 기간 최저치 경신. UAC도 09/13 이후는 raw 데이터 경고로 확인 불가(마스트헤드 참고) — 학습곡선이 계속됐는지는 다음 갱신에서 재확인.'},
+    {name:'매거진 9월 상시소재', color:C.spend,
+      data:[{d:'09-01',install:70,cpi:11615},{d:'09-02',install:74,cpi:11298},{d:'09-03',install:76,cpi:11598},{d:'09-04',install:53,cpi:14694},{d:'09-05',install:69,cpi:14681},{d:'09-06',install:115,cpi:8734},{d:'09-07',install:79,cpi:10783},{d:'09-08',install:79,cpi:11108},{d:'09-09',install:77,cpi:10428},{d:'09-10',install:192,cpi:8353},{d:'09-11',install:113,cpi:16650},{d:'09-12',install:129,cpi:13936},{d:'09-13',install:178,cpi:11559},{d:'09-14',install:139,cpi:9339},{d:'09-15',install:119,cpi:11411},{d:'09-16',install:110,cpi:18156},{d:'09-17',install:101,cpi:19345}],
+      cap:'상시 운영(베이스라인) 소재 — 9/9부터 텍스트광고C·현빈(Vol25) 중심으로 교체돼 한동안 8,300~16,700원대를 오르내리다, 09/16부터 새 소재 에미상·암살자들(Vol26)이 섞이며 CPI가 18,000~19,300원대로 다시 튀었다(12번 섹션 CTR 참고) — 계정 베이스라인 소재조차 9월 중순 들어 전반적으로 비싸지는 추세.'},
+    {name:'UAC (구글)', color:C.install,
+      data:[{d:'09-01',install:199,cpi:7530},{d:'09-02',install:202,cpi:7086},{d:'09-03',install:278,cpi:4974},{d:'09-04',install:264,cpi:4458},{d:'09-05',install:491,cpi:3945},{d:'09-06',install:547,cpi:3395},{d:'09-07',install:504,cpi:3129},{d:'09-08',install:467,cpi:3531},{d:'09-09',install:426,cpi:3927},{d:'09-10',install:500,cpi:3378},{d:'09-11',install:432,cpi:3502},{d:'09-12',install:537,cpi:2967},{d:'09-13',install:513,cpi:3103},{d:'09-14',install:484,cpi:3266},{d:'09-15',install:469,cpi:3398},{d:'09-16',install:503,cpi:3123},{d:'09-17',install:549,cpi:2836}],
+      cap:'학습 효과가 17일째까지 그대로 유지 — 초반 7,000원대에서 9/6 이후 줄곧 2,800~3,900원대. 09/17 2,836원으로 이 리포트 전체 기간 최저치를 다시 경신, 계정에서 가장 안정적인 채널로 자리잡았다.'},
     {name:'e스포츠 국가대표 평가전 (종료)', color:C.crit,
       data:[{d:'09-07',install:270,cpi:2472},{d:'09-08',install:431,cpi:3734},{d:'09-09',install:304,cpi:5830},{d:'09-10',install:259,cpi:8996}],
       cap:'피로 신호 그대로 적중 — 투입 첫날 2,472원이던 CPI가 4일 만에 8,996원(3.6배)까지 오른 뒤, 09/11부터 캠페인 자체가 완전히 빠짐. 경고가 실제 조치로 이어진 사례.'},
-    {name:'카톡플친 (발송 3회 확인, 09/14 이후 데이터 없음)', color:C.mediaX,
-      data:[{d:'09-03',install:27,cpi:105202},{d:'09-07',install:314,cpi:15098},{d:'09-10',install:48,cpi:198523}],
-      cap:'9/3·9/10(위클리 업데이트)은 CPI 10만~20만원대, 9/7(이스포츠 투표 유도)만 15,098원으로 양호. 09/14 발송(이벤트 다이제스트, 81,449원)은 raw 데이터 경고로 이번 판에서 재확인 불가 — GA4 활성사용자 크로스체크로는 그날 발송 자체는 실재했던 것으로 확인됨.'},
-    {name:'부산 국제 영화제 [09/13 이후 데이터 없음]', color:C.mediaKm,
-      data:[{d:'09-09',install:45,cpi:7315},{d:'09-10',install:155,cpi:8866},{d:'09-11',install:190,cpi:10371},{d:'09-12',install:152,cpi:14486}],
-      cap:'09/12까지는 CPI가 나흘 연속 상승 중(7,315→14,486원) — "09/13 정점 후 반전"이라던 지난 판 결론은 그 뒤 데이터가 사라져(마스트헤드 참고) 이번 판에서 검증 불가. 마지막으로 확인된 상태는 "계속 나빠지는 중"이다.'},
-    {name:'퐁피두 도슨트 [09/13 이후 데이터 없음]', color:C.aos,
-      data:[{d:'09-10',install:92,cpi:7880},{d:'09-11',install:89,cpi:9831},{d:'09-12',install:66,cpi:15016}],
-      cap:'09/12까지 CPI가 사흘 연속 상승(7,880→15,016원) — 09/13 이후 흐름은 raw 데이터 경고로 재확인 불가. 마지막 확인 시점 기준으로는 여전히 악화 중이었다는 것만 알 수 있다.'},
-    {name:'위클리보물찾기 [09/13 이후 데이터 없음]', color:C.warn,
-      data:[{d:'09-11',install:458,cpi:2398},{d:'09-12',install:360,cpi:2623}],
-      cap:'투입 첫날(09/11) 대비 CPI가 하루 만에 9.4% 올랐다(2,398→2,623원) — "닷새 만에 89% 상승"이라던 지난 판 수치는 09/13 이후 구간에 의존해 이번 판에서는 확인 불가. 09/12 시점까지는 블렌디드 평균(8,662원)보다 여전히 훨씬 싼 편.'}
+    {name:'카톡플친 (발송 5회 확인)', color:C.mediaX,
+      data:[{d:'09-03',install:27,cpi:105202},{d:'09-07',install:314,cpi:15098},{d:'09-10',install:48,cpi:198523},{d:'09-14',install:34,cpi:81449},{d:'09-17',install:19,cpi:145258}],
+      cap:'설치 기준 CPI만 보면 9/7(이스포츠 투표 유도, 15,098원)만 유독 양호하고 나머지는 8만~20만원대. 그런데 09/14·09/17 두 발송(둘 다 이벤트 다이제스트형, 비슷한 금액)은 같은 시각 GA4 활성사용자를 폭증시킨 것으로 확정됐다(6번 섹션 새 콜아웃) — 이 발송들의 진짜 성과는 "설치"가 아니라 "재방문"으로 따로 봐야 한다.'},
+    {name:'부산 국제 영화제', color:C.mediaKm,
+      data:[{d:'09-09',install:45,cpi:7315},{d:'09-10',install:155,cpi:8866},{d:'09-11',install:190,cpi:10371},{d:'09-12',install:152,cpi:14486},{d:'09-13',install:136,cpi:17320},{d:'09-14',install:123,cpi:16880},{d:'09-15',install:132,cpi:15122},{d:'09-16',install:140,cpi:19469},{d:'09-17',install:121,cpi:22010}],
+      cap:'09/13~09/15의 짧은 하락(17,320→15,122원)은 반전이 아니라 등락이었다 — 09/16·09/17 다시 올라 22,010원으로 이 캠페인 전체 기간 최고치를 경신했다(6번 섹션). 네이버GFA 예산 증액(1번 섹션)에도 불구하고 instagram 대비 여전히 훨씬 비싼 채널 조합에 계속 의존 중.'},
+    {name:'퐁피두 도슨트', color:C.aos,
+      data:[{d:'09-10',install:92,cpi:7880},{d:'09-11',install:89,cpi:9831},{d:'09-12',install:66,cpi:15016},{d:'09-13',install:58,cpi:17002},{d:'09-14',install:38,cpi:21178},{d:'09-15',install:47,cpi:17408},{d:'09-16',install:32,cpi:19242},{d:'09-17',install:28,cpi:19458}],
+      cap:'8일째 개선 신호가 없다 — 09/14 정점(21,178원) 이후 소폭 하락했을 뿐 1.7만~1.9만원대에 그대로 머무는 중, 설치량도 92건→28건으로 계속 줄고 있다. 이 리포트에서 유일하게 "회복"도 "완전 종료"도 아닌 채 장기 표류 중인 캠페인.'},
+    {name:'위클리보물찾기', color:C.warn,
+      data:[{d:'09-10',install:143,cpi:2916},{d:'09-11',install:458,cpi:2398},{d:'09-12',install:360,cpi:2623},{d:'09-13',install:341,cpi:3333},{d:'09-14',install:258,cpi:3783},{d:'09-15',install:214,cpi:4536},{d:'09-16',install:246,cpi:5087},{d:'09-17',install:66,cpi:7735}],
+      cap:'"89% 상승" 경고가 실제로는 훨씬 더 나빠졌다 — 09/11 최저치(2,398원) 대비 09/17 7,735원으로 3.2배, CPI 상승과 함께 09/17엔 설치량 자체가 246건에서 66건으로 급감했다. 같은 날 신규 "2차" 소재를 투입했지만(12번 섹션) 아직 반등 신호는 없다.'}
   ];
   (function(){
     var grid = document.getElementById('smGrid');
@@ -938,19 +945,19 @@
 
   // ================= 메타(Instagram) 집중분석 =================
   var META_DEVICE = [
-    {name:'AOS', spend:28272124, install:3582, cpi:7893, color:C.aos},
-    {name:'iOS', spend:28091047, install:2914, cpi:9640, color:C.ios}
+    {name:'AOS', spend:38429091, install:5195, cpi:7397, color:C.aos},
+    {name:'iOS', spend:38456142, install:4107, cpi:9364, color:C.ios}
   ];
   var META_DEV_CAMP = [
     {name:'ATA페스티벌', aosCpi:14219, iosCpi:15491},
     {name:'타짜시사회 티켓드롭', aosCpi:13165, iosCpi:15119},
-    {name:'매거진 9월 상시소재', aosCpi:6363, iosCpi:12850},
+    {name:'매거진 9월 상시소재', aosCpi:5611, iosCpi:10554},
     {name:'e스포츠 국가대표 평가전', aosCpi:5270, iosCpi:4837, reversed:true},
-    {name:'부산 국제 영화제', aosCpi:6458, iosCpi:6947},
-    {name:'퐁피두 도슨트', aosCpi:9053, iosCpi:12466},
-    {name:'티스퀘어 티켓드롭', aosCpi:12899, iosCpi:18123},
-    {name:'로열티프로그램', aosCpi:4962, iosCpi:8235},
-    {name:'위클리보물찾기', aosCpi:2371, iosCpi:2781}
+    {name:'부산 국제 영화제', aosCpi:8191, iosCpi:8722},
+    {name:'퐁피두 도슨트', aosCpi:12203, iosCpi:16683},
+    {name:'티스퀘어 티켓드롭', aosCpi:13331, iosCpi:19039},
+    {name:'로열티프로그램', aosCpi:4542, iosCpi:7734},
+    {name:'위클리보물찾기', aosCpi:3166, iosCpi:3919}
   ];
   var META_DAILY = [
     {d:'09-01', spend:5265784, install:457, apply:231, vote:0, ctr:1.52},
@@ -964,33 +971,38 @@
     {d:'09-09', spend:3871624, install:478, apply:297, vote:235, ctr:1.77},
     {d:'09-10', spend:6187185, install:868, apply:420, vote:158, ctr:2.05},
     {d:'09-11', spend:4398782, install:898, apply:369, vote:0, ctr:3.3},
-    {d:'09-12', spend:4598004, install:825, apply:268, vote:0, ctr:2.74}
+    {d:'09-12', spend:4598004, install:825, apply:268, vote:0, ctr:2.74},
+    {d:'09-13', spend:5311516, install:796, apply:270, vote:0, ctr:2.4},
+    {d:'09-14', spend:4308840, install:588, apply:154, vote:0, ctr:2.24},
+    {d:'09-15', spend:4228485, install:520, apply:133, vote:0, ctr:2.37},
+    {d:'09-16', spend:4595075, install:554, apply:153, vote:0, ctr:2.91},
+    {d:'09-17', spend:3678653, install:357, apply:115, vote:0, ctr:2.16}
   ];
   var META_SIGNUP = [
     {name:'e스포츠 국가대표 평가전', rate:66.1, install:1264, signup:836},
-    {name:'매거진 9월 상시소재', rate:59.4, install:909, signup:540},
-    {name:'로열티프로그램', rate:58.0, install:479, signup:278},
-    {name:'부산 국제 영화제', rate:56.3, install:517, signup:291},
+    {name:'매거진 9월 상시소재', rate:60.4, install:1489, signup:899},
+    {name:'로열티프로그램', rate:59.7, install:739, signup:441},
+    {name:'위클리보물찾기', rate:57.2, install:2086, signup:1194},
+    {name:'부산 국제 영화제', rate:56.4, install:1047, signup:590},
     {name:'타짜시사회 티켓드롭', rate:56.3, install:915, signup:515},
-    {name:'위클리보물찾기', rate:55.5, install:961, signup:533},
     {name:'ATA페스티벌', rate:53.9, install:1015, signup:547},
-    {name:'티스퀘어 티켓드롭', rate:47.1, install:189, signup:89},
-    {name:'퐁피두 도슨트', rate:46.6, install:247, signup:115}
+    {name:'티스퀘어 티켓드롭', rate:51.2, install:293, signup:150},
+    {name:'퐁피두 도슨트', rate:47.3, install:450, signup:213}
   ];
   var META_BEST = [
-    {name:'[앱홍보_9월 상시] AOS_텍스트광고C', camp:'매거진 9월 상시소재', spend:433232, install:213, cpi:2034},
-    {name:'[앱홍보_9월] AOS 위클리 보물찾기 1안', camp:'위클리보물찾기', spend:1229781, install:519, cpi:2370},
-    {name:'[앱홍보_9월_AOS] 로열티프로그램_위클리완독챌린지 vol25(2안)', camp:'로열티프로그램', spend:112337, install:41, cpi:2740},
-    {name:'[앱홍보_9월] IOS 위클리 보물찾기 1안', camp:'위클리보물찾기', spend:1228364, install:442, cpi:2779},
-    {name:'[앱홍보_9월_AOS] 로열티프로그램_위클리완독챌린지 vol25(1안)', camp:'로열티프로그램', spend:173825, install:59, cpi:2946},
-    {name:'[앱홍보_9월_IOS] 로열티프로그램_위클리완독챌린지 Vol25(2안)', camp:'로열티프로그램', spend:104044, install:26, cpi:4002}
+    {name:'[앱홍보_9월 상시] AOS_텍스트광고C', camp:'매거진 9월 상시소재', spend:1205763, install:521, cpi:2314},
+    {name:'[앱홍보_9월] AOS 위클리 보물찾기 1안', camp:'위클리보물찾기', spend:3396180, install:1116, cpi:3043},
+    {name:'[앱홍보_9월_AOS] 로열티프로그램_위클리완독챌린지 vol25(1안)', camp:'로열티프로그램', spend:374283, install:114, cpi:3283},
+    {name:'[앱홍보_9월_AOS] 로열티프로그램_위클리완독챌린지 vol26', camp:'로열티프로그램', spend:106523, install:32, cpi:3329},
+    {name:'[앱홍보_9월_AOS] 로열티프로그램_위클리완독챌린지 vol25(2안)', camp:'로열티프로그램', spend:433620, install:120, cpi:3614},
+    {name:'[앱홍보_9월] IOS 위클리 보물찾기 1안', camp:'위클리보물찾기', spend:3394435, install:904, cpi:3755}
   ];
   var META_WORST = [
     {name:'[앱홍보_9월 상시] IOS_콘텐츠광고_일상블로그(Vol24)', camp:'매거진 9월 상시소재', spend:660955, install:15, cpi:44064},
-    {name:'[앱홍보_9월 상시] IOS_현빈(Vol25)', camp:'매거진 9월 상시소재', spend:418189, install:15, cpi:27879},
     {name:'[앱홍보_9월 상시] AOS_콘텐츠광고_일상블로그(Vol24)', camp:'매거진 9월 상시소재', spend:493102, install:23, cpi:21439},
+    {name:'[앱홍보_9월 상시] IOS_현빈(Vol25)', camp:'매거진 9월 상시소재', spend:1087582, install:51, cpi:21325},
     {name:'[앱홍보_8월 상시] IOS_귀칼(vol23)', camp:'매거진 9월 상시소재', spend:501368, install:24, cpi:20890},
-    {name:'[앱홍보_9월] IOS 티스퀘어 티켓드롭 1안', camp:'티스퀘어 티켓드롭', spend:1413579, install:78, cpi:18123},
+    {name:'[앱홍보_9월] IOS 티스퀘어 티켓드롭 1안', camp:'티스퀘어 티켓드롭', spend:2322723, install:122, cpi:19039},
     {name:'[앱홍보_8월_IOS] 로열티프로그램_위클리완독챌린지vol23', camp:'로열티프로그램', spend:289289, install:16, cpi:18081}
   ];
 
@@ -1176,12 +1188,17 @@
       {cat:'매체', text:'네이버GFA 설치 27→55건으로 배증, CPI 53,172원까지 추가 개선 — kakaomoment(부산국제영화제, 83,019원)보다 오히려 저렴해짐.'},
       {cat:'정정', text:'"매체설치" 컬럼이 이번 raw 파일부터 09/11 이후분도 채워져 15일 전체 검증 가능해짐 — 메타 자체 과다계상은 평균 14.5%(6.1~21.0% 사이 등락), "물량이 늘수록 커진다"는 지난 가설은 절반만 맞는 것으로 정정(8번 섹션).'}
     ]},
-    {d:'09-16(수)', status:'주의', title:'네이버GFA(부산국제영화제) 광고비 하루 만에 2배 증액', items:[
-      {cat:'예산', text:'busan_ticketdrop_navergfa 일 광고비가 545,064원(09/15)→1,047,787원(09/16)으로 하루 만에 거의 2배로 늘어남 — 노출도 165,301→293,598으로 동반 증가. 같은 세션의 GA4 크로스체크에서 09/17에 navergfa 발 웹 신규유입이 +29% 급증한 것과 시점이 겹친다(1일 지연 반영 가능성, 12번 섹션 참고).'}
+    {d:'09-16(수)', status:'주의', title:'네이버GFA(부산국제영화제) 광고비 하루 만에 2배 증액, 부산 CPI 재상승', items:[
+      {cat:'예산', text:'busan_ticketdrop_navergfa 일 광고비가 545,064원(09/15)→1,047,787원(09/16)으로 하루 만에 거의 2배로 늘어남 — 노출도 165,301→293,598으로 동반 증가. 같은 세션의 GA4 크로스체크에서 09/17에 navergfa 발 웹 신규유입이 +29% 급증한 것과 시점이 겹친다(1일 지연 반영 가능성).'},
+      {cat:'이슈', text:'부산 국제 영화제 계정 전체 CPI가 15,122원(09/15)→19,469원으로 다시 상승 — 09/13~09/15의 하락이 반전이 아니라 일시적 등락이었다는 첫 신호(6번 섹션에서 다음날 확정).'}
     ]},
-    {d:'09-17(목)', status:'전환점', title:'raw 데이터 이상 발견 — 09/13 이후 설치(AF_Install) 컬럼이 계정 전체에서 붕괴', items:[
-      {cat:'전환점', text:'네이버GFA(부산국제영화제) 광고비가 1,042,883원으로 전일 수준을 유지하며 계속 집행 — 같은 날 GA4 활성사용자 크로스체크에서 Web +233%·AOS +108%(관측 이래 최고치)의 재방문자 폭증이 확인됨. 카톡플친 발송 여부는 이날 데이터가 통째로 0으로 찍혀(아래 항목) 확인 불가 — 재활성화 발송이 원인이라는 가설은 이번 raw 파일로는 검증도 반박도 못 함.'},
-      {cat:'이슈', text:'이 raw 파일을 09/18에 다시 열어보니 09/13~09/17 전체 매체(인스타그램·UAC·카카오모먼트·네이버GFA·애드팝콘·카톡플친 등)의 설치(AF_Install)가 전부 0건으로 나옴 — 광고비는 하루 390만~490만원씩 정상 집행 중인데도 그렇다. 더 심각한 건 지난 판(09/16 raw)에 정상 기록돼 있던 09/13~09/15 설치 데이터까지 이번 판에서 사라졌다는 것 — 이 리포트의 신뢰 가능 구간을 09/01~09/12로 되돌리는 계기가 됨(마스트헤드 데이터 경고 참고). 대행사/데이터팀에 재정산 요청 필요.'}
+    {d:'09-17(목)', status:'전환점', title:'카톡플친 5차 발송 + GA4 활성사용자 역대 최고치, 부산·위클리보물찾기 동반 악화', items:[
+      {cat:'전환점', text:'카톡플친이 2,759,900원을 태워 설치 19건(09/14 발송 34건보다 적음)·응모 클릭 69건을 만듦 — 같은 시각 GA4 활성사용자 크로스체크에서 Web +233%·AOS +108%(관측 이래 최고치)의 재방문자 폭증이 확인됨. 설치 반응은 작은데 활성사용자가 폭증한 것 자체가 "카톡플친은 재방문 채널"이라는 설명과 정확히 들어맞아, 이 발송이 원인이라는 가설이 이번 raw 데이터로 확정됨(6번 섹션 새 콜아웃).'},
+      {cat:'이슈', text:'부산 국제 영화제 CPI가 22,010원으로 이 캠페인 전체 기간 최고치 경신 — "09/13 정점 후 반전"이라던 지난 판 결론이 완전히 뒤집힘(6번 섹션).'},
+      {cat:'이슈', text:'위클리보물찾기 CPI가 7,735원까지 뛰며 설치량도 246건→66건으로 급감 — 같은 날 신규 "2차" 소재를 투입(12번 섹션)했지만 첫날 반응은 아직 미약함.'}
+    ]},
+    {d:'09-18(금)', status:'양호', title:'raw 파일 재추출로 데이터 결측 해소', items:[
+      {cat:'정정', text:'전날 처음 받은 raw 파일에서 09/13~09/17 설치(AF_Install)가 계정 전체 0건으로 붕괴돼 있었으나, 재추출본에서 정상 복구됨(09/13~09/15 값은 지난 판과 정확히 일치) — 09/01~09/17 전 구간을 다시 정상 분석해 이번 판에 반영.'}
     ]}
   ];
   (function(){
@@ -1206,7 +1223,7 @@
   })();
 
   // ================= 12) 소재별 CTR 추이 (중단/증액/감액 판단용) =================
-  var ALL10 = ['09-01','09-02','09-03','09-04','09-05','09-06','09-07','09-08','09-09','09-10','09-11','09-12','09-13','09-14','09-15'];
+  var ALL10 = ['09-01','09-02','09-03','09-04','09-05','09-06','09-07','09-08','09-09','09-10','09-11','09-12','09-13','09-14','09-15','09-16','09-17'];
   var CTR_PANELS = [
     {camp:'ATA페스티벌', series:[
       {name:'1안', color:C.spend, data:[{d:'09-01',ctr:1.4,install:109},{d:'09-02',ctr:1.31,install:135},{d:'09-03',ctr:1.3,install:117},{d:'09-04',ctr:1.21,install:121},{d:'09-05',ctr:1.46,install:127},{d:'09-06',ctr:1.48,install:136},{d:'09-07',ctr:1.61,install:80},{d:'09-08',ctr:2.36,install:30}]},
@@ -1222,36 +1239,39 @@
     ], cap:'1안·2안 모두 CTR이 뚜렷하게 하락하며 소재 피로를 예고했고(1안 2.50%→1.22%, 2안 2.98%→1.93%), 실제로 다음날(09/11) 캠페인이 완전히 빠졌다 — CPI·CTR 두 지표가 같은 결론을 가리켰던 사례.'},
     {camp:'로열티프로그램', series:[
       {name:'vol24(9월)', color:C.spend, data:[{d:'09-03',ctr:1.64,install:37},{d:'09-04',ctr:2.12,install:47},{d:'09-05',ctr:1.59,install:33},{d:'09-06',ctr:1.64,install:55},{d:'09-07',ctr:1.66,install:25},{d:'09-08',ctr:1.91,install:26},{d:'09-09',ctr:1.8,install:33},{d:'09-10',ctr:1.74,install:16}]},
-      {name:'vol25(1안)', color:C.aos, data:[{d:'09-11',ctr:2.2,install:31},{d:'09-12',ctr:2.94,install:66},{d:'09-13',ctr:3.04,install:51},{d:'09-14',ctr:2.52,install:21},{d:'09-15',ctr:2.51,install:14}]},
-      {name:'vol25(2안)', color:C.ios, data:[{d:'09-11',ctr:2.12,install:20},{d:'09-12',ctr:2.07,install:47},{d:'09-13',ctr:1.81,install:25},{d:'09-14',ctr:1.67,install:24},{d:'09-15',ctr:2.28,install:20}]}
-    ], cap:'vol24는 09/10 종료. 그 자리를 채운 vol25는 두 안 다 vol24보다 CTR이 높아졌고(1안 최고 3.04%), 1안이 2안보다 대체로 우세 — 09/15엔 격차가 좁혀졌지만(2.51% vs 2.28%) 여전히 vol25(1안) 우세가 유지되는 흐름.'},
+      {name:'vol25(1안)', color:C.aos, data:[{d:'09-11',ctr:2.2,install:31},{d:'09-12',ctr:2.94,install:66},{d:'09-13',ctr:3.04,install:51},{d:'09-14',ctr:2.52,install:21},{d:'09-15',ctr:2.51,install:14},{d:'09-16',ctr:2.99,install:17},{d:'09-17',ctr:3.65,install:5}]},
+      {name:'vol25(2안)', color:C.ios, data:[{d:'09-11',ctr:2.12,install:20},{d:'09-12',ctr:2.07,install:47},{d:'09-13',ctr:1.81,install:25},{d:'09-14',ctr:1.67,install:24},{d:'09-15',ctr:2.28,install:20},{d:'09-16',ctr:2.88,install:23},{d:'09-17',ctr:2.85,install:7}]},
+      {name:'vol26(신규)', color:C.crit, data:[{d:'09-17',ctr:2.73,install:53}]}
+    ], cap:'vol24는 09/10 종료. vol25는 두 안 다 09/16~09/17 CTR이 오히려 더 올라(1안 3.65%까지) 소진 기미 없이 꾸준함. 09/17 투입된 신규 vol26이 첫날 install 53건으로 vol25 두 안 합친 것보다 더 큰 볼륨을 바로 만들어내 — 로열티프로그램은 이 리포트에서 유일하게 소재 순환이 계속 성공적인 캠페인.'},
     {camp:'매거진 9월 상시소재 (구 소재, 09/10 종료)', series:[
       {name:'텍스트광고B', color:C.spend, data:[{d:'09-01',ctr:2.05,install:35},{d:'09-02',ctr:1.84,install:37},{d:'09-03',ctr:1.57,install:34},{d:'09-04',ctr:1.57,install:31},{d:'09-05',ctr:1.54,install:36},{d:'09-06',ctr:2.13,install:54},{d:'09-07',ctr:1.91,install:36},{d:'09-08',ctr:1.69,install:30},{d:'09-09',ctr:2.13,install:37},{d:'09-10',ctr:2.78,install:8}]},
       {name:'귀칼(vol23)', color:C.ios, data:[{d:'09-01',ctr:1.49,install:6},{d:'09-02',ctr:1.25,install:8},{d:'09-03',ctr:1.9,install:3},{d:'09-04',ctr:1.68,install:1},{d:'09-05',ctr:1.13,install:1},{d:'09-06',ctr:1.89,install:13},{d:'09-07',ctr:1.58,install:7},{d:'09-08',ctr:1.48,install:8},{d:'09-09',ctr:1.59,install:7},{d:'09-10',ctr:2.71,install:4}]},
       {name:'일상블로그(콘텐츠형)', color:C.crit, data:[{d:'09-03',ctr:1.55,install:6},{d:'09-04',ctr:1.3,install:6},{d:'09-05',ctr:1.17,install:10},{d:'09-06',ctr:1.22,install:4},{d:'09-07',ctr:1.12,install:4},{d:'09-08',ctr:1.0,install:6},{d:'09-09',ctr:1.26,install:2},{d:'09-10',ctr:0.9,install:0}]}
     ], cap:'09/09~10을 기점으로 셋 다 소진되고 신규 소재로 교체됨(오른쪽 패널) — "일상블로그만 CTR이 계속 하락"했던 종전 결론은 데이터 종료로 그대로 확정.'},
     {camp:'매거진 9월 상시소재 (신 소재, 09/09~)', series:[
-      {name:'텍스트광고C', color:C.aos, data:[{d:'09-09',ctr:2.31,install:11},{d:'09-10',ctr:2.15,install:131},{d:'09-11',ctr:1.71,install:66},{d:'09-12',ctr:1.8,install:101},{d:'09-13',ctr:1.63,install:142},{d:'09-14',ctr:1.58,install:99},{d:'09-15',ctr:1.69,install:86}]},
-      {name:'현빈(Vol25)', color:C.warn, data:[{d:'09-10',ctr:1.81,install:23},{d:'09-11',ctr:2.61,install:25},{d:'09-12',ctr:2.72,install:15},{d:'09-13',ctr:2.64,install:19},{d:'09-14',ctr:1.75,install:24},{d:'09-15',ctr:1.9,install:15}]}
-    ], cap:'구 소재를 이어받은 두 신규 소재 — 텍스트광고C가 지금 계정 전체에서 가장 많은 설치를 만들어내는 소재로 등극(하루 최대 142건). CTR은 완만히 낮아지는 중이지만 볼륨이 워낙 커서(왼쪽 패널 대비 10배 이상) 아직 위험 신호는 아니다.'},
+      {name:'텍스트광고C', color:C.aos, data:[{d:'09-09',ctr:2.31,install:11},{d:'09-10',ctr:2.15,install:131},{d:'09-11',ctr:1.71,install:66},{d:'09-12',ctr:1.8,install:101},{d:'09-13',ctr:1.63,install:142},{d:'09-14',ctr:1.58,install:99},{d:'09-15',ctr:1.69,install:86},{d:'09-16',ctr:1.66,install:85},{d:'09-17',ctr:1.58,install:76}]},
+      {name:'현빈(Vol25)', color:C.warn, data:[{d:'09-10',ctr:1.81,install:23},{d:'09-11',ctr:2.61,install:25},{d:'09-12',ctr:2.72,install:15},{d:'09-13',ctr:2.64,install:19},{d:'09-14',ctr:1.75,install:24},{d:'09-15',ctr:1.9,install:15},{d:'09-16',ctr:2.61,install:16},{d:'09-17',ctr:3.0,install:10}]},
+      {name:'에미상+암살자들(Vol26, 신규)', color:C.crit, data:[{d:'09-17',ctr:3.03,install:8}]}
+    ], cap:'텍스트광고C는 install이 142건(09/13)→76건(09/17)으로 완만히 줄었지만 여전히 계정 최대 볼륨 소재. 현빈(Vol25)은 09/16·09/17 CTR이 오히려 반등(2.61%→3.0%) — 소진이 아니라 노출 볼륨이 줄면서 생긴 자연스런 등락으로 보인다. 09/17 투입된 에미상·암살자들(Vol26)은 아직 하루치라 추세 판단은 다음 갱신으로 미룬다.'},
     {camp:'티스퀘어 티켓드롭', series:[
-      {name:'1안', color:C.spend, data:[{d:'09-07',ctr:0.86,install:15},{d:'09-08',ctr:0.88,install:50},{d:'09-09',ctr:0.94,install:31},{d:'09-10',ctr:1.09,install:36},{d:'09-11',ctr:1.3,install:31},{d:'09-12',ctr:1.17,install:26},{d:'09-13',ctr:1.01,install:33},{d:'09-14',ctr:0.97,install:23},{d:'09-15',ctr:0.98,install:19}]}
-    ], cap:'09/07~09/11까지 CTR이 계속 상승(0.86%→1.30%)했지만, 09/12부터 하락해 09/13 이후로는 0.97~1.01%에서 3일째 안정화 — 정점을 찍고 꺾인 뒤 새 평형을 찾은 모양, 증액보다 관망이 맞다.'},
-    {camp:'부산 국제 영화제 [09/13 이후 데이터 없음]', series:[
+      {name:'1안', color:C.spend, data:[{d:'09-07',ctr:0.86,install:15},{d:'09-08',ctr:0.88,install:50},{d:'09-09',ctr:0.94,install:31},{d:'09-10',ctr:1.09,install:36},{d:'09-11',ctr:1.3,install:31},{d:'09-12',ctr:1.17,install:26},{d:'09-13',ctr:1.01,install:33},{d:'09-14',ctr:0.97,install:23},{d:'09-15',ctr:0.98,install:19},{d:'09-16',ctr:1.38,install:18},{d:'09-17',ctr:1.27,install:11}]}
+    ], cap:'09/07~09/11까지 CTR이 계속 상승(0.86%→1.30%)한 뒤 하락해 3일째 0.97~1.01%로 안정화됐다가, 09/16~09/17엔 오히려 1.27~1.38%로 다시 반등 — install은 계속 줄고 있어(33→11건) CTR 반등이 노출 축소에 따른 착시일 가능성이 있다, 볼륨 자체가 작아 증액보다 관망이 맞다.'},
+    {camp:'부산 국제 영화제', series:[
       {name:'1안', color:C.spend, data:[{d:'09-09',ctr:2.92,install:45},{d:'09-10',ctr:2.83,install:105}]},
-      {name:'2안', color:C.ios, data:[{d:'09-10',ctr:2.07,install:50},{d:'09-11',ctr:1.94,install:174},{d:'09-12',ctr:1.46,install:143}]}
-    ], cap:'09/12까지는 2안의 CTR이 3일 연속 하락 중(1.94%→1.46%) — 09/13 이후는 raw 데이터 경고(마스트헤드 참고)로 확인 불가. 지난 판이 봤던 "09/15 반전(1.59%)"은 이번 판에서 검증도 반박도 안 된다.'},
-    {camp:'퐁피두 도슨트 [09/13 이후 데이터 없음]', series:[
-      {name:'1안', color:C.spend, data:[{d:'09-10',ctr:2.08,install:92},{d:'09-11',ctr:2.36,install:89},{d:'09-12',ctr:2.17,install:66}]}
-    ], cap:'09/12까지는 정점(09/11, 2.36%) 이후 하루 하락(2.17%) — 5일 연속 하락·"경고 지속"이라던 지난 판 결론은 09/13~09/15 데이터에 기대고 있어 이번 판에서는 재확인이 안 된다(마스트헤드 데이터 경고 참고).'},
-    {camp:'위클리보물찾기 [09/13 이후 데이터 없음]', series:[
-      {name:'1안', color:C.spend, data:[{d:'09-10',ctr:6.99,install:143},{d:'09-11',ctr:5.86,install:458},{d:'09-12',ctr:5.06,install:360}]}
-    ], cap:'09/10 단 하루 6.99%로 리포트 전체 최고치를 찍은 뒤 09/12까지 이틀 연속 하락 중(5.86%→5.06%) — "89% 상승" 등 09/13 이후 흐름은 이번 판에서 확인 불가(마스트헤드 데이터 경고 참고), 09/12 기준으로만 보면 아직 초기 하락 단계.'},
+      {name:'2안', color:C.ios, data:[{d:'09-10',ctr:2.07,install:50},{d:'09-11',ctr:1.94,install:174},{d:'09-12',ctr:1.46,install:143},{d:'09-13',ctr:1.44,install:126},{d:'09-14',ctr:1.39,install:101},{d:'09-15',ctr:1.59,install:101},{d:'09-16',ctr:1.66,install:112},{d:'09-17',ctr:1.60,install:90}]}
+    ], cap:'2안 CTR은 09/14 저점(1.39%) 이후 09/16까지 완만히 반등(1.66%)했다가 09/17 다시 소폭 하락(1.60%) — CPI가 22,010원(6번 섹션)까지 치솟은 것과 달리 CTR은 크게 무너지지 않은 채 좁은 범위(1.4~1.7%)에서 등락 중이라, 문제는 소재 피로보다 입찰 경쟁·타겟 포화 쪽에 더 가까워 보인다.'},
+    {camp:'퐁피두 도슨트', series:[
+      {name:'1안', color:C.spend, data:[{d:'09-10',ctr:2.08,install:92},{d:'09-11',ctr:2.36,install:89},{d:'09-12',ctr:2.17,install:66},{d:'09-13',ctr:1.84,install:58},{d:'09-14',ctr:1.65,install:38},{d:'09-15',ctr:1.67,install:47},{d:'09-16',ctr:1.99,install:32},{d:'09-17',ctr:1.98,install:28}]}
+    ], cap:'09/11 정점(2.36%) 이후 09/14까지 계속 하락(1.65%)했다가 09/16부터 1.99%로 소폭 반등했지만, install은 92건(09/10)→28건(09/17)으로 꾸준히 줄어드는 중 — CTR 반등이 실질 개선이 아니라 볼륨 축소에 따른 통계적 효과일 가능성이 높다(6번 섹션 결론과 일치).'},
+    {camp:'위클리보물찾기', series:[
+      {name:'1안', color:C.spend, data:[{d:'09-10',ctr:6.99,install:143},{d:'09-11',ctr:5.86,install:458},{d:'09-12',ctr:5.06,install:360},{d:'09-13',ctr:4.19,install:341},{d:'09-14',ctr:3.95,install:258},{d:'09-15',ctr:4.22,install:214},{d:'09-16',ctr:4.89,install:246}]},
+      {name:'2차(신규, 09/17~)', color:C.crit, data:[{d:'09-17',ctr:3.56,install:66}]}
+    ], cap:'1안은 09/10 6.99%로 정점을 찍은 뒤 09/14까지 계속 하락(3.95%)했다가 09/15~09/16 소폭 반등(4.89%)했지만, 09/17 완전히 새 소재("2차")로 교체됐다 — 그런데 2차 첫날 CTR(3.56%)이 1안 마지막날(4.89%)보다 오히려 낮게 출발해, 아직 반등을 만들지 못하고 있다(6번 섹션).'},
     {camp:'리타겟팅 웨이브(위클리업데이트 23·24·25)', series:[
       {name:'23(9월 초)', color:C.spend, data:[{d:'09-01',ctr:1.25,install:4},{d:'09-02',ctr:1.38,install:0},{d:'09-03',ctr:1.18,install:1}]},
       {name:'24(9월 중)', color:C.ios, data:[{d:'09-03',ctr:1.16,install:1},{d:'09-04',ctr:1.21,install:3},{d:'09-05',ctr:1.64,install:1},{d:'09-06',ctr:1.6,install:1},{d:'09-07',ctr:1.6,install:0},{d:'09-08',ctr:1.35,install:0},{d:'09-09',ctr:1.63,install:3},{d:'09-10',ctr:1.28,install:0}]},
-      {name:'25(9월 말)', color:C.crit, data:[{d:'09-10',ctr:1.73,install:0},{d:'09-11',ctr:1.75,install:0},{d:'09-12',ctr:1.8,install:0},{d:'09-13',ctr:1.62,install:1},{d:'09-14',ctr:1.69,install:0},{d:'09-15',ctr:1.82,install:3}]}
-    ], cap:'리타겟팅이라 설치는 거의 없음(회차당 0~3건) — 25회차도 닷새 더 지켜봤지만 설치는 여전히 0~3건 수준, CTR만 1.5~1.9%에서 등락. 소재보다 그때그때 타겟 리스트 크기에 좌우되는 것으로 보인다는 기존 결론 유지.'},
+      {name:'25(9월 말)', color:C.crit, data:[{d:'09-10',ctr:1.73,install:0},{d:'09-11',ctr:1.75,install:0},{d:'09-12',ctr:1.8,install:0},{d:'09-13',ctr:1.71,install:1},{d:'09-14',ctr:1.65,install:0},{d:'09-15',ctr:1.82,install:3},{d:'09-16',ctr:1.34,install:3},{d:'09-17',ctr:1.49,install:2}]}
+    ], cap:'리타겟팅이라 설치는 거의 없음(회차당 0~3건) — 25회차가 17일째까지도 여전히 설치 0~3건, CTR만 1.3~1.8%에서 등락. 소재보다 그때그때 타겟 리스트 크기에 좌우되는 것으로 보인다는 기존 결론 유지.'},
   ];
   (function(){
     var grid = document.getElementById('ctrGrid');
