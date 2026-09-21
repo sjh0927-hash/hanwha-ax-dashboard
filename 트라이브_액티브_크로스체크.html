@@ -173,7 +173,7 @@
     </div>
     <div class="meta">
       <span>마지막 갱신</span>
-      <span class="updated">2026-09-18 · 09/01–09/17 확정 · 09/18 데이터 수집중(부분집계)</span>
+      <span class="updated">2026-09-21 · 09/01–09/20 확정 · 09/21 데이터 수집중(부분집계)</span>
     </div>
   </header>
 
@@ -269,6 +269,9 @@
     <div><b>2026-09-14 데이터 정정.</b> 09/10 신규유입 오차가 AOS +70%·iOS +112%로 비정상적으로 크게 나와 재검증한 결과, <b>GA4 쪽 09/10 수치가 처음 "확정"으로 기록했던 날(09/11 재조회 시점)에도 아직 집계가 다 안 끝난 상태였음</b>을 확인 — 그 다음날(09/14, 4일 경과) 다시 조회하니 GA4 09/10 값이 크게 늘어남(예: AOS 신규사용자 982→1,473, iOS 383→715). AppsFlyer 쪽은 raw 설치 로그와 집계 리포트가 완전히 일치해 정상 확인됨(Organic 제외 전 매체가 1건도 안 틀리게 일치) — 문제는 AppsFlyer가 아니라 GA4의 처리 지연이었음. "다음날 재조회하면 확정"이라는 기존 가정이 항상 안전하지는 않다는 반례로 기록.</div>
     <div><b>2026-09-15 추가 발견 — GA4 활성사용자(AU)는 신규사용자보다 훨씬 늦게, 더 크게 흔들림.</b> 09/01–09/14 전체를 다시 훑어본 결과 대부분 날짜는 오차 1% 미만으로 안정적이었지만, <b>Android 활성사용자만 유독 09/08(3,472→2,939, -15.4%)·09/13(3,757→3,019, -19.6%)에서 크게 하향 조정</b>됨 — 같은 날짜의 신규사용자는 각각 -6.4%·-6.3%로 정상 범위(±8%) 안이었음. 즉 신규사용자는 며칠 지나면 대체로 안정되는데, 활성사용자는 그보다 늦게(그리고 방향도 예측 불가하게, 이번엔 감소 쪽으로) 더 크게 재조정될 수 있다는 뜻 — 아마도 GA4의 사용자 식별자 중복제거(identity resolution)가 며칠에 걸쳐 뒤늦게 반영되기 때문으로 추정(미확인). 위 차트·표의 09/01–09/14 활성사용자 값은 이번에 전부 재조회한 최신값으로 갱신(신규사용자·AppsFlyer Installs는 재조회해도 거의 그대로였음 — 안정성 재확인). AppsFlyer daily_report 09/14 확정치는 API 일 1회 제한상 오늘 처음 확보(전일 부분집계 aos 44/ios 17 → 확정 aos 994/ios 435로 급증, 예상된 패턴).</div>
     <div><b>2026-09-18 재검증 — 앞선 09-15 발견의 후속: 한 번 안정돼 보인 값도 며칠 뒤 다시 흔들릴 수 있음.</b> 09/01–09/17 전체를 다시 조회한 결과 09/01–09/13은 오차 1% 미만으로 안정적이었으나, <b>09/14(4일 경과, 이미 한 번 재검증했던 날)에서 오히려 더 크게 재조정</b>됨 — AOS 활성사용자 4,026→3,692(-8.3%), iOS 신규사용자 413→477(+15.5%, 기존 "신규사용자는 ±8% 안에서 빨리 안정된다"는 가정을 깨는 첫 사례). 09/15(3일 경과)도 웹 신규사용자 +8.1%·iOS 활성사용자 +8.3%로 비슷한 폭의 재조정이 있었음. 09/16(2일 경과)은 오차 3%대로 정상 범위. 즉 재검증은 한 번으로 끝나지 않고 며칠 뒤 또 흔들릴 수 있다는 뜻 — 위 차트·표는 이번 재조회 최신값으로 전부 갱신.</div>
+    <div><b>2026-09-21 재검증 — Web 활성사용자, 이 크로스체크 사상 최대폭(-36%) 재조정.</b> 09/01–09/20 전체를 다시 조회한 결과 09/01–09/16은 오차 1% 미만으로 안정적이었으나, <b>09/17(T+4) Web 활성사용자가 5,946→3,807(-36.0%)로 크게 하향 조정</b>됨 — 같은 날 신규사용자(1,612)·AOS·iOS 활성사용자는 오차 1% 미만으로 정상이었음. 지금까지는 Android·iOS 활성사용자가 주로 흔들렸는데(09/08·09/13 사례) 이번엔 Web에서, 그것도 가장 큰 폭으로 나타나 — 재조정이 특정 플랫폼에 국한된 현상이 아니라는 뜻. 09/18(T+3)은 부분집계(294/131 등)에서 확정치로 정상적으로 급증.</div>
+    <div><b>주말(09/19 토·09/20 일) 신규유입 감소 — 확정 가능한 것과 추정만 가능한 것을 구분.</b> <u>확정(AppsFlyer Installs, 재검증해도 거의 안 흔들리는 지표):</u> 전주 동요일(09/12 토·09/13 일) 대비 AOS -29.9%(1,348→945)·-25.2%(1,248→934), iOS -46.5%(555→297)·-52.1%(499→239) — iOS 감소폭이 특히 큼. <u>추정(GA4, 최근일수록 나중에 크게 흔들릴 수 있음 — 바로 위 09/17 사례 참고):</u> 신규사용자는 Web -53.7%/-53.8%, iOS -51.7%/-46.3%로 크게 줄고 AOS는 -23.8%/-19.5%로 상대적으로 덜 줄었음. 반면 활성사용자(기존 이용자 포함)는 AOS가 오히려 +2.5%/+1.5%로 견조했고 Web -43.8%/-40.8%·iOS -25.6%/-28.3%만 감소 — 즉 이번 주말엔 신규 유입이 특히 꺾였고, AOS 기존 이용자 활동은 유지된 것으로 보이나 GA4 수치는 앞으로 조정될 수 있어 확정으로 보지 말 것.</div>
+    <div><b>미반영.</b> "유입경로 상세"(하단 섹션) 데이터는 이번 갱신에서 제외 — 09/01–09/17 기준 값 그대로임(권한 문제로 partners_report 재수집 못함). 다음 세션에서 재수집 필요.</div>
     <div><b>미해결.</b> AppsFlyer 대시보드의 진짜 활성사용자 대응 지표(Retention/Overview Unique Users)는 아직 API로 확인 못함 — 화면 확인 필요.</div>
     <div>PLUS 트라이브 · GA4 property 298197652 · AppsFlyer iOS id1631958069 / Android com.hanwha.lifeplus.tribes.app</div>
   </footer>
@@ -293,29 +296,35 @@
     {d:'09-13', web:{au:1895, new:1439}, aos:{au:3019,new:1242}, ios:{au:1666,new:514}}, // 2026-09-15 재검증: aos AU 3757→3019(-19.6%, 하단 각주)
     {d:'09-14', web:{au:2688, new:1391}, aos:{au:3692,new:1020}, ios:{au:2319,new:477}}, // 2026-09-18 재검증(T+4): aos AU 4026→3692(-8.3%), iOS new 413→477(+15.5%, 하단 각주)
     {d:'09-15', web:{au:1709, new:1108}, aos:{au:3127,new:992},  ios:{au:1768,new:400}}, // 2026-09-18 재검증(T+3): web new 1025→1108(+8.1%), iOS AU 1633→1768(+8.3%, 하단 각주)
-    {d:'09-16', web:{au:1785, new:1345}, aos:{au:3516,new:1090}, ios:{au:1751,new:430}}, // 2026-09-18 재검증(T+2): 오차 3%대, 정상 범위
-    {d:'09-17', web:{au:5946, new:1612}, aos:{au:7318,new:1329}, ios:{au:2777,new:413}},
-    {d:'09-18', web:{au:294,  new:131},  aos:{au:736, new:248},  ios:{au:197,  new:41}, partial:true}
+    {d:'09-16', web:{au:1785, new:1345}, aos:{au:3516,new:1090}, ios:{au:1756,new:431}}, // 2026-09-18 재검증(T+2): 오차 3%대, 정상 범위
+    {d:'09-17', web:{au:3807, new:1612}, aos:{au:7304,new:1330}, ios:{au:2788,new:416}}, // 2026-09-21 재검증(T+4): web AU 5,946→3,807(-36.0%, 이 크로스체크 사상 최대 재조정폭, 하단 각주). 신규사용자·AOS·iOS는 오차 1% 미만으로 안정적.
+    {d:'09-18', web:{au:1418, new:864},  aos:{au:3638,new:1069}, ios:{au:1366, new:273}}, // 2026-09-21 재검증(T+3): 전일 부분집계(294/131 등)에서 확정치로 급증, 예상된 패턴
+    {d:'09-19', web:{au:1495, new:851},  aos:{au:4026,new:1030}, ios:{au:1656, new:288}},
+    {d:'09-20', web:{au:1122, new:665},  aos:{au:3064,new:1001}, ios:{au:1197, new:276}},
+    {d:'09-21', web:{au:200,  new:130},  aos:{au:537, new:202},  ios:{au:198,  new:55}, partial:true}
   ];
   var AF = [
-    {d:'09-01', aos:{installs:1187, loyal:659},  ios:{installs:490, loyal:61}},
-    {d:'09-02', aos:{installs:970,  loyal:540},  ios:{installs:370, loyal:33}},
-    {d:'09-03', aos:{installs:1804, loyal:1265}, ios:{installs:625, loyal:131}},
-    {d:'09-04', aos:{installs:984,  loyal:514},  ios:{installs:355, loyal:36}},
-    {d:'09-05', aos:{installs:1290, loyal:694},  ios:{installs:388, loyal:32}},
-    {d:'09-06', aos:{installs:1274, loyal:634},  ios:{installs:359, loyal:34}},
-    {d:'09-07', aos:{installs:1296, loyal:684},  ios:{installs:675, loyal:100}},
-    {d:'09-08', aos:{installs:926,  loyal:460},  ios:{installs:481, loyal:62}},
-    {d:'09-09', aos:{installs:1060, loyal:574},  ios:{installs:381, loyal:37}},
-    {d:'09-10', aos:{installs:1670, loyal:993},  ios:{installs:812, loyal:37}},
-    {d:'09-11', aos:{installs:1233, loyal:722},  ios:{installs:598, loyal:31}},
-    {d:'09-12', aos:{installs:1348, loyal:768},  ios:{installs:555, loyal:18}},
-    {d:'09-13', aos:{installs:1248, loyal:651},  ios:{installs:499, loyal:8}},
-    {d:'09-14', aos:{installs:994,  loyal:474},  ios:{installs:435, loyal:4}},
-    {d:'09-15', aos:{installs:992,  loyal:481},  ios:{installs:400, loyal:7}},
-    {d:'09-16', aos:{installs:1056, loyal:511},  ios:{installs:393, loyal:4}},
-    {d:'09-17', aos:{installs:1280, loyal:677},  ios:{installs:384, loyal:3}},
-    {d:'09-18', aos:{installs:13,   loyal:7},    ios:{installs:10,  loyal:0}}
+    {d:'09-01', aos:{installs:1187, loyal:668},  ios:{installs:490, loyal:65}},
+    {d:'09-02', aos:{installs:970,  loyal:547},  ios:{installs:370, loyal:39}},
+    {d:'09-03', aos:{installs:1804, loyal:1278}, ios:{installs:625, loyal:164}},
+    {d:'09-04', aos:{installs:984,  loyal:528},  ios:{installs:355, loyal:40}},
+    {d:'09-05', aos:{installs:1290, loyal:703},  ios:{installs:388, loyal:40}},
+    {d:'09-06', aos:{installs:1274, loyal:649},  ios:{installs:359, loyal:43}},
+    {d:'09-07', aos:{installs:1296, loyal:702},  ios:{installs:675, loyal:119}},
+    {d:'09-08', aos:{installs:926,  loyal:471},  ios:{installs:481, loyal:72}},
+    {d:'09-09', aos:{installs:1060, loyal:586},  ios:{installs:381, loyal:50}},
+    {d:'09-10', aos:{installs:1670, loyal:1036}, ios:{installs:812, loyal:91}},
+    {d:'09-11', aos:{installs:1233, loyal:748},  ios:{installs:598, loyal:72}},
+    {d:'09-12', aos:{installs:1348, loyal:800},  ios:{installs:555, loyal:56}},
+    {d:'09-13', aos:{installs:1248, loyal:683},  ios:{installs:499, loyal:31}},
+    {d:'09-14', aos:{installs:1016, loyal:532},  ios:{installs:442, loyal:27}},
+    {d:'09-15', aos:{installs:1019, loyal:531},  ios:{installs:417, loyal:25}},
+    {d:'09-16', aos:{installs:1056, loyal:545},  ios:{installs:393, loyal:18}},
+    {d:'09-17', aos:{installs:1280, loyal:710},  ios:{installs:384, loyal:20}},
+    {d:'09-18', aos:{installs:967,  loyal:490},  ios:{installs:246, loyal:8}},
+    {d:'09-19', aos:{installs:945,  loyal:475},  ios:{installs:297, loyal:3}},
+    {d:'09-20', aos:{installs:934,  loyal:400},  ios:{installs:239, loyal:1}},
+    {d:'09-21'}
   ];
 
   var css = getComputedStyle(document.documentElement);
