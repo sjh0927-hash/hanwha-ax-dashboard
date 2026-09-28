@@ -173,7 +173,7 @@
     </div>
     <div class="meta">
       <span>마지막 갱신</span>
-      <span class="updated">2026-09-23 · 09/01–09/22 확정 · 09/23 데이터 수집중(부분집계)</span>
+      <span class="updated">2026-09-29 · 09/01–09/28 확정 · 09/29 데이터 수집중(부분집계)</span>
     </div>
   </header>
 
@@ -217,7 +217,7 @@
   <section class="panel">
     <div class="panel-head">
       <h2>유입경로 상세 — Web(GA4) vs OS별(AppsFlyer)</h2>
-      <div class="desc">09/01–09/22 누적(전일까지), 매일 갱신. Web은 GA4 firstUserSource 기준 신규사용자, AOS·iOS는 AppsFlyer Installs 기준 — 계측기가 서로 달라서 비중을 그대로 더하거나 맞비교하면 안 됨(플랫폼별로 각자 보는 용도).</div>
+      <div class="desc">09/01–09/28 누적(전일까지), 매일 갱신. Web은 GA4 firstUserSource 기준 신규사용자, AOS·iOS는 AppsFlyer Installs 기준 — 계측기가 서로 달라서 비중을 그대로 더하거나 맞비교하면 안 됨(플랫폼별로 각자 보는 용도).</div>
     </div>
     <div class="mini-chart-title" style="margin-top:8px;"><span class="sw" style="background:var(--series-web)"></span>Web (GA4 · 신규사용자)</div>
     <div id="barsWeb" class="hbar-panel"></div>
@@ -238,7 +238,7 @@
       <span>※ GA4는 앱(iOS·AOS) 유입경로 귀속이 구조적으로 거의 불가(iOS 100%·AOS 81%가 (direct)/(not set)) — OS별 유입경로는 AppsFlyer가 신뢰 가능한 쪽.</span>
     </div>
     <div class="status-legend">
-      <span>※ navergfa(네이버 GFA) 웹 신규유입은 09/17 하루 급증(1,337→1,725, +29%) 이후 6일째 1,728 그대로 — 일회성 스파이크로 최종 확인, 추가 추적 불필요.</span>
+      <span>※ napreward(리워드 매체)는 09/28 하루에 14,839명 — 송편찾기 이벤트(E_find_Songpyeon_2609) 유입. hanwhafireworks.com(53,553)·navergfa(1,728)는 각각 09/17 이후 사실상 증가 없음(종료된 유입원).</span>
     </div>
 
     <div class="mini-chart-title" style="margin-top:22px;">애드셋별 신규설치 — Android+iOS 합산 (AppsFlyer, 설치 기준)</div>
@@ -257,28 +257,19 @@
       <span>※ "구글애즈 UAC(2604_install_0416)"는 Android 전용 — Google UAC가 자동 생성하는 코드일 뿐 실제 애드셋명이 아님. Facebook Ads 항목만 실제 소재·캠페인명이 그대로 노출됨.</span>
     </div>
     <div class="status-legend">
-      <span>※ E스포츠대회티켓·ATA페스티벌 티겟드롭·타짜시사회_티켓드롭은 이벤트 종료 확인(2026-09-17, 담당자 확인) — 09/16부터 신규설치 0건인 건 트래킹 문제가 아니라 정상 종료 신호. 앞으로 순위가 하락해도 이례적 현상 아님.</span>
+      <span>※ 종료된 애드셋: E스포츠대회티켓·ATA페스티벌 티겟드롭·타짜시사회_티켓드롭(2026-09-17 담당자 확인). 위클리 보물찾기(1차)·퐁피두 도슨트 티켓드롭도 09/22 이후 설치 0~1건으로 멈춰 사실상 종료로 보임(담당자 미확인). 이들이 순위 상단에 있는 건 과거 누적치 때문이지 지금의 유입력이 아님.</span>
     </div>
     <div class="status-legend">
-      <span>※ 종료 애드셋이 멈춰있는 사이, 계속 운영 중인 "부국제 티켓드롭"이 09/17 기준 누적 설치에서 종료된 ATA페스티벌·타짜시사회를 추월(순위 5위로 상승) — 두 종료 이벤트가 여전히 순위표 상단에 있는 건 과거 누적치 때문이지 현재 유입력이 아님에 유의.</span>
+      <span>※ 계속 성장 중: [앱홍보_6월 상시] 텍스트광고가 09/22 이후 1,761→2,652건(+51%)으로 2위, 09/23 시작한 자라섬재즈페스티벌이 6일 만에 559건으로 10위 진입. 퐁피두 도슨트는 기타로 밀려남. "Songpyeon_napreward"(535건, 09/28)는 기타에 포함.</span>
     </div>
   </section>
 
   <footer>
-    <div><b>읽는 법.</b> GA4 활성사용자엔 웹 스트림이 섞여 있어 AppsFlyer 전체 활성사용자와 직접 비교할 수 없음 — 비교 가능한 지점은 "신규 유입"(AF Installs ↔ GA4 신규사용자)뿐.</div>
-    <div><b>2026-09-14 데이터 정정.</b> 09/10 신규유입 오차가 AOS +70%·iOS +112%로 비정상적으로 크게 나와 재검증한 결과, <b>GA4 쪽 09/10 수치가 처음 "확정"으로 기록했던 날(09/11 재조회 시점)에도 아직 집계가 다 안 끝난 상태였음</b>을 확인 — 그 다음날(09/14, 4일 경과) 다시 조회하니 GA4 09/10 값이 크게 늘어남(예: AOS 신규사용자 982→1,473, iOS 383→715). AppsFlyer 쪽은 raw 설치 로그와 집계 리포트가 완전히 일치해 정상 확인됨(Organic 제외 전 매체가 1건도 안 틀리게 일치) — 문제는 AppsFlyer가 아니라 GA4의 처리 지연이었음. "다음날 재조회하면 확정"이라는 기존 가정이 항상 안전하지는 않다는 반례로 기록.</div>
-    <div><b>2026-09-15 추가 발견 — GA4 활성사용자(AU)는 신규사용자보다 훨씬 늦게, 더 크게 흔들림.</b> 09/01–09/14 전체를 다시 훑어본 결과 대부분 날짜는 오차 1% 미만으로 안정적이었지만, <b>Android 활성사용자만 유독 09/08(3,472→2,939, -15.4%)·09/13(3,757→3,019, -19.6%)에서 크게 하향 조정</b>됨 — 같은 날짜의 신규사용자는 각각 -6.4%·-6.3%로 정상 범위(±8%) 안이었음. 즉 신규사용자는 며칠 지나면 대체로 안정되는데, 활성사용자는 그보다 늦게(그리고 방향도 예측 불가하게, 이번엔 감소 쪽으로) 더 크게 재조정될 수 있다는 뜻 — 아마도 GA4의 사용자 식별자 중복제거(identity resolution)가 며칠에 걸쳐 뒤늦게 반영되기 때문으로 추정(미확인). 위 차트·표의 09/01–09/14 활성사용자 값은 이번에 전부 재조회한 최신값으로 갱신(신규사용자·AppsFlyer Installs는 재조회해도 거의 그대로였음 — 안정성 재확인). AppsFlyer daily_report 09/14 확정치는 API 일 1회 제한상 오늘 처음 확보(전일 부분집계 aos 44/ios 17 → 확정 aos 994/ios 435로 급증, 예상된 패턴).</div>
-    <div><b>2026-09-18 재검증 — 앞선 09-15 발견의 후속: 한 번 안정돼 보인 값도 며칠 뒤 다시 흔들릴 수 있음.</b> 09/01–09/17 전체를 다시 조회한 결과 09/01–09/13은 오차 1% 미만으로 안정적이었으나, <b>09/14(4일 경과, 이미 한 번 재검증했던 날)에서 오히려 더 크게 재조정</b>됨 — AOS 활성사용자 4,026→3,692(-8.3%), iOS 신규사용자 413→477(+15.5%, 기존 "신규사용자는 ±8% 안에서 빨리 안정된다"는 가정을 깨는 첫 사례). 09/15(3일 경과)도 웹 신규사용자 +8.1%·iOS 활성사용자 +8.3%로 비슷한 폭의 재조정이 있었음. 09/16(2일 경과)은 오차 3%대로 정상 범위. 즉 재검증은 한 번으로 끝나지 않고 며칠 뒤 또 흔들릴 수 있다는 뜻 — 위 차트·표는 이번 재조회 최신값으로 전부 갱신.</div>
-    <div><b>2026-09-21 재검증 — Web 활성사용자, 이 크로스체크 사상 최대폭(-36%) 재조정.</b> 09/01–09/20 전체를 다시 조회한 결과 09/01–09/16은 오차 1% 미만으로 안정적이었으나, <b>09/17(T+4) Web 활성사용자가 5,946→3,807(-36.0%)로 크게 하향 조정</b>됨 — 같은 날 신규사용자(1,612)·AOS·iOS 활성사용자는 오차 1% 미만으로 정상이었음. 지금까지는 Android·iOS 활성사용자가 주로 흔들렸는데(09/08·09/13 사례) 이번엔 Web에서, 그것도 가장 큰 폭으로 나타나 — 재조정이 특정 플랫폼에 국한된 현상이 아니라는 뜻. 09/18(T+3)은 부분집계(294/131 등)에서 확정치로 정상적으로 급증.</div>
-    <div><b>주말(09/19 토·09/20 일) 신규유입 감소 — 확정 가능한 것과 추정만 가능한 것을 구분.</b> <u>확정(AppsFlyer Installs, 재검증해도 거의 안 흔들리는 지표):</u> 전주 동요일(09/12 토·09/13 일) 대비 AOS -29.9%(1,348→945)·-25.2%(1,248→934), iOS -46.5%(555→297)·-52.1%(499→239) — iOS 감소폭이 특히 큼. <u>추정(GA4, 최근일수록 나중에 크게 흔들릴 수 있음 — 바로 위 09/17 사례 참고):</u> 신규사용자는 Web -53.7%/-53.8%, iOS -51.7%/-46.3%로 크게 줄고 AOS는 -23.8%/-19.5%로 상대적으로 덜 줄었음. 반면 활성사용자(기존 이용자 포함)는 AOS가 오히려 +2.5%/+1.5%로 견조했고 Web -43.8%/-40.8%·iOS -25.6%/-28.3%만 감소 — 즉 이번 주말엔 신규 유입이 특히 꺾였고, AOS 기존 이용자 활동은 유지된 것으로 보이나 GA4 수치는 앞으로 조정될 수 있어 확정으로 보지 말 것.</div>
-    <div><b>09/18(금)~09/20(일) 3일 주요 이슈 정리.</b> 하락은 주말이 아니라 <b>금요일부터 이미 시작</b>됨 — 확정(AppsFlyer Installs) 기준 전주 동요일 대비: 금(09/18↔09/11) AOS -21.6%(1,233→967)·iOS -58.9%(598→246, 3일 중 최대 감소폭), 토(09/19↔09/12) AOS -29.9%·iOS -46.5%, 일(09/20↔09/13) AOS -25.2%·iOS -52.1%. <u>공통 패턴 ①</u> iOS가 3일 내내 AOS보다 감소폭이 훨씬 큼(금-58.9%/토-46.5%/일-52.1%) — 애드셋별 breakdown을 이번엔 재수집 못해(하단 미반영 참고) 특정 매체 문제인지는 다음 갱신에서 확인 필요. <u>공통 패턴 ②</u> AOS 활성사용자(기존 이용자)는 3일 내내 견조(금+8.6%, 토+2.5%, 일+1.5%, GA4 추정치) — 신규유입만 꺾였고 기존 이용자 이탈 징후는 아직 안 보임. Web·iOS 활성사용자는 3일 다 감소(GA4 추정치라 추후 조정 가능, 금 web -51.7%·ios -38.2%). <u>배경 참고(확정 사실)</u>: E스포츠대회티켓·ATA페스티벌 티겟드롭·타짜시사회_티켓드롭 3개 애드셋이 09/16부터 신규설치 0건(이벤트 종료, 2026-09-17 담당자 확인) — 금토일 하락의 일부는 이 구조적 종료 때문일 수 있으나, 나머지 매체(구글애즈 UAC·부국제 티켓드롭 등)의 금토일 개별 추이는 이번엔 확인 못함.</div>
-    <div><b>2026-09-22 재검증 — 09/20(T+2) Web 활성사용자만 하향 조정, 나머지는 안정.</b> 09/01–09/21 전체를 다시 조회한 결과 09/01–09/19는 전부 오차 1% 미만으로 안정적이었고 09/17(T+5)의 -36% 재조정치도 그대로 유지됨(재확인 완료) — <b>09/20 Web 활성사용자만 1,122→982(-12.5%)로 하향</b>됐고 같은 날 신규사용자(665)·AOS·iOS 활성사용자는 오차 1% 미만으로 정상. 09/21(T+1)이 신규로 확정 전환(부분집계 200/537/198 → 확정 3,160/4,254/1,944, 각각 15.8배·7.9배·9.8배) — 부분집계 대비 큰 폭 급증은 예상된 패턴.</div>
-    <div><b>2026-09-22 유입경로 상세 갱신 — 지난 두 번의 갱신을 건너뛴 권한 문제 해결, 09/01–09/21로 확장.</b> 09/17 하루 급증했던 navergfa 웹 신규유입(1,337→1,725, +29%)은 이후 4일간 거의 늘지 않아(누적 1,728, +3건) <b>일회성 스파이크로 확인</b> — 지난 갱신 각주에서 남겨둔 "지속 여부 확인 필요"에 대한 답. 반면 구글애즈 UAC(Android)는 4일 새 7,421→9,325(+25.7%)로 계속 성장 중이라 AOS 신규유입 1위 자리를 더 벌림. iOS 신규유입 상위권에 Apple Search Ads가 처음 눈에 띄는 규모(84건, 0.9%)로 잡힘 — 이전엔 기타에 묻혀있었을 가능성, 절대 규모는 아직 작음.</div>
-    <div><b>애드셋별 재수집 — 종료 애드셋 3개 값 완전동결 재확인, 상시 소재가 종료 이벤트를 추월.</b> E스포츠대회티켓(623/655)·ATA페스티벌 티겟드롭(526/472)·타짜시사회_티켓드롭(477/405) 3개 모두 지난 갱신과 설치수가 한 자리도 다르지 않아 종료 확인이 재검증됨. 그 사이 상시 운영 중인 [앱홍보_6월 상시] 텍스트광고가 802/418→1,081/546(+35%/+31%)로 계속 늘며 순위 4위→3위로 올라 종료된 E스포츠대회티켓을 추월. [앱홍보_8월] 로열티프로그램_위클리완독챌린지도 487/275→611/327(+25%/+19%)로 8월 캠페인 중 유일하게 계속 성장 중(같은 8월 소재인 ATA·타짜시사회는 동결). 신규로 [앱홍보_9월] 위클리 보물찾기 2차(271/179, 누적 10위)가 처음 상위권에 등장 — 기존 "위클리 보물찾기" 1차(1,126/909→1,129/911, 사실상 정체)의 후속 웨이브로 추정.</div>
-    <div><b>2026-09-23 재검증 — 09/21(T+2) Web 활성사용자 소폭 하향, 나머지는 안정.</b> 09/01–09/22 전체를 다시 조회한 결과 09/01–09/19는 전부 오차 1% 미만으로 안정적이었고 09/17의 -36% 재조정치도 그대로 유지됨(재확인 완료) — <b>09/21 Web 활성사용자만 3,160→3,011(-4.7%)로 소폭 하향</b>됐고 같은 날 신규사용자(1,556)·AOS·iOS 활성사용자는 오차 1% 미만으로 정상. 09/22(T+1)이 부분집계(86/370/72 등)에서 확정치(2,424/3,258/1,385)로 전환됐고, 09/23을 새 partial 행으로 추가.</div>
-    <div><b>새로운 발견 — AppsFlyer Installs도 재조정될 수 있음(기존 "확정되면 안 변한다"는 가정을 처음으로 깬 사례).</b> 지금까지 이 대시보드는 "AppsFlyer Installs는 그날 확정되면 값이 고정되고, Loyal Users만 후행 지표라 계속 올라간다"고 가정해왔음(2026-09-10 발견) — 그런데 이번에 09/21 Installs를 재조회하니 AOS 934→986(+5.6%)·iOS 274→291(+6.2%)로 상향 조정됨. Loyal Users만큼 크게 흔들리진 않지만(수% 대), Installs도 완전히 고정된 지표는 아니라는 뜻 — 다음 갱신부터는 확정 직후 1~2일치 Installs도 가벼운 재검증 대상으로 취급할 것.</div>
-    <div><b>2026-09-23 유입경로·애드셋 갱신 — 09/01–09/22로 확장.</b> hanwhafireworks.com은 5일 연속 0증가(53,552 그대로) — 완전 정체가 굳어짐. 반면 카카오모먼트는 하루 만에 10,281→11,595(+1,314, +12.8%)로 계속 성장 중이라 direct(14,290)를 곧 추월할 기세. 애드셋 쪽은 위클리 보물찾기 1차(1,129/911)·퐁피두 도슨트(314/226)가 하루 동안 완전히 동결(설치 0증가) — 종료가 확인된 3개 이벤트(E스포츠·ATA·타짜시사회)와 같은 패턴이라 이 둘도 사실상 종료됐을 가능성. 반대로 텍스트광고(1,081→1,182/546→579)·로열티프로그램(611→633/327→338)·위클리 보물찾기 2차(271→308/179→199)는 계속 성장 중.</div>
-    <div><b>미해결.</b> AppsFlyer 대시보드의 진짜 활성사용자 대응 지표(Retention/Overview Unique Users)는 아직 API로 확인 못함 — 화면 확인 필요.</div>
+    <div><b>읽는 법.</b> GA4 활성사용자엔 웹 스트림이 섞여 있어 AppsFlyer 전체 활성사용자와 직접 비교할 수 없음 — 비교 가능한 지점은 "신규 유입"(AF Installs ↔ GA4 신규사용자)뿐. 9월(09/01–09/28) 합계 기준 두 계측기 차이는 AOS +0.1%·iOS +1.3%로 신규 설치 트래킹은 건강함.</div>
+    <div><b>2026-09-29 갱신 — 09/01–09/28 확정, 09/29 진행중.</b> 09/01–09/21은 재조회해도 오차 1% 미만으로 그대로. 09/22만 Web 활성사용자 -3.2%(2,424→2,346), AppsFlyer Installs AOS +2.9%(822→846)·iOS +1.9%(259→264) 소폭 조정. 09/23 부분집계를 확정치로 바꾸고 09/24–09/28을 새로 채움.</div>
+    <div><b>이번 주 주요 이슈 3가지.</b> ① <u>09/26 구글 UAC 공백</u> — Android 구글 UAC 설치가 하루 24건(평소 ~480건)으로 급감했다가 09/27 1,178건으로 회복. 같은 날 GA4 AOS 신규도 550명(전후일 1,100~1,700명)으로 같이 빠져 집계 지연이 아니라 실제 송출 공백으로 판단 — 대행사 확인 필요. ② <u>09/24(수) 급증</u> — AOS 설치 1,637건, 이 중 Organic 475건. 09/03·09/10·09/17에 이어 수요일마다 Organic이 튀는 패턴이 4주째 반복(원인 미확인). ③ <u>09/28 Web 급증</u> — Web 신규 17,066명 중 14,839명이 리워드 매체 napreward의 송편찾기 캠페인(E_find_Songpyeon_2609). 같은 날 AppsFlyer에 애드셋 "Songpyeon_napreward"로 설치 535건(Android 512)이 잡혀, 웹 리워드 유입이 실제 앱 설치로 이어진 첫 사례 — 며칠 뒤 재방문 여부를 봐야 품질을 판단할 수 있음.</div>
+    <div><b>재조정 규칙(지금까지 쌓인 관찰 요약).</b> GA4 값은 T+1에 크게 늘고(부분집계→확정), 이후 T+4까지도 흔들릴 수 있음 — 가장 큰 사례는 09/17 Web 활성사용자 -36%(T+4), 09/14 iOS 신규 +15.5%(T+4). 활성사용자가 신규사용자보다 늦고 크게 흔들림. AppsFlyer Installs도 확정 직후 1–2일은 수% 상향될 수 있음(09/21 +5.6%, 09/22 +2.9%). 그래서 매 갱신마다 전체 기간을 다시 조회해서 덮어씀. 날짜별 상세 이력은 이 파일의 git 기록에 남아 있음.</div>
+    <div><b>미해결.</b> AppsFlyer 광고비(Cost) 연동은 여전히 N/A라 설치 1건당 비용은 못 봄. AppsFlyer 대시보드의 진짜 활성사용자 대응 지표(Retention/Overview Unique Users)도 아직 API로 확인 못함 — 화면 확인 필요.</div>
     <div>PLUS 트라이브 · GA4 property 298197652 · AppsFlyer iOS id1631958069 / Android com.hanwha.lifeplus.tribes.app</div>
   </footer>
 </div>
@@ -308,8 +299,14 @@
     {d:'09-19', web:{au:1495, new:851},  aos:{au:4029,new:1030}, ios:{au:1662, new:288}},
     {d:'09-20', web:{au:982,  new:665},  aos:{au:3047,new:1000}, ios:{au:1202, new:278}}, // 2026-09-22 재검증(T+2): web AU 1,122→982(-12.5%, 하단 각주). 신규사용자·AOS·iOS는 오차 1% 미만.
     {d:'09-21', web:{au:3011, new:1556}, aos:{au:4232,new:1006}, ios:{au:1934, new:297}}, // 2026-09-23 재검증(T+2): web AU 3,160→3,011(-4.7%), 나머지는 오차 1% 미만으로 안정적(하단 각주)
-    {d:'09-22', web:{au:2424, new:1840}, aos:{au:3258,new:938},  ios:{au:1385, new:275}}, // 부분집계(86/48 등)→확정치로 전환, 예상된 패턴
-    {d:'09-23', web:{au:175,  new:114},  aos:{au:497,  new:145}, ios:{au:136,  new:27},  partial:true}
+    {d:'09-22', web:{au:2346, new:1840}, aos:{au:3245,new:940}, ios:{au:1397, new:275}}, // 2026-09-29 재검증(T+7): web AU 2,424→2,346(-3.2%), 나머지 오차 1% 미만
+    {d:'09-23', web:{au:2758, new:2253}, aos:{au:3236,new:908}, ios:{au:1561, new:366}}, // 부분집계(175/497/136)→확정치로 전환, 예상된 패턴
+    {d:'09-24', web:{au:7965, new:4687}, aos:{au:8700,new:1629}, ios:{au:3623, new:562}},
+    {d:'09-25', web:{au:2660, new:1820}, aos:{au:4030,new:1132}, ios:{au:1744, new:389}},
+    {d:'09-26', web:{au:3154, new:1496}, aos:{au:3898,new:550}, ios:{au:1985, new:359}}, // AOS 신규 550 — 같은 날 구글 UAC 설치 24건(평소 ~480)으로 급감, 하단 각주
+    {d:'09-27', web:{au:2476, new:1576}, aos:{au:4778,new:1716}, ios:{au:1860, new:448}},
+    {d:'09-28', web:{au:36341, new:17066}, aos:{au:6712,new:1993}, ios:{au:2680, new:425}}, // web 급증 — napreward 송편찾기(E_find_Songpyeon_2609) 웹 신규 14,839, 하단 각주
+    {d:'09-29', web:{au:18284, new:9951}, aos:{au:1011, new:417}, ios:{au:187,  new:56},  partial:true}
   ];
   var AF = [
     {d:'09-01', aos:{installs:1187, loyal:669},  ios:{installs:490, loyal:65}},
@@ -333,8 +330,14 @@
     {d:'09-19', aos:{installs:945,  loyal:488},  ios:{installs:297, loyal:11}},
     {d:'09-20', aos:{installs:938,  loyal:421},  ios:{installs:242, loyal:6}},
     {d:'09-21', aos:{installs:986,  loyal:477},  ios:{installs:291, loyal:3}}, // 2026-09-23 재조회: 전일 934/274→986/291로 상향(+5.6%/+6.2%) — Installs도 재조정될 수 있음, 하단 각주 신규 발견
-    {d:'09-22', aos:{installs:822,  loyal:377},  ios:{installs:259, loyal:0}},
-    {d:'09-23'}
+    {d:'09-22', aos:{installs:846, loyal:426}, ios:{installs:264, loyal:16}}, // 2026-09-29 재조회: 822/259→846/264(+2.9%/+1.9%)
+    {d:'09-23', aos:{installs:914, loyal:473}, ios:{installs:400, loyal:19}},
+    {d:'09-24', aos:{installs:1637, loyal:890}, ios:{installs:555, loyal:32}},
+    {d:'09-25', aos:{installs:825, loyal:432}, ios:{installs:347, loyal:16}},
+    {d:'09-26', aos:{installs:533, loyal:300}, ios:{installs:370, loyal:9}}, // 구글 UAC 24건으로 급감한 날
+    {d:'09-27', aos:{installs:1845, loyal:931}, ios:{installs:483, loyal:13}},
+    {d:'09-28', aos:{installs:1769, loyal:723}, ios:{installs:374, loyal:3}},
+    {d:'09-29'}
   ];
 
   var css = getComputedStyle(document.documentElement);
@@ -385,9 +388,11 @@
   // ================= Chart 1: GA4 daily active users (누적 영역, 3개 스트림 + 전체) =================
   (function(){
     var svg = document.getElementById('chartAU');
-    var W=1000,H=300, ML=44,MR=16,MT=16,MB=30;
-    var plotW=W-ML-MR, plotH=H-MT-MB;
     var n = GA4.length;
+    // 날짜가 늘어나면 라벨이 겹치지 않게 폭을 늘리고 가로 스크롤로 봄
+    var W=Math.max(1000, n*40+60),H=300, ML=44,MR=16,MT=16,MB=30;
+    svg.setAttribute("width", W); svg.setAttribute("viewBox", "0 0 "+W+" "+H);
+    var plotW=W-ML-MR, plotH=H-MT-MB;
 
     // 누적 스택: Android(바닥) → iOS → Web(맨 위, 전체 볼륨 기여도가 가장 커서 위로 배치) — web1(맨 위 경계)이 곧 3개 합계(전체)
     var stacks = GA4.map(function(r){
@@ -531,9 +536,11 @@
       var ga = GA4[i][platform].new;
       return {d:row.d, ga:ga, af: af? af.installs : null, partial: !!GA4[i].partial};
     });
-    var W=1000,H=190, ML=44,MR=16,MT=26,MB=40;
-    var plotW=W-ML-MR, plotH=H-MT-MB;
     var n=rows.length;
+    // 막대 위 숫자·아래 % 라벨이 겹치지 않게 날짜 수에 맞춰 폭을 늘리고 가로 스크롤로 봄
+    var W=Math.max(1000, n*60+60),H=190, ML=44,MR=16,MT=26,MB=40;
+    svg.setAttribute("width", W); svg.setAttribute("viewBox", "0 0 "+W+" "+H);
+    var plotW=W-ML-MR, plotH=H-MT-MB;
     var maxV = Math.max.apply(null, rows.map(function(r){return Math.max(r.ga, r.af||0);}));
     var niceMax = Math.ceil(maxV/Math.pow(10,String(Math.round(maxV)).length-1))*Math.pow(10,String(Math.round(maxV)).length-1);
     var groupW = plotW/n, barW = groupW*0.30, gap = groupW*0.06;
@@ -579,51 +586,53 @@
     '<span class="item">막대 아래 %는 둘의 차이 — <span style="color:'+COLORS.good+'">±8%↓ 양호</span> · <span style="color:'+COLORS.warn+'">±8~15% 주의</span> · <span style="color:'+COLORS.crit+'">15%↑ 이상</span></span>'+
     '<span class="item">날짜 옆 • = 당일 진행중(부분 집계)</span>';
 
-  // ================= 유입경로 상세 (09/01-09/21 누적, 매일 갱신) =================
+  // ================= 유입경로 상세 (09/01-09/28 누적, 매일 갱신) =================
   // Web: GA4 firstUserSource 기준 신규사용자 (nice.checkplus.co.kr 제외, 기존 방법론)
   var WEB_SOURCES = [
-    {label:'hanwhafireworks.com', value:53552},
-    {label:'(direct)', value:14290},
-    {label:'카카오모먼트', value:11595},
-    {label:'카카오푸시', value:3032},
+    {label:'hanwhafireworks.com', value:53553},
+    {label:'(direct)', value:17943},
+    {label:'카카오모먼트', value:17590},
+    {label:'napreward(리워드)', value:14857},
+    {label:'카카오푸시', value:6186},
     {label:'navergfa', value:1728},
     {label:'X(트위터)', value:453},
-    {label:'기타(챗GPT·네이버·구글 등)', value:1672}
+    {label:'기타(littly·챗GPT·네이버·구글 등)', value:1953}
   ];
   // Android/iOS: AppsFlyer partners_report Media Source 기준 Installs
   var AOS_SOURCES = [
-    {label:'구글애즈(UAC)', value:9767},
-    {label:'Facebook Ads', value:6279},
-    {label:'Organic', value:5113},
-    {label:'adpopcorn_int', value:3071},
-    {label:'share_from_web', value:718},
-    {label:'Twitter', value:147},
-    {label:'기타', value:224}
+    {label:'구글애즈(UAC)', value:13002},
+    {label:'Facebook Ads', value:7859},
+    {label:'Organic', value:6363},
+    {label:'adpopcorn_int', value:3724},
+    {label:'share_from_web', value:1449},
+    {label:'kakaopush', value:207},
+    {label:'Twitter', value:150},
+    {label:'기타', value:112}
   ];
   var IOS_SOURCES = [
-    {label:'Facebook Ads', value:4605},
-    {label:'Organic', value:2974},
-    {label:'adpopcorn_int', value:1067},
-    {label:'share_from_web', value:431},
-    {label:'kakaopush', value:189},
+    {label:'Facebook Ads', value:5707},
+    {label:'Organic', value:3955},
+    {label:'adpopcorn_int', value:1334},
+    {label:'share_from_web', value:516},
+    {label:'kakaopush', value:241},
     {label:'Twitter', value:146},
-    {label:'Apple Search Ads', value:86},
-    {label:'기타', value:62}
+    {label:'Apple Search Ads', value:111},
+    {label:'기타', value:83}
   ];
   // Android+iOS 합산: AppsFlyer raw installs_report Adset 기준 Installs, AOS/IOS 표기만
   // 다른 동일 캠페인은 라벨을 합쳐서 하나로 집계(애드셋 있는 매체만, Organic 등 제외)
   var ADSET_COMBINED = [
-    {label:'구글애즈 UAC(2604_install_0416, Android전용)', aos:9759, ios:0},
+    {label:'구글애즈 UAC(2604_install_0416, Android전용)', aos:12995, ios:0},
+    {label:'[앱홍보_6월 상시] 텍스트광고', aos:1768, ios:884},
     {label:'[앱홍보_9월] 위클리 보물찾기', aos:1129, ios:911},
-    {label:'[앱홍보_6월 상시] 텍스트광고', aos:1182, ios:579},
+    {label:'[앱홍보_8월] 로열티프로그램_위클리완독챌린지', aos:941, ios:571},
     {label:'[앱홍보_9월] E스포츠대회티켓', aos:623, ios:655},
     {label:'[앱홍보_9월] 부국제 티켓드롭', aos:550, ios:510},
     {label:'[앱홍보_8월] ATA페스티벌 티겟드롭', aos:526, ios:472},
-    {label:'[앱홍보_8월] 로열티프로그램_위클리완독챌린지', aos:633, ios:338},
     {label:'[앱홍보_8월] 타짜시사회_티켓드롭', aos:477, ios:405},
-    {label:'[앱홍보_9월] 퐁피두 도슨트 티켓드롭', aos:314, ios:226},
-    {label:'[앱홍보_9월] 위클리 보물찾기 2차', aos:308, ios:199},
-    {label:'기타(99개 애드셋)', aos:1352, ios:1145}
+    {label:'[앱홍보_9월] 위클리 보물찾기 2차', aos:339, ios:221},
+    {label:'[앱홍보_9월] 자라섬재즈페스티벌', aos:273, ios:286},
+    {label:'기타(127개 애드셋)', aos:2862, ios:1800}
   ];
   function renderHBars(containerId, data, color){
     var total = data.reduce(function(s,r){return s+r.value;},0);
